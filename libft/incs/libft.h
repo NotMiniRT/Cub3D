@@ -6,7 +6,7 @@
 /*   By: gueberso <gueberso@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:44:14 by gueberso          #+#    #+#             */
-/*   Updated: 2025/03/25 20:10:09 by gueberso         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:45:09 by gueberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ size_t	ft_strlen(const char *s);
 
 typedef struct s_list
 {
-	char			*content;
+	void			*content;
 	struct s_list	*next;
 }	t_list;
 
