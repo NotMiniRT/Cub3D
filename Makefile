@@ -10,7 +10,7 @@ DEPS		:= $(OBJS:.o=.d)
 
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
-CPPFLAGS	:= -MMD -MP -I incs_mandatory/ -I libft/incs/
+CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/
 
 RM			:= rm -f
 RMDIR		+= -r
