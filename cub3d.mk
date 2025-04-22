@@ -6,6 +6,7 @@ override MANDATORYDIR	:= mandatory/
 override BONUSDIR		:= bonus/
 
 override UTILSDIR	:= utils/
+override DISPLAYDIR	:= display/
 override PARSINGDIR	:= parsing/
 
 SRC	+= $(addsuffix .c, $(MAIN))
@@ -17,8 +18,16 @@ SRC += $(addprefix $(UTILSDIR), $(addsuffix .c, $(UTILSSRC)))
 
 override UTILSSRC		:= \
 	utils \
+	main_struct \
 
 SRC += $(addprefix $(PARSINGDIR), $(addsuffix .c, $(PARSINGSRC)))
 
 override PARSINGSRC		:= \
 	check_param_validity \
+
+
+SRC += $(addprefix $(DISPLAYDIR), $(addsuffix .c, $(DISPLAYSRC)))
+
+override DISPLAYSRC		:= \
+	manage_inputs \
+	window_start \
