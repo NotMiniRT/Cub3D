@@ -42,6 +42,6 @@ void	check_param_validity(int ac, char **av)
 void	parsing(int ac, char **av)
 {
 	check_param_validity(ac, av);
-	check_scene_validity(av);
-	check_map_validity(av);
+	// check_scene_validity(av);
+	// check_map_validity(av);
 }
