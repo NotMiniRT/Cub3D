@@ -10,7 +10,11 @@ DEPS		:= $(OBJS:.o=.d)
 
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
-CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/
+CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/
+
+MLX_DIR      := mlx/
+MLX_LIB      := $(MLX_DIR)libmlx_Linux.a
+MLX_FLAGS    := -L mlx -lmlx_Linux -L/usr/lib -I mlx -lX11 -lm -lz -lXext $(MLX_LIB)
 
 RM			:= rm -f
 RMDIR		+= -r
@@ -54,12 +58,15 @@ init:
 .PHONY: all
 all: init $(NAME)
 
-$(NAME): libft/libft.a Makefile $(OBJS) $(MAN_PAGE)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft $(RLFLAGS)
+$(NAME): libft/libft.a Makefile mlx/libmlx_Linux.a $(OBJS) $(MAN_PAGE)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft $(MLX_FLAGS)
 	@echo "\n$(GREEN_BOLD)✓ $(NAME) is ready $(RESETC)\n"
 
 libft/libft.a: FORCE
 	@$(MAKE) -C libft
+
+mlx/libmlx_Linux.a: FORCE
+	@$(MAKE) -C mlx
 
 $(BUILD_DIR)%.o: $(SRCSDIR)%.c
 	@mkdir -p $(dir $@)
