@@ -43,6 +43,9 @@ jobs:
     - name: Compile project
       run: make
 
+    - name: Ensure logs directory
+      run: mkdir -p logs
+
     - name: Make script executable
       run: chmod +x ./scripts/test_map_errors.sh
 
