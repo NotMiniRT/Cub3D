@@ -59,3 +59,6 @@ jobs:
     #     name: map-error-test-logs
     #     path: logs/
     #     retention-days: 7
+
+    # cette regle elle casse tout, on la laisse en commentaire pour l'instant.
+    # on verra si on arrive a creer des logs depuis laction plus tard (mais ca peut etre style)
