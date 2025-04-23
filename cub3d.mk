@@ -29,5 +29,8 @@ override PARSINGSRC		:= \
 SRC += $(addprefix $(DISPLAYDIR), $(addsuffix .c, $(DISPLAYSRC)))
 
 override DISPLAYSRC		:= \
-	manage_inputs \
+	inputs_define \
 	window_start \
+	frame_display \
+	image_function \
+	player \
