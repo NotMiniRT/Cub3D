@@ -1,0 +1,29 @@
+name: Compilation Check
+
+on:
+  pull_request:
+    branches: [ main, master, dev ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y make gcc
+
+    - name: Compile project
+      run: make
+
+    - name: Test binary exists
+      run: |
+        if [ ! -f ./cub3D ]; then
+          echo "Binary not created after compilation"
+          exit 1
+        fi

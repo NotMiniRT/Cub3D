@@ -9,7 +9,7 @@ on:
 jobs:
   test-map-errors:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.jobs.build.conclusion == 'success' }}  # Only check if build job succeeded
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Only check if compilation workflow succeeded
 
     steps:
     - name: Checkout code
