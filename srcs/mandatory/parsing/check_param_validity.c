@@ -37,11 +37,21 @@ void	check_param_validity(int ac, char **av)
 		}
 		check_extension(av[1], fd);
 	}
+	close(fd);
+}
+
+void	init_parsing(t_parsing *data, char **av)
+{
+	init_data(data, av);
+	read_all_lines(av);
 }
 
 void	parsing(int ac, char **av)
 {
+	t_parsing	data;
+
 	check_param_validity(ac, av);
+	init_parsing(&data, av);
 	// check_scene_validity(av);
 	// check_map_validity(av);
 }
