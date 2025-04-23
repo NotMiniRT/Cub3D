@@ -33,16 +33,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up environment
       run: |
         sudo apt-get update
         sudo apt-get install -y make gcc
-
-    # - name: Install dependencies
-    #   run: |
-    #     # Install any additional dependencies your project might need
 
     - name: Compile project
       run: make
@@ -54,9 +50,9 @@ jobs:
       run: ./scripts/test_map_errors.sh
 
     - name: Upload test results as artifacts
-      if: always()  # Upload logs even if tests fail
+      if: always()
       uses: actions/upload-artifact@v2
       with:
         name: map-error-test-logs
         path: logs/
-        retention-days: 7  # Keep logs for 7 days
+        retention-days: 7
