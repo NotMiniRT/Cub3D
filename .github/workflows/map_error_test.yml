@@ -2,7 +2,7 @@ name: Map Error Tests
 
 on:
   workflow_run:
-    workflows: ["Build and Check"]
+    workflows: ["Compilation Check"]
     types:
       - completed
 
