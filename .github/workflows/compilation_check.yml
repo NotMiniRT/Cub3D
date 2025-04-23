@@ -53,10 +53,10 @@ jobs:
     - name: Run map error tests
       run: ./scripts/test_map_errors.sh
 
-    # - name: Upload test results as artifacts
-    #   if: always()
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: test-results
-    #     path: |
-    #       # Include any logs or output files if you add them to your script
+    - name: Upload test results as artifacts
+      if: always()  # Upload logs even if tests fail
+      uses: actions/upload-artifact@v2
+      with:
+        name: map-error-test-logs
+        path: logs/
+        retention-days: 7  # Keep logs for 7 days

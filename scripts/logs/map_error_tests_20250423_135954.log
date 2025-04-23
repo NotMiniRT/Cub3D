@@ -1,0 +1,360 @@
+Map Error Tests - Wed Apr 23 13:59:54 CEST 2025
+===============================
+
+[TEST] Testing map: broken_wall.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: color_not_number.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: duplicate_element.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_bad_extension_0.cu
+Output: Error: wrong file format extension
+Exit code: 1
+PASS: Error detected correctly
+----------------------------------------
+
+[TEST] Testing map: map_bad_extension_1.cube
+Output: Error: wrong file format extension
+Exit code: 1
+PASS: Error detected correctly
+----------------------------------------
+
+[TEST] Testing map: map_bad_extension_2
+Output: Error: wrong file format extension
+Exit code: 1
+PASS: Error detected correctly
+----------------------------------------
+
+[TEST] Testing map: map_bad_identifier_0.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_bad_identifier_1.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_bad_identifier_2.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_bad_identifier_3.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_bad_identifier_4.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_bad_xpm_extension_0.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_bad_xpm_extension_1.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_bad_xpm_extension_2.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_color_negative.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_color_not_number_0.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_color_not_number_1.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_color_overflow.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_color_too_big.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_empty.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_empty_color_component.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_empty_name_texture.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_first.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_invalid_element.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_invalid_element_end.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_map_at_start.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_missing_color_0.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_missing_color_1.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_missing_texture_0.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_missing_texture_1.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_missing_texture_2.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_missing_texture_3.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_mutliple_players.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_no_color.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_no_color_info.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_no_map_0.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_no_map_1.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_no_player.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_no_texture.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_no_texture_info.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_not_enough_color_component.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_not_surrounded_by_walls_0.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_not_surrounded_by_walls_1.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_not_surrounded_by_walls_2.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_not_surrounded_by_walls_3.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_only_map.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: map_separated_by_line.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: missing_color.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: missing_element.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: negative_color.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: no_elements.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: no_extension
+Output: Error: wrong file format extension
+Exit code: 1
+PASS: Error detected correctly
+----------------------------------------
+
+[TEST] Testing map: no_player.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: no_texture_path.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: out_of_range_color.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: texture_not_found.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: unknow_map_element.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: wrong_element.cub
+Output: 
+Exit code: 0
+FAIL: No error message detected
+----------------------------------------
+
+[TEST] Testing map: wrong_extension.b
+Output: Error: wrong file format extension
+Exit code: 1
+PASS: Error detected correctly
+----------------------------------------
+
+===============================
+Test summary: 5/59 tests passed
+Some maps did not trigger the expected error message!
