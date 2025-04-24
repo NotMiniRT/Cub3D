@@ -39,11 +39,12 @@ typedef struct s_parsing
 }	t_parsing;
 
 
-char	**read_all_lines(char **av);
+char	**read_all_lines(t_parsing *data);
 
 void	exit_error(char *message);
 void	parsing(int ac, char **av);
 void	init_data(t_parsing *data, char **av);
+void	cleanup_parsing(t_parsing *data);
 
 
 #endif

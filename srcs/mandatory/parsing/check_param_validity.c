@@ -43,7 +43,8 @@ void	check_param_validity(int ac, char **av)
 void	init_parsing(t_parsing *data, char **av)
 {
 	init_data(data, av);
-	read_all_lines(av);
+	read_all_lines(data);
+	// cleanup_parsing(data);
 }
 
 void	parsing(int ac, char **av)

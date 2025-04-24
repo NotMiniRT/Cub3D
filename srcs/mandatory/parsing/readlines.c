@@ -13,12 +13,6 @@
 void	init_data(t_parsing *data, char **av);
 void	cleanup_parsing(t_parsing *data);
 
-/**
- * @brief Extracts a line from the buffer
- *
- * @param buffer Current buffer
- * @return char* Extracted line
- */
 static char	*extract_line(char **buffer)
 {
 	char	*line;
@@ -33,13 +27,19 @@ static char	*extract_line(char **buffer)
 	if ((*buffer)[i] == '\n')
 		i++;
 	line = malloc(i + 1);
-	if (!line)
+	if (line == NULL)
 		return (NULL);
 	ft_memcpy(line, *buffer, i);
 	line[i] = '\0';
 	if ((*buffer)[i])
 	{
 		temp = ft_strdup(&(*buffer)[i]);
+		if (temp == NULL)
+		{
+			free(line);
+			free(*buffer);
+			return (NULL);
+		}
 		free(*buffer);
 		*buffer = temp;
 	}
@@ -59,12 +59,12 @@ static char	*join_and_free(char *s1, char *s2)
 	size_t	i;
 	size_t	j;
 
-	if (!s1)
+	if (s1 == NULL)
 		return (ft_strdup(s2));
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	result = malloc(len1 + len2 + 1);
-	if (!result)
+	if (result == NULL)
 	{
 		free(s1);
 		return (NULL);
@@ -80,12 +80,6 @@ static char	*join_and_free(char *s1, char *s2)
 	return (result);
 }
 
-/**
- * @brief Reads a line from a file descriptor
- *
- * @param fd File descriptor
- * @return char* Line read from fd
- */
 char	*read_line(int fd)
 {
 	static char	*buffer = NULL;
@@ -104,12 +98,14 @@ char	*read_line(int fd)
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
 		{
+			if (buffer)
+				free(buffer);
 			free(read_buffer);
 			return (NULL);
 		}
 		read_buffer[bytes_read] = '\0';
 		if (bytes_read == 0)
-			break;
+			break ;
 		buffer = join_and_free(buffer, read_buffer);
 		if (buffer == NULL)
 		{
@@ -119,47 +115,49 @@ char	*read_line(int fd)
 	}
 	free(read_buffer);
 	line = extract_line(&buffer);
+	if (line == NULL)
+	{
+		free(buffer);
+		free(line);
+		line = NULL;
+	}
 	return (line);
 }
 
-/**
- * @brief Reads all lines from a file into an array of strings
- *
- * @param fd File descriptor
- * @return char** Array of strings (NULL-terminated)
- */
-char	**read_all_lines(char **av)
+char	**read_all_lines(t_parsing *data)
 {
-	t_parsing	data;
-
-	init_data(&data, av);
-	data.line = read_line(data.fd);
-	while (data.line)
+	data->line = read_line(data->fd);
+	while (data->line)
 	{
-		printf("%s", data.line); // debug
-		if (data.count >= data.capacity - 1)
+		printf("%s", data->line); // debug pour l'instant
+		if (data->count >= data->capacity - 1)
 		{
-			data.capacity *= 2;
-			data.new_lines = malloc(sizeof(char *) * data.capacity);
-			if (data.new_lines == NULL)
+			data->capacity *= 2;
+			data->new_lines = malloc(sizeof(char *) * data->capacity);
+			if (data->new_lines == NULL)
 			{
-				while (data.count--)
-					free(data.lines[data.count]);
-				free(data.lines);
-				free(data.line);
-				close(data.fd);
+				while (data->count--)
+					free(data->lines[data->count]);
+				free(data->lines);
+				free(data->line);
+				close(data->fd);
 				return (NULL);
 			}
-			ft_memcpy(data.new_lines, data.lines, data.count * sizeof(char *));
-			free(data.lines);
-			data.lines = data.new_lines;
+			ft_memcpy(data->new_lines, data->lines, data->count * sizeof(char *));
+			free(data->lines);
+			data->lines = data->new_lines;
 		}
-		data.lines[data.count++] = data.line;
-		data.line = read_line(data.fd);
+		data->lines[data->count++] = data->line;
+		data->line = NULL; //read_line(data->fd); // NULL proteger ici ? Si line === NULL c'est que c'est dans read_line que ca a peter, et donc tout a ete free en amont deja. Je sais pas si c'est necessaire de proteger ce retour
+		if (data->line == NULL)
+		{
+			free(data->line); // ce free est en trop a mon avis, ca a deje ete free a l'interieur
+			break ; // pour moi il suffit de break la loop et partir. Pour l'instant il manque un indicateur que quelque chose s'est mal passe (soit un exit, soit une valeur de retour d'erreur)
+		}
 	}
-	data.lines[data.count] = NULL;
-	cleanup_parsing(&data);
-	return (data.lines);
+	data->lines[data->count] = NULL;
+	cleanup_parsing(data);
+	return (data->lines);
 }
 
 void	free_lines(char **lines)
@@ -182,9 +180,14 @@ void	cleanup_parsing(t_parsing *data)
 {
 	if (data->fd != -1)
 		close(data->fd);
-	if (data->lines != NULL)
-		free_lines(data->lines);
-	if (data->line != NULL)
+	if (data->lines)
+	{
+		if (data->count > 0)
+			free_lines(data->lines);
+		else
+			free(data->lines);
+	}
+	if (data->line)
 		free(data->line);
 }
 
