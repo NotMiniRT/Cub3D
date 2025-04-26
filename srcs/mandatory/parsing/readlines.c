@@ -93,7 +93,7 @@ char	*read_line(int fd)
 	if (read_buffer == NULL)
 		return (NULL);
 	bytes_read = 1;
-	while (bytes_read > 0 && (!buffer || !ft_strchr(buffer, '\n')))
+	while (bytes_read > 0 && (!buffer || (!ft_strchr(buffer, '\n') || !ft_strchr(buffer, '\0')))) // un autre moyen de check si on est en fin de fichier ? 
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
@@ -148,7 +148,7 @@ char	**read_all_lines(t_parsing *data)
 			data->lines = data->new_lines;
 		}
 		data->lines[data->count++] = data->line;
-		data->line = NULL; //read_line(data->fd); // NULL proteger ici ? Si line === NULL c'est que c'est dans read_line que ca a peter, et donc tout a ete free en amont deja. Je sais pas si c'est necessaire de proteger ce retour
+		data->line = read_line(data->fd); // NULL proteger ici ? Si line === NULL c'est que c'est dans read_line que ca a peter, et donc tout a ete free en amont deja. Je sais pas si c'est necessaire de proteger ce retour
 		if (data->line == NULL)
 		{
 			free(data->line); // ce free est en trop a mon avis, ca a deje ete free a l'interieur

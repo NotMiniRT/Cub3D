@@ -51,9 +51,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-
-
-
+test/
+test.c
 cub3D
 .build/
 libft.a

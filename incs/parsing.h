@@ -3,6 +3,13 @@
 
 # define BUFFER_SIZE 1024
 
+# define TEXTURE_NO "NO"
+# define TEXTURE_SO "SO"
+# define TEXTURE_WE "WE"
+# define TEXTURE_EA "EA"
+# define COLOR_F "F"
+# define COLOR_C "C"
+
 # define ERR_NB_PARAMS "Error: wrong number of parameters.\n"
 # define ERR_EXTENSION "Error: wrong file format extension\n"
 
@@ -38,6 +45,11 @@ typedef struct s_parsing
 	char	**lines;
 }	t_parsing;
 
+typedef struct s_infos
+{
+	t_parsing	*data;
+	t_scene		*scene;
+}	t_infos;
 
 char	**read_all_lines(t_parsing *data);
 
@@ -45,6 +57,13 @@ void	exit_error(char *message);
 void	parsing(int ac, char **av);
 void	init_data(t_parsing *data, char **av);
 void	cleanup_parsing(t_parsing *data);
+
+
+#define ERR_COLOR_INVALID "Invalid color format\n"
+#define ERR_COLOR_RANGE "Color value out of range (0-255)\n"
+#define ERR_DUPLICATE "Duplicate element identifier\n"
+
+int		check_scene_validity(t_infos *infos);
 
 
 #endif

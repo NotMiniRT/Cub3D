@@ -40,19 +40,38 @@ void	check_param_validity(int ac, char **av)
 	close(fd);
 }
 
-void	init_parsing(t_parsing *data, char **av)
+void	init_parsing(t_infos *infos, char **av) // faire les retours d'erreurs avec errno ou enlever les autres retour d'erreurs avec errno
 {
-	init_data(data, av);
-	read_all_lines(data);
+	infos->data = malloc(sizeof(t_parsing));
+	if (infos->data == NULL)
+		exit(97); // changer ca
+	infos->scene = malloc(sizeof(t_scene));
+	if (infos->scene == NULL)
+	{
+		free(infos->data);
+		exit(98); // changer aussi
+	}
+	init_data(infos->data, av);
+	ft_memset(infos->scene, 0, sizeof(t_scene));
+	infos->data->lines = read_all_lines(infos->data);
+	if (infos->data->lines == NULL)
+	{
+		free(infos->data);
+		free(infos->scene);
+		exit(99); // changer aussi
+	}
 	// cleanup_parsing(data);
 }
 
+
+
 void	parsing(int ac, char **av)
 {
-	t_parsing	data;
+	t_infos		infos;
 
 	check_param_validity(ac, av);
-	init_parsing(&data, av);
-	// check_scene_validity(av);
+	ft_memset(&infos, 0, sizeof(t_infos));
+	init_parsing(&infos, av);
+	check_scene_validity(&infos);
 	// check_map_validity(av);
 }
