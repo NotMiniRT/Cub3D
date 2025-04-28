@@ -95,8 +95,8 @@ char	*read_line(int fd)
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
 		{
-			if (buffer)
-				free(buffer);
+			// if (buffer)
+			// 	free(buffer);
 			free(read_buffer);
 			return (NULL);
 		}
@@ -153,7 +153,6 @@ char	**read_all_lines(t_infos *infos)
 		}
 	}
 	infos->data->lines[infos->data->count] = NULL;
-	cleanup_parsing(infos);
 	return (infos->data->lines);
 }
 
@@ -164,31 +163,40 @@ void	free_lines(char **lines)
 	if (lines == NULL)
 		return ;
 	i = 0;
-	while (lines[i] != NULL)
+	while (lines[i])
 	{
 		free(lines[i]);
-		lines[i] = NULL;
 		i++;
 	}
 	free(lines);
-	lines = NULL;
 }
 
 void	cleanup_parsing(t_infos *infos)
 {
+	if (infos == NULL || infos->data == NULL)
+		return;
 	if (infos->data->fd != -1)
 		close(infos->data->fd);
-	if (infos->data->lines)
+	if (infos->data->lines != NULL)
 	{
 		if (infos->data->count > 0)
 			free_lines(infos->data->lines);
 		else
 			free(infos->data->lines);
+		infos->data->lines = NULL;
 	}
-	if (infos->data->line)
+	if (infos->data->line != NULL)
+	{
 		free(infos->data->line);
-	if (infos->scene)
+		infos->data->line = NULL;
+	}
+	if (infos->scene != NULL)
+	{
 		free(infos->scene);
+		infos->scene = NULL;
+	}
+	free(infos->data);
+	infos->data = NULL;
 }
 
 void	init_data(t_infos *infos, char **av)

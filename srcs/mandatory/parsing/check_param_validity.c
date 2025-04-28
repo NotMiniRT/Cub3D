@@ -66,7 +66,6 @@ void	init_parsing(t_infos *infos, char **av) // faire les retours d'erreurs avec
 		cleanup_parsing(infos);
 		exit(errno);
 	}
-	// cleanup_parsing(data);
 }
 
 void	parsing(int ac, char **av)
@@ -76,6 +75,7 @@ void	parsing(int ac, char **av)
 	check_param_validity(ac, av);
 	ft_memset(&infos, 0, sizeof(t_infos));
 	init_parsing(&infos, av);
+	cleanup_parsing(&infos);
 	exit(1);
 	check_scene_validity(&infos);
 	// check_map_validity(av);
