@@ -39,8 +39,14 @@ if [ ! -d "$ERROR_MAPS_DIR" ]; then
     exit 1
 fi
 
-# Test all maps in the error directory
+# Test all maps in the error directory including hidden files
+shopt -s dotglob  # Enable dotglob to include hidden files in glob patterns
 for map_file in "$ERROR_MAPS_DIR"/*; do
+    # Skip directory entries . and ..
+    if [[ "$(basename "$map_file")" == "." || "$(basename "$map_file")" == ".." ]]; then
+        continue
+    fi
+
     if [ -f "$map_file" ]; then
         TOTAL_MAPS=$((TOTAL_MAPS + 1))
         echo -e "${CYAN}Testing map: ${NC}$(basename "$map_file")"
@@ -68,6 +74,7 @@ for map_file in "$ERROR_MAPS_DIR"/*; do
         echo "----------------------------------------" >> $LOG_FILE
     fi
 done
+shopt -u dotglob  # Disable dotglob when done
 
 # Print summary
 echo -e "${CYAN}Test summary: ${PASSED_MAPS}/${TOTAL_MAPS} tests passed${NC}"
