@@ -34,3 +34,4 @@ override DISPLAYSRC		:= \
 	frame_display \
 	image_function \
 	player \
+	ray_check \

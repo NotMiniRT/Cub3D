@@ -33,6 +33,15 @@ int	start_display(t_main_struct *main_struct)
 {
 	if (init_display(main_struct))
 		return (1);
+	main_struct->map = malloc(sizeof(char *) * 6);
+	main_struct->map[0] = "11111";
+	main_struct->map[1] = "10001";
+	main_struct->map[2] = "10001";
+	main_struct->map[3] = "10001";
+	main_struct->map[4] = "11111";
+	main_struct->map[5] = NULL;
+	main_struct->player->x = 2.5;
+	main_struct->player->y = 2.5;
 	init_inputs(main_struct);
 	mlx_loop(main_struct->mlx_ptr);
 	mlx_do_key_autorepeaton(main_struct->mlx_ptr);

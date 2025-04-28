@@ -2,12 +2,14 @@
 #include "common.h"
 #include <math.h>
 #include <stdio.h>
+#include "ray.h"
+#include "main_struct.h"
 
 int	init_player(t_player *player)
 {
 	player->x = 0;
 	player->y = 0;
-	player->fov_angle = 0;
+	player->fov_angle = 0.5 * PI;
 	return (1);
 }
 
@@ -56,15 +58,21 @@ int	is_facing_up(float ray_angle)
 	return (!is_facing_down(ray_angle));
 }
 
-void	player_log(t_player *player)
+void	player_log(t_main_struct *main_struct)
 {
-	printf("player: x: %f, y: %f, angle: %f\n", player->x, player->y, player->fov_angle);
-	if (is_facing_down(player->fov_angle))
-		printf("player is facing down ");
-	else
-		printf("player is facing up ");
-	if (is_facing_left(player->fov_angle))
-		printf("and left\n");
-	else
-		printf("and right\n");
+	float	cross[3];
+	printf("player: x: %f, y: %f, angle: %f\n", main_struct->player->x, main_struct->player->y, main_struct->player->fov_angle);
+	// if (is_facing_down(main_struct->player->fov_angle))
+	// 	printf("player is facing down ");
+	// else
+	// 	printf("player is facing up ");
+	// if (is_facing_left(main_struct->player->fov_angle))
+	// 	printf("and left\n");
+	// else
+	// 	printf("and right\n");
+	cross[0] = main_struct->player->x;
+	cross[1] = main_struct->player->y;
+	cross[2] = 0;
+	ray_check(main_struct, &cross);
+	printf("First colision is in (%f, %f), on axis %c\n", cross[0], cross[1], 'x' + (cross[2] >= 1));
 }

@@ -7,9 +7,12 @@ void	init_main_struct(t_main_struct *main_struct)
 	main_struct->mlx_ptr = NULL;
 	main_struct->win_ptr = NULL;
 	main_struct->player = NULL;
+	main_struct->map = NULL;
 }
 void	free_main_struct(t_main_struct *main_struct)
 {
+	// int	i;
+
 	if (!main_struct)
 		return ;
 	if (main_struct->player != NULL)
@@ -25,4 +28,15 @@ void	free_main_struct(t_main_struct *main_struct)
 		free(main_struct->mlx_ptr);
 		main_struct->mlx_ptr = NULL;
 	}
+	// if (main_struct->map != NULL)
+	// {
+	// 	i = 0;
+	// 	while(main_struct->map[i])
+	// 	{
+	// 		free(main_struct->map[i]);
+	// 		i++;
+	// 	}
+	// 	free(main_struct->map);
+	// 	main_struct->map = NULL;
+	// }
 }
