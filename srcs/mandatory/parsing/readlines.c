@@ -10,9 +10,6 @@
 #include "libft.h"
 #include "parsing.h"
 
-void	init_data(t_parsing *data, char **av);
-void	cleanup_parsing(t_parsing *data);
-
 static char	*extract_line(char **buffer)
 {
 	char	*line;
@@ -93,7 +90,7 @@ char	*read_line(int fd)
 	if (read_buffer == NULL)
 		return (NULL);
 	bytes_read = 1;
-	while (bytes_read > 0 && (!buffer || (!ft_strchr(buffer, '\n') || !ft_strchr(buffer, '\0')))) // un autre moyen de check si on est en fin de fichier ? 
+	while (bytes_read > 0 && (!buffer || (!ft_strchr(buffer, '\n') || !ft_strchr(buffer, '\0')))) // un autre moyen de check si on est en fin de fichier ?
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
@@ -124,40 +121,40 @@ char	*read_line(int fd)
 	return (line);
 }
 
-char	**read_all_lines(t_parsing *data)
+char	**read_all_lines(t_infos *infos)
 {
-	data->line = read_line(data->fd);
-	while (data->line)
+	infos->data->line = read_line(infos->data->fd);
+	while (infos->data->line)
 	{
-		printf("%s", data->line); // debug pour l'instant
-		if (data->count >= data->capacity - 1)
+		printf("%s", infos->data->line); // debug pour l'instant
+		if (infos->data->count >= infos->data->capacity - 1)
 		{
-			data->capacity *= 2;
-			data->new_lines = malloc(sizeof(char *) * data->capacity);
-			if (data->new_lines == NULL)
+			infos->data->capacity *= 2;
+			infos->data->new_lines = malloc(sizeof(char *) * infos->data->capacity);
+			if (infos->data->new_lines == NULL)
 			{
-				while (data->count--)
-					free(data->lines[data->count]);
-				free(data->lines);
-				free(data->line);
-				close(data->fd);
+				while (infos->data->count--)
+					free(infos->data->lines[infos->data->count]);
+				free(infos->data->lines);
+				free(infos->data->line);
+				close(infos->data->fd);
 				return (NULL);
 			}
-			ft_memcpy(data->new_lines, data->lines, data->count * sizeof(char *));
-			free(data->lines);
-			data->lines = data->new_lines;
+			ft_memcpy(infos->data->new_lines, infos->data->lines, infos->data->count * sizeof(char *));
+			free(infos->data->lines);
+			infos->data->lines = infos->data->new_lines;
 		}
-		data->lines[data->count++] = data->line;
-		data->line = read_line(data->fd); // NULL proteger ici ? Si line === NULL c'est que c'est dans read_line que ca a peter, et donc tout a ete free en amont deja. Je sais pas si c'est necessaire de proteger ce retour
-		if (data->line == NULL)
+		infos->data->lines[infos->data->count++] = infos->data->line;
+		infos->data->line = read_line(infos->data->fd); // NULL proteger ici ? Si line === NULL c'est que c'est dans read_line que ca a peter, et donc tout a ete free en amont deja. Je sais pas si c'est necessaire de proteger ce retour
+		if (infos->data->line == NULL)
 		{
-			free(data->line); // ce free est en trop a mon avis, ca a deje ete free a l'interieur
+			free(infos->data->line); // ce free est en trop a mon avis, ca a deje ete free a l'interieur
 			break ; // pour moi il suffit de break la loop et partir. Pour l'instant il manque un indicateur que quelque chose s'est mal passe (soit un exit, soit une valeur de retour d'erreur)
 		}
 	}
-	data->lines[data->count] = NULL;
-	cleanup_parsing(data);
-	return (data->lines);
+	infos->data->lines[infos->data->count] = NULL;
+	cleanup_parsing(infos);
+	return (infos->data->lines);
 }
 
 void	free_lines(char **lines)
@@ -170,39 +167,42 @@ void	free_lines(char **lines)
 	while (lines[i] != NULL)
 	{
 		free(lines[i]);
+		lines[i] = NULL;
 		i++;
 	}
 	free(lines);
 	lines = NULL;
 }
 
-void	cleanup_parsing(t_parsing *data)
+void	cleanup_parsing(t_infos *infos)
 {
-	if (data->fd != -1)
-		close(data->fd);
-	if (data->lines)
+	if (infos->data->fd != -1)
+		close(infos->data->fd);
+	if (infos->data->lines)
 	{
-		if (data->count > 0)
-			free_lines(data->lines);
+		if (infos->data->count > 0)
+			free_lines(infos->data->lines);
 		else
-			free(data->lines);
+			free(infos->data->lines);
 	}
-	if (data->line)
-		free(data->line);
+	if (infos->data->line)
+		free(infos->data->line);
+	if (infos->scene)
+		free(infos->scene);
 }
 
-void	init_data(t_parsing *data, char **av)
+void	init_data(t_infos *infos, char **av)
 {
-	data->line = NULL;
-	data->fd = open(av[1], O_RDONLY); // protect ? ca a deja ete check plus tot
-	data->lines = malloc(sizeof(char *) * 16);
-	if (data->lines == NULL || data->fd == -1)
+	infos->data->line = NULL;
+	infos->data->fd = open(av[1], O_RDONLY);
+	infos->data->lines = malloc(sizeof(char *) * 16);
+	if (infos->data->lines == NULL || infos->data->fd == -1)
 	{
 		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
-		cleanup_parsing(data);
+		cleanup_parsing(infos);
 		exit(errno);
 	}
-	data->count = 0;
-	data->capacity = 16;
-	data->new_lines = NULL;
+	infos->data->count = 0;
+	infos->data->capacity = 16; // 16 - 1 ?
+	infos->data->new_lines = NULL;
 }

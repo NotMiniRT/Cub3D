@@ -51,12 +51,12 @@ typedef struct s_infos
 	t_scene		*scene;
 }	t_infos;
 
-char	**read_all_lines(t_parsing *data);
+char	**read_all_lines(t_infos *infos);
 
 void	exit_error(char *message);
 void	parsing(int ac, char **av);
-void	init_data(t_parsing *data, char **av);
-void	cleanup_parsing(t_parsing *data);
+void	init_data(t_infos *infos, char **av);
+void	cleanup_parsing(t_infos *infos);
 
 
 #define ERR_COLOR_INVALID "Invalid color format\n"
