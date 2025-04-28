@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "ft_dprintf.h"
 #include "parsing.h"

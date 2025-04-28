@@ -1,8 +1,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
-
-#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 #include "ft_dprintf.h"
 #include "libft.h"
@@ -25,7 +25,8 @@ static void	check_extension(char *map, int fd)
 			last_dot = i;
 		i++;
 	}
-	if (last_dot <= last_slash + 1 || ft_strcmp(&map[last_dot], CUB_FORMAT) != 0)
+	if (last_dot <= last_slash + 1 || \
+		ft_strcmp(&map[last_dot], CUB_FORMAT) != 0)
 	{
 		close(fd);
 		exit_error(ERR_EXTENSION);

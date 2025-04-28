@@ -5,8 +5,8 @@ override SRCSBONUS	= $(addprefix $(SRCSDIR)$(BONUSDIR), $(SRCBONUS))
 override MANDATORYDIR	:= mandatory/
 override BONUSDIR		:= bonus/
 
-override UTILSDIR	:= utils/
-override PARSINGDIR	:= parsing/
+override UTILSDIR		:= utils/
+override PARSINGDIR		:= parsing/
 
 SRC	+= $(addsuffix .c, $(MAIN))
 
@@ -22,5 +22,8 @@ SRC += $(addprefix $(PARSINGDIR), $(addsuffix .c, $(PARSINGSRC)))
 
 override PARSINGSRC		:= \
 	check_param_validity \
+	fill_scene_infos \
+	init \
+	readlines_utils \
 	readlines \
-	fill_scene_infos
+	utils
