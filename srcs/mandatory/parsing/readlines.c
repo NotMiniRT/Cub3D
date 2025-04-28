@@ -3,17 +3,37 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include <fcntl.h>
-#include <stdbool.h>
 
 #include "ft_dprintf.h"
 #include "libft.h"
 #include "parsing.h"
 
+static int	handle_remaining_buffer(char **buffer, char *line, size_t i)
+{
+	char	*temp;
+
+	if (!(*buffer)[i])
+	{
+		free(*buffer);
+		*buffer = NULL;
+		return (1);
+	}
+	temp = ft_strdup(&(*buffer)[i]);
+	if (temp == NULL)
+	{
+		free(line);
+		free(*buffer);
+		*buffer = NULL;
+		return (0);
+	}
+	free(*buffer);
+	*buffer = temp;
+	return (1);
+}
+
 static char	*extract_line(char **buffer)
 {
 	char	*line;
-	char	*temp;
 	size_t	i;
 
 	if (!*buffer || !**buffer)
@@ -23,81 +43,71 @@ static char	*extract_line(char **buffer)
 		i++;
 	if ((*buffer)[i] == '\n')
 		i++;
-	line = malloc(i + 1);
+	line = malloc(sizeof(char) * i + 1);
 	if (line == NULL)
 		return (NULL);
 	ft_memcpy(line, *buffer, i);
 	line[i] = '\0';
-	if ((*buffer)[i])
-	{
-		temp = ft_strdup(&(*buffer)[i]);
-		if (temp == NULL)
-		{
-			free(line);
-			free(*buffer);
-			return (NULL);
-		}
-		free(*buffer);
-		*buffer = temp;
-	}
-	else
-	{
-		free(*buffer);
-		*buffer = NULL;
-	}
+	if (handle_remaining_buffer(buffer, line, i) == 0)
+		return (NULL);
 	return (line);
 }
 
-static char	*join_and_free(char *s1, char *s2)
+static char	*join_and_free(char *s1, char *s2) // j'ai pas trouvé d'autres solutions a call ft_strlen 2 fois par variable ici. On depasse les 25 lignes sinon
 {
 	char	*result;
-	size_t	len1;
-	size_t	len2;
-	size_t	i;
-	size_t	j;
+	ssize_t	i;
+	ssize_t	j;
 
 	if (s1 == NULL)
 		return (ft_strdup(s2));
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	result = malloc(len1 + len2 + 1);
+	result = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (result == NULL)
 	{
+		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		free(s1);
 		return (NULL);
 	}
 	i = -1;
-	while (++i < len1)
+	while (++i < (ssize_t) ft_strlen(s1))
 		result[i] = s1[i];
 	j = -1;
-	while (++j < len2)
+	while (++j < (ssize_t) ft_strlen(s2))
 		result[i + j] = s2[j];
 	result[i + j] = '\0';
 	free(s1);
 	return (result);
 }
 
-char	*read_line(int fd)
+int	read_line_check(int fd, char *buffer)
 {
-	static char	*buffer = NULL;
-	char		*read_buffer;
-	char		*line;
-	ssize_t		bytes_read;
-
+	if (fd == CLEAR_BUFFER)
+	{
+		if (buffer)
+		{
+			free(buffer);
+			buffer = NULL;
+		}
+		return (-1);
+	}
 	if (fd < 0)
-		return (NULL);
-	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (read_buffer == NULL)
-		return (NULL);
-	bytes_read = 1;
-	while (bytes_read > 0 && (!buffer || (!ft_strchr(buffer, '\n') || !ft_strchr(buffer, '\0')))) // un autre moyen de check si on est en fin de fichier ?
+		return (-1);
+	return (0);
+}
+
+static char	*read_line_main_loop(ssize_t bytes_read, char *buffer, \
+	char *read_buffer, int fd)
+{
+	while (bytes_read > 0 && (!buffer || (!ft_strchr(buffer, '\n') && buffer[0] != '\0')))
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
+		if (bytes_read == -1)
 		{
-			// if (buffer)
-			// 	free(buffer);
+			ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
+			if (buffer)
+				free(buffer);
 			free(read_buffer);
+			buffer = NULL;
 			return (NULL);
 		}
 		read_buffer[bytes_read] = '\0';
@@ -110,107 +120,79 @@ char	*read_line(int fd)
 			return (NULL);
 		}
 	}
+	return (buffer);
+}
+
+char	*read_line(int fd)
+{
+	static char	*buffer = NULL;
+	char		*read_buffer;
+	char		*line;
+	ssize_t		bytes_read;
+
+	if (read_line_check(fd, buffer) == -1)
+		return (NULL);
+	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (read_buffer == NULL)
+	{
+		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
+		return (NULL);
+	}
+	bytes_read = 1;
+	buffer = read_line_main_loop(bytes_read, buffer, read_buffer, fd);
+	// if (buffer == NULL)
+	// while (bytes_read > 0 && (!buffer || (!ft_strchr(buffer, '\n') && buffer[0] != '\0')))
+	// {
+	// 	bytes_read = read(fd, read_buffer, BUFFER_SIZE);
+	// 	if (bytes_read == -1)
+	// 	{
+	// 		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
+	// 		if (buffer)
+	// 			free(buffer);
+	// 		free(read_buffer);
+	// 		buffer = NULL;
+	// 		return (NULL);
+	// 	}
+	// 	read_buffer[bytes_read] = '\0';
+	// 	if (bytes_read == 0)
+	// 		break ;
+	// 	buffer = join_and_free(buffer, read_buffer);
+	// 	if (buffer == NULL)
+	// 	{
+	// 		free(read_buffer);
+	// 		return (NULL);
+	// 	}
+	// }
 	free(read_buffer);
 	line = extract_line(&buffer);
-	if (line == NULL)
-	{
-		free(buffer);
-		free(line);
-		line = NULL;
-	}
 	return (line);
 }
 
-char	**read_all_lines(t_infos *infos)
+
+
+char	**read_all_lines(t_parsing *data)
 {
-	infos->data->line = read_line(infos->data->fd);
-	while (infos->data->line)
+	data->line = read_line(data->fd);
+	while (data->line)
 	{
-		printf("%s", infos->data->line); // debug pour l'instant
-		if (infos->data->count >= infos->data->capacity - 1)
+		printf("%s", data->line); // Debug pour l'instant
+		if (data->count >= data->capacity - 1)
 		{
-			infos->data->capacity *= 2;
-			infos->data->new_lines = malloc(sizeof(char *) * infos->data->capacity);
-			if (infos->data->new_lines == NULL)
-			{
-				while (infos->data->count--)
-					free(infos->data->lines[infos->data->count]);
-				free(infos->data->lines);
-				free(infos->data->line);
-				close(infos->data->fd);
-				return (NULL);
-			}
-			ft_memcpy(infos->data->new_lines, infos->data->lines, infos->data->count * sizeof(char *));
-			free(infos->data->lines);
-			infos->data->lines = infos->data->new_lines;
+			data->capacity *= 2;
+			data->new_lines = malloc(sizeof(char *) * data->capacity);
+			if (data->new_lines == NULL)
+				return (clear_read_lines(data));
+			ft_memcpy(data->new_lines, data->lines,
+				data->count * sizeof(char *));
+			free(data->lines);
+			data->lines = data->new_lines;
+			data->new_lines = NULL;
 		}
-		infos->data->lines[infos->data->count++] = infos->data->line;
-		infos->data->line = read_line(infos->data->fd); // NULL proteger ici ? Si line === NULL c'est que c'est dans read_line que ca a peter, et donc tout a ete free en amont deja. Je sais pas si c'est necessaire de proteger ce retour
-		if (infos->data->line == NULL)
-		{
-			free(infos->data->line); // ce free est en trop a mon avis, ca a deje ete free a l'interieur
-			break ; // pour moi il suffit de break la loop et partir. Pour l'instant il manque un indicateur que quelque chose s'est mal passe (soit un exit, soit une valeur de retour d'erreur)
-		}
+		data->lines[data->count++] = data->line;
+		data->line = read_line(data->fd);
+		if (data->line == NULL)
+			break ;
 	}
-	infos->data->lines[infos->data->count] = NULL;
-	return (infos->data->lines);
-}
-
-void	free_lines(char **lines)
-{
-	size_t	i;
-
-	if (lines == NULL)
-		return ;
-	i = 0;
-	while (lines[i])
-	{
-		free(lines[i]);
-		i++;
-	}
-	free(lines);
-}
-
-void	cleanup_parsing(t_infos *infos)
-{
-	if (infos == NULL || infos->data == NULL)
-		return;
-	if (infos->data->fd != -1)
-		close(infos->data->fd);
-	if (infos->data->lines != NULL)
-	{
-		if (infos->data->count > 0)
-			free_lines(infos->data->lines);
-		else
-			free(infos->data->lines);
-		infos->data->lines = NULL;
-	}
-	if (infos->data->line != NULL)
-	{
-		free(infos->data->line);
-		infos->data->line = NULL;
-	}
-	if (infos->scene != NULL)
-	{
-		free(infos->scene);
-		infos->scene = NULL;
-	}
-	free(infos->data);
-	infos->data = NULL;
-}
-
-void	init_data(t_infos *infos, char **av)
-{
-	infos->data->line = NULL;
-	infos->data->fd = open(av[1], O_RDONLY);
-	infos->data->lines = malloc(sizeof(char *) * 16);
-	if (infos->data->lines == NULL || infos->data->fd == -1)
-	{
-		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
-		cleanup_parsing(infos);
-		exit(errno);
-	}
-	infos->data->count = 0;
-	infos->data->capacity = 16; // 16 - 1 ?
-	infos->data->new_lines = NULL;
+	data->lines[data->count] = NULL;
+	return (data->lines);
 }
