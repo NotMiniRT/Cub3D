@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Colors for better output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
 # Path to the executable and error maps
@@ -23,7 +23,7 @@ LOG_FILE="scripts/logs/map_error_tests_${TIMESTAMP}.log"
 echo "Map Error Tests - $(date)" > $LOG_FILE
 echo "===============================" >> $LOG_FILE
 
-echo -e "${YELLOW}Starting map error tests...${NC}"
+echo -e "${CYAN}Starting map error tests...${NC}"
 
 # Check if executable exists
 if [ ! -f "$EXECUTABLE" ]; then
@@ -39,11 +39,17 @@ if [ ! -d "$ERROR_MAPS_DIR" ]; then
     exit 1
 fi
 
-# Test all maps in the error directory
+# Test all maps in the error directory including hidden files
+shopt -s dotglob  # Enable dotglob to include hidden files in glob patterns
 for map_file in "$ERROR_MAPS_DIR"/*; do
+    # Skip directory entries . and ..
+    if [[ "$(basename "$map_file")" == "." || "$(basename "$map_file")" == ".." ]]; then
+        continue
+    fi
+
     if [ -f "$map_file" ]; then
         TOTAL_MAPS=$((TOTAL_MAPS + 1))
-        echo -e "${YELLOW}Testing map: ${NC}$(basename "$map_file")"
+        echo -e "${CYAN}Testing map: ${NC}$(basename "$map_file")"
         echo -e "\n[TEST] Testing map: $(basename "$map_file")" >> $LOG_FILE
 
         # Run the executable with the map and capture stderr
@@ -68,9 +74,10 @@ for map_file in "$ERROR_MAPS_DIR"/*; do
         echo "----------------------------------------" >> $LOG_FILE
     fi
 done
+shopt -u dotglob  # Disable dotglob when done
 
 # Print summary
-echo -e "${YELLOW}Test summary: ${PASSED_MAPS}/${TOTAL_MAPS} tests passed${NC}"
+echo -e "${CYAN}Test summary: ${PASSED_MAPS}/${TOTAL_MAPS} tests passed${NC}"
 echo -e "\n===============================" >> $LOG_FILE
 echo "Test summary: ${PASSED_MAPS}/${TOTAL_MAPS} tests passed" >> $LOG_FILE
 

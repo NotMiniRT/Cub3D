@@ -1,8 +1,9 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-#include "common.h"
 #include "ft_dprintf.h"
 #include "libft.h"
 #include "parsing.h"
@@ -10,11 +11,22 @@
 static void	check_extension(char *map, int fd)
 {
 	size_t	i;
+	size_t	last_dot;
+	size_t	last_slash;
 
 	i = 0;
+	last_dot = 0;
+	last_slash = 0;
 	while (map && map[i])
+	{
+		if (map[i] == '/')
+			last_slash = i;
+		else if (map[i] == '.')
+			last_dot = i;
 		i++;
-	if (i < 4 || ft_strcmp(&map[i - 4], CUB_FORMAT) != 0)
+	}
+	if (last_dot <= last_slash + 1 || \
+		ft_strcmp(&map[last_dot], CUB_FORMAT) != 0)
 	{
 		close(fd);
 		exit_error(ERR_EXTENSION);
@@ -25,6 +37,7 @@ void	check_param_validity(int ac, char **av)
 {
 	int	fd;
 
+	fd = -1;
 	if (ac != 2)
 		exit_error(ERR_NB_PARAMS);
 	else
@@ -37,22 +50,19 @@ void	check_param_validity(int ac, char **av)
 		}
 		check_extension(av[1], fd);
 	}
-	close(fd);
-}
-
-void	init_parsing(t_parsing *data, char **av)
-{
-	init_data(data, av);
-	read_all_lines(data);
-	// cleanup_parsing(data);
+	if (fd != -1)
+		close(fd);
 }
 
 void	parsing(int ac, char **av)
 {
-	t_parsing	data;
+	t_infos	infos;
 
 	check_param_validity(ac, av);
-	init_parsing(&data, av);
-	// check_scene_validity(av);
+	ft_memset(&infos, 0, sizeof(t_infos));
+	init_parsing(&infos, av);
+	cleanup_parsing(&infos);
+	exit(1);
+	check_scene_validity(&infos);
 	// check_map_validity(av);
 }

@@ -1,7 +1,17 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# include <stddef.h>
+
 # define BUFFER_SIZE 1024
+# define CLEAR_BUFFER -42
+
+# define TEXTURE_NO "NO"
+# define TEXTURE_SO "SO"
+# define TEXTURE_WE "WE"
+# define TEXTURE_EA "EA"
+# define COLOR_F "F"
+# define COLOR_C "C"
 
 # define ERR_NB_PARAMS "Error: wrong number of parameters.\n"
 # define ERR_EXTENSION "Error: wrong file format extension\n"
@@ -38,13 +48,38 @@ typedef struct s_parsing
 	char	**lines;
 }	t_parsing;
 
+typedef struct s_infos
+{
+	t_parsing	*data;
+	t_scene		*scene;
+}	t_infos;
 
 char	**read_all_lines(t_parsing *data);
+char	**clear_read_lines(t_parsing *data);
 
 void	exit_error(char *message);
 void	parsing(int ac, char **av);
-void	init_data(t_parsing *data, char **av);
-void	cleanup_parsing(t_parsing *data);
+void	init_data(t_infos *infos, char **av);
+void	cleanup_parsing(t_infos *infos);
+char	*read_line(int fd);
 
+char	*extract_line(char **buffer);
+char	*join_and_free(char *s1, char *s2);
+int		read_line_check(int fd, char *buffer);
+
+
+
+
+
+
+
+# define ERR_COLOR_INVALID "Invalid color format\n"
+# define ERR_COLOR_RANGE "Color value out of range (0-255)\n"
+# define ERR_DUPLICATE "Duplicate element identifier\n"
+
+void	init_data(t_infos *infos, char **av);
+void	init_parsing(t_infos *infos, char **av);
+
+int		check_scene_validity(t_infos *infos);
 
 #endif
