@@ -81,16 +81,12 @@ char	*extract_line(char **buffer);
 char	*join_and_free(char *s1, char *s2);
 int		read_line_check(int fd, char *buffer);
 
-
 void	free_array(char **array);
 void	free_scene(t_scene *scene);
 
 bool	check_extension(char *map, int fd, char *extension);
 
-
-
 /* -------------------------------------------------------------------------- */
-
 
 void	init_data(t_infos *infos, char **av);
 void	init_parsing(t_infos *infos, char **av);
