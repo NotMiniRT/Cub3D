@@ -60,5 +60,5 @@ jobs:
     #     path: logs/
     #     retention-days: 7
 
-    # cette regle elle casse tout, on la laisse en commentaire pour l'instant.
-    # on verra si on arrive a creer des logs depuis laction plus tard (mais ca peut etre style)
+    # This rule is currently causing issues, so it has been left commented out for now.
+    # We will revisit this later to see if we can generate logs directly from the action (which could be useful).
