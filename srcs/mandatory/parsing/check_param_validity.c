@@ -8,7 +8,7 @@
 #include "libft.h"
 #include "parsing.h"
 
-static void	check_extension(char *map, int fd)
+bool	check_extension(char *map, int fd, char *extension)
 {
 	size_t	i;
 	size_t	last_dot;
@@ -25,12 +25,13 @@ static void	check_extension(char *map, int fd)
 			last_dot = i;
 		i++;
 	}
-	if (last_dot == 0 || (last_slash != 0 && last_dot == last_slash + 1) ||
-        ft_strcmp(&map[last_dot], CUB_FORMAT) != 0)
+	if (last_dot == 0 || (last_slash != 0 && last_dot == last_slash + 1) || \
+						ft_strcmp(&map[last_dot], extension) != 0)
 	{
 		close(fd);
-		exit_error(ERR_EXTENSION);
+		return (false);
 	}
+	return (true);
 }
 
 void	check_param_validity(int ac, char **av)
@@ -48,7 +49,8 @@ void	check_param_validity(int ac, char **av)
 			ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 			exit(errno);
 		}
-		check_extension(av[1], fd);
+		if (check_extension(av[1], fd, CUB_FORMAT) == false)
+			exit_error(ERR_EXTENSION);
 	}
 	if (fd != -1)
 		close(fd);
@@ -61,8 +63,7 @@ void	parsing(int ac, char **av)
 	check_param_validity(ac, av);
 	ft_memset(&infos, 0, sizeof(t_infos));
 	init_parsing(&infos, av);
-	cleanup_parsing(&infos);
-	exit(1);
 	check_scene_validity(&infos);
-	// check_map_validity(av);
+	cleanup_parsing(&infos);
 }
+/* apres check_scene_validity check_map_validity(av); */

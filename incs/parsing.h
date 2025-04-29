@@ -2,23 +2,37 @@
 # define PARSING_H
 
 # include <stddef.h>
+# include <stdbool.h>
+
+typedef struct s_scene	t_scene;
+typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 
 # define BUFFER_SIZE 1024
 # define CLEAR_BUFFER -42
 
-# define TEXTURE_NO "NO"
-# define TEXTURE_SO "SO"
-# define TEXTURE_WE "WE"
-# define TEXTURE_EA "EA"
-# define COLOR_F "F"
-# define COLOR_C "C"
-
-# define ERR_NB_PARAMS "Error: wrong number of parameters.\n"
-# define ERR_EXTENSION "Error: wrong file format extension\n"
-
-# define _ERROR "Error: %s\n"
+# define TEXTURE_NO	"NO"
+# define TEXTURE_SO	"SO"
+# define TEXTURE_WE	"WE"
+# define TEXTURE_EA	"EA"
+# define COLOR_F	"F"
+# define COLOR_C	"C"
 
 # define CUB_FORMAT ".cub"
+# define XPM_FORMAT ".xpm"
+
+# define _ERROR		"Error: %s\n"
+
+# define ERR_NB_PARAMS		"Error: wrong number of parameters\n"
+# define ERR_EXTENSION		"Error: wrong file format extension\n"
+
+# define ERR_COLOR_INVALID	"Invalid color format\n"
+# define ERR_COLOR_RANGE	"Color value out of range (0-255)\n"
+# define ERR_DUPLICATE		"Error\nDuplicate %s identifier\n"
+
+# define ERR_SCENE_INVALID "Invalid scene configuration\n"
+# define ERR_PARSING_ELEMENT "Error\nError parsing element: %s\n"
+# define ERR_INCOMPLETE_SCENE "Error\nScene incomplete before map start\n"
+# define ERR_MISSING_ELEMENT "Error\nMissing required scene elements\n"
 
 typedef struct s_color
 {
@@ -68,18 +82,31 @@ char	*join_and_free(char *s1, char *s2);
 int		read_line_check(int fd, char *buffer);
 
 
+void	free_array(char **array);
+void	free_scene(t_scene *scene);
+
+bool	check_extension(char *map, int fd, char *extension);
 
 
 
+/* -------------------------------------------------------------------------- */
 
-
-# define ERR_COLOR_INVALID "Invalid color format\n"
-# define ERR_COLOR_RANGE "Color value out of range (0-255)\n"
-# define ERR_DUPLICATE "Duplicate element identifier\n"
 
 void	init_data(t_infos *infos, char **av);
 void	init_parsing(t_infos *infos, char **av);
 
 int		check_scene_validity(t_infos *infos);
+
+bool	parse_ceiling_color(t_scene *scene, char *line);
+bool	parse_floor_color(t_scene *scene, char *line);
+
+bool	parse_ea_texture(t_scene *scene, char *line);
+bool	parse_no_texture(t_scene *scene, char *line);
+bool	parse_so_texture(t_scene *scene, char *line);
+bool	parse_we_texture(t_scene *scene, char *line);
+
+bool	is_texture_valid(char *path);
+
+char	*extract_texture_path(char *line, int id_len);
 
 #endif
