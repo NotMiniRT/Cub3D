@@ -1,12 +1,12 @@
+#include <errno.h>
 #include <stdbool.h>
-#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "ft_dprintf.h"
-#include "parsing.h"
 #include "libft.h"
+#include "parsing.h"
 
-/* ligne 27 : pas sur de vouloir laisser ca non plus */
 bool	is_valid_color_component(char *str, unsigned char *component)
 {
 	short	value;
@@ -33,7 +33,6 @@ bool	is_valid_color_component(char *str, unsigned char *component)
 	return (true);
 }
 
-/* ligne 43 : (line[i] == ' ' || line[i] == '\t')*/
 bool	parse_color_components(char *line, t_color *color)
 {
 	char	**components;
@@ -69,16 +68,15 @@ bool	parse_floor_color(t_scene *scene, char *line)
 	}
 	color = malloc(sizeof(t_color));
 	if (color == NULL)
-		return (false);
-	color->line = ft_strdup(line);
-	if (color->line == NULL)
 	{
-		free(color);
+		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		return (false);
 	}
-	if (parse_color_components(line, color) == false)
+	color->line = ft_strdup(line);
+	if (color->line == NULL || parse_color_components(line, color) == false)
 	{
-		free(color->line);
+		if (color->line != NULL)
+			free(color->line);
 		free(color);
 		return (false);
 	}
@@ -86,7 +84,6 @@ bool	parse_floor_color(t_scene *scene, char *line)
 	return (true);
 }
 
-/* errno plus tard */
 bool	parse_ceiling_color(t_scene *scene, char *line)
 {
 	t_color	*color;
@@ -98,16 +95,15 @@ bool	parse_ceiling_color(t_scene *scene, char *line)
 	}
 	color = malloc(sizeof(t_color));
 	if (color == NULL)
-		return (false);
-	color->line = ft_strdup(line);
-	if (color->line == NULL)
 	{
-		free(color);
+		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		return (false);
 	}
-	if (parse_color_components(line, color) == false)
+	color->line = ft_strdup(line);
+	if (color->line == NULL || parse_color_components(line, color) == false)
 	{
-		free(color->line);
+		if (color->line != NULL)
+			free(color->line);
 		free(color);
 		return (false);
 	}
