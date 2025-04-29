@@ -9,7 +9,7 @@ DEPS		:= $(OBJS:.o=.d)
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror -g3
 CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/
 
 MLX_DIR      := mlx/
@@ -58,8 +58,8 @@ init:
 .PHONY: all
 all: init $(NAME)
 
-$(NAME): libft/libft.a Makefile mlx/libmlx_Linux.a $(OBJS) $(MAN_PAGE)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft $(MLX_FLAGS)
+$(NAME): libft/libft.a Makefile $(OBJS) $(MAN_PAGE)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft
 	@echo "\n$(GREEN_BOLD)✓ $(NAME) is ready $(RESETC)\n"
 
 libft/libft.a: FORCE
