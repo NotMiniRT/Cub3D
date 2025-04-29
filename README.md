@@ -4,9 +4,7 @@ test merge
 
 
 
-### Parsing road-map
 
-- [x] program parameter validity
 
 #### Not in order
 
@@ -14,10 +12,16 @@ test merge
 
 > Décision prise: **retour d'erreur avec errno** pour les checks de droits/existence des fichiers/retour_des_fonctions utilisées dans le parsing, du moment que ce n'est pas une erreur de formatage de la scene
 
+### Parsing road-map
+
+- [x] program parameter validity
+
 ##### Informations part
-- [ ] check textures directions format
-- [ ] check textures files rights
-- [ ] check floor/ceiling values
+- [x] check textures directions format
+- [x] check textures files rights
+- [x] check floor/ceiling values
+- [ ] check functions calls
+- [ ] errno set
 
 ##### Map part
 - [ ] Check possible characters inside map
