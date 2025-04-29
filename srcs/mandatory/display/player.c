@@ -60,19 +60,10 @@ int	is_facing_up(float ray_angle)
 
 void	player_log(t_main_struct *main_struct)
 {
-	float	cross[3];
+	// float	cross[2];
 	printf("player: x: %f, y: %f, angle: %f\n", main_struct->player->x, main_struct->player->y, main_struct->player->fov_angle);
-	// if (is_facing_down(main_struct->player->fov_angle))
-	// 	printf("player is facing down ");
-	// else
-	// 	printf("player is facing up ");
-	// if (is_facing_left(main_struct->player->fov_angle))
-	// 	printf("and left\n");
-	// else
-	// 	printf("and right\n");
-	cross[0] = main_struct->player->x;
-	cross[1] = main_struct->player->y;
-	cross[2] = 0;
-	ray_check(main_struct, &cross);
-	printf("First colision is in (%f, %f), on axis %c\n", cross[0], cross[1], 'x' + (cross[2] >= 1));
+	// cross[0] = main_struct->player->x;
+	// cross[1] = 0;
+	// ray_check(main_struct, &cross);
+	// printf("First colision at %f, it's a %c\n", cross[0], 'x' + (cross[1] >= 1));
 }

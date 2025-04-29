@@ -12,8 +12,8 @@ int	handle_input(int keysym, t_main_struct *main_struct)
 {
 	if (keysym == XK_Escape)
 		on_destroy(main_struct);
-	// if (keysym == XK_i)
-	// 	player_log(main_struct);
+	if (keysym == XK_i)
+		player_log(main_struct);
 	if (keysym == XK_a)
 		move_left_right(main_struct->player, 1);
 	if (keysym == XK_d)
@@ -26,6 +26,5 @@ int	handle_input(int keysym, t_main_struct *main_struct)
 		turn(main_struct->player, 1);
 	if (keysym == XK_Left)
 		turn(main_struct->player, -1);
-	player_log(main_struct);
 	return (0);
 }

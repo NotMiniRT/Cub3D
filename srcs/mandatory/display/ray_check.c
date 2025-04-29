@@ -3,77 +3,173 @@
 #include "math.h"
 #include <stdio.h>
 #include "common.h"
-void ray_check(t_main_struct *main_struct, float (*cross)[3])
-{
-	float map_x;
-	float map_y;
-	float dir_x;
-	float dir_y;
-	float delta_x;
-	float delta_y;
-	float side_dist_x;
-	float side_dist_y;
-	float step_x;
-	float step_y;
 
-	map_x = main_struct->player->x;
-	map_y = main_struct->player->y;
-	dir_y = sin(main_struct->player->fov_angle);
-	dir_x = cos(main_struct->player->fov_angle);
-	if (fabsf(dir_x) < 0.0001)
-		delta_x = 10000000;
-	else
-		delta_x = fabsf(1/dir_x);
-	if (fabsf(dir_y) < 0.0001)
-		delta_y = 10000000;
-	else
-		delta_y = fabsf(1/dir_y);
-	if (dir_x > 0)
-	{
-		step_x = 1;
-		side_dist_x = (floor(map_x) + 1 - main_struct->player->x) * delta_x;
-	}
-	else
-	{
-		step_x = -1;
-		side_dist_x = (main_struct->player->x - floor(map_x)) * delta_x;
-	}
-	if (dir_y > 0)
-	{
-		step_y = 1;
-		side_dist_y = (floor(map_y) + 1 - main_struct->player->y) * delta_y;
-	}
-	else
-	{
-		step_y = -1;
-		side_dist_y = (main_struct->player->y - floor(map_y)) * delta_y;
-	}
-	if (fabsf(side_dist_x) < fabsf(side_dist_y))
-		(*cross[2]) = 0;
-	else
-		(*cross[2]) = 1;
-	while (main_struct->map[(int)floor(map_y)][(int)floor(map_x)] != '1')
-	{
-		if (fabsf(side_dist_x) < fabsf(side_dist_y))
-		{
-			side_dist_x = side_dist_x + delta_x;
-			map_x = map_x + step_x;
-			(*cross[2]) = 0;
-		}
-		else
-		{
-			side_dist_y = side_dist_y + delta_y;
-			map_y = map_y + step_y;
-			(*cross[2]) = 1;
-		}
-	}
-	(*cross)[1] = map_y;
-	(*cross)[0] = map_x;
-	if ((*cross)[2] < 1)
-		printf("dist_x is %f\n", fabs(side_dist_x));
-	else
-		printf("dist_y is %f\n", fabs(side_dist_y));
+void ray_check(t_main_struct *main_struct, float (*cross)[2], float teta)
+{
+    int map_x;
+    int map_y;
+    float dir_x;
+    float dir_y;
+    float delta_x;
+    float delta_y;
+    float side_dist_x;
+    float side_dist_y;
+    int step_x;
+    int step_y;
+    int side;
+
+    float player_x = main_struct->player->x;
+    float player_y = main_struct->player->y;
+
+    map_x = (int)floor(player_x);
+    map_y = (int)floor(player_y);
+
+    dir_x = cos(teta);
+    dir_y = sin(teta);
+
+    delta_x = (fabs(dir_x) < 0.0001) ? 1e30 : fabs(1.0 / dir_x);
+    delta_y = (fabs(dir_y) < 0.0001) ? 1e30 : fabs(1.0 / dir_y);
+
+    if (dir_x < 0)
+    {
+        step_x = -1;
+        side_dist_x = (player_x - map_x) * delta_x;
+    }
+    else
+    {
+        step_x = 1;
+        side_dist_x = (map_x + 1.0 - player_x) * delta_x;
+    }
+    
+    if (dir_y < 0)
+    {
+        step_y = -1;
+        side_dist_y = (player_y - map_y) * delta_y;
+    }
+    else
+    {
+        step_y = 1;
+        side_dist_y = (map_y + 1.0 - player_y) * delta_y;
+    }
+
+    side = 0;
+    while (main_struct->map[map_y][map_x] != '1')
+    {
+        if (side_dist_x < side_dist_y)
+        {
+            side_dist_x += delta_x;
+            map_x += step_x;
+            side = 0;
+        }
+        else
+        {
+            side_dist_y += delta_y;
+            map_y += step_y;
+            side = 1;
+        }
+    }
+
+    float dist;
+    if (side == 0)
+    {
+        float wall_x = player_x + ((map_x - player_x + (1 - step_x) / 2) / dir_x) * dir_x;
+        float wall_y = player_y + ((map_x - player_x + (1 - step_x) / 2) / dir_x) * dir_y;
+        
+        dist = sqrt(pow(wall_x - player_x, 2) + pow(wall_y - player_y, 2));
+    }
+    else
+    {
+        float wall_x = player_x + ((map_y - player_y + (1 - step_y) / 2) / dir_y) * dir_x;
+        float wall_y = player_y + ((map_y - player_y + (1 - step_y) / 2) / dir_y) * dir_y;
+
+        dist = sqrt(pow(wall_x - player_x, 2) + pow(wall_y - player_y, 2));
+    }
+
+    (*cross)[0] = dist;
+    (*cross)[1] = side;
 }
+
+    // printf("First colision is in (%d, %d), on axis %c\n", 
+    //        map_x, map_y, 
+    //        (side == 0) ? 'x' : 'y');
+    // printf("player: x: %f, y: %f, angle: %f\n", 
+    //        player_x, player_y, 
+    //        main_struct->player->fov_angle);
+    // printf("dist_%c is %f\n", 
+    //        (side == 0) ? 'x' : 'y', 
+    //        dist);
+
+// void ray_check(t_main_struct *main_struct, float (*cross)[3])
+// {
+// 	float map_x;
+// 	float map_y;
+// 	float dir_x;
+// 	float dir_y;
+// 	float delta_x;
+// 	float delta_y;
+// 	float side_dist_x;
+// 	float side_dist_y;
+// 	float step_x;
+// 	float step_y;
+
+// 	map_x = main_struct->player->x;
+// 	map_y = main_struct->player->y;
+// 	dir_y = sin(main_struct->player->fov_angle);
+// 	dir_x = cos(main_struct->player->fov_angle);
+// 	if (fabsf(dir_x) < 0.0001)
+// 		delta_x = 100000;
+// 	else
+// 		delta_x = fabsf(1/dir_x);
+// 	if (fabsf(dir_y) < 0.0001)
+// 		delta_y = 100000;
+// 	else
+// 		delta_y = fabsf(1/dir_y);
+// 	if (dir_x > 0)
+// 	{
+// 		step_x = 1;
+// 		side_dist_x = (floor(map_x) + 1 - main_struct->player->x) * delta_x;
+// 	}
+// 	else
+// 	{
+// 		step_x = -1;
+// 		side_dist_x = (main_struct->player->x - floor(map_x)) * delta_x;
+// 	}
+// 	if (dir_y > 0)
+// 	{
+// 		step_y = 1;
+// 		side_dist_y = (floor(map_y) + 1 - main_struct->player->y) * delta_y;
+// 	}
+// 	else
+// 	{
+// 		step_y = -1;
+// 		side_dist_y = (main_struct->player->y - floor(map_y)) * delta_y;
+// 	}
+// 	if (fabsf(side_dist_x) < fabsf(side_dist_y))
+// 		(*cross[2]) = 0;
+// 	else
+// 		(*cross[2]) = 1;
+// 	while (main_struct->map[(int)floor(map_y)][(int)floor(map_x)] != '1')
+// 	{
+// 		if (fabsf(side_dist_x) < fabsf(side_dist_y))
+// 		{
+// 			side_dist_x = side_dist_x + delta_x;
+// 			map_x = map_x + step_x;
+// 			(*cross[2]) = 0;
+// 		}
+// 		else
+// 		{
+// 			side_dist_y = side_dist_y + delta_y;
+// 			map_y = map_y + step_y;
+// 			(*cross[2]) = 1;
+// 		}
+// 	}
+// 	(*cross)[1] = map_y;
+// 	(*cross)[0] = map_x;
+// 	if ((*cross)[2] < 1)
+// 		printf("dist_x is %f\n", (map_x - main_struct->player->x + (1 - step_x) / 2) / dir_x);
+// 	else
+// 		printf("dist_y is %f\n", (map_y - main_struct->player->y + (1 - step_y) / 2) / dir_y);
+// }
 // float addy;
 // float addx;
 // int	i;
