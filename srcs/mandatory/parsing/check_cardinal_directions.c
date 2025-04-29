@@ -1,9 +1,8 @@
-#include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "parsing.h"
 #include "ft_dprintf.h"
+#include "parsing.h"
 
 bool	parse_no_texture(t_scene *scene, char *line)
 {

@@ -1,14 +1,8 @@
-#include <stdbool.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include "parsing.h"
-#include "libft.h"
-#include "ft_dprintf.h"
 
-// External function declarations
-extern bool	is_scene_complete(t_scene *scene);
-extern int	get_element_type(char *line);
-extern void	init_parsers(t_parser_func *parsers);
+#include "ft_dprintf.h"
+#include "libft.h"
+#include "parsing.h"
 
 static bool	is_empty_line(char *line)
 {
@@ -22,56 +16,69 @@ static bool	is_empty_line(char *line)
 	return (line[i] == '\0');
 }
 
-/**
- * Checks the validity of the scene configuration
- * @param infos Structure containing scene and parsing data
- * @return index to start checking the map if valid, -1 otherwise
- */
-int	check_scene_validity(t_infos *infos)
+static int	process_scene_line(t_infos *infos, int line_index,
+								t_parser_func *parsers, bool *found_element)
 {
-	t_parser_func	parsers[6];
-	int				i;
-	int				element_type;
-	bool			found_element;
+	char	*line;
+	int		element_type;
 
-	init_parsers(parsers);
-	i = 0;
-	found_element = false;
-	while (infos->data->lines[i])
+	line = infos->data->lines[line_index];
+	if (is_empty_line(line))
+		return (-1);
+	element_type = get_element_type(line);
+	if (element_type != -1)
 	{
-		if (!is_empty_line(infos->data->lines[i]))
+		*found_element = true;
+		if (!parsers[element_type](infos->scene, line))
 		{
-			element_type = get_element_type(infos->data->lines[i]);
-			if (element_type != -1)
-			{
-				found_element = true;
-				if (!parsers[element_type](infos->scene, infos->data->lines[i]))
-				{
-					ft_dprintf(STDERR_FILENO, ERR_PARSING_ELEMENT,
-						infos->data->lines[i]);
-					cleanup_parsing(infos);
-					exit_error(ERR_SCENE_INVALID);
-				}
-			}
-			else if (found_element)
-			{
-				if (is_scene_complete(infos->scene))
-					return (i);
-				else
-				{
-					ft_dprintf(STDERR_FILENO, ERR_INCOMPLETE_SCENE);
-					cleanup_parsing(infos);
-					exit_error(ERR_SCENE_INVALID);
-				}
-			}
+			ft_dprintf(STDERR_FILENO, ERR_PARSING_ELEMENT, line);
+			return (-2);
 		}
-		i++;
 	}
+	else if (*found_element)
+	{
+		if (is_scene_complete(infos->scene))
+			return (line_index);
+		ft_dprintf(STDERR_FILENO, ERR_INCOMPLETE_SCENE);
+		return (-2);
+	}
+	return (-1);
+}
+
+static void	scene_complete(t_infos *infos)
+{
 	if (!is_scene_complete(infos->scene))
 	{
 		ft_dprintf(STDERR_FILENO, ERR_MISSING_ELEMENT);
 		cleanup_parsing(infos);
 		exit_error(ERR_SCENE_INVALID);
 	}
+}
+
+int	check_scene_validity(t_infos *infos)
+{
+	static t_parser_func	parsers[] = {
+		&parse_no_texture, &parse_so_texture,
+		&parse_we_texture, &parse_ea_texture,
+		&parse_floor_color, &parse_ceiling_color};
+	int						i;
+	bool					found_element;
+	int						result;
+
+	i = 0;
+	found_element = false;
+	while (infos->data->lines[i])
+	{
+		result = process_scene_line(infos, i, parsers, &found_element);
+		if (result >= 0)
+			return (result);
+		else if (result == -2)
+		{
+			cleanup_parsing(infos);
+			exit_error(ERR_SCENE_INVALID);
+		}
+		i++;
+	}
+	scene_complete(infos);
 	return (-1);
 }

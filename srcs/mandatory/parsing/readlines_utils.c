@@ -1,5 +1,5 @@
-#include <string.h>
 #include <errno.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "ft_dprintf.h"
@@ -51,8 +51,6 @@ char	*extract_line(char **buffer)
 	return (line);
 }
 
-/* j'ai pas trouvé d'autres solutions que call ft_strlen 2
-	fois par variable ici. On depasse les 25 lignes sinon */
 char	*join_and_free(char *s1, char *s2)
 {
 	char	*result;

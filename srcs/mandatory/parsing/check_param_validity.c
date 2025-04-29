@@ -1,8 +1,7 @@
+#include <errno.h>
 #include <fcntl.h>
 #include <string.h>
-#include <errno.h>
 #include <unistd.h>
-#include <stdlib.h>
 
 #include "ft_dprintf.h"
 #include "libft.h"

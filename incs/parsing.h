@@ -102,7 +102,10 @@ bool	parse_so_texture(t_scene *scene, char *line);
 bool	parse_we_texture(t_scene *scene, char *line);
 
 bool	is_texture_valid(char *path);
+bool	is_scene_complete(t_scene *scene);
 
 char	*extract_texture_path(char *line, int id_len);
+
+int		get_element_type(char *line);
 
 #endif

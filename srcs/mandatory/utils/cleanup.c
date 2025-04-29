@@ -2,9 +2,9 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "parsing.h"
-#include "libft.h"
 #include "ft_dprintf.h"
+#include "libft.h"
+#include "parsing.h"
 
 void	free_array(char **array)
 {

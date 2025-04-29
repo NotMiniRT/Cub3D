@@ -1,14 +1,11 @@
-#include <stdbool.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
 #include <errno.h>
-#include "parsing.h"
-#include "libft.h"
-#include "ft_dprintf.h"
+#include <fcntl.h>
+#include <string.h>
+#include <unistd.h>
 
-#define ERR_TEXTURE_INVALID "Invalid texture path"
+#include "ft_dprintf.h"
+#include "libft.h"
+#include "parsing.h"
 
 char	*extract_texture_path(char *line, int id_len)
 {

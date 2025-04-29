@@ -1,5 +1,3 @@
-#include <stdbool.h>
-
 #include "libft.h"
 #include "parsing.h"
 
@@ -15,32 +13,22 @@ int	get_element_type(char *line)
 	if (!line || !*line)
 		return (-1);
 	if (ft_strncmp(line, TEXTURE_NO, 2) == 0 && \
-		(line[2] == ' ' || ft_isspace(line[2]) != 0))
+		(line[2] == ' ' || ft_isspace_no_nl(line[2]) != 0))
 		return (0);
 	else if (ft_strncmp(line, TEXTURE_SO, 2) == 0 && \
-		(line[2] == ' ' || ft_isspace(line[2]) != 0))
+		(line[2] == ' ' || ft_isspace_no_nl(line[2]) != 0))
 		return (1);
 	else if (ft_strncmp(line, TEXTURE_WE, 2) == 0 && \
-		(line[2] == ' ' || ft_isspace(line[2]) != 0))
+		(line[2] == ' ' || ft_isspace_no_nl(line[2]) != 0))
 		return (2);
 	else if (ft_strncmp(line, TEXTURE_EA, 2) == 0 && \
-		(line[2] == ' ' || ft_isspace(line[2]) != 0))
+		(line[2] == ' ' || ft_isspace_no_nl(line[2]) != 0))
 		return (3);
 	else if (ft_strncmp(line, COLOR_F, 1) == 0 && \
-		(line[1] == ' ' || ft_isspace(line[1]) != 0))
+		(line[1] == ' ' || ft_isspace_no_nl(line[1]) != 0))
 		return (4);
 	else if (ft_strncmp(line, COLOR_C, 1) == 0 && \
-		(line[1] == ' ' || ft_isspace(line[1]) != 0))
+		(line[1] == ' ' || ft_isspace_no_nl(line[1]) != 0))
 		return (5);
 	return (-1);
-}
-
-void	init_parsers(t_parser_func *parsers)
-{
-	parsers[0] = parse_no_texture;
-	parsers[1] = parse_so_texture;
-	parsers[2] = parse_we_texture;
-	parsers[3] = parse_ea_texture;
-	parsers[4] = parse_floor_color;
-	parsers[5] = parse_ceiling_color;
 }

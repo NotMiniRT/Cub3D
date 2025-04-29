@@ -57,7 +57,6 @@ char	*read_line(int fd)
 	return (line);
 }
 
-/* ft_dprintf(STDERR_FILENO, "%s", data->line); Debug pour l'instant */
 char	**read_all_lines(t_parsing *data)
 {
 	data->line = read_line(data->fd);
