@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    libft.mk                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbuisson <lbuisson@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: gueberso <gueberso@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 10:09:03 by gueberso          #+#    #+#              #
-#    Updated: 2025/03/24 09:20:36 by lbuisson         ###   ########lyon.fr    #
+#    Updated: 2025/04/29 08:42:58 by gueberso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ override CHARSRC := \
 	ft_isprint \
 	ft_tolower \
 	ft_toupper \
+	ft_isspace_no_nl \
+	ft_isspace \
 
 SRC += $(addprefix $(FDDIR), $(addsuffix .c, $(FDSRC)))
 
@@ -46,7 +48,6 @@ SRC += $(addprefix $(INTDIR), $(addsuffix .c, $(INTSRC)))
 
 override INTSRC := \
 	ft_atoi \
-	ft_isspace \
 	ft_itoa \
 
 SRC += $(addprefix $(LISTDIR), $(addsuffix .c, $(LISTSRC)))

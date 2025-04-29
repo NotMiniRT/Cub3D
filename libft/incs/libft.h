@@ -6,7 +6,7 @@
 /*   By: gueberso <gueberso@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:44:14 by gueberso          #+#    #+#             */
-/*   Updated: 2025/04/28 20:45:19 by gueberso         ###   ########.fr       */
+/*   Updated: 2025/04/29 08:42:38 by gueberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 
+bool	ft_isspace_no_nl(char c);
 bool	ft_isspace(char c);
 
 /*	----------- void_functions ---------------------------------------------- */

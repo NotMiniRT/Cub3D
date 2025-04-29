@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbuisson <lbuisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gueberso <gueberso@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:31:57 by gueberso          #+#    #+#             */
-/*   Updated: 2025/03/26 14:00:46 by lbuisson         ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 08:41:46 by gueberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdbool.h>
 
 bool	ft_isspace(char c)
 {
