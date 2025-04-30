@@ -35,3 +35,5 @@ override DISPLAYSRC		:= \
 	image_function \
 	player \
 	ray_check \
+	mlx_loop \
+	timer \

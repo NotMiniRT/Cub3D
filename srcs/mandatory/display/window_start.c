@@ -25,8 +25,9 @@ static int	init_display(t_main_struct *main_struct)
 static void	init_inputs(t_main_struct *main_struct)
 {
 	mlx_do_key_autorepeatoff(main_struct->mlx_ptr);
-	mlx_loop_hook(main_struct->mlx_ptr, frame_display, main_struct);
-	mlx_hook(main_struct->win_ptr, 3, 1L << 1, handle_input, main_struct);
+	mlx_loop_hook(main_struct->mlx_ptr, mlx_loop_action, main_struct);
+	mlx_hook(main_struct->win_ptr, 2, 1L << 1, handle_input, main_struct);
+	mlx_hook(main_struct->win_ptr, 3, 1L << 0, release_move, main_struct);
 	mlx_hook(main_struct->win_ptr, 17, 1, on_destroy, main_struct);
 }
 

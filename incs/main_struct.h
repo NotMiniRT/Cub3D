@@ -2,6 +2,18 @@
 # define MAIN_STRUCT_H
 
 # include "struct_player.h"
+# include "stdlib.h"
+
+typedef enum moves {
+    UP = 0,
+    DOWN = 1,
+    RIGHT = 2,
+    LEFT = 3,
+    TRIGHT = 4,
+    TLEFT = 5,
+	SHIFT = 6
+} moves;
+
 
 typedef struct s_main_struct
 {
@@ -9,10 +21,14 @@ typedef struct s_main_struct
 	void			*win_ptr;
 	t_player		*player;
 	char			**map;
+	size_t			created_at;
+	size_t			last_move;
+	short int		inputs[7];
+	int 			is_moving;
 } t_main_struct;
 
+int		is_moving(t_main_struct *t_main_struct);
 void	init_main_struct(t_main_struct *main_struct);
 void	free_main_struct(t_main_struct *main_struct);
-void	player_log(t_main_struct *main_struct);
 
 #endif

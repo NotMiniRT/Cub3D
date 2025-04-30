@@ -8,6 +8,15 @@ void	init_main_struct(t_main_struct *main_struct)
 	main_struct->win_ptr = NULL;
 	main_struct->player = NULL;
 	main_struct->map = NULL;
+	main_struct->created_at = 0;
+	main_struct->last_move = 0;
+	main_struct->inputs[UP] = 0;
+	main_struct->inputs[DOWN] = 0;
+	main_struct->inputs[RIGHT] = 0;
+	main_struct->inputs[LEFT] = 0;
+	main_struct->inputs[TRIGHT] = 0;
+	main_struct->inputs[TLEFT] = 0;
+	main_struct->inputs[SHIFT] = 0;
 }
 void	free_main_struct(t_main_struct *main_struct)
 {
@@ -39,4 +48,13 @@ void	free_main_struct(t_main_struct *main_struct)
 	// 	free(main_struct->map);
 	// 	main_struct->map = NULL;
 	// }
+}
+
+int is_moving(t_main_struct *main_struct)
+{
+	if (main_struct->inputs[UP] + main_struct->inputs[DOWN] == 1
+		|| main_struct->inputs[RIGHT] + main_struct->inputs[LEFT] == 1
+		|| main_struct->inputs[TRIGHT] + main_struct->inputs[TLEFT] == 1)
+		return (1);
+	return (0);
 }
