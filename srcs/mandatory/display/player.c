@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "ray.h"
 #include "main_struct.h"
-
+#include "struct_player.h"
 int	init_player(t_player *player)
 {
 	player->x = 0;
@@ -22,16 +22,40 @@ void turn(t_player *player, int turn_dir)
 		player->fov_angle += 2 * PI;
 }
 
-void move_foward_backward(t_player *player, int move_dir)
+void move_foward_backward(t_main_struct *main_struct, int move_dir)
 {
-	player->x += move_dir * (cos(player->fov_angle) * PLAYER_SPEED);
-	player->y += move_dir * (sin(player->fov_angle) * PLAYER_SPEED);
+	float move_x;
+	float move_y;
+
+	move_x = main_struct->player->x + move_dir * (cos(main_struct->player->fov_angle) * PLAYER_SPEED);
+	move_y = main_struct->player->y + move_dir * (sin(main_struct->player->fov_angle) * PLAYER_SPEED);
+	if (main_struct->map[(int)move_y][(int)move_x] != '1')
+	{
+		main_struct->player->x = move_x;
+		main_struct->player->y = move_y;
+	}
+	else if (main_struct->map[(int)move_y][(int)main_struct->player->x] != '1')
+		main_struct->player->y = move_y;
+	else if (main_struct->map[(int)main_struct->player->y][(int)move_x] != '1')
+		main_struct->player->x = move_x;
 }
 
-void move_left_right(t_player *player, int move_dir)
+void move_left_right(t_main_struct *main_struct, int move_dir)
 {
-	player->x += cos(player->fov_angle + PI * 0.5) * move_dir * PLAYER_SPEED;
-	player->y += sin(player->fov_angle + PI * 0.5) * move_dir * PLAYER_SPEED;
+	float move_x;
+	float move_y;
+
+	move_x = main_struct->player->x + cos(main_struct->player->fov_angle + PI * 0.5) * move_dir * PLAYER_SPEED;
+	move_y = main_struct->player->y + sin(main_struct->player->fov_angle + PI * 0.5) * move_dir * PLAYER_SPEED;
+	if (main_struct->map[(int)move_y][(int)move_x] != '1')
+	{
+		main_struct->player->x = move_x;
+		main_struct->player->y = move_y;
+	}
+	else if (main_struct->map[(int)move_y][(int)main_struct->player->x] != '1')
+		main_struct->player->y = move_y;
+	else if (main_struct->map[(int)main_struct->player->y][(int)move_x] != '1')
+		main_struct->player->x = move_x;
 }
 int	is_facing_down(float ray_angle)
 {

@@ -5,6 +5,7 @@
 #include "common.h"
 #include "image.h"
 #include "display.h"
+#include "player.h"
 
 static int	init_display(t_main_struct *main_struct)
 {
@@ -33,15 +34,21 @@ int	start_display(t_main_struct *main_struct)
 {
 	if (init_display(main_struct))
 		return (1);
-	main_struct->map = malloc(sizeof(char *) * 6);
-	main_struct->map[0] = "11111";
-	main_struct->map[1] = "10001";
-	main_struct->map[2] = "10001";
-	main_struct->map[3] = "10001";
-	main_struct->map[4] = "11111";
-	main_struct->map[5] = NULL;
-	main_struct->player->x = 2;
-	main_struct->player->y = 1;
+	main_struct->map = malloc(sizeof(char *) * 11);
+	main_struct->map[0]  = "111111111111111";
+	main_struct->map[1]  = "110000000000011";
+	main_struct->map[2]  = "110111111110011";
+	main_struct->map[3]  = "110110000110011";
+	main_struct->map[4]  = "110110000110011";
+	main_struct->map[5]  = "110110000110011";
+	main_struct->map[6]  = "110000000000011";
+	main_struct->map[7]  = "110001111100011";
+	main_struct->map[8]  = "110000110000011";
+	main_struct->map[9]  = "111111111111111";
+	main_struct->map[10] = NULL;
+	
+	main_struct->player->x = 4;
+	main_struct->player->y = 8;
 	init_inputs(main_struct);
 	mlx_loop(main_struct->mlx_ptr);
 	mlx_do_key_autorepeaton(main_struct->mlx_ptr);

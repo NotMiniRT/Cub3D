@@ -1,7 +1,7 @@
 #ifndef MAIN_STRUCT_H
 # define MAIN_STRUCT_H
 
-# include "player.h"
+# include "struct_player.h"
 
 typedef struct s_main_struct
 {

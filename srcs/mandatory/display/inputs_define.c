@@ -15,13 +15,13 @@ int	handle_input(int keysym, t_main_struct *main_struct)
 	if (keysym == XK_i)
 		player_log(main_struct);
 	if (keysym == XK_a)
-		move_left_right(main_struct->player, 1);
+		move_left_right(main_struct, 1);
 	if (keysym == XK_d)
-		move_left_right(main_struct->player, -1);
+		move_left_right(main_struct, -1);
 	if (keysym == XK_w)
-		move_foward_backward(main_struct->player, 1);
+		move_foward_backward(main_struct, 1);
 	if (keysym == XK_s)
-		move_foward_backward(main_struct->player, -1);
+		move_foward_backward(main_struct, -1);
 	if (keysym == XK_Right)
 		turn(main_struct->player, 1);
 	if (keysym == XK_Left)
