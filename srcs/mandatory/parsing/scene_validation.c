@@ -4,6 +4,27 @@
 #include "libft.h"
 #include "parsing.h"
 
+static int	check_line_integrity(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line == NULL || line[0] == '\0')
+		return (0);
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && \
+			line[i] != 'N' && line[i] != 'S' && line[i] != 'E' && \
+			line[i] != 'W' && line[i] != '\n')
+		{
+			ft_dprintf(STDERR_FILENO, "char qui casse: %c\n", line[i]);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 static bool	is_empty_line(char *line)
 {
 	int	i;
@@ -37,9 +58,8 @@ static int	process_scene_line(t_infos *infos, int line_index,
 	}
 	else if (*found_element)
 	{
-		if (is_scene_complete(infos->scene))
+		if (is_scene_complete(infos->scene) && check_line_integrity(line) == 1)
 			return (line_index);
-		ft_dprintf(STDERR_FILENO, ERR_INCOMPLETE_SCENE);
 		return (-2);
 	}
 	return (-1);
