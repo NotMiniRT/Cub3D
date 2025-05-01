@@ -43,9 +43,9 @@ int	start_display(t_main_struct *main_struct)
 	main_struct->map[4]  = "110110000110011";
 	main_struct->map[5]  = "110110000110011";
 	main_struct->map[6]  = "110000000000011";
-	main_struct->map[7]  = "110001111100011";
+	main_struct->map[7]  = "110001001100011";
 	main_struct->map[8]  = "110000110000011";
-	main_struct->map[9]  = "111111111111111";
+	main_struct->map[9]  = "001111111111111";
 	main_struct->map[10] = NULL;
 	
 	main_struct->player->x = 4;

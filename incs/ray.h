@@ -1,6 +1,6 @@
 #ifndef RAY_H
 # define RAY_H
 
-float	*ray_check(t_main_struct *main_struct, float (*cross)[2], float teta);
+double	*ray_check(t_main_struct *main_struct, double (*cross)[2], double teta_cos_sin[2]);
 
 #endif

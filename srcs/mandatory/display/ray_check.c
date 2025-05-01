@@ -4,31 +4,38 @@
 #include <stdio.h>
 #include "common.h"
 
-void ray_check(t_main_struct *main_struct, float (*cross)[2], float teta)
+void ray_check(t_main_struct *main_struct, double (*cross)[2], double teta_cos_sin[2])
 {
     int map_x;
     int map_y;
-    float dir_x;
-    float dir_y;
-    float delta_x;
-    float delta_y;
-    float side_dist_x;
-    float side_dist_y;
+    double dir_x;
+    double dir_y;
+    double delta_x;
+    double delta_y;
+    double side_dist_x;
+    double side_dist_y;
+    double dist;
     int step_x;
     int step_y;
     int side;
 
-    float player_x = main_struct->player->x;
-    float player_y = main_struct->player->y;
+    double player_x = main_struct->player->x;
+    double player_y = main_struct->player->y;
 
     map_x = (int)floor(player_x);
     map_y = (int)floor(player_y);
 
-    dir_x = cos(teta);
-    dir_y = sin(teta);
+    dir_x = teta_cos_sin[0];
+    dir_y = teta_cos_sin[1];
 
-    delta_x = (fabs(dir_x) < 0.0001) ? 1e30 : fabs(1.0 / dir_x);
-    delta_y = (fabs(dir_y) < 0.0001) ? 1e30 : fabs(1.0 / dir_y);
+    if (fabs(dir_x) < 0.0001)
+        delta_x = 1e30;
+    else 
+        delta_x = fabs(1.0 / dir_x);
+    if (fabs(dir_y) < 0.0001)
+        delta_y = 1e30;
+    else 
+        delta_y = fabs(1.0 / dir_y);
 
     if (dir_x < 0)
     {
@@ -69,18 +76,17 @@ void ray_check(t_main_struct *main_struct, float (*cross)[2], float teta)
         }
     }
 
-    float dist;
     if (side == 0)
     {
-        float wall_x = player_x + ((map_x - player_x + (1 - step_x) / 2) / dir_x) * dir_x;
-        float wall_y = player_y + ((map_x - player_x + (1 - step_x) / 2) / dir_x) * dir_y;
+        double wall_x = player_x + (map_x - player_x + (1 - step_x) * 0.5);
+        double wall_y = player_y + ((map_x - player_x + (1 - step_x) * 0.5) / dir_x) * dir_y;
         
         dist = sqrt(pow(wall_x - player_x, 2) + pow(wall_y - player_y, 2));
     }
     else
     {
-        float wall_x = player_x + ((map_y - player_y + (1 - step_y) / 2) / dir_y) * dir_x;
-        float wall_y = player_y + ((map_y - player_y + (1 - step_y) / 2) / dir_y) * dir_y;
+        double wall_x = player_x + ((map_y - player_y + (1 - step_y) / 2) / dir_y) * dir_x;
+        double wall_y = player_y + (map_y - player_y + (1 - step_y) / 2);
 
         dist = sqrt(pow(wall_x - player_x, 2) + pow(wall_y - player_y, 2));
     }
@@ -99,18 +105,18 @@ void ray_check(t_main_struct *main_struct, float (*cross)[2], float teta)
     //        (side == 0) ? 'x' : 'y', 
     //        dist);
 
-// void ray_check(t_main_struct *main_struct, float (*cross)[3])
+// void ray_check(t_main_struct *main_struct, double (*cross)[3])
 // {
-// 	float map_x;
-// 	float map_y;
-// 	float dir_x;
-// 	float dir_y;
-// 	float delta_x;
-// 	float delta_y;
-// 	float side_dist_x;
-// 	float side_dist_y;
-// 	float step_x;
-// 	float step_y;
+// 	double map_x;
+// 	double map_y;
+// 	double dir_x;
+// 	double dir_y;
+// 	double delta_x;
+// 	double delta_y;
+// 	double side_dist_x;
+// 	double side_dist_y;
+// 	double step_x;
+// 	double step_y;
 
 // 	map_x = main_struct->player->x;
 // 	map_y = main_struct->player->y;
@@ -170,8 +176,8 @@ void ray_check(t_main_struct *main_struct, float (*cross)[2], float teta)
 // 	else
 // 		printf("dist_y is %f\n", (map_y - main_struct->player->y + (1 - step_y) / 2) / dir_y);
 // }
-// float addy;
-// float addx;
+// double addy;
+// double addx;
 // int	i;
 // (void)cross;
 // i = 0;

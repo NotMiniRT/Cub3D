@@ -18,6 +18,7 @@ int	mlx_loop_action(t_main_struct *main_struct)
 		return (1);
 	if (timestamp_in_ms(main_struct) - main_struct->last_move > 20 && is_moving(main_struct))
 	{
+		//printf("inputs [%d, %d, %d, %d, %d, %d]\n", main_struct->inputs[0],  main_struct->inputs[1], main_struct->inputs[2], main_struct->inputs[3], main_struct->inputs[4], main_struct->inputs[5]);
 		main_struct->last_move = timestamp_in_ms(main_struct);
 		do_one_move(main_struct);
 	}

@@ -25,14 +25,14 @@ void turn_player(t_player *player, int turn_dir)
 
 void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_side)
 {
-	float move_x;
-	float move_y;
+	double move_x;
+	double move_y;
 
 	if (move_dir_front != 0)
 	{
-		move_x = main_struct->player->x + (1 + (main_struct->inputs[SHIFT] == 1)) * move_dir_front * (cos(main_struct->player->fov_angle) * PLAYER_SPEED);
-		move_y = main_struct->player->y + (1 + (main_struct->inputs[SHIFT] == 1)) * move_dir_front * (sin(main_struct->player->fov_angle) * PLAYER_SPEED);
-		if (main_struct->map[(int)move_y][(int)move_x] != '1')
+		move_x = main_struct->player->x + (1 + 2 * (main_struct->inputs[SHIFT] == 1)) * move_dir_front * (cos(main_struct->player->fov_angle) * PLAYER_SPEED);
+		move_y = main_struct->player->y + (1 + 2 * (main_struct->inputs[SHIFT] == 1)) * move_dir_front * (sin(main_struct->player->fov_angle) * PLAYER_SPEED);
+		if (main_struct->map[(int)move_y][(int)move_x] != '1' && main_struct->map[(int)move_y][(int)main_struct->player->x] != '1' && main_struct->map[(int)main_struct->player->y][(int)move_x] != '1')
 		{
 			main_struct->player->x = move_x;
 			main_struct->player->y = move_y;
@@ -58,7 +58,7 @@ void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_si
 	{
 		move_x = main_struct->player->x + cos(main_struct->player->fov_angle + PI * 0.5) * move_dir_side * PLAYER_SPEED;
 		move_y = main_struct->player->y + sin(main_struct->player->fov_angle + PI * 0.5) * move_dir_side * PLAYER_SPEED;
-		if (main_struct->map[(int)move_y][(int)move_x] != '1')
+		if (main_struct->map[(int)move_y][(int)move_x] != '1' && main_struct->map[(int)move_y][(int)main_struct->player->x] != '1' && main_struct->map[(int)main_struct->player->y][(int)move_x] != '1')
 		{
 			main_struct->player->x = move_x;
 			main_struct->player->y = move_y;
@@ -82,7 +82,7 @@ void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_si
 	}
 }
 
-int	is_facing_down(float ray_angle)
+int	is_facing_down(double ray_angle)
 {
 	if (ray_angle < 0)
 	{
@@ -91,25 +91,25 @@ int	is_facing_down(float ray_angle)
 	}
 	return (ray_angle < PI);
 }
-int	is_facing_left(float ray_angle)
+int	is_facing_left(double ray_angle)
 {
 	if (ray_angle < 0)
 		ray_angle = 2 * PI + ray_angle;
 	return (ray_angle < PI * 0.5 || ray_angle > PI * 1.5 );
 }
-int	is_facing_right(float ray_angle)
+int	is_facing_right(double ray_angle)
 {
 	return (!is_facing_left(ray_angle));
 }
 
-int	is_facing_up(float ray_angle)
+int	is_facing_up(double ray_angle)
 {
 	return (!is_facing_down(ray_angle));
 }
 
 void	player_log(t_main_struct *main_struct)
 {
-	// float	cross[2];
+	// double	cross[2];
 	printf("player: x: %f, y: %f, angle: %f\n", main_struct->player->x, main_struct->player->y, main_struct->player->fov_angle);
 	// cross[0] = main_struct->player->x;
 	// cross[1] = 0;

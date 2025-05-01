@@ -20,7 +20,7 @@ typedef struct s_main_struct
 	void			*mlx_ptr;
 	void			*win_ptr;
 	t_player		*player;
-	char			**map;
+	char			**map;	
 	size_t			created_at;
 	size_t			last_move;
 	short int		inputs[7];

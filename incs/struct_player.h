@@ -3,9 +3,9 @@
 
 typedef struct s_player
 {
-	float x;
-	float y;
-	float fov_angle;
+	double x;
+	double y;
+	double fov_angle;
 } t_player;
 
 #endif
