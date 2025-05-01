@@ -6,21 +6,6 @@
 #include "libft.h"
 #include "parsing.h"
 
-void	free_array(char **array)
-{
-	size_t	i;
-
-	if (array == NULL)
-		return ;
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
-
 static void	free_color(t_color *color)
 {
 	if (color == NULL)
@@ -83,4 +68,20 @@ char	**clear_read_lines(t_parsing *data)
 	free(data->line);
 	close(data->fd);
 	return (NULL);
+}
+
+void	free_extended_map(char **extended_map, int height)
+{
+	int	i;
+
+	if (!extended_map)
+		return ;
+	i = 0;
+	while (i <= height)
+	{
+		if (extended_map[i])
+			free(extended_map[i]);
+		i++;
+	}
+	free(extended_map);
 }
