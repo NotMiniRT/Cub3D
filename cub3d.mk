@@ -8,6 +8,8 @@ override BONUSDIR		:= bonus/
 override UTILSDIR		:= utils/
 override PARSINGDIR		:= parsing/
 
+override MAPDIR			:= $(PARSINGDIR)map/
+
 SRC	+= $(addsuffix .c, $(MAIN))
 
 override MAIN			:= \
@@ -31,3 +33,17 @@ override PARSINGSRC		:= \
 	scene_validation_utils \
 	scene_validation \
 	texture_utils \
+
+SRC += $(addprefix $(MAPDIR), $(addsuffix .c, $(MAPSRC)))
+
+override MAPSRC			:= \
+	map_char_validation \
+	map_check_boundaries \
+	map_check_playable_area \
+	map_check_validity \
+	map_create_copy \
+	map_debug \
+	map_init_boundaries \
+	map_main_check \
+	map_player_check \
+	map_trace_boundaries \
