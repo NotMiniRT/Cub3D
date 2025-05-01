@@ -9,6 +9,9 @@ override UTILSDIR		:= utils/
 override PARSINGDIR		:= parsing/
 
 override MAPDIR			:= $(PARSINGDIR)map/
+override UTILSDIR	:= utils/
+override DISPLAYDIR	:= display/
+override PARSINGDIR	:= parsing/
 
 SRC	+= $(addsuffix .c, $(MAIN))
 
@@ -20,6 +23,7 @@ SRC += $(addprefix $(UTILSDIR), $(addsuffix .c, $(UTILSSRC)))
 override UTILSSRC		:= \
 	cleanup \
 	utils \
+	main_struct \
 
 SRC += $(addprefix $(PARSINGDIR), $(addsuffix .c, $(PARSINGSRC)))
 
@@ -46,3 +50,16 @@ override MAPSRC			:= \
 	map_init_boundaries \
 	map_main_check \
 	map_player_check \
+
+
+SRC += $(addprefix $(DISPLAYDIR), $(addsuffix .c, $(DISPLAYSRC)))
+
+override DISPLAYSRC		:= \
+	inputs_define \
+	window_start \
+	frame_display \
+	image_function \
+	player \
+	ray_check \
+	mlx_loop \
+	timer \
