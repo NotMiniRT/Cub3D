@@ -11,9 +11,6 @@ static void	init_tmp(t_filling *tmp, t_infos *infos, t_ext_map *ext_map)
 	tmp->c = infos->data->lines[ext_map->map_start + tmp->i][tmp->j];
 }
 
-/*
-** Remplit la carte étendue avec les données de la carte originale
-*/
 static void	fill_extended_map(t_ext_map *ext_map, t_infos *infos)
 {
 	t_filling	tmp;
@@ -42,9 +39,6 @@ static void	fill_extended_map(t_ext_map *ext_map, t_infos *infos)
 	}
 }
 
-/*
-** Crée une copie de la carte avec une bordure
-*/
 char	**create_extended_map(t_infos *infos, t_ext_map *ext_map)
 {
 	ext_map->map = init_extended_map(ext_map);
@@ -56,9 +50,6 @@ char	**create_extended_map(t_infos *infos, t_ext_map *ext_map)
 	return (ext_map->map);
 }
 
-/*
-** Marque tous les espaces comme extérieurs pour simplifier la vérification
-*/
 void	mark_spaces_as_exterior(t_map_data map_data)
 {
 	int	i;
