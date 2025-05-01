@@ -1,0 +1,33 @@
+#include "map_validation.h"
+
+static bool	is_player(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+bool	is_player_or_empty(char c)
+{
+	return (c == '0' || is_player(c));
+}
+
+int	count_players(t_map_data map_data)
+{
+	int	i;
+	int	j;
+	int	player_count;
+
+	player_count = 0;
+	i = 1;
+	while (i < map_data.height - 1)
+	{
+		j = 1;
+		while (j < map_data.width - 1)
+		{
+			if (is_player(map_data.map[i][j]))
+				player_count++;
+			j++;
+		}
+		i++;
+	}
+	return (player_count);
+}
