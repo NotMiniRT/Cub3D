@@ -21,7 +21,7 @@ test merge
 - [x] check textures files rights
 - [x] check floor/ceiling values
 - [ ] check functions calls
-- [ ] errno set
+- [x] errno set (partout ?)
 
 ##### Map part
 - [ ] Check possible characters inside map
