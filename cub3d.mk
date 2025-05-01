@@ -46,4 +46,3 @@ override MAPSRC			:= \
 	map_init_boundaries \
 	map_main_check \
 	map_player_check \
-	map_trace_boundaries \
