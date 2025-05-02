@@ -8,10 +8,11 @@ override BONUSDIR		:= bonus/
 override UTILSDIR		:= utils/
 override PARSINGDIR		:= parsing/
 
-override MAPDIR			:= $(PARSINGDIR)map/
 override UTILSDIR	:= utils/
 override DISPLAYDIR	:= display/
 override PARSINGDIR	:= parsing/
+override MAPDIR		:= $(PARSINGDIR)map/
+override SCENEDIR	:= $(PARSINGDIR)scene/
 
 SRC	+= $(addsuffix .c, $(MAIN))
 
@@ -28,12 +29,16 @@ override UTILSSRC		:= \
 SRC += $(addprefix $(PARSINGDIR), $(addsuffix .c, $(PARSINGSRC)))
 
 override PARSINGSRC		:= \
-	check_cardinal_directions \
 	check_param_validity \
-	color_utils \
 	init \
 	readlines_utils \
 	readlines \
+
+SRC += $(addprefix $(SCENEDIR), $(addsuffix .c, $(SCENESRC)))
+
+override SCENESRC		:= \
+	check_cardinal_directions \
+	color_utils \
 	scene_validation_utils \
 	scene_validation \
 	texture_utils \
