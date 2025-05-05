@@ -2,6 +2,7 @@
 # define MAIN_STRUCT_H
 
 # include "struct_player.h"
+# include "struct_image.h"
 # include "stdlib.h"
 
 typedef enum moves {
@@ -25,6 +26,8 @@ typedef struct s_main_struct
 	size_t			last_move;
 	short int		inputs[7];
 	int 			is_moving;
+	t_image_cub		*frame;
+	t_image_cub		*wall;
 } t_main_struct;
 
 int		is_moving(t_main_struct *t_main_struct);

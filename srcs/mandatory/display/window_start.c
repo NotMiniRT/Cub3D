@@ -18,6 +18,10 @@ static int	init_display(t_main_struct *main_struct)
 	main_struct->player = malloc(sizeof(t_player));
 	if (main_struct->player == NULL)
 		return (1);
+	if (create_img_cub(main_struct, &(main_struct->frame), WINDOW_WIDTH, WINDOW_HEIGHT))
+		return (1);
+	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall), "./assets/textures/walls/wall_1.xpm"))
+		return (1);
 	init_player(main_struct->player);
 	return (0);
 }
