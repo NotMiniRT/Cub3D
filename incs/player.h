@@ -12,4 +12,5 @@ int	init_player(t_player *player);
 void turn_player(t_player *player, int turn_dir);
 void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_side);
 void player_log(t_main_struct *main_struct);
+
 #endif

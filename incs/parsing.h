@@ -50,6 +50,7 @@ typedef struct s_scene
 	char	*so_texture;
 	char	*no_texture;
 	char	*ea_texture;
+	int		pos[3];
 }	t_scene;
 
 typedef struct s_parsing

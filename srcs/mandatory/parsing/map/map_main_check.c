@@ -63,7 +63,7 @@ static void	validate_player_count(t_infos *infos, t_map_data map_data)
 {
 	int	player_count;
 
-	player_count = count_players(map_data);
+	player_count = count_players(map_data, infos);
 	if (player_count != 1)
 	{
 		if (g_debug_mode)
@@ -79,7 +79,7 @@ static void	validate_player_count(t_infos *infos, t_map_data map_data)
 	print_debug_steps("CARTE VALIDÉE AVEC SUCCÈS", map_data);
 }
 
-void	check_map_validity(t_infos *infos, int map_start)
+check_map_validity(t_infos *infos, int map_start)
 {
 	t_ext_map	ext_map;
 	t_map_data	map_data;
