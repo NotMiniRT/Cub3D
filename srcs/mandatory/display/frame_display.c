@@ -55,6 +55,7 @@ void render_one_ray(t_main_struct *main_struct, double teta_cos_sin[2], int row,
 	int	j;
 	double res[2];
 	double height;
+	double wallX;
 	res[0] = 0;
 	res[1] = 0;
 
@@ -62,6 +63,19 @@ void render_one_ray(t_main_struct *main_struct, double teta_cos_sin[2], int row,
 
 	height = (WINDOW_WIDTH / (1.154 * res[0] * cos(delta_teta * i - 0.5235988)));
 	j = 0;
+
+	if (res[1] == 1)
+		wallX = main_struct->player->x + res[0] * teta_cos_sin[0];
+	else
+		wallX = main_struct->player->y + res[0] * teta_cos_sin[1];
+
+	wallX -= floor(wallX);
+
+	int texX = (int)(wallX * 64);
+	if (texX < 0) texX = 0;
+	if (texX >= 64) texX = 64 - 1;
+	double step = (double)64 / height;
+	double texPos = -(WINDOW_HEIGHT - height) / 2 * step;
 	while(j < WINDOW_HEIGHT)
 	{
 
@@ -70,40 +84,23 @@ void render_one_ray(t_main_struct *main_struct, double teta_cos_sin[2], int row,
 		else if (j > (WINDOW_HEIGHT + height) / 2)
 			change_pixel_color(main_struct->frame, 0xFF0000, row, j);
 		else if (res[1] == 1) {
-			double wallX = main_struct->player->x + res[0] * teta_cos_sin[0];
-			wallX -= floor(wallX);
 
-			int texX = (int)(wallX * 64);
-			if (texX < 0) texX = 0;
-			if (texX >= 64) texX = 64 - 1;
-
-			double step = (double)64 / height;
-			double texPos = (j - (WINDOW_HEIGHT - height) / 2) * step;
 			int texY = (int)texPos;
 
 			if (texY < 0) texY = 0;
 			if (texY >= 64) texY = 64 - 1;
 
 			change_pixel_color(main_struct->frame, get_color(main_struct->wall, texX, texY), row, j);
-			texPos += step;
 		}
 		else{
-			double wallX = main_struct->player->y + res[0] * teta_cos_sin[1];
-			wallX -= floor(wallX);
-
-			int texX = (int)(wallX * 64);
-			if (texX < 0) texX = 0;
-			if (texX >= 64) texX = 64 - 1;
-
-			double step = (double)64 / height;
-			double texPos = (j - (WINDOW_HEIGHT - height) / 2) * step;
 			int texY = (int)texPos;
 
 			if (texY < 0) texY = 0;
 			if (texY >= 64) texY = 64 - 1;
 
 			change_pixel_color(main_struct->frame, get_color(main_struct->wall, texX, texY), row, j);
-			texPos += step;}
+		}
+		texPos += step;
 		j++;
 	}
 }
