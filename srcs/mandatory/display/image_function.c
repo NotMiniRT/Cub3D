@@ -5,6 +5,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int	get_color(t_image_cub *img, int texture_x, int texture_y)
+{
+	double pixel;
+
+	pixel = (texture_y * img->line_bytes) + (texture_x * 4);
+
+	unsigned char b = img->buffer[(int)pixel + 0];
+	unsigned char g = img->buffer[(int)pixel + 1];
+	unsigned char r = img->buffer[(int)pixel + 2];
+	unsigned char a = img->buffer[(int)pixel + 3];
+	
+	return ((int)((a << 24) | (r << 16) | (g << 8) | b));
+}
+
 void	change_pixel_color(t_image_cub *img, int color, int x, int y)
 {
 	int pixel;

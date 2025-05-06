@@ -10,8 +10,9 @@
 # define ROT_SPEED 0.12
 # define PLAYER_SPEED 0.06
 # define PI 3.14159265359f
+# define FOVHALF FOV * 0.5
 # define FOVSWINDOW_WIDTH FOV / WINDOW_WIDTH
-
+# define DISTANCE_SCALE_FACTOR 1.5
 int	start_display(t_main_struct *main_struct);
 
 #endif

@@ -42,10 +42,10 @@ int	start_display(t_main_struct *main_struct)
 	main_struct->map = malloc(sizeof(char *) * 11);
 	main_struct->map[0]  = "111111111111111";
 	main_struct->map[1]  = "110000000000011";
-	main_struct->map[2]  = "110111111110011";
-	main_struct->map[3]  = "110110000110011";
-	main_struct->map[4]  = "110110000110011";
-	main_struct->map[5]  = "110110000110011";
+	main_struct->map[2]  = "110000000000011";
+	main_struct->map[3]  = "110000000000011";
+	main_struct->map[4]  = "110000000000011";
+	main_struct->map[5]  = "110000000000011";
 	main_struct->map[6]  = "110000000000011";
 	main_struct->map[7]  = "110001001100011";
 	main_struct->map[8]  = "110000110000011";

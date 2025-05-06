@@ -4,6 +4,8 @@
 #include "player.h"
 #include "stdio.h"
 
+void sleep(int);
+
 void do_one_move(t_main_struct *main_struct)
 {
 	if (main_struct->inputs[UP] + main_struct->inputs[DOWN] == 1 || main_struct->inputs[RIGHT] + main_struct->inputs[LEFT] == 1)
@@ -14,6 +16,7 @@ void do_one_move(t_main_struct *main_struct)
 
 int	mlx_loop_action(t_main_struct *main_struct)
 {
+	//sleep(1);
 	if (frame_display(main_struct))
 		return (1);
 	if (timestamp_in_ms(main_struct) - main_struct->last_move > 20 && is_moving(main_struct))
