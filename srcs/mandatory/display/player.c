@@ -13,7 +13,7 @@ int	init_player(t_player *player)
 	return (1);
 }
 
-void turn_player(t_player *player, int turn_dir)
+void	turn_player(t_player *player, int turn_dir)
 {
 	player->fov_angle += turn_dir * ROT_SPEED;
 	if (player->fov_angle < 0)
@@ -22,7 +22,8 @@ void turn_player(t_player *player, int turn_dir)
 		player->fov_angle -= PIx2;
 }
 
-void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_side)
+void	move_player(t_main_struct *main_struct, \
+										int move_dir_front, int move_dir_side)
 {
 	double move_x;
 	double move_y;
@@ -45,7 +46,7 @@ void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_si
 			main_struct->player->y = move_y;
 		}
 		else if (main_struct->map[(int)main_struct->player->y][(int)move_x] != '1')
-		{			
+		{
 			main_struct->player->x = move_x;
 			if (main_struct->player->y - move_y < 0)
 				main_struct->player->y = floor(move_y) - 0.01;
@@ -71,7 +72,7 @@ void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_si
 			main_struct->player->y = move_y;
 		}
 		else if (main_struct->map[(int)main_struct->player->y][(int)move_x] != '1')
-		{			
+		{
 			main_struct->player->x = move_x;
 			if (main_struct->player->y - move_y < 0)
 				main_struct->player->y = floor(move_y) - 0.01;

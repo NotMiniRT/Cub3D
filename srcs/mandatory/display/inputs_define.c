@@ -3,13 +3,14 @@
 #include "mlx.h"
 #include "player.h"
 #include <stdio.h>
+
 int	on_destroy(t_main_struct *main_struct)
 {
 	mlx_loop_end(main_struct->mlx_ptr);
 	return (0);
 }
 
-int release_move(int keysym, t_main_struct *main_struct)
+int	release_move(int keysym, t_main_struct *main_struct)
 {
 	if (keysym == XK_a)
 		main_struct->inputs[LEFT] = 0;
@@ -27,7 +28,7 @@ int release_move(int keysym, t_main_struct *main_struct)
 		main_struct->inputs[SHIFT] = 0;
 	return (0);
 }
-void toggle_move(t_main_struct *main_struct, int keysym)
+void	toggle_move(t_main_struct *main_struct, int keysym)
 {
 	if (keysym == XK_a)
 		main_struct->inputs[LEFT] = 1;

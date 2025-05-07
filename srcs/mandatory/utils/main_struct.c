@@ -5,14 +5,14 @@
 #include "math.h"
 #include "common.h"
 
-int init_R_H_tab(t_main_struct *main_struct)
+bool	init_R_H_tab(t_main_struct *main_struct)
 {
 	int i;
 
 	main_struct->cos_R_H_tab = malloc(sizeof(double) * WINDOW_WIDTH);
 	main_struct->R_H_tab = malloc(sizeof(double) * WINDOW_WIDTH);
 	if (main_struct->cos_R_H_tab == NULL || main_struct->R_H_tab == NULL)
-		return (1);
+		return (false);
 	i = 0;
 	while (i < WINDOW_WIDTH)
 	{
@@ -20,7 +20,7 @@ int init_R_H_tab(t_main_struct *main_struct)
 		main_struct->cos_R_H_tab[i] = cos(main_struct->R_H_tab[i]);
 		i++;
 	}
-	return (0);
+	return (true);
 }
 
 // #include "libft.h"
