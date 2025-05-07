@@ -22,8 +22,11 @@ int init_R_H_tab(t_main_struct *main_struct)
 	return (0);
 }
 
-void	init_main_struct(t_main_struct *main_struct)
+// #include "libft.h"
+
+void	init_main_struct(t_main_struct *main_struct) /* remplacer l'appel a cette fonction par un memset ? */
 {
+	// ft_memset(main_struct, 0, sizeof(t_main_struct));
 	main_struct->mlx_ptr = NULL;
 	main_struct->win_ptr = NULL;
 	main_struct->player = NULL;
@@ -40,6 +43,7 @@ void	init_main_struct(t_main_struct *main_struct)
 	main_struct->inputs[TLEFT] = 0;
 	main_struct->inputs[SHIFT] = 0;
 }
+
 void	free_main_struct(t_main_struct *main_struct)
 {
 	// int	i;

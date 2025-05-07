@@ -10,7 +10,7 @@ static int	check_line_integrity(char *line)
 
 	i = 0;
 	if (line == NULL || line[0] == '\0')
-		return (0);
+		return (false);
 	while (line[i])
 	{
 		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && \
@@ -18,11 +18,11 @@ static int	check_line_integrity(char *line)
 			line[i] != 'W' && line[i] != '\n')
 		{
 			ft_dprintf(STDERR_FILENO, "char qui casse: %c\n", line[i]);
-			return (0);
+			return (false);
 		}
 		i++;
 	}
-	return (1);
+	return (true);
 }
 
 static bool	is_empty_line(char *line)
@@ -58,7 +58,7 @@ static int	process_scene_line(t_infos *infos, int line_index,
 	}
 	else if (*found_element)
 	{
-		if (is_scene_complete(infos->scene) && check_line_integrity(line) == 1)
+		if (is_scene_complete(infos->scene) && check_line_integrity(line))
 			return (line_index);
 		return (-2);
 	}

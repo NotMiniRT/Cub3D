@@ -6,7 +6,7 @@
 #include "libft.h"
 #include "parsing.h"
 
-static int	handle_remaining_buffer(char **buffer, char *line, size_t i)
+static bool	handle_remaining_buffer(char **buffer, char *line, size_t i)
 {
 	char	*temp;
 
@@ -14,7 +14,7 @@ static int	handle_remaining_buffer(char **buffer, char *line, size_t i)
 	{
 		free(*buffer);
 		*buffer = NULL;
-		return (1);
+		return (true);
 	}
 	temp = ft_strdup(&(*buffer)[i]);
 	if (temp == NULL)
@@ -22,11 +22,11 @@ static int	handle_remaining_buffer(char **buffer, char *line, size_t i)
 		free(line);
 		free(*buffer);
 		*buffer = NULL;
-		return (0);
+		return (false);
 	}
 	free(*buffer);
 	*buffer = temp;
-	return (1);
+	return (true);
 }
 
 char	*extract_line(char **buffer)
@@ -46,7 +46,7 @@ char	*extract_line(char **buffer)
 		return (NULL);
 	ft_memcpy(line, *buffer, i);
 	line[i] = '\0';
-	if (handle_remaining_buffer(buffer, line, i) == 0)
+	if (!handle_remaining_buffer(buffer, line, i))
 		return (NULL);
 	return (line);
 }
@@ -77,7 +77,7 @@ char	*join_and_free(char *s1, char *s2)
 	return (result);
 }
 
-int	read_line_check(int fd, char *buffer)
+bool	read_line_check(int fd, char *buffer)
 {
 	if (fd == CLEAR_BUFFER)
 	{
@@ -86,9 +86,9 @@ int	read_line_check(int fd, char *buffer)
 			free(buffer);
 			buffer = NULL;
 		}
-		return (-1);
+		return (false);
 	}
 	if (fd < 0)
-		return (-1);
-	return (0);
+		return (false);
+	return (true);
 }

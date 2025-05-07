@@ -80,7 +80,7 @@ char	*read_line(int fd);
 
 char	*extract_line(char **buffer);
 char	*join_and_free(char *s1, char *s2);
-int		read_line_check(int fd, char *buffer);
+bool	read_line_check(int fd, char *buffer);
 
 void	free_array(char **array);
 void	free_scene(t_scene *scene);
