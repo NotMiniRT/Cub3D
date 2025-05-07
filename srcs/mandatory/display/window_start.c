@@ -20,7 +20,13 @@ static int	init_display(t_main_struct *main_struct)
 		return (1);
 	if (create_img_cub(main_struct, &(main_struct->frame), WINDOW_WIDTH, WINDOW_HEIGHT))
 		return (1);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall), "./assets/textures/walls/wall_2.xpm"))
+	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), "./assets/textures/walls/wall_1.xpm"))
+		return (1);
+	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), "./assets/textures/walls/wall_2.xpm"))
+		return (1);
+	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_o), "./assets/textures/walls/not_a_circle.xpm"))
+		return (1);
+	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), "./assets/textures/walls/wall_4.xpm"))
 		return (1);
 	if (init_R_H_tab(main_struct))
 		return (1);

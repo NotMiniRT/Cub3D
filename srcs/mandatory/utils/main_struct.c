@@ -3,6 +3,7 @@
 #include "mlx.h"
 #include "image.h"
 #include "math.h"
+#include "common.h"
 
 int init_R_H_tab(t_main_struct *main_struct)
 {
@@ -49,39 +50,26 @@ void	free_main_struct(t_main_struct *main_struct)
 	if (main_struct->player != NULL)
 		free(main_struct->player);
 	free_image_cub(main_struct, main_struct->frame);
+	free_image_cub(main_struct, main_struct->wall_e);
+	free_image_cub(main_struct, main_struct->wall_s);
+	free_image_cub(main_struct, main_struct->wall_o);
+	free_image_cub(main_struct, main_struct->wall_n);
 	if (main_struct->mlx_ptr != NULL && main_struct->win_ptr != NULL)
-	{
 		mlx_destroy_window(main_struct->mlx_ptr, main_struct->win_ptr);
-		main_struct->win_ptr = NULL;
-	}
+	if (main_struct->cos_R_H_tab != NULL)
+		free(main_struct->cos_R_H_tab);
+	if (main_struct->R_H_tab != NULL)
+		free(main_struct->R_H_tab);
 	if (main_struct->mlx_ptr != NULL)
 	{
 		mlx_destroy_display(main_struct->mlx_ptr);
 		free(main_struct->mlx_ptr);
 		main_struct->mlx_ptr = NULL;
 	}
-	if (main_struct->cos_R_H_tab != NULL)
-	{
-		free(main_struct->cos_R_H_tab);
-		main_struct->cos_R_H_tab = NULL;
-	}
-	if (main_struct->R_H_tab != NULL)
-	{
-		free(main_struct->R_H_tab);
-		main_struct->R_H_tab = NULL;
-	}
+	main_struct->R_H_tab = NULL;
+	main_struct->win_ptr = NULL;
+	main_struct->cos_R_H_tab = NULL;
 	free(main_struct->map);
-	// if (main_struct->map != NULL)
-	// {
-	// 	i = 0;
-	// 	while(main_struct->map[i])
-	// 	{
-	// 		free(main_struct->map[i]);
-	// 		i++;
-	// 	}
-	// 	free(main_struct->map);
-	// 	main_struct->map = NULL;
-	// }
 }
 
 int is_moving(t_main_struct *main_struct)
