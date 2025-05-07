@@ -7,8 +7,47 @@
 #include <stdio.h>
 #include "ray.h"
 
+// double max(double a, double b) {
+//     return (a > b) ? a : b;
+// }
 
-void render_one_ray(t_main_struct *main_struct, double teta_cos_sin[2], int row, double teta)
+// double min(double a, double b) {
+//     return (a < b) ? a : b;
+// }
+
+// void	add_pixel_color(t_image_cub *img, double dist, int x, int y, char is_not_wall)
+// {
+// 	int pixel;
+// 	double t_normalized;
+// 	double j_mapping;
+
+// 	j_mapping = 1;
+// 	t_normalized = 1 - max(0.0, min(1.0, (dist - 2.0) / 3.0));
+// 	// printf("%f\n", t_normalized);
+// 	pixel = (y * img->line_bytes) + (x * 4);
+
+// 	if (is_not_wall)
+// 		j_mapping = fabs(max(0, min(1080, y)) - 540) / 540;
+// 	img->buffer[pixel + 0] = (unsigned char)img->buffer[pixel + 0] * (t_normalized * j_mapping);
+// 	img->buffer[pixel + 1] = (unsigned char)img->buffer[pixel + 1] * (t_normalized * j_mapping);
+// 	img->buffer[pixel + 2] = (unsigned char)img->buffer[pixel + 2] * (t_normalized * j_mapping);
+// 	// if (img->buffer[pixel + 0] > 200)
+// 	// {
+// 	// 	printf("%f \n", t_normalized);
+// 	// }
+// }
+
+static inline int	get_color(t_image_cub *img, int texture_x, int texture_y)
+{
+	return (((int *)(img->buffer + (texture_y * img->line_bytes) + (texture_x)))[0]);
+}
+
+static inline void	change_pixel_color(t_image_cub *img, int color, int x, int y)
+{
+	((int *)(img->buffer + (y * img->line_bytes) + (x)))[0] = color;
+}
+
+void render_one_ray(t_main_struct *main_struct, double teta_cos_sin[2], int row)
 {
 	int	j;
 	double res[3];
@@ -22,7 +61,7 @@ void render_one_ray(t_main_struct *main_struct, double teta_cos_sin[2], int row,
 	res[2] = 0;
 	ray_check(main_struct, &res, teta_cos_sin);
 
-	corrected_dist = res[0] * cos(teta - main_struct->player->fov_angle);
+	corrected_dist = res[0] * main_struct->cos_R_H_tab[row];
 	height = (WINDOW_HEIGHT / corrected_dist);
 	
 	wall_hit_x = res[2] - floor(res[2]);
@@ -33,15 +72,18 @@ void render_one_ray(t_main_struct *main_struct, double teta_cos_sin[2], int row,
 	if (text_x < 0) text_x = 0;
 	if (text_x >= 64) text_x = 64 - 1;
 	double step = (double)64. / height;
-	double texPos = -(WINDOW_HEIGHT - height) / 2. * step;
+	double texPos = -(WINDOW_HEIGHT - height) * 0.5 * step;
+	int height_check_minus = (WINDOW_HEIGHT - height) * 0.5;
+	int height_check_plus = (WINDOW_HEIGHT + height) * 0.5;
+	
+	text_x = text_x * 4;
+	row = row * 4;
 	j = 0;	
 	while(j < WINDOW_HEIGHT)
 	{
-		if ((row == WINDOW_WIDTH * 0.5) || j == (WINDOW_HEIGHT * 0.5))
-			change_pixel_color(main_struct->frame, 0xFFFFFF, row, j);
-		else if (j < (WINDOW_HEIGHT - height) / 2)
+		if (j < height_check_minus)
 			change_pixel_color(main_struct->frame, 0x00AAAA, row, j);
-		else if (j > (WINDOW_HEIGHT + height) / 2)
+		else if (j > height_check_plus)
 			change_pixel_color(main_struct->frame, 0xAAAA00, row, j);
 		else if (res[1] == 1) {
 
@@ -60,46 +102,30 @@ void render_one_ray(t_main_struct *main_struct, double teta_cos_sin[2], int row,
 
 			change_pixel_color(main_struct->frame, get_color(main_struct->wall, text_x, text_y), row, j);
 		}
+
+		// if (corrected_dist > 2)
+		// 	add_pixel_color(main_struct->frame, corrected_dist, row, j, (j < (WINDOW_HEIGHT - height) / 2 || j > (WINDOW_HEIGHT + height) / 2));
 		texPos += step;
-		j++;
+		j = j + 1;
 	}
 }
 
 int	frame_display(t_main_struct *main_struct)
 {
-	int i;
+	int row;
 
-	double	teta;
-	// double	next_cos_teta;
-	// double	next_sin_teta;
-	//double  delta_x[3];
-	// double	cos_delta;
-	// double	sin_delta;
+	double teta;
 	double teta_cos_sin[2];
 
-	i = 0;
-	
-	// 2 * i / camera - 1;
-
-
-	double R_H =  2 * tan(FOV / 2) / WINDOW_WIDTH;
-	
-	while (i < WINDOW_WIDTH)
+	row = 0;
+	while (row < WINDOW_WIDTH)
 	{
-		if (i < WINDOW_WIDTH * 0.5)
-			teta = main_struct->player->fov_angle - atan(R_H * (WINDOW_WIDTH * 0.5 - i));
-		else 
-			teta = main_struct->player->fov_angle + atan(R_H * (i - WINDOW_WIDTH * 0.5));
+
+		teta = main_struct->player->fov_angle + main_struct->R_H_tab[row];
 		teta_cos_sin[0] = cos(teta);
 		teta_cos_sin[1] = sin(teta);
-		render_one_ray(main_struct, teta_cos_sin, i, teta);
-
-		// next_cos_teta = teta_cos_sin[0] * cos_delta - teta_cos_sin[1] * sin_delta;
-		// next_sin_teta = teta_cos_sin[1] * cos_delta + sin_delta * teta_cos_sin[0];
-		// teta_cos_sin[0] = next_cos_teta;
-		// teta_cos_sin[1] = next_sin_teta;
-
-		i++;
+		render_one_ray(main_struct, teta_cos_sin, row);
+		row++;
 	}
 	mlx_put_image_to_window(main_struct->mlx_ptr, main_struct->win_ptr, main_struct->frame->sprite, 0, 0);
 	return (0);

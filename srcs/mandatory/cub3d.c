@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "main_struct.h"
 #include "common.h"
+#include "display.h"
 //#include "parsing.h"
 
 int	main()

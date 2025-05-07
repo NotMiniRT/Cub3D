@@ -3,6 +3,7 @@
 #include "timer.h"
 #include "player.h"
 #include "stdio.h"
+#include "time.h"
 
 void sleep(int);
 
@@ -16,7 +17,24 @@ void do_one_move(t_main_struct *main_struct)
 
 int	mlx_loop_action(t_main_struct *main_struct)
 {
-	//sleep(1);
+
+	static int frame_count = 0;
+    static clock_t last_time = 0;
+
+    if (last_time == 0)
+        last_time = clock();
+
+    frame_count++;
+
+    clock_t now = clock();
+    double elapsed = (double)(now - last_time) / CLOCKS_PER_SEC;
+
+    if (elapsed >= 1.0) {
+        printf("FPS : %d\n", frame_count);
+        frame_count = 0;
+        last_time = now;
+    }
+
 	if (frame_display(main_struct))
 		return (1);
 	if (timestamp_in_ms(main_struct) - main_struct->last_move > 20 && is_moving(main_struct))
@@ -25,5 +43,6 @@ int	mlx_loop_action(t_main_struct *main_struct)
 		main_struct->last_move = timestamp_in_ms(main_struct);
 		do_one_move(main_struct);
 	}
+
 	return (0);
 }
