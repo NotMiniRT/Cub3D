@@ -68,3 +68,4 @@ override DISPLAYSRC		:= \
 	ray_check \
 	mlx_loop \
 	timer \
+	render_one_ray \

@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "ray.h"
 #include "main_struct.h"
-#include "struct_player.h"
 
 int	init_player(t_player *player)
 {
@@ -17,10 +16,10 @@ int	init_player(t_player *player)
 void turn_player(t_player *player, int turn_dir)
 {
 	player->fov_angle += turn_dir * ROT_SPEED;
-	if (player->fov_angle > 2 * PI)
-		player->fov_angle -= 2 * PI;
-	if (player->fov_angle < -2 * PI)
-		player->fov_angle += 2 * PI;
+	if (player->fov_angle < 0)
+		player->fov_angle += PIx2 - player->fov_angle;
+	if (player->fov_angle > PIx2)
+		player->fov_angle -= PIx2;
 }
 
 void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_side)
@@ -84,17 +83,10 @@ void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_si
 
 int	is_facing_down(double ray_angle)
 {
-	if (ray_angle < 0)
-	{
-		printf("from %f to %f\n", ray_angle, 2 * PI + ray_angle);
-		ray_angle = 2 * PI + ray_angle;
-	}
-	return (ray_angle < PI);
+	return (ray_angle > PI);
 }
 int	is_facing_left(double ray_angle)
 {
-	if (ray_angle < 0)
-		ray_angle = 2 * PI + ray_angle;
 	return (ray_angle < PI * 0.5 || ray_angle > PI * 1.5 );
 }
 int	is_facing_right(double ray_angle)

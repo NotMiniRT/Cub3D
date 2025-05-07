@@ -1,8 +1,7 @@
 #ifndef PLAYER_H
 # define PLAYER_H
 
-#include "main_struct.h"
-#include "struct_player.h"
+#include "structs.h"
 
 int	is_facing_up(double ray_angle);
 int	is_facing_down(double ray_angle);

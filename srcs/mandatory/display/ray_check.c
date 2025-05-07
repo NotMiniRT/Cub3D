@@ -3,107 +3,102 @@
 #include <stdio.h>
 #include "common.h"
 
-void ray_check(t_main_struct *main_struct, double (*cross)[3], double teta_cos_sin[2])
+static void define_basic_param_calculus(t_ray_calculus *calcul, double cos_sin[2], t_main_struct *main_struct)
 {
-	double dir_x;
-    double dir_y;
+    calcul->player_x = main_struct->player->x;
+    calcul->player_y = main_struct->player->y;
+	calcul->dir_x = cos_sin[0];
+    calcul->dir_y = cos_sin[1];
 
-	double player_x;
-    double player_y;
+    calcul->map_x = (int)floor(calcul->player_x);
+    calcul->map_y = (int)floor(calcul->player_y);
 
-    double delta_x;
-    double delta_y;
-
-    double side_dist_x;
-    double side_dist_y;
-
-    int step_x;
-    int step_y;
-
-	int side;
-
-	int map_x;
-    int map_y;
-
-	double wall_x;
-    double wall_y;
-
-	double dist;
-
-	player_x = main_struct->player->x;
-    player_y = main_struct->player->y;
-	dir_x = teta_cos_sin[0];
-    dir_y = teta_cos_sin[1];
-
-    map_x = (int)floor(player_x);
-    map_y = (int)floor(player_y);
-
-	if (fabs(dir_x) < 0.000001)
-		delta_x = 10000000;
+	if (fabs(calcul->dir_x) < 0.000001)
+        calcul->delta_x = 10000000;
 	else 
-		delta_x = fabs(1.0 / dir_x);
-	if (fabs(dir_y) < 0.000001)
-		delta_y = 10000000;
+        calcul->delta_x = fabs(1.0 / calcul->dir_x);
+	if (fabs(calcul->dir_y) < 0.000001)
+        calcul->delta_y = 10000000;
 	else 
-		delta_y = fabs(1.0 / dir_y);
+        calcul->delta_y = fabs(1.0 / calcul->dir_y);
+}
 
-	if (dir_x < 0)
+static void get_step_and_side_dist(t_ray_calculus *calcul)
+{
+    if (calcul->dir_x < 0)
 	{
-		step_x = -1;
-		side_dist_x = (player_x - map_x) * delta_x;
+		calcul->step_x = -1;
+		calcul->side_dist_x = (calcul->player_x - calcul->map_x) * calcul->delta_x;
 	}
 	else
 	{
-		step_x = 1;
-		side_dist_x = (map_x + 1.0 - player_x) * delta_x;
+		calcul->step_x = 1;
+		calcul->side_dist_x = (calcul->map_x + 1.0 - calcul->player_x) * calcul->delta_x;
 	}
 	
-	if (dir_y < 0)
+	if (calcul->dir_y < 0)
 	{
-		step_y = -1;
-		side_dist_y = (player_y - map_y) * delta_y;
+		calcul->step_y = -1;
+		calcul->side_dist_y = (calcul->player_y - calcul->map_y) * calcul->delta_y;
 	}
 	else
 	{
-		step_y = 1;
-		side_dist_y = (map_y + 1.0 - player_y) * delta_y;
+		calcul->step_y = 1;
+		calcul->side_dist_y = (calcul->map_y + 1.0 - calcul->player_y) * calcul->delta_y;
 	}
+    calcul->side = 0;
+}
 
-    side = 0;
-	while (main_struct->map[map_y][map_x] != '1')
+static void get_dists_and_wall_x_y(t_ray_calculus *calcul)
+{
+    if (calcul->side == 0)
     {
-        if (side_dist_x < side_dist_y)
+        calcul->wall_x = (calcul->map_x - calcul->player_x + (1 - calcul->step_x) * 0.5);
+        calcul->wall_y = ((calcul->map_x - calcul->player_x + (1 - calcul->step_x) * 0.5) / calcul->dir_x) * calcul->dir_y;
+        
+        calcul->dist = sqrt(pow(calcul->wall_x, 2) + pow(calcul->wall_y, 2));
+    }
+    else
+    {
+        calcul->wall_x = ((calcul->map_y - calcul->player_y + (1 - calcul->step_y) / 2) / calcul->dir_y) * calcul->dir_x;
+        calcul->wall_y = (calcul->map_y - calcul->player_y + (1 - calcul->step_y) / 2);
+
+        calcul->dist = sqrt(pow(calcul->wall_x, 2) + pow(calcul->wall_y, 2));
+    }
+}
+
+static void fill_cross(t_ray_calculus *calcul, double (*cross)[3])
+{
+    (*cross)[0] = calcul->dist;
+    (*cross)[1] = calcul->side;
+    if (calcul->side == 1)
+        (*cross)[2] = calcul->player_x + calcul->wall_x;
+    else
+        (*cross)[2] = calcul->player_y + calcul->wall_y;
+}
+
+void ray_check(t_main_struct *main_struct, double (*cross)[3], double cos_sin[2])
+{
+
+    t_ray_calculus calcul;
+
+    define_basic_param_calculus(&calcul, cos_sin, main_struct);
+    get_step_and_side_dist(&calcul);
+	while (main_struct->map[calcul.map_y][calcul.map_x] != '1')
+    {
+        if (calcul.side_dist_x < calcul.side_dist_y)
         {
-            side_dist_x += delta_x;
-            map_x += step_x;
-            side = 0;
+            calcul.side_dist_x += calcul.delta_x;
+            calcul.map_x += calcul.step_x;
+            calcul.side = 0;
         }
         else
         {
-            side_dist_y += delta_y;
-            map_y += step_y;
-            side = 1;
+            calcul.side_dist_y += calcul.delta_y;
+            calcul.map_y += calcul.step_y;
+            calcul.side = 1;
         }
     }
-	if (side == 0)
-    {
-        wall_x = (map_x - player_x + (1 - step_x) * 0.5);
-        wall_y = ((map_x - player_x + (1 - step_x) * 0.5) / dir_x) * dir_y;
-        
-        dist = sqrt(pow(wall_x, 2) + pow(wall_y, 2));
-    }
-    else
-    {
-        wall_x = ((map_y - player_y + (1 - step_y) / 2) / dir_y) * dir_x;
-        wall_y = (map_y - player_y + (1 - step_y) / 2);
-
-        dist = sqrt(pow(wall_x, 2) + pow(wall_y, 2));
-    }
-
-    (*cross)[0] = dist;
-    (*cross)[1] = side;
-    if (side == 1)
-        (*cross)[2] = player_x + wall_x;
-    else
-        (*cross)[2] = player_y + wall_y;
+    get_dists_and_wall_x_y(&calcul);
+    fill_cross(&calcul, cross);
 }
