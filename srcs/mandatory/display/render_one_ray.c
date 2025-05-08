@@ -7,12 +7,12 @@
 #include <stdio.h>
 #include "ray.h"
 
-static inline int	get_color(t_image_cub *img, int texture_x, int texture_y)
-{
-	return (((int *)(img->buffer + (texture_y * img->line_bytes) + (texture_x)))[0]);
-}
+// static inline int	get_color_opti(t_image_cub *img, int texture_x, int *texture_y)
+// {
+// 	return ((texture_y + texture_x)[0]);
+// }
 
-static inline void	change_pixel_color(t_image_cub *img, int color, int x, int y)
+static inline void	change_pixel_color_opti(t_image_cub *img, int color, int x, int y)
 {
 	((int *)(img->buffer + (y * img->line_bytes) + (x)))[0] = color;
 }
@@ -28,11 +28,18 @@ static void get_calcul_param(t_render_calculus *render_calc, t_main_struct *main
 		render_calc->text_x = 0;
 	if (render_calc->text_x >= 64)
 		render_calc->text_x = 64 - 1;
-	render_calc->step = (double)64. / render_calc->height;
+	render_calc->step = 64. / render_calc->height;
 	render_calc->texPos = -(WINDOW_HEIGHT - render_calc->height) * 0.5 * render_calc->step;
 	render_calc->height_check_minus = (WINDOW_HEIGHT - render_calc->height) * 0.5;
 	render_calc->height_check_plus = (WINDOW_HEIGHT + render_calc->height) * 0.5;
-	render_calc->text_x = render_calc->text_x * 4;
+	if (is_facing_up(render_calc->teta) && render_calc->res[1] == 1)
+		render_calc->line_add = (int *)(main_struct->wall_s->buffer + (render_calc->text_x * main_struct->wall_s->line_bytes));
+	else if (render_calc->res[1] == 1)
+		render_calc->line_add = (int *)(main_struct->wall_n->buffer + (render_calc->text_x * main_struct->wall_n->line_bytes));
+	else if (is_facing_left(render_calc->teta))
+		render_calc->line_add = (int *)(main_struct->wall_e->buffer + (render_calc->text_x * main_struct->wall_e->line_bytes));
+	else
+		render_calc->line_add = (int *)(main_struct->wall_o->buffer + (render_calc->text_x * main_struct->wall_o->line_bytes));
 }
 
 static void render_on_screen(t_render_calculus *render_calc, t_main_struct *main_struct, int row, int j)
@@ -43,20 +50,12 @@ static void render_on_screen(t_render_calculus *render_calc, t_main_struct *main
 		change_pixel_color(main_struct->frame, 0xAAAA00, row, j);
 	else
 	{
-
 		render_calc->text_y = (int)render_calc->texPos;
 		if (render_calc->text_y < 0)
 			render_calc->text_y = 0;
 		if (render_calc->text_y >= 64)
 			render_calc->text_y = 64 - 1;
-		if (is_facing_up(render_calc->teta) && render_calc->res[1] == 1)
-			change_pixel_color(main_struct->frame, get_color(main_struct->wall_s, render_calc->text_x, render_calc->text_y), row, j);
-		else if (render_calc->res[1] == 1)
-			change_pixel_color(main_struct->frame, get_color(main_struct->wall_n, render_calc->text_x, render_calc->text_y), row, j);
-		else if (is_facing_left(render_calc->teta))
-			change_pixel_color(main_struct->frame, get_color(main_struct->wall_e, render_calc->text_x, render_calc->text_y), row, j);
-		else
-			change_pixel_color(main_struct->frame, get_color(main_struct->wall_o, render_calc->text_x, render_calc->text_y), row, j);
+		change_pixel_color_opti(main_struct->frame, (render_calc->line_add + render_calc->text_y)[0], row, j);
 	}
 }
 

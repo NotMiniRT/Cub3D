@@ -9,7 +9,7 @@ DEPS		:= $(OBJS:.o=.d)
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g3 #-o3 -flto -march=native -funroll-loops
+CFLAGS		:= -Wall -Wextra -Werror #-ofast -flto -march=native -funroll-loops
 CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/
 
 MLX_DIR      := mlx/

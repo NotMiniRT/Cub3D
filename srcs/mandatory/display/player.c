@@ -83,7 +83,7 @@ void move_player(t_main_struct *main_struct, int move_dir_front, int move_dir_si
 
 int	is_facing_up(double ray_angle)
 {
-	return (ray_angle > PI && ray_angle < PIx2);
+	return (ray_angle > PI);
 }
 int	is_facing_left(double ray_angle)
 {
