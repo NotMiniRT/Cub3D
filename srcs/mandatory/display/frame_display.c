@@ -21,6 +21,10 @@ int	frame_display(t_main_struct *main_struct)
 		teta = main_struct->player->fov_angle + main_struct->R_H_tab[row];
 		teta_cos_sin[0] = cos(teta);
 		teta_cos_sin[1] = sin(teta);
+		if (teta < 0)
+			teta += PIx2;
+		if (teta > PIx2)
+			teta -= PIx2;
 		render_one_ray(main_struct, teta_cos_sin, row, teta);
 		row++;
 	}

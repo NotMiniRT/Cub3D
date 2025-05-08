@@ -41,7 +41,7 @@ static void render_on_screen(t_render_calculus *render_calc, t_main_struct *main
 		change_pixel_color(main_struct->frame, 0x00AAAA, row, j);
 	else if (j > render_calc->height_check_plus)
 		change_pixel_color(main_struct->frame, 0xAAAA00, row, j);
-	else if (render_calc->res[1] == 1)
+	else
 	{
 
 		render_calc->text_y = (int)render_calc->texPos;
@@ -49,22 +49,14 @@ static void render_on_screen(t_render_calculus *render_calc, t_main_struct *main
 			render_calc->text_y = 0;
 		if (render_calc->text_y >= 64)
 			render_calc->text_y = 64 - 1;
-		if (is_facing_down(render_calc->teta))
+		if (is_facing_up(render_calc->teta) && render_calc->res[1] == 1)
+			change_pixel_color(main_struct->frame, get_color(main_struct->wall_s, render_calc->text_x, render_calc->text_y), row, j);
+		else if (render_calc->res[1] == 1)
+			change_pixel_color(main_struct->frame, get_color(main_struct->wall_n, render_calc->text_x, render_calc->text_y), row, j);
+		else if (is_facing_left(render_calc->teta))
 			change_pixel_color(main_struct->frame, get_color(main_struct->wall_e, render_calc->text_x, render_calc->text_y), row, j);
 		else
 			change_pixel_color(main_struct->frame, get_color(main_struct->wall_o, render_calc->text_x, render_calc->text_y), row, j);
-	}
-	else
-	{
-		render_calc->text_y = (int)render_calc->texPos;
-		if (render_calc->text_y < 0)
-			render_calc->text_y = 0;
-		if (render_calc->text_y >= 64)
-			render_calc->text_y = 64 - 1;
-		if (is_facing_left(render_calc->teta))
-			change_pixel_color(main_struct->frame, get_color(main_struct->wall_s, render_calc->text_x, render_calc->text_y), row, j);
-		else
-			change_pixel_color(main_struct->frame, get_color(main_struct->wall_n, render_calc->text_x, render_calc->text_y), row, j);
 	}
 }
 

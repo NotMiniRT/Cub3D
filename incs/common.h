@@ -12,6 +12,8 @@
 # define PLAYER_SPEED 0.06
 # define FOVHALF FOV * 0.5
 # define PIx2 PI * 2
+# define PIx05 PI * 0.5
+# define PIx15 PI * 1.5
 # define DISTANCE_SCALE_FACTOR 1.5
 
 #endif
