@@ -60,6 +60,7 @@ typedef struct s_render_calculus
 	int height_check_plus;
 	double wall_hit;
 	double teta;
+	int 	*line_add;
 } t_render_calculus;
 
 typedef struct s_ray_calculus

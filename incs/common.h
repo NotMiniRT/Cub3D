@@ -8,10 +8,12 @@
 # define DRUG_FOV 1.5471975512
 # define PI 3.14159265359f
 # define FOV 1.0471975512
-# define ROT_SPEED 0.12
+# define ROT_SPEED 0.10
 # define PLAYER_SPEED 0.06
 # define FOVHALF FOV * 0.5
 # define PIx2 PI * 2
+# define PIx05 PI * 0.5
+# define PIx15 PI * 1.5
 # define DISTANCE_SCALE_FACTOR 1.5
 
 #endif

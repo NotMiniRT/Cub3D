@@ -9,7 +9,7 @@ int	init_player(t_player *player)
 {
 	player->x = 0;
 	player->y = 0;
-	player->fov_angle = 0.5 * PI;
+	player->fov_angle =  0.5 * PI + 0.001;
 	return (1);
 }
 
@@ -82,22 +82,22 @@ void	move_player(t_main_struct *main_struct, \
 	}
 }
 
-int	is_facing_down(double ray_angle)
+int	is_facing_up(double ray_angle)
 {
 	return (ray_angle > PI);
 }
 int	is_facing_left(double ray_angle)
 {
-	return (ray_angle < PI * 0.5 || ray_angle > PI * 1.5 );
+	return (ray_angle > PIx05 && ray_angle < PIx15 );
 }
 int	is_facing_right(double ray_angle)
 {
 	return (!is_facing_left(ray_angle));
 }
 
-int	is_facing_up(double ray_angle)
+int	is_facing_down(double ray_angle)
 {
-	return (!is_facing_down(ray_angle));
+	return (!is_facing_up(ray_angle));
 }
 
 void	player_log(t_main_struct *main_struct)
