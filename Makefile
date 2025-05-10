@@ -58,7 +58,7 @@ init:
 .PHONY: all
 all: init $(NAME)
 
-$(NAME): libft/libft.a Makefile $(OBJS) $(MAN_PAGE)
+$(NAME): libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJS) $(MAN_PAGE)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft $(MLX_FLAGS)
 	@echo "\n$(GREEN_BOLD)✓ $(NAME) is ready $(RESETC)\n"
 
