@@ -1,19 +1,19 @@
 #ifndef COMMON_H
 # define COMMON_H
 
-#include "main_struct.h"
+# include "main_struct.h"
 
 # define WINDOW_HEIGHT 1080
 # define WINDOW_WIDTH 1920
 # define DRUG_FOV 1.5471975512
-# define PI 3.14159265359f
+# define PI 3.14159265359
 # define FOV 1.0471975512
 # define ROT_SPEED 0.10
 # define PLAYER_SPEED 0.06
-# define FOVHALF FOV * 0.5
-# define PIx2 PI * 2
-# define PIx05 PI * 0.5
-# define PIx15 PI * 1.5
+# define FOVHALF 0.5235987756
+# define PIX2 6.28318530718
+# define PIX05 1.57079632679
+# define PIXX15 4.71238898038
 # define DISTANCE_SCALE_FACTOR 1.5
 
 #endif

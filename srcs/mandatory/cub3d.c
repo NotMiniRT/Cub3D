@@ -4,9 +4,9 @@
 #include "display.h"
 //#include "parsing.h"
 
-int	main()
+int	main(void)
 {
-	t_main_struct main_struct;
+	t_main_struct	main_struct;
 	//parsing(ac, av);
 	init_main_struct(&main_struct);
 	start_display(&main_struct);
