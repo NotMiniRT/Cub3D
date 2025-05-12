@@ -24,24 +24,6 @@ int	init_r_h_tab(t_main_struct *main_struct)
 	return (0);
 }
 
-void	init_main_struct(t_main_struct *main_struct)
-{
-	main_struct->mlx_ptr = NULL;
-	main_struct->win_ptr = NULL;
-	main_struct->player = NULL;
-	main_struct->map = NULL;
-	main_struct->cos_r_h_tab = NULL;
-	main_struct->r_h_tab = NULL;
-	main_struct->created_at = 0;
-	main_struct->last_move = 0;
-	main_struct->inputs[UP] = 0;
-	main_struct->inputs[DOWN] = 0;
-	main_struct->inputs[RIGHT] = 0;
-	main_struct->inputs[LEFT] = 0;
-	main_struct->inputs[TRIGHT] = 0;
-	main_struct->inputs[TLEFT] = 0;
-	main_struct->inputs[SHIFT] = 0;
-}
 
 void	free_main_struct(t_main_struct *main_struct)
 {
@@ -69,7 +51,6 @@ void	free_main_struct(t_main_struct *main_struct)
 	main_struct->r_h_tab = NULL;
 	main_struct->win_ptr = NULL;
 	main_struct->cos_r_h_tab = NULL;
-	free(main_struct->map);
 }
 
 int	is_moving(t_main_struct *main_struct)

@@ -40,7 +40,7 @@ typedef struct s_main_struct
 	t_image_cub		*wall_o;
 	t_image_cub		*wall_s;
 	t_image_cub		*wall_e;
-	char			**map;	
+	char			**map;
 	double			*r_h_tab;
 	double			*cos_r_h_tab;
 	size_t			created_at;
