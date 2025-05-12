@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include "common.h"
 
-static void	define_basic_param_calculus(t_ray_calculus *calcul, \
-								double cos_sin[2], t_main_struct *main_struct)
+static void	define_basic_param_calculus(t_ray_calculus *calcul,
+		double cos_sin[2], t_main_struct *main_struct)
 {
 	calcul->player_x = main_struct->player->x;
 	calcul->player_y = main_struct->player->y;
@@ -27,26 +27,26 @@ static void	get_step_and_side_dist(t_ray_calculus *calcul)
 	if (calcul->dir_x < 0)
 	{
 		calcul->step_x = -1;
-		calcul->side_dist_x = \
-						(calcul->player_x - calcul->map_x) * calcul->delta_x;
+		calcul->side_dist_x = (calcul->player_x - calcul->map_x)
+			* calcul->delta_x;
 	}
 	else
 	{
 		calcul->step_x = 1;
-		calcul->side_dist_x = \
-					(calcul->map_x + 1.0 - calcul->player_x) * calcul->delta_x;
+		calcul->side_dist_x = (calcul->map_x + 1.0 - calcul->player_x)
+			* calcul->delta_x;
 	}
 	if (calcul->dir_y < 0)
 	{
 		calcul->step_y = -1;
-		calcul->side_dist_y = \
-					(calcul->player_y - calcul->map_y) * calcul->delta_y;
+		calcul->side_dist_y = (calcul->player_y - calcul->map_y)
+			* calcul->delta_y;
 	}
 	else
 	{
 		calcul->step_y = 1;
-		calcul->side_dist_y = \
-					(calcul->map_y + 1.0 - calcul->player_y) * calcul->delta_y;
+		calcul->side_dist_y = (calcul->map_y + 1.0 - calcul->player_y)
+			* calcul->delta_y;
 	}
 	calcul->side = 0;
 }
@@ -55,20 +55,20 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 {
 	if (calcul->side == 0)
 	{
-		calcul->wall_x = \
-			(calcul->map_x - calcul->player_x + (1 - calcul->step_x) * 0.5);
-		calcul->wall_y = \
-			((calcul->map_x - calcul->player_x + (1 - calcul->step_x) * 0.5) \
-											/ calcul->dir_x) * calcul->dir_y;
+		calcul->wall_x = (calcul->map_x - calcul->player_x
+				+ (1 - calcul->step_x) * 0.5);
+		calcul->wall_y = ((calcul->map_x - calcul->player_x
+					+ (1 - calcul->step_x) * 0.5)
+				/ calcul->dir_x) * calcul->dir_y;
 		calcul->dist = sqrt(pow(calcul->wall_x, 2) + pow(calcul->wall_y, 2));
 	}
 	else
 	{
-		calcul->wall_x = \
-			((calcul->map_y - calcul->player_y \
-				+ (1 - calcul->step_y) / 2) / calcul->dir_y) * calcul->dir_x;
-		calcul->wall_y = \
-			(calcul->map_y - calcul->player_y + (1 - calcul->step_y) / 2);
+		calcul->wall_x = ((calcul->map_y - calcul->player_y
+					+ (1 - calcul->step_y) * 0.5)
+				/ calcul->dir_y) * calcul->dir_x;
+		calcul->wall_y = (calcul->map_y - calcul->player_y
+				+ (1 - calcul->step_y) * 0.5);
 		calcul->dist = sqrt(pow(calcul->wall_x, 2) + pow(calcul->wall_y, 2));
 	}
 }
@@ -83,8 +83,8 @@ static void	fill_cross(t_ray_calculus *calcul, double (*cross)[3])
 		(*cross)[2] = calcul->player_y + calcul->wall_y;
 }
 
-void	ray_check(t_main_struct *main_struct, \
-										double (*cross)[3], double cos_sin[2])
+void	ray_check(t_main_struct *main_struct,
+		double (*cross)[3], double cos_sin[2])
 {
 	t_ray_calculus	calcul;
 

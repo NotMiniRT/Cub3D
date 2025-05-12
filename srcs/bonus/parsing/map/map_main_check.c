@@ -18,7 +18,7 @@ static void	validate_map_basics(t_infos *infos, int map_start)
 	if (map_start < 6)
 	{
 		cleanup_parsing(infos);
-		exit_error("Error\nMap invalide (pas de map)");
+		exit_error("Error\nNo map");
 	}
 	if (!infos->data->lines[map_start])
 	{
@@ -28,7 +28,7 @@ static void	validate_map_basics(t_infos *infos, int map_start)
 	if (!check_map_chars(infos, map_start))
 	{
 		cleanup_parsing(infos);
-		exit_error("Error\nCaractère invalide dans la map");
+		exit_error("Error\nInvalid character encountered"); // retour a la ligne ?
 	}
 }
 
@@ -55,7 +55,8 @@ static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 		}
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit_error("Error\nMap pas fermee");
+		exit(1);
+		// exit_error("Error\nUnclosed map");
 	}
 }
 
@@ -74,39 +75,9 @@ static void	validate_player_count(t_infos *infos, t_map_data map_data)
 		}
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit_error("Error\nTrop de joueurs");
+		exit_error("Error\nToo many players");
 	}
 	print_debug_steps("CARTE VALIDÉE AVEC SUCCÈS", map_data);
-}
-
-static void validate_doors(t_infos *infos, t_map_data map_data)
-{
-	if (!check_doors(map_data))
-	{
-		if (g_debug_mode)
-		{
-			printf("\n--- ERREUR: PLACEMENT DE PORTE INVALIDE ---\n");
-			debug_print_map_with_coords(map_data);
-		}
-		free_extended_map(map_data.map, map_data.height);
-		cleanup_parsing(infos);
-		exit_error("Error\nPlacement de porte invalide");
-	}
-}
-
-static void count_entities(t_map_data map_data)
-{
-	int collectibles = count_collectibles(map_data);
-	int doors = count_doors(map_data);
-	int monsters = count_monsters(map_data);
-
-	if (g_debug_mode)
-	{
-		printf("\n--- ENTITÉS TROUVÉES ---\n");
-		printf("Collectibles: %d\n", collectibles);
-		printf("Portes: %d\n", doors);
-		printf("Monstres: %d\n", monsters);
-	}
 }
 
 void check_map_validity(t_infos *infos, int map_start)
@@ -131,14 +102,5 @@ void check_map_validity(t_infos *infos, int map_start)
 	map_data.width = width + 2;
 	validate_extended_map(infos, map_data);
 	validate_player_count(infos, map_data);
-	validate_doors(infos, map_data);
-	count_entities(map_data);
-	
-	// Store entity positions in the scene
-	store_collectibles(map_data, infos);
-	store_doors(map_data, infos);
-	store_monsters(map_data, infos);
-	
-	print_debug_steps("CARTE VALIDÉE AVEC SUCCÈS", map_data);
 	free_extended_map(map_data.map, map_data.height);
 }

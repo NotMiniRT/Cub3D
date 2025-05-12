@@ -18,7 +18,7 @@ static void	validate_map_basics(t_infos *infos, int map_start)
 	if (map_start < 6)
 	{
 		cleanup_parsing(infos);
-		exit_error("Error\nMap invalide (pas de map)");
+		exit_error("Error\nNo map");
 	}
 	if (!infos->data->lines[map_start])
 	{
@@ -28,7 +28,7 @@ static void	validate_map_basics(t_infos *infos, int map_start)
 	if (!check_map_chars(infos, map_start))
 	{
 		cleanup_parsing(infos);
-		exit_error("Error\nCaractère invalide dans la map");
+		exit_error("Error\nInvalid character encountered");
 	}
 }
 
@@ -55,7 +55,7 @@ static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 		}
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit_error("Error\nMap pas fermee");
+		exit(1);
 	}
 }
 
@@ -74,12 +74,12 @@ static void	validate_player_count(t_infos *infos, t_map_data map_data)
 		}
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit_error("Error\nTrop de joueurs");
+		exit_error("Error\nToo many players");
 	}
 	print_debug_steps("CARTE VALIDÉE AVEC SUCCÈS", map_data);
 }
 
-void check_map_validity(t_infos *infos, int map_start)
+void	check_map_validity(t_infos *infos, int map_start)
 {
 	t_ext_map	ext_map;
 	t_map_data	map_data;

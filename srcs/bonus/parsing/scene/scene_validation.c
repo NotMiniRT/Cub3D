@@ -15,10 +15,9 @@ static int	check_line_integrity(char *line)
 	{
 		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && \
 			line[i] != 'N' && line[i] != 'S' && line[i] != 'E' && \
-			line[i] != 'W' && line[i] != 'C' && line[i] != 'D' && \
-			line[i] != 'M' && line[i] != '\n')
+			line[i] != 'W' && line[i] != '\n')
 		{
-			ft_dprintf(STDERR_FILENO, "char qui casse: %c\n", line[i]);
+			// ft_dprintf(STDERR_FILENO, "char qui casse: %c\n", line[i]);
 			return (false);
 		}
 		i++;
@@ -61,19 +60,10 @@ static int	process_scene_line(t_infos *infos, int line_index,
 	{
 		if (is_scene_complete(infos->scene) && check_line_integrity(line))
 			return (line_index);
+		ft_dprintf(STDERR_FILENO, ERR_SCENE_INVALID);
 		return (-2);
 	}
 	return (-1);
-}
-
-static void	scene_complete(t_infos *infos)
-{
-	if (!is_scene_complete(infos->scene))
-	{
-		ft_dprintf(STDERR_FILENO, ERR_MISSING_ELEMENT);
-		cleanup_parsing(infos);
-		exit_error(ERR_SCENE_INVALID);
-	}
 }
 
 int	check_scene_validity(t_infos *infos)
@@ -96,10 +86,9 @@ int	check_scene_validity(t_infos *infos)
 		else if (result == -2)
 		{
 			cleanup_parsing(infos);
-			exit_error(ERR_SCENE_INVALID);
+			// exit_error(ERR_SCENE_INVALID);
 		}
 		i++;
 	}
-	scene_complete(infos);
 	return (-1);
 }

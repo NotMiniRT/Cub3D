@@ -10,7 +10,7 @@ bool	parse_no_texture(t_scene *scene, char *line)
 
 	if (scene->no_texture != NULL)
 	{
-		ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, TEXTURE_NO);
+		// ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, TEXTURE_NO);
 		return (false);
 	}
 	path = extract_texture_path(line, 2);
@@ -30,7 +30,7 @@ bool	parse_so_texture(t_scene *scene, char *line)
 
 	if (scene->so_texture != NULL)
 	{
-		ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, TEXTURE_SO);
+		// ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, TEXTURE_SO);
 		return (false);
 	}
 	path = extract_texture_path(line, 2);
@@ -50,7 +50,7 @@ bool	parse_we_texture(t_scene *scene, char *line)
 
 	if (scene->we_texture != NULL)
 	{
-		ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, TEXTURE_WE);
+		// ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, TEXTURE_WE);
 		return (false);
 	}
 	path = extract_texture_path(line, 2);
@@ -70,7 +70,7 @@ bool	parse_ea_texture(t_scene *scene, char *line)
 
 	if (scene->ea_texture != NULL)
 	{
-		ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, TEXTURE_EA);
+		// ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, TEXTURE_EA);
 		return (false);
 	}
 	path = extract_texture_path(line, 2);

@@ -3,23 +3,7 @@
 bool	is_valid_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S' || \
-			c == 'E' || c == 'W' || c == ' ' || c == 'C' || \
-			c == 'D' || c == 'M');
-}
-
-bool	is_collectible(char c)
-{
-	return (c == 'C');
-}
-
-bool	is_door(char c)
-{
-	return (c == 'D');
-}
-
-bool	is_monster(char c)
-{
-	return (c == 'M');
+			c == 'E' || c == 'W' || c == ' ');
 }
 
 bool	is_space_or_outside(t_map_data map_data, t_point p)

@@ -19,8 +19,7 @@ bool	check_map_chars(t_infos *infos, int map_start)
 		{
 			c = infos->data->lines[i][j];
 			if (c != '0' && c != '1' && c != 'N' && c != 'S' && \
-				c != 'E' && c != 'W' && c != 'C' && c != 'D' && \
-				c != 'M' && !ft_isspace(c) && c != '\n')
+				c != 'E' && c != 'W' && !ft_isspace(c) && c != '\n')
 			{
 				if (DEBUG_MODE)
 					printf("Caractère invalide '%c' ligne %d, position %d\n",

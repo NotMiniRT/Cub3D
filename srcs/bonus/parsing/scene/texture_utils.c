@@ -36,7 +36,7 @@ bool	is_texture_valid(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
+		// ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		return (false);
 	}
 	if (check_extension(path, fd, XPM_FORMAT) == false)

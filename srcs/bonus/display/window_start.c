@@ -7,49 +7,36 @@
 #include "image.h"
 #include "display.h"
 #include "player.h"
-/*
-static bool	get_images(t_main_struct *main_struct)
-{
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
-		"./assets/textures/walls/wall_false.xpm"))
-		return (false);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), \
-		"./assets/textures/walls/wall_2.xpm"))
-		return (false);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_o), \
-		"./assets/textures/walls/not_a_circle.xpm"))
-		return (false);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), \
-		"./assets/textures/walls/wall_4.xpm"))
-		return (false);
-	return (true);
-} */
+#include "parsing.h"
+#include "ft_dprintf.h"
+#include <unistd.h>
 
-static bool	init_display(t_main_struct *main_struct)
+static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 {
 	main_struct->mlx_ptr = mlx_init();
 	if (main_struct->mlx_ptr == NULL)
 		return (false);
-	main_struct->win_ptr = mlx_new_window(main_struct->mlx_ptr, \
-										WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
+	main_struct->win_ptr = mlx_new_window(main_struct->mlx_ptr,
+			WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
 	if (main_struct->mlx_ptr == NULL)
 		return (false);
 	main_struct->player = malloc(sizeof(t_player));
 	if (main_struct->player == NULL)
-		return (1);
-	if (create_img_cub(main_struct, &(main_struct->frame), WINDOW_WIDTH, WINDOW_HEIGHT))
-		return (1);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), "./assets/textures/walls/wall_1.xpm"))
-		return (1);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), "./assets/textures/walls/not_a_circle.xpm"))
-		return (1);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_o), "./assets/textures/walls/wall_2.xpm"))
-		return (1);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), "./assets/textures/walls/wall_4.xpm"))
-		return (1);
-	if (init_R_H_tab(main_struct))
-		return (1);
-	init_player(main_struct->player);
+		return (false);
+	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), \
+			infos->scene->so_texture)
+		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_o), \
+			infos->scene->we_texture)
+		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), \
+			infos->scene->no_texture)
+		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
+			infos->scene->ea_texture)
+		|| create_img_cub(main_struct, &(main_struct->frame), \
+			WINDOW_WIDTH, WINDOW_HEIGHT))
+		return (false);
+	if (!init_r_h_tab(main_struct))
+		return (false);
+	init_player(main_struct->player, infos);
 	return (true);
 }
 
@@ -62,26 +49,12 @@ static void	init_inputs(t_main_struct *main_struct)
 	mlx_hook(main_struct->win_ptr, 17, 1, on_destroy, main_struct);
 }
 
-bool	start_display(t_main_struct *main_struct)
+void	start_display(t_main_struct *main_struct, t_infos *infos)
 {
-	if (!init_display(main_struct))
-		return (false);
-	main_struct->map = malloc(sizeof(char *) * 11);
-	main_struct->map[0] = "111111111111111";
-	main_struct->map[1] = "110000000000011";
-	main_struct->map[2] = "110000000000011";
-	main_struct->map[3] = "110000000000011";
-	main_struct->map[4] = "110000000000011";
-	main_struct->map[5] = "110000000000011";
-	main_struct->map[6] = "110000000000011";
-	main_struct->map[7] = "110001001100011";
-	main_struct->map[8] = "110000110000011";
-	main_struct->map[9] = "001111111111111";
-	main_struct->map[10] = NULL;
-	main_struct->player->x = 4;
-	main_struct->player->y = 8;
+	if (!init_display(main_struct, infos))
+		return ;
+	main_struct->map = &(infos->data->lines[infos->map_start]);
 	init_inputs(main_struct);
 	mlx_loop(main_struct->mlx_ptr);
 	mlx_do_key_autorepeaton(main_struct->mlx_ptr);
-	return (true);
 }
