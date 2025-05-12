@@ -6,8 +6,9 @@
 #include "image.h"
 #include "display.h"
 #include "player.h"
+#include "parsing.h"
 
-static int	init_display(t_main_struct *main_struct)
+static int	init_display(t_main_struct *main_struct, t_infos *infos)
 {
 	main_struct->mlx_ptr = mlx_init();
 	if (main_struct->mlx_ptr == NULL)
@@ -20,19 +21,19 @@ static int	init_display(t_main_struct *main_struct)
 	if (main_struct->player == NULL)
 		return (1);
 	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_s),
-			"./assets/textures/walls/wall_4.xpm")
+			infos->scene->so_texture)
 		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_o),
-			"./assets/textures/walls/wall_2.xpm")
+		infos->scene->we_texture)
 		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_n),
-			"./assets/textures/walls/not_a_circle.xpm")
+		infos->scene->no_texture)
 		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_e),
-			"./assets/textures/walls/wall_1.xpm")
+		infos->scene->ea_texture)
 		|| create_img_cub(main_struct, &(main_struct->frame),
 			WINDOW_WIDTH, WINDOW_HEIGHT))
 		return (1);
 	if (init_r_h_tab(main_struct))
 		return (1);
-	init_player(main_struct->player);
+	init_player(main_struct->player, infos);
 	return (0);
 }
 
@@ -45,24 +46,27 @@ static void	init_inputs(t_main_struct *main_struct)
 	mlx_hook(main_struct->win_ptr, 17, 1, on_destroy, main_struct);
 }
 
-int	start_display(t_main_struct *main_struct)
+int	start_display(t_main_struct *main_struct, t_infos *infos)
 {
-	if (init_display(main_struct))
+	if (init_display(main_struct, infos))
 		return (1);
-	main_struct->map = malloc(sizeof(char *) * 11);
-	main_struct->map[0] = "111111111111111";
-	main_struct->map[1] = "110000000000011";
-	main_struct->map[2] = "110000000000011";
-	main_struct->map[3] = "110000000000011";
-	main_struct->map[4] = "110000000000011";
-	main_struct->map[5] = "110000000000011";
-	main_struct->map[6] = "110000000000011";
-	main_struct->map[7] = "110001001100011";
-	main_struct->map[8] = "110000110000011";
-	main_struct->map[9] = "001111111111111";
-	main_struct->map[10] = NULL;
-	main_struct->player->x = 4;
-	main_struct->player->y = 8;
+	main_struct->map = &(infos->data->lines[infos->map_start]);
+
+
+	// main_struct->map = malloc(sizeof(char *) * 11);
+	// main_struct->map[0] = "111111111111111";
+	// main_struct->map[1] = "110000000000011";
+	// main_struct->map[2] = "110000000000011";
+	// main_struct->map[3] = "110000000000011";
+	// main_struct->map[4] = "110000000000011";
+	// main_struct->map[5] = "110000000000011";
+	// main_struct->map[6] = "110000000000011";
+	// main_struct->map[7] = "110001001100011";
+	// main_struct->map[8] = "110000110000011";
+	// main_struct->map[9] = "001111111111111";
+	// main_struct->map[10] = NULL;
+	// main_struct->player->x = 4;
+	// main_struct->player->y = 8;
 	init_inputs(main_struct);
 	mlx_loop(main_struct->mlx_ptr);
 	mlx_do_key_autorepeaton(main_struct->mlx_ptr);
