@@ -55,15 +55,12 @@ void	check_param_validity(int ac, char **av)
 		close(fd);
 }
 
-void	parsing(int ac, char **av)
+void	parsing(int ac, char **av, t_infos *infos)
 {
-	t_infos	infos;
-	int		map_start;
-
 	check_param_validity(ac, av);
-	ft_memset(&infos, 0, sizeof(t_infos));
-	init_parsing(&infos, av);
-	map_start = check_scene_validity(&infos);
-	check_map_validity(&infos, map_start);
-	cleanup_parsing(&infos);
+	ft_memset(infos, 0, sizeof(t_infos));
+	init_parsing(infos, av);
+	infos->map_start = check_scene_validity(infos);
+	check_map_validity(infos, infos->map_start);
+	// cleanup_parsing(&infos);
 }

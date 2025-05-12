@@ -73,13 +73,14 @@ typedef struct s_infos
 {
 	t_parsing	*data;
 	t_scene		*scene;
+	int			map_start;
 }	t_infos;
 
 char	**read_all_lines(t_parsing *data);
 char	**clear_read_lines(t_parsing *data);
 
 void	exit_error(char *message);
-void	parsing(int ac, char **av);
+void	parsing(int ac, char **av, t_infos *infos);
 void	init_data(t_infos *infos, char **av);
 void	cleanup_parsing(t_infos *infos);
 char	*read_line(int fd);
