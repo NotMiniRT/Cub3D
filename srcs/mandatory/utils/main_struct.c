@@ -16,7 +16,7 @@ int	init_r_h_tab(t_main_struct *main_struct)
 	i = 0;
 	while (i < WINDOW_WIDTH)
 	{
-		main_struct->r_h_tab[i] = atan(2 * tan(FOV * 0.5)
+		main_struct->r_h_tab[i] = atan(2 * tan(FOVHALF)
 				/ WINDOW_WIDTH * (i - WINDOW_WIDTH * 0.5));
 		main_struct->cos_r_h_tab[i] = cos(main_struct->r_h_tab[i]);
 		i++;

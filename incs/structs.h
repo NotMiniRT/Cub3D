@@ -45,6 +45,7 @@ typedef struct s_main_struct
 	double			*cos_r_h_tab;
 	size_t			created_at;
 	size_t			last_move;
+	size_t			last_frame;
 	short int		inputs[7];
 	int				is_moving;
 }	t_main_struct;

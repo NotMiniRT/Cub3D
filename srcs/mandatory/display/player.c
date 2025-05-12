@@ -8,8 +8,8 @@
 
 int	init_player(t_player *player, t_infos *infos)
 {
-	player->x = infos->scene->pos[0];
-	player->y = infos->scene->pos[1];
+	player->x = infos->scene->pos[0] - 0.5;
+	player->y = infos->scene->pos[1] - 0.5;
 	if (infos->scene->pos[2] == 'N')
 		player->fov_angle = PIXX15 + 0.001;
 	else if (infos->scene->pos[2] == 'E')

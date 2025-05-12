@@ -7,6 +7,8 @@
 #include "display.h"
 #include "player.h"
 #include "parsing.h"
+#include "ft_dprintf.h"
+#include <unistd.h>
 
 static int	init_display(t_main_struct *main_struct, t_infos *infos)
 {
@@ -20,15 +22,15 @@ static int	init_display(t_main_struct *main_struct, t_infos *infos)
 	main_struct->player = malloc(sizeof(t_player));
 	if (main_struct->player == NULL)
 		return (1);
-	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_s),
+	if (get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), \
 			infos->scene->so_texture)
-		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_o),
-		infos->scene->we_texture)
-		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_n),
-		infos->scene->no_texture)
-		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_e),
-		infos->scene->ea_texture)
-		|| create_img_cub(main_struct, &(main_struct->frame),
+		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_o), \
+			infos->scene->we_texture)
+		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), \
+			infos->scene->no_texture)
+		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
+			infos->scene->ea_texture)
+		|| create_img_cub(main_struct, &(main_struct->frame), \
 			WINDOW_WIDTH, WINDOW_HEIGHT))
 		return (1);
 	if (init_r_h_tab(main_struct))
