@@ -62,5 +62,4 @@ void	parsing(int ac, char **av, t_infos *infos)
 	init_parsing(infos, av);
 	infos->map_start = check_scene_validity(infos);
 	check_map_validity(infos, infos->map_start);
-	// cleanup_parsing(&infos);
 }

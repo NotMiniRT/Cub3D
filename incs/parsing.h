@@ -22,15 +22,14 @@ typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 
 # define _ERROR		"Error: %s\n"
 
-# define ERR_NB_PARAMS		"Error: wrong number of parameters\n"
-# define ERR_EXTENSION		"Error: wrong file format extension\n"
+# define ERR_NB_PARAMS		"Error\nWrong number of parameters\n"
+# define ERR_EXTENSION		"Error\nWrong file format extension\n"
 
 # define ERR_COLOR_INVALID	"Invalid color format\n"
-# define ERR_COLOR_RANGE	"Color value out of range (0-255)\n"
 # define ERR_DUPLICATE		"Error\nDuplicate %s identifier\n"
 
 # define ERR_SCENE_INVALID "Error\nInvalid scene configuration\n"
-# define ERR_PARSING_ELEMENT "Error\nError parsing element: %s\n"
+# define ERR_PARSING_ELEMENT "Error\nParsing element: %s\n"
 # define ERR_INCOMPLETE_SCENE "Error\nScene incomplete before map start\n"
 # define ERR_MISSING_ELEMENT "Error\nMissing required scene elements\n"
 

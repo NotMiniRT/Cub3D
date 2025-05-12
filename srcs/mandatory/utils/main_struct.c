@@ -24,7 +24,6 @@ int	init_r_h_tab(t_main_struct *main_struct)
 	return (true);
 }
 
-
 void	free_main_struct(t_main_struct *main_struct)
 {
 	if (!main_struct)

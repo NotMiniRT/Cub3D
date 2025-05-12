@@ -28,6 +28,7 @@ int	release_move(int keysym, t_main_struct *main_struct)
 		main_struct->inputs[SHIFT] = 0;
 	return (0);
 }
+
 void	toggle_move(t_main_struct *main_struct, int keysym)
 {
 	if (keysym == XK_a)

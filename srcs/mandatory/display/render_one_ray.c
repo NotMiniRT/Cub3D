@@ -10,7 +10,7 @@
 static inline void	change_pixel_color_opti(t_image_cub *img,
 		int color, int x, int y)
 {
-	((int *)(img->buffer + (y * img->line_bytes) + (x)))[0] = clr;
+	((int *)(img->buffer + (y * img->line_bytes) + (x)))[0] = color;
 }
 
 static void	get_right_wall(t_render_calculus *render_calc,
