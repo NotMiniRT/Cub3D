@@ -40,19 +40,21 @@ typedef struct s_main_struct
 	t_image_cub		*wall_o;
 	t_image_cub		*wall_s;
 	t_image_cub		*wall_e;
+	t_image_cub		*fog;
+	int				ground;
+	int				ceil;
 	char			**map;
 	double			*r_h_tab;
 	double			*cos_r_h_tab;
 	size_t			created_at;
 	size_t			last_move;
-	size_t			last_frame;
 	short int		inputs[7];
 	int				is_moving;
 }	t_main_struct;
 
 typedef struct s_render_calculus
 {
-	double	res[3];
+	double	res[4];
 	double	height;
 	int		text_x;
 	int		text_y;
@@ -60,7 +62,7 @@ typedef struct s_render_calculus
 	double	texpos;
 	int		height_check_minus;
 	int		height_check_plus;
-	double	wall_hit;
+	double	wall_pc;
 	double	teta;
 	int		*line_add;
 }	t_render_calculus;
@@ -83,6 +85,7 @@ typedef struct s_ray_calculus
 	double	wall_x;
 	double	wall_y;
 	double	dist;
+	int		flag_dist;
 }	t_ray_calculus;
 
 #endif

@@ -32,9 +32,13 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
 			infos->scene->ea_texture)
 		|| create_img_cub(main_struct, &(main_struct->frame), \
-			WINDOW_WIDTH, WINDOW_HEIGHT))
+			WINDOW_WIDTH, WINDOW_HEIGHT)
+		|| get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
+			"assets/textures/walls/fog.xpm"))
 		return (false);
-	if (!init_r_h_tab(main_struct))
+	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
+	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
+	if (init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
 	return (true);

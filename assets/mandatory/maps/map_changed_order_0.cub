@@ -3,8 +3,8 @@ EA ./assets/textures/walls/wall_4.xpm
 SO ./assets/textures/walls/wall_2.xpm
 WE ./assets/textures/walls/wall_3.xpm
 
-F 255,255,255
-C 255,0,0
+F 70,70,70
+C 70,70,70
 
 
 
