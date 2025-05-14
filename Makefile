@@ -52,7 +52,7 @@ endif
 -include $(DEPS)
 
 .PHONY: init
-init: FORCE
+init: ensure_mlx FORCE
 	@mkdir -p $(BUILD_DIR)
 	@echo "$(NEED_REBUILD)" > $(BUILD_DIR)total_files
 	@echo "0" > $(BUILD_DIR)current_file
@@ -67,8 +67,21 @@ $(NAME): libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJS) $(MAN_PAGE)
 libft/libft.a: FORCE
 	@$(MAKE) -C libft
 
-mlx/libmlx_Linux.a: FORCE
-	@$(MAKE) -C mlx
+mlx/libmlx_Linux.a: ensure_mlx
+	@if [ -d "$(MLX_DIR)" ]; then \
+		$(MAKE) -C mlx; \
+	else \
+		echo "$(RED_BOLD)Error: MLX directory not found and could not be cloned$(RESETC)"; \
+		exit 1; \
+	fi
+
+.PHONY: ensure_mlx
+ensure_mlx:
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "$(CYAN)Adding minilibx as submodule...$(RESETC)"; \
+		git submodule add https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
+		git submodule update --init --recursive; \
+	fi
 
 $(BUILD_DIR)%.o: $(SRCSDIR)%.c
 	@mkdir -p $(dir $@)
