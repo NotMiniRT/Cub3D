@@ -1,6 +1,5 @@
-#include "main_struct.h"
+#include "structs.h"
 #include "math.h"
-#include <stdio.h>
 #include "common.h"
 
 static void	define_basic_param_calculus(t_ray_calculus *calcul,

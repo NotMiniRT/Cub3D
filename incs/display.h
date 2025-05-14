@@ -3,9 +3,10 @@
 
 # include "main_struct.h"
 # include "parsing.h"
+# include <stdbool.h>
 
 int		frame_display(t_main_struct *main_struct);
 int		mlx_loop_action(t_main_struct *main_struct);
-void	start_display(t_main_struct *main_struct, t_infos *infos);
+bool	start_display(t_main_struct *main_struct, t_infos *infos);
 
 #endif

@@ -1,10 +1,8 @@
-#include "main_struct.h"
 #include "common.h"
 #include "player.h"
 #include "image.h"
 #include "mlx.h"
 #include <math.h>
-#include <stdio.h>
 #include "ray.h"
 
 static inline void	change_pixel_color_opt(t_image_cub *img,
@@ -39,7 +37,7 @@ static void	get_calcul_param(t_render_calculus *render_calc,
 	render_calc->height = (WINDOW_HEIGHT
 			/ (render_calc->res[0] * main_struct->cos_r_h_tab[row]));
 	if (render_calc->res[3])
-		render_calc->text_x = fmod((0.64 * row * 0.33), 64);
+		render_calc->text_x = fmod((0.21 * row), 64);
 	else
 	{
 		render_calc->wall_pc = render_calc->res[2] - floor(render_calc->res[2]);
