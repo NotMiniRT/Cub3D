@@ -15,7 +15,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        submodules: 'recursive'  # Ajouté ici
+        submodules: 'recursive'
 
     - name: Set up environment
       run: |
@@ -39,7 +39,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        submodules: 'recursive'  # Ajouté ici également
+        submodules: 'recursive'
 
     - name: Set up environment
       run: |
