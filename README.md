@@ -1,8 +1,5 @@
 # Cub3D
 
-test merge
-
-
 
 
 
@@ -21,12 +18,11 @@ test merge
 - [x] check textures files rights
 - [x] check floor/ceiling values
 - [ ] check functions calls
-- [x] errno set (partout ?)
+- [x] errno set (partout ?) non, enlever si fichier de textures n'existe pas egalement
 
 ##### Map part
-- [ ] Check possible characters inside map
-- [ ] Check floodfill
-- [ ] Check closed map
+- [x] Check possible characters inside map
+- [x] Check closed map
 
 
 
