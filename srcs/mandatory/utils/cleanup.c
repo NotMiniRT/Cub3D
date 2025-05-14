@@ -42,14 +42,9 @@ void	cleanup_parsing(t_infos *infos)
 	read_line(CLEAR_BUFFER);
 	if (infos->data->fd != -1)
 		close(infos->data->fd);
-	if (infos->data->lines != NULL)
-	{
-		if (infos->data->count > 0)
-			free_array(infos->data->lines);
-		else
-			free(infos->data->lines);
-		infos->data->lines = NULL;
-	}
+	if (infos->data->count >= 0)
+		free_array(infos->data->lines);
+	infos->data->lines = NULL;
 	if (infos->data->line != NULL)
 	{
 		free(infos->data->line);
@@ -66,6 +61,8 @@ char	**clear_read_lines(t_parsing *data)
 		free(data->lines[data->count]);
 	free(data->lines);
 	free(data->line);
+	data->lines = NULL;
+	data->line = NULL;
 	close(data->fd);
 	return (NULL);
 }

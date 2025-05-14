@@ -3,11 +3,12 @@
 
 # include <stddef.h>
 # include <stdbool.h>
+# include <sys/types.h>
 
 typedef struct s_scene	t_scene;
 typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 512
 # define CLEAR_BUFFER -42
 
 # define TEXTURE_NO	"NO"
@@ -70,8 +71,8 @@ typedef struct s_scene
 
 typedef struct s_parsing
 {
-	size_t	count;
-	size_t	capacity;
+	ssize_t	count;
+	ssize_t	capacity;
 	int		fd;
 	char	*line;
 	char	**new_lines;
