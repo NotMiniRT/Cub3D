@@ -4,8 +4,8 @@
 # include "parsing.h"
 # include "map_types.h"
 
-void	get_map_dimensions(t_infos *infos, int map_start, \
-											int *height, int *width);
+void	get_map_dimensions(t_infos *infos, int map_start,
+			int *height, int *width);
 
 void	mark_spaces_as_exterior(t_map_data map_data);
 

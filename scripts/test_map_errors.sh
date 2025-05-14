@@ -4,6 +4,7 @@
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 CYAN='\033[1;36m'
+YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Path to the executable and error maps
@@ -11,6 +12,14 @@ EXECUTABLE="./cub3D"
 ERROR_MAPS_DIR="./assets/mandatory/map_errors"
 TOTAL_MAPS=0
 PASSED_MAPS=0
+
+# Default: verbose mode is off
+VERBOSE=false
+
+# Check for command line arguments
+if [[ "$1" == "-v" || "$1" == "--verbose" ]]; then
+    VERBOSE=true
+fi
 
 # Create logs directory if it doesn't exist
 mkdir -p scripts/logs
@@ -63,10 +72,16 @@ for map_file in "$ERROR_MAPS_DIR"/*; do
         # Check if the output contains "Error" followed by a newline
         if echo "$ERROR_OUTPUT" | grep -q "Error"; then
             echo -e "${GREEN}✓ Test passed: Error detected correctly${NC}"
+            # Only show error message in verbose mode
+            if $VERBOSE; then
+                echo -e "${YELLOW}Program output:"
+                echo -e "${NC}$ERROR_OUTPUT"
+            fi
             echo "PASS: Error detected correctly" >> $LOG_FILE
             PASSED_MAPS=$((PASSED_MAPS + 1))
         else
             echo -e "${RED}✗ Test failed: No error message detected${NC}"
+            # Always show output for failed tests
             echo -e "${RED}Output was: ${NC}$ERROR_OUTPUT"
             echo "FAIL: No error message detected" >> $LOG_FILE
         fi

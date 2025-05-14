@@ -59,7 +59,7 @@ all: init $(NAME)
 
 $(NAME): Makefile $(OBJS)
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJS)
-	@echo "\n\n$(GREEN_BOLD)✓ $(NAME) is ready ✨$(RESETC)\n"
+	@echo "\n\n$(GREEN_BOLD)✓ $(NAME) is ready $(RESETC)\n"
 
 $(BUILD_DIR)%.o: $(SRCSDIR)%.c
 	@mkdir -p $(dir $@)

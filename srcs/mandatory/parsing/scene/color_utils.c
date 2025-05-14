@@ -88,10 +88,7 @@ bool	parse_ceiling_color(t_scene *scene, char *line)
 	t_color	*color;
 
 	if (scene->ceiling_color)
-	{
-		ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, COLOR_C);
 		return (false);
-	}
 	color = malloc(sizeof(t_color));
 	if (color == NULL)
 	{

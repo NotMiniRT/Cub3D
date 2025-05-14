@@ -3,13 +3,14 @@
 #include "mlx.h"
 #include "player.h"
 #include <stdio.h>
+
 int	on_destroy(t_main_struct *main_struct)
 {
 	mlx_loop_end(main_struct->mlx_ptr);
 	return (0);
 }
 
-int release_move(int keysym, t_main_struct *main_struct)
+int	release_move(int keysym, t_main_struct *main_struct)
 {
 	if (keysym == XK_a)
 		main_struct->inputs[LEFT] = 0;
@@ -27,7 +28,8 @@ int release_move(int keysym, t_main_struct *main_struct)
 		main_struct->inputs[SHIFT] = 0;
 	return (0);
 }
-void toggle_move(t_main_struct *main_struct, int keysym)
+
+void	toggle_move(t_main_struct *main_struct, int keysym)
 {
 	if (keysym == XK_a)
 		main_struct->inputs[LEFT] = 1;
@@ -51,7 +53,9 @@ int	handle_input(int keysym, t_main_struct *main_struct)
 		player_log(main_struct);
 	else if (keysym == XK_Shift_L)
 		main_struct->inputs[SHIFT] = 1;
-	else if (keysym == XK_a || keysym == XK_d || keysym == XK_w || keysym == XK_s || keysym == XK_Right || keysym == XK_Left)
+	else if (keysym == XK_a || keysym == XK_d
+		|| keysym == XK_w || keysym == XK_s
+		|| keysym == XK_Right || keysym == XK_Left)
 		toggle_move(main_struct, keysym);
 	return (0);
 }

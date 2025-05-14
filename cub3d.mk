@@ -13,6 +13,8 @@ override DISPLAYDIR	:= display/
 override PARSINGDIR	:= parsing/
 override MAPDIR		:= $(PARSINGDIR)map/
 override SCENEDIR	:= $(PARSINGDIR)scene/
+override INITDIR	:= $(PARSINGDIR)init/
+
 
 SRC	+= $(addsuffix .c, $(MAIN))
 
@@ -26,9 +28,9 @@ override UTILSSRC		:= \
 	utils \
 	main_struct \
 
-SRC += $(addprefix $(PARSINGDIR), $(addsuffix .c, $(PARSINGSRC)))
+SRC += $(addprefix $(INITDIR), $(addsuffix .c, $(INITSRC)))
 
-override PARSINGSRC		:= \
+override INITSRC		:= \
 	check_param_validity \
 	init \
 	readlines_utils \
@@ -68,3 +70,6 @@ override DISPLAYSRC		:= \
 	ray_check \
 	mlx_loop \
 	timer \
+	render_one_ray \
+	image_utils \
+	player_facing \
