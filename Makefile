@@ -76,7 +76,7 @@ mlx/libmlx_Linux.a: ensure_mlx
 	fi
 
 .PHONY: ensure_mlx
-ensure_mlx:
+ensure_mlx: FORCE
 	@if [ ! -d "$(MLX_DIR)" ]; then \
 		echo "$(CYAN)Adding minilibx as submodule...$(RESETC)"; \
 		git submodule add https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
