@@ -21,7 +21,7 @@ int	init_r_h_tab(t_main_struct *main_struct)
 		main_struct->cos_r_h_tab[i] = cos(main_struct->r_h_tab[i]);
 		i++;
 	}
-	return (0);
+	return (true);
 }
 
 void	free_main_struct(t_main_struct *main_struct)

@@ -11,24 +11,24 @@
 #include "map_validation.h"
 #include "parsing.h"
 
-int	g_debug_mode = 1;
+const int	g_debug_mode = DEBUG_MODE;
 
 static void	validate_map_basics(t_infos *infos, int map_start)
 {
 	if (map_start < 6)
 	{
 		cleanup_parsing(infos);
-		exit_error("Error\nMap invalide (pas de map)");
+		exit_error(ERR_NO_MAP);
 	}
 	if (!infos->data->lines[map_start])
 	{
 		cleanup_parsing(infos);
-		exit_error("Error\nPas de map");
+		exit_error(ERR_NO_MAP);
 	}
 	if (!check_map_chars(infos, map_start))
 	{
 		cleanup_parsing(infos);
-		exit_error("Error\nCaractère invalide dans la map");
+		exit_error(ERR_INVALID_CHAR);
 	}
 }
 
@@ -36,26 +36,26 @@ static void	print_debug_steps(const char *message, t_map_data map_data)
 {
 	if (g_debug_mode)
 	{
-		printf("\n--- %s ---\n", message);
+		printf(DEBUG_SEPARATOR, message);
 		debug_print_map(map_data);
 	}
 }
 
 static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 {
-	print_debug_steps("CARTE INITIALE", map_data);
+	print_debug_steps(DEBUG_INITIAL_MAP, map_data);
 	mark_spaces_as_exterior(map_data);
-	print_debug_steps("APRÈS MARQUAGE DES ESPACES", map_data);
+	print_debug_steps(DEBUG_MAP_AFTER_SPACE, map_data);
 	if (!check_area_closed(map_data))
 	{
 		if (g_debug_mode)
 		{
-			printf("\n--- ERREUR: CARTE NON FERMÉE ---\n");
+			printf(DEBUG_UNCLOSED_MAP);
 			debug_print_map_with_coords(map_data);
 		}
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit_error("Error\nMap pas fermee");
+		exit(1);
 	}
 }
 
@@ -68,18 +68,17 @@ static void	validate_player_count(t_infos *infos, t_map_data map_data)
 	{
 		if (g_debug_mode)
 		{
-			printf("\n--- ERREUR: NOMBRE DE JOUEURS INVALIDE (%d) ---\n",
-				player_count);
+			printf(DEBUG_PLAYER_COUNT, player_count);
 			debug_print_map(map_data);
 		}
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit_error("Error\nTrop de joueurs");
+		exit_error(ERR_TOO_MANY_PLAYER);
 	}
-	print_debug_steps("CARTE VALIDÉE AVEC SUCCÈS", map_data);
+	print_debug_steps(DEBUG_VALID_MAP, map_data);
 }
 
-void check_map_validity(t_infos *infos, int map_start)
+void	check_map_validity(t_infos *infos, int map_start)
 {
 	t_ext_map	ext_map;
 	t_map_data	map_data;
@@ -92,10 +91,10 @@ void check_map_validity(t_infos *infos, int map_start)
 	ext_map.width = width;
 	ext_map.map_start = map_start;
 	map_data.map = create_extended_map(infos, &ext_map);
-	if (!map_data.map)
+	if (map_data.map == NULL)
 	{
 		cleanup_parsing(infos);
-		exit_error("Error\nMalloc");
+		exit(1);
 	}
 	map_data.height = height + 2;
 	map_data.width = width + 2;

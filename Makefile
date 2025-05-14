@@ -9,7 +9,7 @@ DEPS		:= $(OBJS:.o=.d)
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -ofast -flto -march=native -funroll-loops
+CFLAGS		:= -Wall -Wextra -Werror -g3
 CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/
 
 MLX_DIR      := mlx/
@@ -24,6 +24,8 @@ DIR_DUP		= mkdir -p $(BUILD_DIR)
 .DEFAULT_GOAL	:= all
 
 # ********** COUNT FILES ***************************************************** #
+
+DEBUG_MODE	?= 0
 
 NEED_REBUILD_SRC := $(shell find $(SRCSDIR) -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
 NEWER_HEADERS := $(shell find incs/ libft/incs/ -name "*.h" -newer $(NAME) 2>/dev/null | wc -l)
@@ -50,7 +52,7 @@ endif
 -include $(DEPS)
 
 .PHONY: init
-init:
+init: ensure_mlx FORCE
 	@mkdir -p $(BUILD_DIR)
 	@echo "$(NEED_REBUILD)" > $(BUILD_DIR)total_files
 	@echo "0" > $(BUILD_DIR)current_file
@@ -65,8 +67,21 @@ $(NAME): libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJS) $(MAN_PAGE)
 libft/libft.a: FORCE
 	@$(MAKE) -C libft
 
-mlx/libmlx_Linux.a: FORCE
-	@$(MAKE) -C mlx
+mlx/libmlx_Linux.a: ensure_mlx
+	@if [ -d "$(MLX_DIR)" ]; then \
+		$(MAKE) -C mlx; \
+	else \
+		echo "$(RED_BOLD)Error: MLX directory not found and could not be cloned$(RESETC)"; \
+		exit 1; \
+	fi
+
+.PHONY: ensure_mlx
+ensure_mlx: FORCE
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "$(CYAN)Adding minilibx as submodule...$(RESETC)"; \
+		git submodule add https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
+		git submodule update --init --recursive; \
+	fi
 
 $(BUILD_DIR)%.o: $(SRCSDIR)%.c
 	@mkdir -p $(dir $@)
@@ -90,7 +105,11 @@ $(BUILD_DIR)%.o: $(SRCSDIR)%.c
 		printf "⠴"; \
 	fi; \
 	printf "] [%d/%d] $(RESETC)%s" "$$CURRENT" "$$TOTAL" "$<"
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $< -D DEBUG_MODE=$(DEBUG_MODE)
+
+.PHONY: debug
+debug: clean
+	@$(MAKE) DEBUG_MODE=1
 
 .PHONY: clean
 clean:

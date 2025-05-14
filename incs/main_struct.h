@@ -1,6 +1,8 @@
 #ifndef MAIN_STRUCT_H
 # define MAIN_STRUCT_H
 
+# include <stdbool.h>
+
 # include "structs.h"
 
 int		is_moving(t_main_struct *t_main_struct);

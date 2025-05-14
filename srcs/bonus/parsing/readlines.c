@@ -42,7 +42,7 @@ char	*read_line(int fd)
 	char		*line;
 	ssize_t		bytes_read;
 
-	if (read_line_check(fd, buffer) == -1)
+	if (!read_line_check(fd, buffer))
 		return (NULL);
 	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (read_buffer == NULL)

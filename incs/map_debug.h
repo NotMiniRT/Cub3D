@@ -13,7 +13,7 @@
 # define RESET		"\033[0m"
 
 # ifndef DEBUG_MODE
-#  define DEBUG_MODE 1
+#  define DEBUG_MODE 0
 # endif
 
 void	print_cell_color(char c);

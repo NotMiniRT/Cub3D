@@ -22,17 +22,26 @@ typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 
 # define _ERROR		"Error: %s\n"
 
-# define ERR_NB_PARAMS		"Error: wrong number of parameters\n"
-# define ERR_EXTENSION		"Error: wrong file format extension\n"
+# define ERR_NB_PARAMS			"Error\nWrong number of parameters\n"
+# define ERR_EXTENSION			"Error\nWrong file format extension\n"
 
-# define ERR_COLOR_INVALID	"Invalid color format\n"
-# define ERR_COLOR_RANGE	"Color value out of range (0-255)\n"
-# define ERR_DUPLICATE		"Error\nDuplicate %s identifier\n"
+# define ERR_COLOR_INVALID		"Invalid color format\n"
+# define ERR_DUPLICATE			"Error\nDuplicate %s identifier\n"
 
-# define ERR_SCENE_INVALID "Error\nInvalid scene configuration\n"
-# define ERR_PARSING_ELEMENT "Error\nError parsing element: %s\n"
-# define ERR_INCOMPLETE_SCENE "Error\nScene incomplete before map start\n"
-# define ERR_MISSING_ELEMENT "Error\nMissing required scene elements\n"
+# define ERR_INCOMPLETE_SCENE	"Error\nScene incomplete before map start\n"
+# define ERR_INVALID_CHAR		"Error\nInvalid character encountered\n"
+# define ERR_MISSING_ELEMENT	"Error\nMissing required scene elements\n"
+# define ERR_NO_MAP				"Error\nNo map in file"
+# define ERR_PARSING_ELEMENT	"Error\nParsing element: %s\n"
+# define ERR_SCENE_INVALID		"Error\nInvalid scene configuration\n"
+# define ERR_TOO_MANY_PLAYER	"Error\nToo many players"
+
+# define DEBUG_INITIAL_MAP		"INITIAL MAP"
+# define DEBUG_MAP_AFTER_SPACE	"MAP AFTER SPACES INCLUSING"
+# define DEBUG_PLAYER_COUNT		"\n--- ERROR: INVALID NUMBER OF PLAYER (%d) ---\n"
+# define DEBUG_SEPARATOR		"\n--- %s ---\n"
+# define DEBUG_UNCLOSED_MAP		"\n--- ERROR: UNCLOSED MAP ---\n"
+# define DEBUG_VALID_MAP		"MAP SUCCESSFULLY VALIDATED"
 
 typedef struct s_color
 {
@@ -51,6 +60,12 @@ typedef struct s_scene
 	char	*no_texture;
 	char	*ea_texture;
 	int		pos[3];
+	int		collectible_count;
+	int		door_count;
+	int		monster_count;
+	int		collectible_positions[100][2]; // Storing up to 100 collectibles (x,y)
+	int		door_positions[100][2];        // Storing up to 100 doors (x,y)
+	int		monster_positions[100][2];     // Storing up to 100 monsters (x,y)
 }	t_scene;
 
 typedef struct s_parsing
@@ -81,7 +96,7 @@ char	*read_line(int fd);
 
 char	*extract_line(char **buffer);
 char	*join_and_free(char *s1, char *s2);
-int		read_line_check(int fd, char *buffer);
+bool	read_line_check(int fd, char *buffer);
 
 void	free_array(char **array);
 void	free_scene(t_scene *scene);
