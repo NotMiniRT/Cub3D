@@ -24,7 +24,6 @@ int	init_r_h_tab(t_main_struct *main_struct)
 	return (0);
 }
 
-
 void	free_main_struct(t_main_struct *main_struct)
 {
 	if (!main_struct)
@@ -36,6 +35,7 @@ void	free_main_struct(t_main_struct *main_struct)
 	free_image_cub(main_struct, main_struct->wall_s);
 	free_image_cub(main_struct, main_struct->wall_o);
 	free_image_cub(main_struct, main_struct->wall_n);
+	free_image_cub(main_struct, main_struct->fog);
 	if (main_struct->mlx_ptr != NULL && main_struct->win_ptr != NULL)
 		mlx_destroy_window(main_struct->mlx_ptr, main_struct->win_ptr);
 	if (main_struct->cos_r_h_tab != NULL)

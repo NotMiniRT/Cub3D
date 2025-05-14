@@ -31,8 +31,12 @@ static int	init_display(t_main_struct *main_struct, t_infos *infos)
 		|| get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
 			infos->scene->ea_texture)
 		|| create_img_cub(main_struct, &(main_struct->frame), \
-			WINDOW_WIDTH, WINDOW_HEIGHT))
+			WINDOW_WIDTH, WINDOW_HEIGHT)
+		|| get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
+			"assets/textures/walls/fog.xpm"))
 		return (1);
+	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
+	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
 	if (init_r_h_tab(main_struct))
 		return (1);
 	init_player(main_struct->player, infos);
@@ -53,22 +57,6 @@ int	start_display(t_main_struct *main_struct, t_infos *infos)
 	if (init_display(main_struct, infos))
 		return (1);
 	main_struct->map = &(infos->data->lines[infos->map_start]);
-
-
-	// main_struct->map = malloc(sizeof(char *) * 11);
-	// main_struct->map[0] = "111111111111111";
-	// main_struct->map[1] = "110000000000011";
-	// main_struct->map[2] = "110000000000011";
-	// main_struct->map[3] = "110000000000011";
-	// main_struct->map[4] = "110000000000011";
-	// main_struct->map[5] = "110000000000011";
-	// main_struct->map[6] = "110000000000011";
-	// main_struct->map[7] = "110001001100011";
-	// main_struct->map[8] = "110000110000011";
-	// main_struct->map[9] = "001111111111111";
-	// main_struct->map[10] = NULL;
-	// main_struct->player->x = 4;
-	// main_struct->player->y = 8;
 	init_inputs(main_struct);
 	mlx_loop(main_struct->mlx_ptr);
 	mlx_do_key_autorepeaton(main_struct->mlx_ptr);

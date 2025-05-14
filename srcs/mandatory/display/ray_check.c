@@ -6,6 +6,7 @@
 static void	define_basic_param_calculus(t_ray_calculus *calcul,
 		double cos_sin[2], t_main_struct *main_struct)
 {
+	calcul->flag_dist = 0;
 	calcul->player_x = main_struct->player->x;
 	calcul->player_y = main_struct->player->y;
 	calcul->dir_x = cos_sin[0];
@@ -60,7 +61,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 		calcul->wall_y = ((calcul->map_x - calcul->player_x
 					+ (1 - calcul->step_x) * 0.5)
 				/ calcul->dir_x) * calcul->dir_y;
-		calcul->dist = sqrt(pow(calcul->wall_x, 2) + pow(calcul->wall_y, 2));
+		calcul->dist = calcul->side_dist_x - calcul->delta_x;
 	}
 	else
 	{
@@ -69,29 +70,39 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 				/ calcul->dir_y) * calcul->dir_x;
 		calcul->wall_y = (calcul->map_y - calcul->player_y
 				+ (1 - calcul->step_y) * 0.5);
-		calcul->dist = sqrt(pow(calcul->wall_x, 2) + pow(calcul->wall_y, 2));
+		calcul->dist = calcul->side_dist_y - calcul->delta_y;
 	}
 }
 
-static void	fill_cross(t_ray_calculus *calcul, double (*cross)[3])
+static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
 {
 	(*cross)[0] = calcul->dist;
 	(*cross)[1] = calcul->side;
+	if (calcul->flag_dist)
+	{
+		(*cross)[0] = RENDER_DIST;
+		(*cross)[1] = 0;
+	}
 	if (calcul->side == 1)
 		(*cross)[2] = calcul->player_x + calcul->wall_x;
 	else
 		(*cross)[2] = calcul->player_y + calcul->wall_y;
+	(*cross)[3] = calcul->flag_dist;
 }
 
 void	ray_check(t_main_struct *main_struct,
-		double (*cross)[3], double cos_sin[2])
+		double (*cross)[4], double cos_sin[2])
 {
 	t_ray_calculus	calcul;
 
 	define_basic_param_calculus(&calcul, cos_sin, main_struct);
 	get_step_and_side_dist(&calcul);
-	while (main_struct->map[calcul.map_y][calcul.map_x] != '1')
+	while (!calcul.flag_dist
+		&& main_struct->map[calcul.map_y][calcul.map_x] != '1')
 	{
+		calcul.flag_dist
+			= (calcul.side_dist_x > RENDER_DIST
+				&& calcul.side_dist_y > RENDER_DIST);
 		if (calcul.side_dist_x < calcul.side_dist_y)
 		{
 			calcul.side_dist_x += calcul.delta_x;

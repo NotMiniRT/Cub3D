@@ -37,9 +37,9 @@ typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 typedef struct s_color
 {
 	char			*line;
-	unsigned char	r;
-	unsigned char	g;
 	unsigned char	b;
+	unsigned char	g;
+	unsigned char	r;
 }	t_color;
 
 typedef struct s_scene
