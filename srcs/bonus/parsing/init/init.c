@@ -10,6 +10,9 @@
 void	init_data(t_infos *infos, char **av)
 {
 	infos->data->line = NULL;
+	infos->data->count = 0;
+	infos->data->capacity = 16;
+	infos->data->new_lines = NULL;
 	infos->data->fd = open(av[1], O_RDONLY);
 	infos->data->lines = malloc(sizeof(char *) * 16);
 	if (infos->data->lines == NULL || infos->data->fd == -1)
@@ -18,9 +21,7 @@ void	init_data(t_infos *infos, char **av)
 		cleanup_parsing(infos);
 		exit(errno);
 	}
-	infos->data->count = 0;
-	infos->data->capacity = 16;
-	infos->data->new_lines = NULL;
+	ft_memset(infos->data->lines, 0, sizeof(char *) * 16);
 }
 
 void	init_parsing(t_infos *infos, char **av)
@@ -38,10 +39,10 @@ void	init_parsing(t_infos *infos, char **av)
 		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		exit(errno);
 	}
-	init_data(infos, av);
 	ft_memset(infos->scene, 0, sizeof(t_scene));
+	init_data(infos, av);
 	infos->data->lines = read_all_lines(infos->data);
-	if (infos->data->lines == NULL)
+	if (infos->data->lines == NULL || errno != 0)
 	{
 		cleanup_parsing(infos);
 		exit(errno);
