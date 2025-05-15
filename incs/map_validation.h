@@ -18,13 +18,14 @@ bool	is_collectible(char c);
 bool	is_door(char c);
 bool	is_monster(char c);
 
-int		count_players(t_map_data map_data, t_infos *infos);
-
-bool    check_doors(t_map_data map_data);
+bool	check_doors(t_map_data map_data, t_infos *infos);
 bool	are_entities_valid(t_map_data map_data);
 
-void    store_collectibles(t_map_data map_data, t_infos *infos);
-void    store_doors(t_map_data map_data, t_infos *infos);
+int		count_players(t_map_data map_data, t_infos *infos);
+
+
+void    store_door(t_map_data map_data, int i, int j, t_infos *infos);
+
 void    store_monsters(t_map_data map_data, t_infos *infos);
 
 void	check_map_validity(t_infos *infos, int map_start);

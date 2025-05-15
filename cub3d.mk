@@ -109,6 +109,7 @@ override MAPSRCBONUS	:= \
 	map_check_playable_area \
 	map_check_validity \
 	map_create_copy \
+	map_debug_collectibles \
 	map_debug \
 	map_init_boundaries \
 	map_main_check \

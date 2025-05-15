@@ -11,55 +11,6 @@
 #include "map_validation.h"
 #include "parsing.h"
 
-const int	g_debug_mode = DEBUG_MODE;
-
-static void	debug_print_entities(t_infos *infos, int show_flags)
-{
-	int	i;
-
-	if (!g_debug_mode)
-		return ;
-	printf("\n--- DEBUG: ENTITY POSITIONS ---\n");
-	if ((show_flags & 1) && infos->scene->collectible_count > 0)
-	{
-		printf(GREEN "Collectibles (%d):" RESET "\n", infos->scene->collectible_count);
-		for (i = 0; i < infos->scene->collectible_count; i++)
-		{
-			printf("  C[%d]: x=%d, y=%d\n",
-				   i,
-				   infos->scene->collectible_positions[i][0],
-				   infos->scene->collectible_positions[i][1]);
-		}
-		printf("\n");
-	}
-	if ((show_flags & 2) && infos->scene->door_count > 0)
-	{
-		printf(BLUE "Doors (%d):" RESET "\n", infos->scene->door_count);
-		for (i = 0; i < infos->scene->door_count; i++)
-		{
-			printf("  D[%d]: x=%d, y=%d, value=%d\n",
-				   i,
-				   infos->scene->door_positions[i][0],
-				   infos->scene->door_positions[i][1],
-				   infos->scene->door_positions[i][2]);
-		}
-		printf("\n");
-	}
-	if ((show_flags & 4) && infos->scene->monster_count > 0)
-	{
-		printf(RED "Monsters (%d):" RESET "\n", infos->scene->monster_count);
-		for (i = 0; i < infos->scene->monster_count; i++)
-		{
-			printf("  M[%d]: x=%d, y=%d\n",
-				   i,
-				   infos->scene->monster_positions[i][0],
-				   infos->scene->monster_positions[i][1]);
-		}
-		printf("\n");
-	}
-	printf("---------------------------\n\n");
-}
-
 static void	validate_map_basics(t_infos *infos, int map_start)
 {
 	if (map_start < 6)
@@ -79,15 +30,6 @@ static void	validate_map_basics(t_infos *infos, int map_start)
 	}
 }
 
-static void	print_debug_steps(const char *message, t_map_data map_data)
-{
-	if (g_debug_mode)
-	{
-		printf(DEBUG_SEPARATOR, message);
-		debug_print_map(map_data);
-	}
-}
-
 static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 {
 	mark_spaces_as_exterior(map_data);
@@ -98,7 +40,7 @@ static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 		cleanup_parsing(infos);
 		exit(1);
 	}
-	if (!check_doors(map_data))
+	if (!check_doors(map_data, infos))
 	{
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
@@ -110,8 +52,6 @@ static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 		cleanup_parsing(infos);
 		exit(1);
 	}
-	store_collectibles(map_data, infos);
-	store_doors(map_data, infos);
 	store_monsters(map_data, infos);
 	debug_print_entities(infos, 7);
 }
