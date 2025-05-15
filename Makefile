@@ -4,7 +4,9 @@ include cub3d.mk
 
 BUILD_DIR	:= .build/
 OBJS 		:= $(patsubst $(SRCSDIR)%.c,$(BUILD_DIR)%.o,$(SRCS))
+OBJSB		:= $(patsubst $(SRCSDIR)%.c,$(BUILD_DIR)%.o,$(SRCSBONUS))
 DEPS		:= $(OBJS:.o=.d)
+DEPSB		:= $(OBJSB:.o=.d)
 
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
@@ -59,6 +61,7 @@ init: ensure_mlx FORCE
 
 .PHONY: all
 all: init $(NAME)
+	@$(RM) .bonus
 
 $(NAME): libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJS) $(MAN_PAGE)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft $(MLX_FLAGS)
@@ -111,6 +114,19 @@ $(BUILD_DIR)%.o: $(SRCSDIR)%.c
 debug: clean
 	@$(MAKE) DEBUG_MODE=1
 
+.PHONY: debugb
+debugb: clean
+	@$(MAKE) bonus DEBUG_MODE=1
+
+.PHONY: bonus
+bonus: init .bonus
+
+.bonus: libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJSB)
+	@$(RM) $(NAME)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJSB) -L libft -lft $(MLX_FLAGS)
+	@echo "\n$(GREEN_BOLD)✓ $(NAME) bonus is ready $(RESETC)\n"
+	@touch .bonus
+
 .PHONY: clean
 clean:
 	$(MAKE) clean -C libft/
@@ -120,7 +136,7 @@ clean:
 .PHONY: fclean
 fclean: clean
 	$(MAKE) fclean -C libft/
-	@$(RM) $(RMDIR) $(NAME) $(BUILD_DIR)
+	@$(RM) $(RMDIR) $(NAME) $(BUILD_DIR) .bonus
 	@$(RM) $(RMDIR)
 	@echo "$(RED_BOLD)✓ $(NAME) is fully cleaned!$(RESETC)"
 
