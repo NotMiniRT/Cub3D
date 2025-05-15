@@ -16,10 +16,7 @@ static int	check_line_integrity(char *line)
 		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && \
 			line[i] != 'N' && line[i] != 'S' && line[i] != 'E' && \
 			line[i] != 'W' && line[i] != '\n')
-		{
-			// ft_dprintf(STDERR_FILENO, "char qui casse: %c\n", line[i]);
 			return (false);
-		}
 		i++;
 	}
 	return (true);
@@ -86,7 +83,7 @@ int	check_scene_validity(t_infos *infos)
 		else if (result == -2)
 		{
 			cleanup_parsing(infos);
-			// exit_error(ERR_SCENE_INVALID);
+			exit(1);
 		}
 		i++;
 	}

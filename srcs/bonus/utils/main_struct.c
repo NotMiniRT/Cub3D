@@ -4,6 +4,7 @@
 #include "image.h"
 #include "math.h"
 #include "common.h"
+#include <stdbool.h>
 
 int	init_r_h_tab(t_main_struct *main_struct)
 {
@@ -12,7 +13,7 @@ int	init_r_h_tab(t_main_struct *main_struct)
 	main_struct->cos_r_h_tab = malloc(sizeof(double) * WINDOW_WIDTH);
 	main_struct->r_h_tab = malloc(sizeof(double) * WINDOW_WIDTH);
 	if (main_struct->cos_r_h_tab == NULL || main_struct->r_h_tab == NULL)
-		return (1);
+		return (false);
 	i = 0;
 	while (i < WINDOW_WIDTH)
 	{
@@ -23,7 +24,6 @@ int	init_r_h_tab(t_main_struct *main_struct)
 	}
 	return (true);
 }
-
 
 void	free_main_struct(t_main_struct *main_struct)
 {

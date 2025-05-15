@@ -19,11 +19,10 @@ bool	is_door(char c);
 bool	is_monster(char c);
 
 int		count_players(t_map_data map_data, t_infos *infos);
-int		count_collectibles(t_map_data map_data);
-int		count_doors(t_map_data map_data);
-int		count_monsters(t_map_data map_data);
 
 bool    check_doors(t_map_data map_data);
+bool	are_entities_valid(t_map_data map_data);
+
 void    store_collectibles(t_map_data map_data, t_infos *infos);
 void    store_doors(t_map_data map_data, t_infos *infos);
 void    store_monsters(t_map_data map_data, t_infos *infos);

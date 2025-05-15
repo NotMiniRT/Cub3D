@@ -5,7 +5,7 @@
 #include "parsing.h"
 #include "map_debug.h"
 
-extern const int	g_debug_mode = DEBUG_MODE;
+extern const int	g_debug_mode;
 
 bool	check_map_chars(t_infos *infos, int map_start)
 {
@@ -21,11 +21,9 @@ bool	check_map_chars(t_infos *infos, int map_start)
 		{
 			c = infos->data->lines[i][j];
 			if (c != '0' && c != '1' && c != 'N' && c != 'S' && \
-				c != 'E' && c != 'W' && !ft_isspace(c) && c != '\n')
+				c != 'E' && c != 'W' && c != 'D' && c != 'M' && \
+				c != 'C' && c != '\n' && !ft_isspace(c))
 			{
-				if (g_debug_mode)
-					printf("Caractère invalide '%c' ligne %d, position %d\n",
-						c, i - map_start + 1, j + 1);
 				return (false);
 			}
 			j++;
