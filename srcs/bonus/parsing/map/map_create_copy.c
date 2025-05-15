@@ -6,9 +6,31 @@ static void	init_tmp(t_filling *tmp, t_infos *infos, t_ext_map *ext_map)
 {
 	tmp->i = 0;
 	tmp->j = 0;
-	tmp->src_len = \
-		ft_strlen(infos->data->lines[ext_map->map_start + tmp->i]);
-	tmp->c = infos->data->lines[ext_map->map_start + tmp->i][tmp->j];
+	if (infos->data->lines[ext_map->map_start + tmp->i])
+	{
+		tmp->src_len = \
+			ft_strlen(infos->data->lines[ext_map->map_start + tmp->i]);
+		if (tmp->src_len > 0)
+			tmp->c = infos->data->lines[ext_map->map_start + tmp->i][tmp->j];
+		else
+			tmp->c = ' ';
+	}
+	else
+	{
+		tmp->src_len = 0;
+		tmp->c = ' ';
+	}
+}
+
+static void	update_len(t_ext_map *ext_map, t_infos *infos, t_filling *tmp)
+{
+	if (infos->data->lines[ext_map->map_start + tmp->i])
+		tmp->src_len = \
+			ft_strlen(infos->data->lines[ext_map->map_start + tmp->i]);
+	else
+		tmp->src_len = 0;
+	ext_map->map[tmp->i + 1][0] = ' ';
+	tmp->j = 0;
 }
 
 static void	fill_extended_map(t_ext_map *ext_map, t_infos *infos)
@@ -18,8 +40,7 @@ static void	fill_extended_map(t_ext_map *ext_map, t_infos *infos)
 	init_tmp(&tmp, infos, ext_map);
 	while (tmp.i < ext_map->height)
 	{
-		ext_map->map[tmp.i + 1][0] = ' ';
-		tmp.j = 0;
+		update_len(ext_map, infos, &tmp);
 		while (tmp.j < tmp.src_len)
 		{
 			tmp.c = infos->data->lines[ext_map->map_start + tmp.i][tmp.j];
