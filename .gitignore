@@ -58,5 +58,6 @@ cub3D
 libft.a
 *logs
 
+.bonus
 .vscode
-# mlx/
+mlx/
