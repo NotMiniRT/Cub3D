@@ -76,6 +76,8 @@ char	**read_all_lines(t_parsing *data)
 	data->line = read_line(data->fd);
 	if (data->line == NULL)
 	{
+		if (errno == 0)
+			ft_dprintf(STDERR_FILENO, ERR_EMPTY_FILE);
 		free_array(data->lines);
 		return (NULL);
 	}
