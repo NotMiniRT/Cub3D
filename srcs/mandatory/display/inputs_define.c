@@ -49,8 +49,6 @@ int	handle_input(int keysym, t_main_struct *main_struct)
 {
 	if (keysym == XK_Escape)
 		on_destroy(main_struct);
-	else if (keysym == XK_i)
-		player_log(main_struct);
 	else if (keysym == XK_Shift_L)
 		main_struct->inputs[SHIFT] = 1;
 	else if (keysym == XK_a || keysym == XK_d

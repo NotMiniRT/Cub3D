@@ -1,9 +1,7 @@
-#include "player.h"
+#include "structs.h"
 #include "common.h"
 #include <math.h>
-#include <stdio.h>
 #include "ray.h"
-#include "main_struct.h"
 #include "parsing.h"
 
 int	init_player(t_player *player, t_infos *infos)
@@ -82,10 +80,4 @@ void	move_player(t_main_struct *main_struct, int move_dir_front,
 					+ PIX05) * move_dir_side * PLAYER_SPEED;
 		one_direction(main_struct, move_x, move_y);
 	}
-}
-
-void	player_log(t_main_struct *main_struct)
-{
-	printf("player: x: %f, y: %f, angle: %f\n", main_struct->player->x,
-		main_struct->player->y, main_struct->player->fov_angle);
 }
