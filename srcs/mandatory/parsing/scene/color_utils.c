@@ -32,7 +32,7 @@ bool	is_valid_color_component(char *str, unsigned char *component)
 	return (true);
 }
 
-bool	parse_color_components(char *line, t_color *color)
+bool	parse_color_components(char *line, t_color_parse *color)
 {
 	char	**components;
 	bool	result;
@@ -58,14 +58,14 @@ bool	parse_color_components(char *line, t_color *color)
 
 bool	parse_floor_color(t_scene *scene, char *line)
 {
-	t_color	*color;
+	t_color_parse	*color;
 
 	if (scene->floor_color)
 	{
 		ft_dprintf(STDERR_FILENO, ERR_DUPLICATE, COLOR_F);
 		return (false);
 	}
-	color = malloc(sizeof(t_color));
+	color = malloc(sizeof(t_color_parse));
 	if (color == NULL)
 	{
 		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
@@ -85,11 +85,11 @@ bool	parse_floor_color(t_scene *scene, char *line)
 
 bool	parse_ceiling_color(t_scene *scene, char *line)
 {
-	t_color	*color;
+	t_color_parse	*color;
 
 	if (scene->ceiling_color)
 		return (false);
-	color = malloc(sizeof(t_color));
+	color = malloc(sizeof(t_color_parse));
 	if (color == NULL)
 	{
 		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
