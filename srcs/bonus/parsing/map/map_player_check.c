@@ -7,7 +7,7 @@ static bool	is_player(char c)
 
 bool	is_player_or_empty(char c)
 {
-	return (c == '0' || is_player(c));
+	return (c == '0' || is_player(c) || c == 'C' || c == 'M');
 }
 
 int	count_players(t_map_data map_data, t_infos *infos)
