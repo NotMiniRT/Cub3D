@@ -67,7 +67,7 @@ typedef struct s_scene
 	int		door_count;
 	int		monster_count;
 	int		collectible_positions[100][2]; // Storing up to 100 collectibles (x,y)
-	int		door_positions[100][2];        // Storing up to 100 doors (x,y)
+	int		door_positions[100][3];        // Storing up to 100 doors (x,y)
 	int		monster_positions[100][2];     // Storing up to 100 monsters (x,y)
 }	t_scene;
 

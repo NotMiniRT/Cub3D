@@ -48,6 +48,8 @@ void	store_doors(t_map_data map_data, t_infos *infos)
 				{
 					infos->scene->door_positions[count][0] = j;
 					infos->scene->door_positions[count][1] = i;
+					infos->scene->door_positions[count][2] = 100;
+
 					count++;
 				}
 			}
