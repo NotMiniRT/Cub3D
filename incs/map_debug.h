@@ -2,6 +2,7 @@
 # define MAP_DEBUG_H
 
 # include "map_types.h"
+# include "parsing.h"
 
 # define RED		"\033[31m"
 # define GREEN		"\033[32m"
@@ -19,5 +20,8 @@
 void	print_cell_color(char c);
 void	debug_print_map(t_map_data map_data);
 void	debug_print_map_with_coords(t_map_data map_data);
+
+void	print_debug_steps(const char *message, t_map_data map_data);
+void	debug_print_entities(t_infos *infos, int show_flags);
 
 #endif
