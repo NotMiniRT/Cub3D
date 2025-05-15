@@ -1,11 +1,8 @@
-#include "main_struct.h"
+#include "structs.h"
 #include "common.h"
-#include "player.h"
-#include "image.h"
 #include "mlx.h"
-#include <math.h>
-#include <stdio.h>
 #include "ray.h"
+#include <math.h>
 
 int	frame_display(t_main_struct *main_struct)
 {
