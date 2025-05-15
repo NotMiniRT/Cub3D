@@ -33,7 +33,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	main_struct->win_ptr = mlx_new_window(main_struct->mlx_ptr,
 			WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
-	if (main_struct->mlx_ptr == NULL)
+	if (main_struct->win_ptr == NULL)
 		return (false);
 	main_struct->player = malloc(sizeof(t_player));
 	if (main_struct->player == NULL)

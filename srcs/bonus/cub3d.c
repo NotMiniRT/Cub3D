@@ -3,7 +3,7 @@
 #include "common.h"
 #include "display.h"
 #include "libft.h"
-
+#include "ft_dprintf.h"
 #include "parsing.h"
 
 int	main(int ac, char **av)
@@ -13,7 +13,8 @@ int	main(int ac, char **av)
 
 	ft_memset(&main_struct, 0, sizeof(t_main_struct));
 	parsing(ac, av, &infos);
-	start_display(&main_struct, &infos);
+	if (!start_display(&main_struct, &infos))
+		ft_dprintf(2, "Error\nExternal function fail during initialisation\n");
 	free_main_struct(&main_struct);
 	cleanup_parsing(&infos);
 	return (EXIT_SUCCESS);
