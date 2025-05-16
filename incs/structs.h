@@ -27,15 +27,16 @@ typedef struct s_image_cub
 	int		pixel_bits;
 	int		line_bytes;
 	int		endian;
-	char	*buffer;
+	char	*buffer; // string de limage
 }	t_image_cub;
 
 typedef struct s_main_struct
 {
-	void			*mlx_ptr;
-	void			*win_ptr;
+	void			*mlx_ptr; // instance mlx
+	void			*win_ptr; // instance image de la fenetre
 	t_player		*player;
-	t_image_cub		*frame;
+	t_image_cub		*frame; // image principale
+	t_image_cub		*minimap; // image minimap
 	t_image_cub		*wall_n;
 	t_image_cub		*wall_o;
 	t_image_cub		*wall_s;

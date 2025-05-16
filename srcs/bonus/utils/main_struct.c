@@ -32,6 +32,7 @@ void	free_main_struct_img(t_main_struct *main_struct)
 	free_image_cub(main_struct, main_struct->wall_s);
 	free_image_cub(main_struct, main_struct->wall_o);
 	free_image_cub(main_struct, main_struct->wall_n);
+	// free_image_cub(main_struct, main_struct->minimap);
 	free_image_cub(main_struct, main_struct->fog);
 }
 

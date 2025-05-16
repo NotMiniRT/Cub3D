@@ -23,6 +23,8 @@ int	frame_display(t_main_struct *main_struct)
 		render_one_ray(main_struct, teta_cos_sin, row, teta);
 		row++;
 	}
+	// if (overlay(main_struct)) // dedans on set la minimap, en premier
+	// 	return (1);
 	mlx_put_image_to_window(main_struct->mlx_ptr, main_struct->win_ptr,
 		main_struct->frame->sprite, 0, 0);
 	return (0);

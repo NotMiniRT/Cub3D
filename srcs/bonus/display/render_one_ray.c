@@ -91,6 +91,7 @@ void	render_one_ray(t_main_struct *main_struct,
 	render_calc.res[3] = 0;
 	render_calc.teta = teta;
 	ray_check(main_struct, &(render_calc.res), teta_cos_sin);
+	//update ray_minimap(main_struct, render_calc.res); -> pour faire les rayons dans la minimap (ulterieur)
 	get_calcul_param(&render_calc, main_struct, teta_cos_sin, row);
 	row = row * 4;
 	j = 0;
