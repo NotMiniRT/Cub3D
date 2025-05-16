@@ -22,6 +22,8 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 			WINDOW_WIDTH, WINDOW_HEIGHT)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
 			"assets/textures/walls/fog.xpm"))
+		// || !create_img_cub(main_struct, &(main_struct->minimap), \
+			// WINDOW_WIDTH * 0.17, WINDOW_HEIGHT * 0.17)) // define plus tard
 		return (false);
 	return (true);
 }
