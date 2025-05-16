@@ -52,6 +52,7 @@ endif
 # ********** RULES *********************************************************** #
 
 -include $(DEPS)
+-include $(DEPSB)
 
 .PHONY: init
 init: ensure_mlx FORCE
@@ -63,7 +64,7 @@ init: ensure_mlx FORCE
 all: init $(NAME)
 	@$(RM) .bonus
 
-$(NAME): libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJS) $(MAN_PAGE)
+$(NAME): libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJS)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft $(MLX_FLAGS)
 	@echo "\n$(GREEN_BOLD)✓ $(NAME) is ready $(RESETC)\n"
 
