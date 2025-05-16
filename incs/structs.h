@@ -3,7 +3,7 @@
 
 # include "stdlib.h"
 
-typedef enum moves
+typedef enum e_moves
 {
 	UP = 0,
 	DOWN = 1,
@@ -20,6 +20,18 @@ typedef struct s_player
 	double	y;
 	double	fov_angle;
 }	t_player;
+
+typedef struct s_minimap
+{
+	int		player_x;
+	int		player_y;
+	int		x;
+	int		y;
+	int		map_x;
+	int		map_y;
+	int		color;
+	char	block_type;
+}	t_minimap;
 
 typedef struct s_image_cub
 {
@@ -44,6 +56,7 @@ typedef struct s_main_struct
 	t_image_cub		*fog;
 	int				ground;
 	int				ceil;
+	int				fuel; // [0;100]
 	char			**map;
 	double			*r_h_tab;
 	double			*cos_r_h_tab;

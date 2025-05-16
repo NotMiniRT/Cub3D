@@ -10,6 +10,6 @@
 # define PIX2 6.28318530718
 # define PIX05 1.57079632679
 # define PIXX15 4.71238898038
-# define RENDER_DIST 10
+# define RENDER_DIST 20
 
 #endif

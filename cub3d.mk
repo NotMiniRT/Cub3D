@@ -119,14 +119,17 @@ override MAPSRCBONUS	:= \
 SRCBONUS += $(addprefix $(DISPLAYDIR), $(addsuffix .c, $(DISPLAYSRCBONUS)))
 
 override DISPLAYSRCBONUS	:= \
-	inputs_define \
-	window_start \
 	frame_display \
 	image_function \
+	image_utils \
+	inputs_define \
+	minimap_drawing \
+	minimap \
+	mlx_loop \
+	overlay \
+	player_facing \
 	player \
 	ray_check \
-	mlx_loop \
-	timer \
 	render_one_ray \
-	image_utils \
-	player_facing \
+	timer \
+	window_start \

@@ -3,7 +3,18 @@
 #include "mlx.h"
 #include "ray.h"
 #include <math.h>
+#include "image.h"
+#include "minimap.h"
 
+/**
+ * Appeler les thread ici apres mlx_put_image (en gros)
+ * Avec 3 etats :
+ * 0 initialisation
+ * 1 calcul
+ * 2 attente tous les threads calculs finis
+ * boucle
+ * main process = update image + status
+ */
 int	frame_display(t_main_struct *main_struct)
 {
 	int		row;
@@ -23,9 +34,9 @@ int	frame_display(t_main_struct *main_struct)
 		render_one_ray(main_struct, teta_cos_sin, row, teta);
 		row++;
 	}
-	// if (overlay(main_struct)) // dedans on set la minimap, en premier
-	// 	return (1);
 	mlx_put_image_to_window(main_struct->mlx_ptr, main_struct->win_ptr,
 		main_struct->frame->sprite, 0, 0);
+	if (overlay(main_struct))
+		return (1);
 	return (0);
 }

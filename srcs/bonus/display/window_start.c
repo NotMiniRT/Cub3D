@@ -21,9 +21,9 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 		|| !create_img_cub(main_struct, &(main_struct->frame), \
 			WINDOW_WIDTH, WINDOW_HEIGHT)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
-			"assets/textures/walls/fog.xpm"))
-		// || !create_img_cub(main_struct, &(main_struct->minimap), \
-			// WINDOW_WIDTH * 0.17, WINDOW_HEIGHT * 0.17)) // define plus tard
+			"assets/textures/walls/fog.xpm")
+		|| !create_img_cub(main_struct, &(main_struct->minimap), \
+			WINDOW_HEIGHT / 3, WINDOW_HEIGHT / 3))
 		return (false);
 	return (true);
 }
@@ -65,6 +65,7 @@ bool	start_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	main_struct->map = &(infos->data->lines[infos->map_start]);
 	init_inputs(main_struct);
+	//thread
 	mlx_loop(main_struct->mlx_ptr);
 	mlx_do_key_autorepeaton(main_struct->mlx_ptr);
 	return (true);
