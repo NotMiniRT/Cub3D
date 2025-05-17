@@ -42,7 +42,8 @@ static bool	is_valid_coord(t_main_struct *main_struct, int map_x, int map_y)
 	return (true);
 }
 
-static void	init_offset_fractional(t_main_struct *main_struct, t_minimap *minimap)
+static void	init_offset_fractional(t_main_struct *main_struct, \
+															t_minimap *minimap)
 {
 	minimap->y = -1;
 	minimap->player_x = (int)floor(main_struct->player->x);

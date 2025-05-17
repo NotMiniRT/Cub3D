@@ -3,17 +3,16 @@
 
 # include <stdbool.h>
 
-# include "minimap.h"
 # include "structs.h"
 
-# define MINIMAP_RADIUS 12
+# define MINIMAP_RADIUS 9
 # define PLAYER_DOT_SIZE 6
 
 bool	display_minimap(t_main_struct *main_struct);
 bool	overlay(t_main_struct *main_struct);
 
-void	draw_square(t_image_cub *img, int x, int y, int color);
-void	draw_player(t_image_cub *img);
+void	draw_square_with_offset(t_image_cub *img, t_minimap *minimap);
+void	draw_player(t_image_cub *img, double angle);
 void	fill_minimap_background(t_image_cub *img);
 
 #endif

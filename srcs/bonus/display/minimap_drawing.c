@@ -33,51 +33,67 @@ static void	minimap_set_pixel(t_image_cub *img, int x, int y, int color)
 	}
 }
 
-void	draw_square(t_image_cub *img, int x, int y, int color)
+void	draw_square_with_offset(t_image_cub *img, t_minimap *minimap)
 {
-	const int	block_size = (WINDOW_HEIGHT / 3) / (MINIMAP_RADIUS * 2);
-	int			i;
-	int			j;
-	int			start_x;
-	int			start_y;
+	int	i;
+	int	j;
+	int	start_x;
+	int	start_y;
 
-	start_x = x * block_size;
-	start_y = y * block_size;
+	start_x = minimap->x * minimap->block_size + -minimap->offset_x;
+	start_y = minimap->y * minimap->block_size + -minimap->offset_y;
 	i = 0;
-	while (i < block_size)
+	while (i < minimap->block_size)
 	{
 		j = 0;
-		while (j < block_size)
+		while (j < minimap->block_size)
 		{
-			minimap_set_pixel(img, start_x + i, start_y + j, color);
+			if (start_x + i >= 0 && start_x + i < (WINDOW_HEIGHT / 3) && \
+				start_y + j >= 0 && start_y + j < (WINDOW_HEIGHT / 3))
+				minimap_set_pixel(img, \
+									start_x + i, start_y + j, minimap->color);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	draw_player(t_image_cub *img)
+static void	draw_player_dot(t_image_cub *img, t_minimap_player *player)
 {
-	int		i;
-	int		j;
-	int		center_x;
-	int		center_y;
-	float	distance;
-
-	center_x = (WINDOW_HEIGHT / 3) / 2;
-	center_y = (WINDOW_HEIGHT / 3) / 2;
-	i = -PLAYER_DOT_SIZE;
-	while (i <= PLAYER_DOT_SIZE)
+	while (player->i <= PLAYER_DOT_SIZE)
 	{
-		j = -PLAYER_DOT_SIZE;
-		while (j <= PLAYER_DOT_SIZE)
+		player->j = -PLAYER_DOT_SIZE;
+		while (player->j <= PLAYER_DOT_SIZE)
 		{
-			distance = sqrt(i * i + j * j);
-			if (distance <= PLAYER_DOT_SIZE)
-				minimap_set_pixel(img, center_x + i, center_y + j, 0xFF2E86E1);
-			j++;
+			player->distance = \
+							sqrt(player->i * player->i + player->j * player->j);
+			if (player->distance <= PLAYER_DOT_SIZE)
+				minimap_set_pixel(img, player->center_x + player->i, \
+					player->center_y + player->j, 0xFF2E86E1);
+			player->j++;
 		}
-		i++;
+		player->i++;
+	}
+}
+
+void	draw_player(t_image_cub *img, double angle)
+{
+	t_minimap_player	player;
+
+	player.center_x = (WINDOW_HEIGHT / 3) / 2;
+	player.center_y = (WINDOW_HEIGHT / 3) / 2;
+	player.i = -PLAYER_DOT_SIZE;
+	draw_player_dot(img, &player);
+	player.dir_x = cos(angle) * (PLAYER_DOT_SIZE * 2);
+	player.dir_y = sin(angle) * (PLAYER_DOT_SIZE * 2);
+	player.i = 0;
+	while (player.i <= PLAYER_DOT_SIZE * 2)
+	{
+		minimap_set_pixel(img,
+			player.center_x + (player.dir_x * player.i) / (PLAYER_DOT_SIZE * 2),
+			player.center_y + (player.dir_y * player.i) / (PLAYER_DOT_SIZE * 2),
+			0xFFFFFFFF);
+		player.i++;
 	}
 }
 
@@ -92,7 +108,7 @@ void	fill_minimap_background(t_image_cub *img)
 		x = 0;
 		while (x < (WINDOW_HEIGHT / 3))
 		{
-			minimap_set_pixel(img, x, y, 0x002E4053);
+			minimap_set_pixel(img, x, y, 0x00101825);
 			x++;
 		}
 		y++;

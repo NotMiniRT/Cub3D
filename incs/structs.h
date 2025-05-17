@@ -21,17 +21,46 @@ typedef struct s_player
 	double	fov_angle;
 }	t_player;
 
+typedef struct s_minimap_player
+{
+	int		i;
+	int		j;
+	int		center_x;
+	int		center_y;
+	int		dir_x;
+	int		dir_y;
+	float	distance;
+}	t_minimap_player;
+
 typedef struct s_minimap
 {
-	int		player_x;
-	int		player_y;
+	double				offset_x;
+	double				offset_y;
+	double				fractional_x;
+	double				fractional_y;
+	int					block_size;
+	int					player_x;
+	int					player_y;
+	int					x;
+	int					y;
+	int					map_x;
+	int					map_y;
+	int					color;
+	char				block_type;
+}	t_minimap;
+
+typedef struct s_fuel_bar
+{
 	int		x;
 	int		y;
-	int		map_x;
-	int		map_y;
+	int		width;
+	int		height;
+	int		gauge_x;
+	int		gauge_y;
+	int		gauge_width;
+	int		gauge_height;
 	int		color;
-	char	block_type;
-}	t_minimap;
+}	t_fuel_bar;
 
 typedef struct s_image_cub
 {
@@ -49,6 +78,7 @@ typedef struct s_main_struct
 	t_player		*player;
 	t_image_cub		*frame; // image principale
 	t_image_cub		*minimap; // image minimap
+	t_image_cub		*fuel_bar;
 	t_image_cub		*wall_n;
 	t_image_cub		*wall_o;
 	t_image_cub		*wall_s;
