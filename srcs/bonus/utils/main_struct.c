@@ -5,6 +5,7 @@
 #include "math.h"
 #include "common.h"
 #include <stdbool.h>
+#include "multithreading.h"
 
 int	init_r_h_tab(t_main_struct *main_struct)
 {
@@ -59,6 +60,7 @@ void	free_main_struct(t_main_struct *main_struct)
 	main_struct->r_h_tab = NULL;
 	main_struct->win_ptr = NULL;
 	main_struct->cos_r_h_tab = NULL;
+	cleanup_threads(main_struct->thread_manager);
 }
 
 int	is_moving(t_main_struct *main_struct)
