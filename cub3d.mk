@@ -8,6 +8,7 @@ override BONUSDIR		:= bonus/
 override UTILSDIR		:= utils/
 override DISPLAYDIR		:= display/
 override PARSINGDIR		:= parsing/
+override THREADDIR		:= threads/
 override MAPDIR		    := $(PARSINGDIR)map/
 override SCENEDIR		:= $(PARSINGDIR)scene/
 override INITDIR		:= $(PARSINGDIR)init/
@@ -135,3 +136,9 @@ override DISPLAYSRCBONUS	:= \
 	render_one_ray \
 	timer \
 	window_start \
+
+SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
+
+override THREADSRC	:= \
+	threads_init \
+	threads_utils \
