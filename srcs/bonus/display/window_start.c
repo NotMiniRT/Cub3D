@@ -8,7 +8,14 @@
 #include "parsing.h"
 #include <stdio.h>
 #include "fuel_bar.h"
+#include "multithreading.h"
 
+#include "libft.h"
+
+/**
+ * @bug check les droits de fichiers avant de faire quoi que ce soit
+ *
+ */
 static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 {
 	if (!get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), \
@@ -51,6 +58,8 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	init_player(main_struct->player, infos);
 	main_struct->fuel = 100;
+	if (!init_threads(main_struct))
+		return (false);
 	return (true);
 }
 
@@ -69,7 +78,6 @@ bool	start_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	main_struct->map = &(infos->data->lines[infos->map_start]);
 	init_inputs(main_struct);
-	//thread
 	mlx_loop(main_struct->mlx_ptr);
 	mlx_do_key_autorepeaton(main_struct->mlx_ptr);
 	return (true);

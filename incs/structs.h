@@ -3,6 +3,8 @@
 
 # include "stdlib.h"
 
+typedef struct s_thread_manager	t_thread_manager;
+
 typedef enum e_moves
 {
 	UP = 0,
@@ -81,27 +83,28 @@ typedef struct s_image_cub
 
 typedef struct s_main_struct
 {
-	void			*mlx_ptr; // instance mlx
-	void			*win_ptr; // instance image de la fenetre
-	t_player		*player;
-	t_image_cub		*frame; // image principale
-	t_image_cub		*minimap; // image minimap
-	t_image_cub		*fuel_bar;
-	t_image_cub		*wall_n;
-	t_image_cub		*wall_o;
-	t_image_cub		*wall_s;
-	t_image_cub		*wall_e;
-	t_image_cub		*fog;
-	int				ground;
-	int				ceil;
-	int				fuel; // [0;100]
-	char			**map;
-	double			*r_h_tab;
-	double			*cos_r_h_tab;
-	size_t			created_at;
-	size_t			last_move;
-	short int		inputs[7];
-	int				is_moving;
+	void				*mlx_ptr; // instance mlx
+	void				*win_ptr; // instance image de la fenetre
+	t_player			*player;
+	t_image_cub			*frame; // image principale
+	t_image_cub			*minimap; // image minimap
+	t_image_cub			*fuel_bar;
+	t_image_cub			*wall_n;
+	t_image_cub			*wall_o;
+	t_image_cub			*wall_s;
+	t_image_cub			*wall_e;
+	t_image_cub			*fog;
+	t_thread_manager	*thread_manager;
+	int					ground;
+	int					ceil;
+	int					fuel;
+	char				**map;
+	double				*r_h_tab;
+	double				*cos_r_h_tab;
+	size_t				created_at;
+	size_t				last_move;
+	short int			inputs[7];
+	int					is_moving;
 }	t_main_struct;
 
 typedef struct s_render_calculus
