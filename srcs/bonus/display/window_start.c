@@ -7,6 +7,7 @@
 #include "player.h"
 #include "parsing.h"
 #include <stdio.h>
+#include "fuel_bar.h"
 
 static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 {
@@ -23,7 +24,9 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
 			"assets/textures/walls/fog.xpm")
 		|| !create_img_cub(main_struct, &(main_struct->minimap), \
-			WINDOW_HEIGHT / 3, WINDOW_HEIGHT / 3))
+			WINDOW_HEIGHT / 3, WINDOW_HEIGHT / 3)
+		|| !create_img_cub(main_struct, &(main_struct->fuel_bar), \
+			HUD_WIDTH, HUD_HEIGHT))
 		return (false);
 	return (true);
 }
@@ -47,6 +50,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
+	main_struct->fuel = 100;
 	return (true);
 }
 
