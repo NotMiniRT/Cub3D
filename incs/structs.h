@@ -21,6 +21,14 @@ typedef struct s_player
 	double	fov_angle;
 }	t_player;
 
+typedef struct s_gauge_color
+{
+	int	r;
+	int	g;
+	int	b;
+	int	color;
+}	t_gauge_color;
+
 typedef struct s_minimap_player
 {
 	int		i;
