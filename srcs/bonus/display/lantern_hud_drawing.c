@@ -49,11 +49,10 @@ static void	draw_gauge_segment(t_image_cub *img, int y, t_gauge_color color)
 
 static void	draw_gauge_border(t_image_cub *img)
 {
-	int	x;
-	int	y;
-	int	border_color;
+	static int	border_color = 0x00305070;
+	int			x;
+	int			y;
 
-	border_color = 0x00305070;
 	y = GAUGE_Y - GAUGE_BORDER;
 	while (y < GAUGE_Y + GAUGE_HEIGHT + GAUGE_BORDER)
 	{
@@ -71,11 +70,10 @@ static void	draw_gauge_border(t_image_cub *img)
 
 static void	draw_gauge_background(t_image_cub *img)
 {
-	int	x;
-	int	y;
-	int	bg_color;
+	static int	bg_color = 0x00101825;
+	int			x;
+	int			y;
 
-	bg_color = 0x00101825;
 	y = GAUGE_Y;
 	while (y < GAUGE_Y + GAUGE_HEIGHT)
 	{

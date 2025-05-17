@@ -36,7 +36,7 @@ int	frame_display(t_main_struct *main_struct)
 	}
 	mlx_put_image_to_window(main_struct->mlx_ptr, main_struct->win_ptr,
 		main_struct->frame->sprite, 0, 0);
-	if (overlay(main_struct))
+	if (!overlay(main_struct))
 		return (1);
 	return (0);
 }
