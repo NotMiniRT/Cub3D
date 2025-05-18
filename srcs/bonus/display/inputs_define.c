@@ -3,12 +3,8 @@
 #include "mlx.h"
 #include "player.h"
 #include <stdio.h>
-
-int	on_destroy(t_main_struct *main_struct)
-{
-	mlx_loop_end(main_struct->mlx_ptr);
-	return (0);
-}
+#include "common.h"
+#include "inputs.h"
 
 int	release_move(int keysym, t_main_struct *main_struct)
 {

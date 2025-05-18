@@ -69,6 +69,9 @@ static void	init_inputs(t_main_struct *main_struct)
 	mlx_loop_hook(main_struct->mlx_ptr, mlx_loop_action, main_struct);
 	mlx_hook(main_struct->win_ptr, 2, 1L << 1, handle_input, main_struct);
 	mlx_hook(main_struct->win_ptr, 3, 1L << 0, release_move, main_struct);
+	mlx_hook(main_struct->win_ptr, 6, 1L << 6, handle_mouse_move, main_struct);
+	mlx_hook(main_struct->win_ptr, 4, 1L << 2, handle_mouse_press, main_struct);
+	mlx_hook(main_struct->win_ptr, 5, 1L << 3, handle_mouse_rl, main_struct);
 	mlx_hook(main_struct->win_ptr, 17, 1, on_destroy, main_struct);
 }
 
