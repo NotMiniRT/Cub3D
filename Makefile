@@ -33,7 +33,7 @@ NEED_REBUILD_SRC := $(shell find $(SRCSDIR) -name "*.c" -newer $(NAME) 2>/dev/nu
 NEWER_HEADERS := $(shell find incs/ libft/incs/ -name "*.h" -newer $(NAME) 2>/dev/null | wc -l)
 EXECUTABLE_EXISTS := $(shell [ -f $(NAME) ] && echo 1 || echo 0)
 
-RE_TARGET := $(filter re,$(MAKECMDGOALS))
+RE_TARGET := $(filter re debug,$(MAKECMDGOALS))
 
 ifneq ($(RE_TARGET),)
 	NEED_REBUILD := $(words $(SRCS))
@@ -49,6 +49,25 @@ else
 	endif
 endif
 
+BONUS_TARGET := $(filter bonus debugb,$(MAKECMDGOALS))
+
+ifneq ($(BONUS_TARGET),)
+    NEED_REBUILD := $(words $(SRCSBONUS))
+else
+    ifneq ($(RE_TARGET),)
+        NEED_REBUILD := $(words $(SRCS))
+    else
+        ifeq ($(EXECUTABLE_EXISTS),0)
+            NEED_REBUILD := $(words $(SRCS))
+        else
+            ifeq ($(NEWER_HEADERS),0)
+                NEED_REBUILD := $(NEED_REBUILD_SRC)
+            else
+                NEED_REBUILD := $(words $(SRCS))
+            endif
+        endif
+    endif
+endif
 # ********** RULES *********************************************************** #
 
 -include $(DEPS)
