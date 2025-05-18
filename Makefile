@@ -64,7 +64,7 @@ init: ensure_mlx FORCE
 all: init $(NAME)
 	@$(RM) .bonus
 
-$(NAME): libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJS)
+$(NAME): libft/libft.a mlx/libmlx_Linux.a mlx/libmlx.a Makefile $(OBJS)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft $(MLX_FLAGS)
 	@echo "\n$(GREEN_BOLD)✓ $(NAME) is ready $(RESETC)\n"
 
@@ -122,7 +122,7 @@ debugb: clean
 .PHONY: bonus
 bonus: init .bonus
 
-.bonus: libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJSB)
+.bonus: libft/libft.a mlx/libmlx_Linux.a mlx/libmlx.a Makefile $(OBJSB)
 	@$(RM) $(NAME)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJSB) -L libft -lft $(MLX_FLAGS)
 	@echo "\n$(GREEN_BOLD)✓ $(NAME) bonus is ready $(RESETC)\n"

@@ -88,7 +88,6 @@ bool	init_threads(t_main_struct *main_struct)
 		pthread_mutex_lock(&main_struct->thread_manager->exit_mutex);
 		main_struct->thread_manager->should_exit = true;
 		pthread_mutex_unlock(&main_struct->thread_manager->exit_mutex);
-		pthread_barrier_wait(&main_struct->thread_manager->frame);
 		cleanup_threads(main_struct->thread_manager);
 		return (false);
 	}
