@@ -129,6 +129,7 @@ override DISPLAYSRCBONUS	:= \
 	minimap_drawing \
 	minimap \
 	mlx_loop \
+	mouse_hook \
 	overlay \
 	player_facing \
 	player \

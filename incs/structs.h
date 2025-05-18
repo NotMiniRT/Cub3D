@@ -105,6 +105,10 @@ typedef struct s_main_struct
 	size_t				last_move;
 	short int			inputs[7];
 	int					is_moving;
+	int					lock_mouse_x;
+    int					lock_mouse_y;
+    int					is_mouse_locked;
+    int					mouse_left_pressed;
 }	t_main_struct;
 
 typedef struct s_render_calculus
