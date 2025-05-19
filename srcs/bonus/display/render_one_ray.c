@@ -13,6 +13,10 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 	((int *)(img->buffer + (y * img->line_bytes) + (x)))[0] = color;
 }
 
+
+/*
+Obtient le mur a aficher en fonction du side et de la direction que face le joueur, si on ne fait absolument aucunne transcparence sur la porte il suffit de la remettre la
+*/
 static void	get_right_wall(t_render_calculus *render_calc,
 	t_main_struct *main_struct)
 {
@@ -33,6 +37,14 @@ static void	get_right_wall(t_render_calculus *render_calc,
 				+ (render_calc->text_x * main_struct->wall_o->line_bytes));
 }
 
+/*
+height: taille en pixel a l'ecran corrigee
+wall_pc: point de collision avec le mur, en %
+step: avancee en y sur l'ecrn pour chaque iteration ( pour les murs)
+text_x/y: la position en x/y sur la texture
+texpos: point de depart du mur en y
+height_check_minus?max: debut et fin du mur en y
+*/
 static void	get_calcul_param(t_render_calculus *render_calc,
 	t_main_struct *main_struct, double teta_cos_sin[2], int row)
 {
@@ -62,6 +74,11 @@ static void	get_calcul_param(t_render_calculus *render_calc,
 	get_right_wall(render_calc, main_struct);
 }
 
+
+/*
+boucle sur le tableau de collision pour chaque pixel du rayon et verfie si il y a besoin de l'afficher
+la partie commentee sert a reccuperer le bon pixel, il faut remplacer text_y/x par les coordonnes a reccuperer sur la texture
+*/
 int	put_transparency(t_render_calculus *render_calc,
 	t_main_struct *main_struct, int row, int j)
 {
@@ -81,7 +98,7 @@ int	put_transparency(t_render_calculus *render_calc,
 				change_pixel_color_opt(main_struct->frame, 0xFFFFFF, row, j);
 				return (1);
 			}
-			if (render_calc->hit_tab[i].type == DOOR)
+			else if (render_calc->hit_tab[i].type == DOOR)
 			{
 				change_pixel_color_opt(main_struct->frame, 0xFFFFFF, row, j);
 				return (1);
@@ -92,6 +109,9 @@ int	put_transparency(t_render_calculus *render_calc,
 	return (0);
 }
 
+/*
+pLACE LA COULEUR DU PIXEL si aucunne collision n'a eu besoin de s'afficher
+*/
 static void	render_on_screen(t_render_calculus *render_calc,
 	t_main_struct *main_struct, int row, int j)
 {
@@ -110,6 +130,10 @@ static void	render_on_screen(t_render_calculus *render_calc,
 	}
 }
 
+
+/*
+effectue les clculs de base pour chaque eleemnt du tableau de colision
+*/
 void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int row)
 {
 	int i;
@@ -128,7 +152,9 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 		i++;
 	}
 }
-
+/*
+beta: servirait a incrementer tout les textpos, items et murs, potentiellement inutile
+*/
 void add_text_pos(t_render_calculus *render_calc)
 {
 	int i;
@@ -141,7 +167,9 @@ void add_text_pos(t_render_calculus *render_calc)
 		i++;
 	}
 }	
-
+/*
+recupere les donnees du rayonpuis boucle sur tout les pixels de la rangee
+*/
 void	render_one_ray(t_main_struct *main_struct,
 	double teta_cos_sin[2], int row, double teta)
 {
