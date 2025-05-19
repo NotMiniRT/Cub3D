@@ -1,15 +1,14 @@
-#include "structs.h"
+#include "structs_b.h"
 #include <stdlib.h>
 #include "mlx.h"
-#include "image.h"
+#include "image_b.h"
 #include "math.h"
 #include "common.h"
 #include <stdbool.h>
-
+#include <stdio.h>
 int	init_r_h_tab(t_main_struct *main_struct)
 {
 	int	i;
-
 	main_struct->cos_r_h_tab = malloc(sizeof(double) * WINDOW_WIDTH);
 	main_struct->r_h_tab = malloc(sizeof(double) * WINDOW_WIDTH);
 	if (main_struct->cos_r_h_tab == NULL || main_struct->r_h_tab == NULL)
@@ -32,6 +31,8 @@ void	free_main_struct_img(t_main_struct *main_struct)
 	free_image_cub(main_struct, main_struct->wall_s);
 	free_image_cub(main_struct, main_struct->wall_o);
 	free_image_cub(main_struct, main_struct->wall_n);
+	free_image_cub(main_struct, main_struct->potion);
+	free_image_cub(main_struct, main_struct->door);
 	free_image_cub(main_struct, main_struct->fog);
 }
 

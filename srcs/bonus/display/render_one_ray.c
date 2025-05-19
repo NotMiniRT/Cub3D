@@ -1,10 +1,12 @@
 #include "common.h"
-#include "player.h"
-#include "image.h"
+#include "structs_b.h"
+#include "player_b.h"
+#include "image_b.h"
 #include "mlx.h"
 #include <math.h>
-#include "ray.h"
-
+#include "ray_b.h"
+#include "libft.h"
+#include <stdio.h>
 static inline void	change_pixel_color_opt(t_image_cub *img,
 		int color, int x, int y)
 {
@@ -60,24 +62,85 @@ static void	get_calcul_param(t_render_calculus *render_calc,
 	get_right_wall(render_calc, main_struct);
 }
 
+int	put_transparency(t_render_calculus *render_calc,
+	t_main_struct *main_struct, int row, int j)
+{
+	int i;
+	// int color;
+
+	i = 0;
+	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	{
+		if (j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
+		{
+			// int text_y = ((int)render_calc->hit_tab[i].texpos)%64;
+			// color = get_color(main_struct->potion, row%64, text_y);
+			// //printf("row: %d, text_y: %d\n", row%64, text_y);
+			if (render_calc->hit_tab[i].type == ITEM)
+			{
+				change_pixel_color_opt(main_struct->frame, 0xFFFFFF, row, j);
+				return (1);
+			}
+			if (render_calc->hit_tab[i].type == DOOR)
+			{
+				change_pixel_color_opt(main_struct->frame, 0xFFFFFF, row, j);
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
 static void	render_on_screen(t_render_calculus *render_calc,
 	t_main_struct *main_struct, int row, int j)
 {
-	if (j < render_calc->height_check_minus)
+
+	if (put_transparency(render_calc, main_struct, row, j))
+		return ;
+	else if (j < render_calc->height_check_minus)
 		change_pixel_color_opt(main_struct->frame, main_struct->ceil, row, j);
 	else if (j > render_calc->height_check_plus)
 		change_pixel_color_opt(main_struct->frame, main_struct->ground, row, j);
 	else
 	{
-		render_calc->text_y = (int)render_calc->texpos;
-		if (render_calc->text_y < 0)
-			render_calc->text_y = 0;
-		if (render_calc->text_y >= 64)
-			render_calc->text_y = 64 - 1;
+		render_calc->text_y = ((int)render_calc->texpos);
 		change_pixel_color_opt(main_struct->frame,
 			(render_calc->line_add + render_calc->text_y)[0], row, j);
 	}
 }
+
+void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int row)
+{
+	int i;
+
+	i = 0;
+	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	{
+		render_calc->hit_tab[i].height = (WINDOW_HEIGHT
+			/ (render_calc->hit_tab[i].dist * main_struct->cos_r_h_tab[row]));
+		render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
+				- render_calc->hit_tab[i].height) * 0.5;
+		render_calc->hit_tab[i].height_check_plus = (WINDOW_HEIGHT
+				+ render_calc->hit_tab[i].height) * 0.5;
+		render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
+				* 0.5 * render_calc->step;
+		i++;
+	}
+}
+
+void add_text_pos(t_render_calculus *render_calc)
+{
+	int i;
+
+	i = 0;
+	render_calc->texpos += render_calc->step;
+	while (i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	{
+		render_calc->hit_tab[i].texpos += render_calc->step;
+		i++;
+	}
+}	
 
 void	render_one_ray(t_main_struct *main_struct,
 	double teta_cos_sin[2], int row, double teta)
@@ -90,14 +153,17 @@ void	render_one_ray(t_main_struct *main_struct,
 	render_calc.res[2] = 0;
 	render_calc.res[3] = 0;
 	render_calc.teta = teta;
-	ray_check(main_struct, &(render_calc.res), teta_cos_sin);
+	ft_bzero(render_calc.hit_tab, 10 * sizeof(t_object_hit));
+	ray_check(main_struct, &(render_calc.res), teta_cos_sin, render_calc.hit_tab);
 	get_calcul_param(&render_calc, main_struct, teta_cos_sin, row);
+	if (render_calc.hit_tab[0].type != NOTHING)
+		set_hit_tab(&render_calc, main_struct, row);
 	row = row * 4;
 	j = 0;
 	while (j < WINDOW_HEIGHT)
 	{
 		render_on_screen(&render_calc, main_struct, row, j);
-		render_calc.texpos += render_calc.step;
+		add_text_pos(&render_calc);
 		j = j + 1;
 	}
 }

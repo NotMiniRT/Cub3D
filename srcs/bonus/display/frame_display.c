@@ -1,8 +1,9 @@
-#include "structs.h"
+#include "structs_b.h"
 #include "common.h"
 #include "mlx.h"
-#include "ray.h"
+#include "ray_b.h"
 #include <math.h>
+#include <stdio.h>
 
 int	frame_display(t_main_struct *main_struct)
 {
@@ -13,6 +14,7 @@ int	frame_display(t_main_struct *main_struct)
 	row = 0;
 	while (row < WINDOW_WIDTH)
 	{
+
 		teta = main_struct->player->fov_angle + main_struct->r_h_tab[row];
 		teta_cos_sin[0] = cos(teta);
 		teta_cos_sin[1] = sin(teta);

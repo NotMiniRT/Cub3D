@@ -1,7 +1,7 @@
-#include "structs.h"
+#include "structs_b.h"
 #include "common.h"
 #include <math.h>
-#include "ray.h"
+#include "ray_b.h"
 #include "parsing.h"
 
 int	init_player(t_player *player, t_infos *infos)
