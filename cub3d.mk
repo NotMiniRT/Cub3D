@@ -70,7 +70,7 @@ override DISPLAYSRC		:= \
 	image_utils \
 	player_facing \
 
-
+# ********** BONUS SOURCES *************************************************** #
 
 SRCBONUS += $(addsuffix .c, $(MAINBONUS))
 

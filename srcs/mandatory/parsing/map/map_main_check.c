@@ -11,8 +11,6 @@
 #include "map_validation.h"
 #include "parsing.h"
 
-const int	g_debug_mode = DEBUG_MODE;
-
 static void	validate_map_basics(t_infos *infos, int map_start)
 {
 	if (map_start < 6)
@@ -35,7 +33,7 @@ static void	validate_map_basics(t_infos *infos, int map_start)
 /* Remettre en static lorsqu'on aura separer les headers mandatory/bonus */
 void	print_debug_steps(const char *message, t_map_data map_data)
 {
-	if (g_debug_mode)
+	if (DEBUG_MODE)
 	{
 		printf(DEBUG_SEPARATOR, message);
 		debug_print_map(map_data);
@@ -49,7 +47,7 @@ static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 	print_debug_steps(DEBUG_MAP_AFTER_SPACE, map_data);
 	if (!check_area_closed(map_data))
 	{
-		if (g_debug_mode)
+		if (DEBUG_MODE)
 		{
 			printf(DEBUG_UNCLOSED_MAP);
 			debug_print_map_with_coords(map_data);
@@ -67,7 +65,7 @@ static void	validate_player_count(t_infos *infos, t_map_data map_data)
 	player_count = count_players(map_data, infos);
 	if (player_count != 1)
 	{
-		if (g_debug_mode)
+		if (DEBUG_MODE)
 		{
 			printf(DEBUG_PLAYER_COUNT, player_count);
 			debug_print_map(map_data);

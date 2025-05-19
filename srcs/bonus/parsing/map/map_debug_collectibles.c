@@ -4,8 +4,6 @@
 #include "map_validation.h"
 #include "parsing.h"
 
-const int	g_debug_mode = DEBUG_MODE;
-
 static void	debug_print_door(t_infos *infos, int show_flags)
 {
 	int	i;
@@ -46,7 +44,7 @@ static void	debug_print_monster(t_infos *infos, int show_flags)
 
 void	debug_print_entities(t_infos *infos, int show_flags)
 {
-	if (!g_debug_mode)
+	if (!DEBUG_MODE)
 		return ;
 	printf("\n--- DEBUG: ENTITY POSITIONS ---\n");
 	debug_print_door(infos, show_flags);
@@ -56,7 +54,7 @@ void	debug_print_entities(t_infos *infos, int show_flags)
 
 void	print_debug_steps(const char *message, t_map_data map_data)
 {
-	if (g_debug_mode)
+	if (DEBUG_MODE)
 	{
 		printf(DEBUG_SEPARATOR, message);
 		debug_print_map(map_data);
