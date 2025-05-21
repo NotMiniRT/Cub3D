@@ -4,6 +4,7 @@
 # include "stdlib.h"
 
 typedef struct s_thread_manager	t_thread_manager;
+typedef struct s_image_cub		t_image_cub;
 
 typedef enum e_moves
 {
@@ -15,6 +16,14 @@ typedef enum e_moves
 	TLEFT = 5,
 	SHIFT = 6
 }	t_moves;
+
+typedef struct s_torch
+{
+    t_image_cub  *frames[4];
+    int          current_frame;
+    size_t       last_update;
+    size_t       frame_duration;
+}	t_torch;
 
 typedef struct s_player
 {
@@ -88,6 +97,7 @@ typedef struct s_main_struct
 	t_player			*player;
 	t_image_cub			*frame; // image principale
 	t_image_cub			*minimap; // image minimap
+	t_torch				*torch;
 	t_image_cub			*fuel_bar;
 	t_image_cub			*wall_n;
 	t_image_cub			*wall_o;

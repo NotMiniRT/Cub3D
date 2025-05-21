@@ -75,6 +75,26 @@ static void	fill_hud_background(t_image_cub *img)
 	}
 }
 
+bool	display_minifuel(t_main_struct *main_struct)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < HUD_HEIGHT)
+	{
+		j = 0;
+		while (j < HUD_WIDTH)
+		{
+			change_pixel_color(main_struct->frame, \
+				get_color(main_struct->fuel_bar, j, i), HUD_X + j, HUD_Y + i);
+			j = j + 4;
+		}
+		i++;
+	}
+	return (true);
+}
+
 bool	display_hud(t_main_struct *main_struct)
 {
 	static int	last_fuel_level = -1;
@@ -88,7 +108,6 @@ bool	display_hud(t_main_struct *main_struct)
 		draw_fuel_gauge(main_struct->fuel_bar, main_struct->fuel);
 		last_fuel_level = main_struct->fuel;
 	}
-	mlx_put_image_to_window(main_struct->mlx_ptr, main_struct->win_ptr,
-		main_struct->fuel_bar->sprite, HUD_X, HUD_Y);
+	display_minifuel(main_struct);
 	return (true);
 }

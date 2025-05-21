@@ -1,5 +1,5 @@
 #include <math.h>
-
+#include "image.h"
 #include "common.h"
 #include "libft.h"
 #include "minimap.h"
@@ -82,6 +82,26 @@ bool	render_minimap(t_main_struct *main_struct, t_minimap *minimap)
 	return (true);
 }
 
+bool	display_miniminimap(t_main_struct *main_struct)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < WINDOW_HEIGHT * 0.3333)
+	{
+		j = 0;
+		while (j < WINDOW_HEIGHT * 1.3333)
+		{
+			change_pixel_color(main_struct->frame, \
+					get_color(main_struct->minimap, j, i), 80 + j, 20 + i);
+			j = j + 4;
+		}
+		i++;
+	}
+	return (true);
+}
+
 bool	display_minimap(t_main_struct *main_struct)
 {
 	t_minimap	minimap;
@@ -89,7 +109,6 @@ bool	display_minimap(t_main_struct *main_struct)
 	ft_memset(&minimap, 0, sizeof(t_minimap));
 	if (!render_minimap(main_struct, &minimap))
 		return (false);
-	mlx_put_image_to_window(main_struct->mlx_ptr, main_struct->win_ptr,
-		main_struct->minimap->sprite, 20, 20);
+	display_miniminimap(main_struct);
 	return (true);
 }
