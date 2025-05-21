@@ -33,7 +33,7 @@ NEED_REBUILD_SRC := $(shell find $(SRCSDIR) -name "*.c" -newer $(NAME) 2>/dev/nu
 NEWER_HEADERS := $(shell find incs/ libft/incs/ -name "*.h" -newer $(NAME) 2>/dev/null | wc -l)
 EXECUTABLE_EXISTS := $(shell [ -f $(NAME) ] && echo 1 || echo 0)
 
-RE_TARGET := $(filter re,$(MAKECMDGOALS))
+RE_TARGET := $(filter re debug,$(MAKECMDGOALS))
 
 ifneq ($(RE_TARGET),)
 	NEED_REBUILD := $(words $(SRCS))
@@ -49,9 +49,29 @@ else
 	endif
 endif
 
+BONUS_TARGET := $(filter bonus debugb,$(MAKECMDGOALS))
+
+ifneq ($(BONUS_TARGET),)
+    NEED_REBUILD := $(words $(SRCSBONUS))
+else
+    ifneq ($(RE_TARGET),)
+        NEED_REBUILD := $(words $(SRCS))
+    else
+        ifeq ($(EXECUTABLE_EXISTS),0)
+            NEED_REBUILD := $(words $(SRCS))
+        else
+            ifeq ($(NEWER_HEADERS),0)
+                NEED_REBUILD := $(NEED_REBUILD_SRC)
+            else
+                NEED_REBUILD := $(words $(SRCS))
+            endif
+        endif
+    endif
+endif
 # ********** RULES *********************************************************** #
 
 -include $(DEPS)
+-include $(DEPSB)
 
 .PHONY: init
 init: ensure_mlx FORCE
@@ -63,7 +83,7 @@ init: ensure_mlx FORCE
 all: init $(NAME)
 	@$(RM) .bonus
 
-$(NAME): libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJS) $(MAN_PAGE)
+$(NAME): libft/libft.a mlx/libmlx_Linux.a mlx/libmlx.a Makefile $(OBJS)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJS) -L libft -lft $(MLX_FLAGS)
 	@echo "\n$(GREEN_BOLD)✓ $(NAME) is ready $(RESETC)\n"
 
@@ -121,7 +141,7 @@ debugb: clean
 .PHONY: bonus
 bonus: init .bonus
 
-.bonus: libft/libft.a mlx/libmlx_Linux.a Makefile $(OBJSB)
+.bonus: libft/libft.a mlx/libmlx_Linux.a mlx/libmlx.a Makefile $(OBJSB)
 	@$(RM) $(NAME)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJSB) -L libft -lft $(MLX_FLAGS)
 	@echo "\n$(GREEN_BOLD)✓ $(NAME) bonus is ready $(RESETC)\n"

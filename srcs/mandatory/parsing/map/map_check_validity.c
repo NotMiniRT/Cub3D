@@ -5,8 +5,6 @@
 #include "parsing.h"
 #include "map_debug.h"
 
-extern const int	g_debug_mode;
-
 bool	check_map_chars(t_infos *infos, int map_start)
 {
 	int		i;

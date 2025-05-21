@@ -2,62 +2,62 @@
 static char *_832aa764d464016d1343c840f912677[] = {
 /* columns rows colors chars-per-pixel */
 "64 64 56 1 ",
-"  c #202020",
-". c #2C2C2C",
-"X c gray19",
-"o c gray22",
-"O c #400000",
-"+ c #4C0000",
-"@ c #580000",
-"# c #640000",
-"$ c #700000",
-"% c #7C0000",
-"& c #543C1C",
-"* c #585400",
-"= c #706C00",
-"- c #744C28",
-"; c #400040",
-": c #480048",
-"> c #500050",
-", c #580058",
-"< c #600064",
-"1 c #6C0070",
-"2 c gray25",
-"3 c #484848",
-"4 c gray33",
-"5 c #646464",
-"6 c gray44",
-"7 c #7C7C7C",
-"8 c #880000",
-"9 c #980000",
-"0 c #A40000",
-"q c #B00000",
-"w c #BC0000",
-"e c #C80000",
-"r c #D40000",
-"t c #E00000",
-"y c #EC0000",
-"u c #FC0000",
-"i c #FC2020",
-"p c #B45400",
-"a c #CC6000",
-"s c #FC7800",
-"d c #A86840",
-"f c #848400",
-"g c #9C9C00",
-"h c #FC8820",
-"j c #CCC400",
-"k c #E4D800",
-"l c #FCF400",
-"z c #E88C58",
-"x c #840084",
-"c c #9C009C",
-"v c gray55",
-"b c #989898",
-"n c gray66",
-"m c #B4B4B4",
-"M c #C0C0C0",
-"N c #D0D0D0",
+"  c #121218", /* Darkest base stone */
+". c #18181F", /* Very dark stone */
+"X c #1D1D23", /* Dark base stone */
+"o c #222228", /* Base stone color */
+"O c #1A1A25", /* Dark mineral vein 1 */
+"+ c #1F1F2A", /* Dark mineral vein 2 */
+"@ c #24242F", /* Dark mineral vein 3 */
+"# c #292934", /* Dark mineral vein 4 */
+"$ c #2E2E39", /* Dark mineral vein 5 */
+"% c #33333E", /* Dark mineral vein 6 */
+"& c #252531", /* Dark moss stone 1 */
+"* c #282833", /* Dark moss stone 2 */
+"= c #2F2F3A", /* Dark moss stone 3 */
+"- c #323240", /* Dark wood texture */
+"; c #1E1826", /* Deep purple tone 1 */
+": c #221B2B", /* Deep purple tone 2 */
+"> c #251E30", /* Deep purple tone 3 */
+", c #292234", /* Deep purple tone 4 */
+"< c #2C2639", /* Deep purple tone 5 */
+"1 c #30293E", /* Deep purple accent */
+"2 c #2A2A32", /* Medium stone 1 */
+"3 c #31313A", /* Medium stone 2 */
+"4 c #38383F", /* Medium-light stone */
+"5 c #404046", /* Light stone accent */
+"6 c #48484E", /* Lighter stone highlight */
+"7 c #505055", /* Brightest stone highlight */
+"8 c #373742", /* Medium mineral vein 1 */
+"9 c #3B3B47", /* Medium mineral vein 2 */
+"0 c #3F3F4C", /* Medium mineral vein 3 */
+"q c #444451", /* Medium mineral vein 4 */
+"w c #484856", /* Medium mineral vein 5 */
+"e c #4D4D5B", /* Medium mineral vein 6 */
+"r c #51515F", /* Medium mineral vein 7 */
+"t c #565663", /* Medium mineral vein 8 */
+"y c #5A5A67", /* Medium mineral vein 9 */
+"u c #5E5E6B", /* Bright mineral vein */
+"i c #62626F", /* Bright mineral accent */
+"p c #37333C", /* Medium wood texture 1 */
+"a c #3C3842", /* Medium wood texture 2 */
+"s c #464452", /* Light wood texture */
+"d c #353B40", /* Dark moss accent */
+"f c #33362C", /* Dark moss color 1 */
+"g c #38392F", /* Dark moss color 2 */
+"h c #464650", /* Light moss highlight */
+"j c #3C3D34", /* Medium moss color 1 */
+"k c #42433A", /* Medium moss color 2 */
+"l c #4A4B42", /* Light moss color */
+"z c #444848", /* Dark moss accent 2 */
+"x c #342B45", /* Deep purple accent 1 */
+"c c #3A3050", /* Deep purple accent 2 */
+"v c #424249", /* Medium gray 1 */
+"b c #48484F", /* Medium gray 2 */
+"n c #535358", /* Light gray */
+"m c #5F5F63", /* Lighter gray 1 */
+"M c #68686C", /* Lighter gray 2 */
+"N c #727276", /* Brightest gray highlight */
 /* pixels */
 "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",
 "4o433333433333343o333333344444433333333344444443333ooo334433333o",

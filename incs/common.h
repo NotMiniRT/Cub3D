@@ -19,5 +19,6 @@
 # define PIX53 5.23598775598
 # define PIX116 5.75958653158 
 # define RENDER_DIST 10
+# define MOUSE_SENSITIVITY 0.002
 
 #endif

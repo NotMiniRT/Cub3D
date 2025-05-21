@@ -3,7 +3,12 @@
 
 # include "stdlib.h"
 
-typedef enum moves
+
+typedef struct s_thread_manager	t_thread_manager;
+typedef struct s_image_cub		t_image_cub;
+
+
+typedef enum e_moves
 {
 	UP = 0,
 	DOWN = 1,
@@ -20,6 +25,64 @@ typedef enum s_types_object
 	ITEM,
 	DOOR
 }	t_types_object;
+
+typedef struct s_torch
+{
+    t_image_cub  *frames[4];
+    int          current_frame;
+    size_t       last_update;
+    size_t       frame_duration;
+}	t_torch;
+
+typedef struct s_gauge_color
+{
+	int	r;
+	int	g;
+	int	b;
+	int	color;
+}	t_gauge_color;
+
+typedef struct s_minimap_player
+{
+	int		i;
+	int		j;
+	int		center_x;
+	int		center_y;
+	int		dir_x;
+	int		dir_y;
+	float	distance;
+}	t_minimap_player;
+
+typedef struct s_minimap
+{
+	double				offset_x;
+	double				offset_y;
+	double				fractional_x;
+	double				fractional_y;
+	int					block_size;
+	int					player_x;
+	int					player_y;
+	int					x;
+	int					y;
+	int					map_x;
+	int					map_y;
+	int					color;
+	char				block_type;
+}	t_minimap;
+
+typedef struct s_fuel_bar
+{
+	int		x;
+	int		y;
+	int		width;
+	int		height;
+	int		gauge_x;
+	int		gauge_y;
+	int		gauge_width;
+	int		gauge_height;
+	int		color;
+}	t_fuel_bar;
+
 
 typedef struct s_player
 {
@@ -43,6 +106,9 @@ typedef struct s_main_struct
 	void			*win_ptr;
 	t_player		*player;
 	t_image_cub		*frame;
+	t_image_cub			*minimap;
+	t_torch				*torch;
+	t_image_cub			*fuel_bar;
 	t_image_cub		*wall_n;
 	t_image_cub		*wall_o;
 	t_image_cub		*wall_s;
@@ -50,9 +116,11 @@ typedef struct s_main_struct
 	t_image_cub		*fog;
 	t_image_cub		*potion;
 	t_image_cub		*door;
-	int				(*doors)[100][3]; 
+	t_thread_manager	*thread_manager;
+	int				(*doors)[100][4]; 
 	int				ground;
 	int				ceil;
+	int					fuel;
 	char			**map;
 	double			*r_h_tab;
 	double			*cos_r_h_tab;
@@ -60,6 +128,10 @@ typedef struct s_main_struct
 	size_t			last_move;
 	short int		inputs[7];
 	int				is_moving;
+	int					lock_mouse_x;
+    int					lock_mouse_y;
+    int					is_mouse_locked;
+    int					mouse_left_pressed;
 }	t_main_struct;
 
 typedef struct s_object_hit

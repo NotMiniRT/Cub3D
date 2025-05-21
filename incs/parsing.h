@@ -18,6 +18,10 @@ typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 # define COLOR_F	"F"
 # define COLOR_C	"C"
 
+# define HORIZONTAL 0
+# define VERTICAL 1
+# define ENCLOSED 2
+
 # define CUB_FORMAT ".cub"
 # define XPM_FORMAT ".xpm"
 
@@ -34,11 +38,12 @@ typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 # define ERR_INVALID_CHAR "Error\nInvalid character encountered\n"
 # define ERR_MISSING_ELEMENT "Error\nMissing required scene elements\n"
 # define ERR_NO_MAP "Error\nNo map in file"
-# define ERR_PARSING_ELEMENT "Error\nParsing element: %s\n"
+# define ERR_PARSING_ELEMENT "Error\nParsing element: %s"
 # define ERR_SCENE_INVALID "Error\nInvalid scene configuration\n"
 # define ERR_TOO_MANY_PLAYER "Error\nToo many player found in map\n"
 # define ERR_NO_PLAYER "Error\nNo player found in map\n"
 # define ERR_ENTITY "Error\nEntity is not properly enclosed ([%d,%d])\n"
+# define ERR_NB_MONSTER "Error\nMore than one monster entity\n"
 
 # define DEBUG_INITIAL_MAP "INITIAL MAP"
 # define DEBUG_MAP_AFTER_SPACE "MAP AFTER SPACES INCLUSING"
@@ -46,18 +51,19 @@ typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 # define DEBUG_SEPARATOR "\n--- %s ---\n"
 # define DEBUG_UNCLOSED_MAP "\n--- ERROR: UNCLOSED MAP ---\n"
 # define DEBUG_VALID_MAP "MAP SUCCESSFULLY VALIDATED"
-typedef struct s_color
+
+typedef struct s_color_parse
 {
 	unsigned char	b;
 	unsigned char	g;
 	unsigned char	r;
 	char			*line;
-}	t_color;
+}	t_color_parse;
 
 typedef struct s_scene
 {
-	t_color	*floor_color;
-	t_color	*ceiling_color;
+	t_color_parse	*floor_color;
+	t_color_parse	*ceiling_color;
 	char	*we_texture;
 	char	*so_texture;
 	char	*no_texture;
@@ -67,7 +73,7 @@ typedef struct s_scene
 	int		door_count;
 	int		monster_count;
 	int		collectible_positions[100][2]; // Storing up to 100 collectibles (x,y)
-	int		door_positions[100][3];        // Storing up to 100 doors (x,y)
+	int		door_positions[100][4];        // Storing up to 100 doors (x,y)
 	int		monster_positions[100][2];     // Storing up to 100 monsters (x,y)
 }	t_scene;
 

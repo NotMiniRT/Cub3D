@@ -8,6 +8,7 @@ override BONUSDIR		:= bonus/
 override UTILSDIR		:= utils/
 override DISPLAYDIR		:= display/
 override PARSINGDIR		:= parsing/
+override THREADDIR		:= threads/
 override MAPDIR		    := $(PARSINGDIR)map/
 override SCENEDIR		:= $(PARSINGDIR)scene/
 override INITDIR		:= $(PARSINGDIR)init/
@@ -69,7 +70,7 @@ override DISPLAYSRC		:= \
 	image_utils \
 	player_facing \
 
-
+# ********** BONUS SOURCES *************************************************** #
 
 SRCBONUS += $(addsuffix .c, $(MAINBONUS))
 
@@ -109,6 +110,7 @@ override MAPSRCBONUS	:= \
 	map_check_playable_area \
 	map_check_validity \
 	map_create_copy \
+	map_debug_collectibles \
 	map_debug \
 	map_init_boundaries \
 	map_main_check \
@@ -118,15 +120,28 @@ override MAPSRCBONUS	:= \
 SRCBONUS += $(addprefix $(DISPLAYDIR), $(addsuffix .c, $(DISPLAYSRCBONUS)))
 
 override DISPLAYSRCBONUS	:= \
-	inputs_define \
-	window_start \
 	frame_display \
 	image_function \
+	image_utils \
+	inputs_define \
+	lantern_hud_drawing \
+	lantern_hud \
+	minimap_drawing \
+	minimap \
+	mlx_loop \
+	mouse_hook \
+	overlay \
+	player_facing \
 	player \
 	ray_check \
-	mlx_loop \
-	timer \
+	torch \
 	render_one_ray \
-	image_utils \
-	player_facing \
 	door_management \
+	timer \
+	window_start \
+
+SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
+
+override THREADSRC	:= \
+	threads_init \
+	threads_utils \

@@ -6,7 +6,7 @@
 #include "libft.h"
 #include "parsing.h"
 
-static void	free_color(t_color *color)
+static void	free_color(t_color_parse *color)
 {
 	if (color == NULL)
 		return ;

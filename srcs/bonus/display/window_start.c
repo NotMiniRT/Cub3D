@@ -7,7 +7,16 @@
 #include "player_b.h"
 #include "parsing.h"
 #include <stdio.h>
+#include "fuel_bar.h"
+#include "multithreading.h"
+#include "torch.h"
 
+#include "libft.h"
+
+/**
+ * @bug check les droits de fichiers avant de faire quoi que ce soit
+ *
+ */
 static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 {
 	if (!get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), \
@@ -18,6 +27,8 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 			infos->scene->no_texture)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
 			infos->scene->ea_texture)
+		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
+			infos->scene->ea_texture)
 		|| !create_img_cub(main_struct, &(main_struct->frame), \
 			WINDOW_WIDTH, WINDOW_HEIGHT)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
@@ -25,7 +36,11 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->door), \
 			"assets/textures/walls/door.xpm")
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->potion), \
-			"assets/textures/walls/potion.xpm"))
+			"assets/textures/walls/potion.xpm")
+		|| !create_img_cub(main_struct, &(main_struct->minimap), \
+			WINDOW_HEIGHT / 3, WINDOW_HEIGHT / 3)
+		|| !create_img_cub(main_struct, &(main_struct->fuel_bar), \
+			HUD_WIDTH, HUD_HEIGHT))
 		return (false);
 	return (true);
 }
@@ -50,6 +65,11 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
+	main_struct->fuel = 100;
+	if (!init_torch(main_struct))
+		return (false);
+	if (!init_threads(main_struct))
+		return (false);
 	return (true);
 }
 
@@ -59,6 +79,9 @@ static void	init_inputs(t_main_struct *main_struct)
 	mlx_loop_hook(main_struct->mlx_ptr, mlx_loop_action, main_struct);
 	mlx_hook(main_struct->win_ptr, 2, 1L << 1, handle_input, main_struct);
 	mlx_hook(main_struct->win_ptr, 3, 1L << 0, release_move, main_struct);
+	mlx_hook(main_struct->win_ptr, 6, 1L << 6, handle_mouse_move, main_struct);
+	mlx_hook(main_struct->win_ptr, 4, 1L << 2, handle_mouse_press, main_struct);
+	mlx_hook(main_struct->win_ptr, 5, 1L << 3, handle_mouse_rl, main_struct);
 	mlx_hook(main_struct->win_ptr, 17, 1, on_destroy, main_struct);
 }
 

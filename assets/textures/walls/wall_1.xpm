@@ -2,32 +2,32 @@
 static char *_698ef08270f44a7f47c4646052dc367[] = {
 /* columns rows colors chars-per-pixel */
 "64 64 26 1 ",
-"  c #202020",
-". c #2C2C2C",
-"X c gray19",
-"o c #343434",
-"O c gray22",
-"+ c #400000",
-"@ c #4C0000",
-"# c #580000",
-"$ c #640000",
-"% c #700000",
-"& c #7C0000",
-"* c gray25",
-"= c #484848",
-"- c #4C4C4C",
-"; c gray33",
-": c gray36",
-"> c #646464",
-", c #880000",
-"< c #980000",
-"1 c #A40000",
-"2 c #B00000",
-"3 c #BC0000",
-"4 c #C80000",
-"5 c #D40000",
-"6 c #E00000",
-"7 c #EC0000",
+"  c #0F0E15", /* Darkest purple-slate stone */
+". c #14131B", /* Very dark purple-slate */
+"X c #191821", /* Dark purple-slate */
+"o c #1E1C27", /* Dark purple-tinted slate */
+"O c #24212D", /* Base dark purple slate */
+"+ c #231522", /* Dark purple vein 1 */
+"@ c #281927", /* Dark purple vein 2 */
+"# c #2D1D2D", /* Dark purple vein 3 */
+"$ c #322133", /* Dark purple vein 4 */
+"% c #372538", /* Dark purple vein 5 */
+"& c #3C293E", /* Dark purple vein 6 */
+"* c #292632", /* Medium dark purple slate */
+"= c #2F2B38", /* Medium purple slate */
+"- c #35303E", /* Medium slate with purple tint */
+"; c #3B3544", /* Medium-light purple slate */
+": c #41394A", /* Lighter purple slate accent */
+"> c #474051", /* Lightest purple slate accents */
+", c #412741", /* Purple mineral accent 1 */
+"< c #472C47", /* Purple mineral accent 2 */
+"1 c #4D304D", /* Purple mineral accent 3 */
+"2 c #523553", /* Purple mineral accent 4 */
+"3 c #583A59", /* Purple mineral accent 5 */
+"4 c #5E3F5F", /* Purple mineral accent 6 */
+"5 c #644465", /* Purple mineral accent 7 */
+"6 c #69496A", /* Purple mineral accent 8 */
+"7 c #6F4E70", /* Purple mineral accent 9 */
 /* pixels */
 "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
 ";O;=====;======;=O=======;;;;;;=========;;;;;;;====OOO==;;=====O",

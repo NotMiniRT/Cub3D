@@ -119,14 +119,14 @@ void	add_hit_ray(t_ray_calculus *calcul, t_object_hit	hit_tab[10])
 		hit_tab[calcul->index_hit_tab].wall_pc = calcul->player_y + ((calcul->map_x - calcul->player_x
 					+ (1 - calcul->step_x) * 0.5)
 				/ calcul->dir_x) * calcul->dir_y;
-		hit_tab[calcul->index_hit_tab].dist = calcul->side_dist_x + calcul->delta_x;
+		hit_tab[calcul->index_hit_tab].dist = calcul->side_dist_x - calcul->delta_x;
 	}
 	else
 	{
 		hit_tab[calcul->index_hit_tab].wall_pc = calcul->player_x + ((calcul->map_y - calcul->player_y
 					+ (1 - calcul->step_y) * 0.5)
 				/ calcul->dir_y) * calcul->dir_x;
-		hit_tab[calcul->index_hit_tab].dist = calcul->side_dist_y + calcul->delta_y;
+		hit_tab[calcul->index_hit_tab].dist = calcul->side_dist_y - calcul->delta_y;
 	}
 
 	hit_tab[calcul->index_hit_tab].map_x = (int)calcul->map_y;

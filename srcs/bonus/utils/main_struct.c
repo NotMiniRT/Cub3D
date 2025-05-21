@@ -5,7 +5,8 @@
 #include "math.h"
 #include "common.h"
 #include <stdbool.h>
-#include <stdio.h>
+#include "multithreading.h"
+
 int	init_r_h_tab(t_main_struct *main_struct)
 {
 	int	i;
@@ -26,6 +27,8 @@ int	init_r_h_tab(t_main_struct *main_struct)
 
 void	free_main_struct_img(t_main_struct *main_struct)
 {
+	int	i;
+
 	free_image_cub(main_struct, main_struct->frame);
 	free_image_cub(main_struct, main_struct->wall_e);
 	free_image_cub(main_struct, main_struct->wall_s);
@@ -33,7 +36,21 @@ void	free_main_struct_img(t_main_struct *main_struct)
 	free_image_cub(main_struct, main_struct->wall_n);
 	free_image_cub(main_struct, main_struct->potion);
 	free_image_cub(main_struct, main_struct->door);
+	free_image_cub(main_struct, main_struct->minimap);
+	free_image_cub(main_struct, main_struct->fuel_bar);
 	free_image_cub(main_struct, main_struct->fog);
+	if (main_struct->torch)
+	{
+		i = 0;
+		while (i < 4)
+		{
+			if (main_struct->torch->frames[i])
+				free_image_cub(main_struct, main_struct->torch->frames[i]);
+			i++;
+		}
+		free(main_struct->torch);
+		main_struct->torch = NULL;
+	}
 }
 
 void	free_main_struct(t_main_struct *main_struct)
@@ -58,6 +75,7 @@ void	free_main_struct(t_main_struct *main_struct)
 	main_struct->r_h_tab = NULL;
 	main_struct->win_ptr = NULL;
 	main_struct->cos_r_h_tab = NULL;
+	cleanup_threads(main_struct->thread_manager);
 }
 
 int	is_moving(t_main_struct *main_struct)

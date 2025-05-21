@@ -3,8 +3,8 @@ SO ./assets/textures/walls/wall_2.xpm
 WE ./assets/textures/walls/wall_3.xpm
 EA ./assets/textures/walls/wall_4.xpm
 
-F 50,50,50
-C 150,150,255
+F 20,30,50
+C 135,206,235
 
 11111111111111111111
 10000000000000000001

@@ -20,6 +20,15 @@ int	init_player(t_player *player, t_infos *infos)
 	return (1);
 }
 
+void	rotate_player_by_mouse(t_player *player, float rotation)
+{
+	player->fov_angle += rotation;
+	if (player->fov_angle < 0)
+		player->fov_angle += PIX2;
+	if (player->fov_angle > PIX2)
+		player->fov_angle -= PIX2;
+}
+
 void	turn_player(t_player *player, int turn_dir)
 {
 	player->fov_angle += turn_dir * ROT_SPEED;
