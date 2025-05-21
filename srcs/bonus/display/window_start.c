@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "fuel_bar.h"
 #include "multithreading.h"
+#include "torch.h"
 
 #include "libft.h"
 
@@ -24,6 +25,8 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 			infos->scene->we_texture)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), \
 			infos->scene->no_texture)
+		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
+			infos->scene->ea_texture)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
 			infos->scene->ea_texture)
 		|| !create_img_cub(main_struct, &(main_struct->frame), \
@@ -58,6 +61,8 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	init_player(main_struct->player, infos);
 	main_struct->fuel = 100;
+	if (!init_torch(main_struct))
+		return (false);
 	if (!init_threads(main_struct))
 		return (false);
 	return (true);

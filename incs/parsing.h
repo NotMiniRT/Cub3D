@@ -38,7 +38,7 @@ typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 # define ERR_INVALID_CHAR "Error\nInvalid character encountered\n"
 # define ERR_MISSING_ELEMENT "Error\nMissing required scene elements\n"
 # define ERR_NO_MAP "Error\nNo map in file"
-# define ERR_PARSING_ELEMENT "Error\nParsing element: %s\n"
+# define ERR_PARSING_ELEMENT "Error\nParsing element: %s"
 # define ERR_SCENE_INVALID "Error\nInvalid scene configuration\n"
 # define ERR_TOO_MANY_PLAYER "Error\nToo many player found in map\n"
 # define ERR_NO_PLAYER "Error\nNo player found in map\n"
@@ -51,6 +51,7 @@ typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 # define DEBUG_SEPARATOR "\n--- %s ---\n"
 # define DEBUG_UNCLOSED_MAP "\n--- ERROR: UNCLOSED MAP ---\n"
 # define DEBUG_VALID_MAP "MAP SUCCESSFULLY VALIDATED"
+
 typedef struct s_color_parse
 {
 	unsigned char	b;

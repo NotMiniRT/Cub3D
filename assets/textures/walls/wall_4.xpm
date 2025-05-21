@@ -2,26 +2,26 @@
 static char *e1316a6c007747d3a2ef8a7931a86de2[] = {
 /* columns rows colors chars-per-pixel */
 "64 64 20 1 ",
-"  c #382C14",
-". c gray22",
-"X c #403018",
-"o c #483818",
-"O c #543C1C",
-"+ c #5C4020",
-"@ c #6C4824",
-"# c #744C28",
-"$ c #400040",
-"% c #480048",
-"& c #500050",
-"* c #580058",
-"= c #6C0070",
-"- c #484848",
-"; c gray33",
-": c #646464",
-"> c #80502C",
-", c #840084",
-"< c #9C009C",
-"1 c #B400B4",
+"  c #131820", /* Darkest stone base */
+". c #1B2028", /* Very dark stone */
+"X c #202530", /* Dark stone base */
+"o c #252A36", /* Medium-dark stone */
+"O c #2A2F3D", /* Medium stone */
+"+ c #2F3444", /* Medium-light stone */
+"@ c #34394B", /* Light stone */
+"# c #393E52", /* Lighter stone */
+"$ c #141426", /* Dark crystal 1 */
+"% c #19192E", /* Dark crystal 2 */
+"& c #1E1E36", /* Dark crystal 3 */
+"* c #22223E", /* Dark crystal 4 */
+"= c #282846", /* Medium crystal */
+"- c #30304D", /* Medium crystal highlight */
+"; c #38384A", /* Medium stone accent */
+": c #404052", /* Light stone accent */
+"> c #3F3F59", /* Medium-light crystal */
+", c #252564", /* Deep crystal accent */
+"< c #2E2E78", /* Crystal highlight 1 */
+"1 c #36368C", /* Crystal highlight 2 */
 /* pixels */
 "===$$$$$*=,*=$$$$$$$======*$$$$$$$$$*=,,=**$$$$$$$$$$$$$********",
 "+,,=$$$*=,==**$$$$$=,<@@@+=*$$$$$$&*=,,,,=,=$$$$$$$$$***=,,@@@@@",

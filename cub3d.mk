@@ -70,7 +70,7 @@ override DISPLAYSRC		:= \
 	image_utils \
 	player_facing \
 
-
+# ********** BONUS SOURCES *************************************************** #
 
 SRCBONUS += $(addsuffix .c, $(MAINBONUS))
 
@@ -134,6 +134,7 @@ override DISPLAYSRCBONUS	:= \
 	player_facing \
 	player \
 	ray_check \
+	torch \
 	render_one_ray \
 	timer \
 	window_start \
