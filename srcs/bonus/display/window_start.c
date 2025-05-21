@@ -23,7 +23,7 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
 			"assets/textures/walls/fog.xpm")
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->door), \
-			"assets/textures/walls/circle.xpm")
+			"assets/textures/walls/door.xpm")
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->potion), \
 			"assets/textures/walls/potion.xpm"))
 		return (false);

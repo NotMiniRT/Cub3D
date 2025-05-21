@@ -19,22 +19,22 @@ void	do_one_move(t_main_struct *main_struct)
 
 int	mlx_loop_action(t_main_struct *main_struct)
 {
-	static int frame_count = 0;
-	static clock_t last_time = 0;
+	// static int frame_count = 0;
+	// static clock_t last_time = 0;
 
-	if (last_time == 0)
-		last_time = clock();
+	// if (last_time == 0)
+	// 	last_time = clock();
 
-	frame_count++;
+	// frame_count++;
 
-	clock_t now = clock();
-	double elapsed = (double)(now - last_time) / CLOCKS_PER_SEC;
+	// clock_t now = clock();
+	// double elapsed = (double)(now - last_time) / CLOCKS_PER_SEC;
 
-	if (elapsed >= 1.0) {
-		printf("FPS : %d\n", frame_count);
-		frame_count = 0;
-		last_time = now;
-	}
+	// if (elapsed >= 1.0) {
+	// 	printf("FPS : %d\n", frame_count);
+	// 	frame_count = 0;
+	// 	last_time = now;
+	// }
 	if (frame_display(main_struct))
 		return (1);
 	if (timestamp_in_ms(main_struct) - main_struct->last_move > 20

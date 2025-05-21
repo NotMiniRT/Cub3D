@@ -50,7 +50,7 @@ typedef struct s_main_struct
 	t_image_cub		*fog;
 	t_image_cub		*potion;
 	t_image_cub		*door;
-	void			*doors;
+	int				(*doors)[100][3]; 
 	int				ground;
 	int				ceil;
 	char			**map;
@@ -64,18 +64,20 @@ typedef struct s_main_struct
 
 typedef struct s_object_hit
 {
-	int				x;
-	int				y;
+	int				map_x;
+	int				map_y;
 	float			dist; 
 	double			height;
-	// int		text_x;
-	// int		text_y;
-	// double	step;
+	int				text_x;
+	int 			side;
+	double			wall_pc;
 	double			texpos;
+	double step;
 	int		height_check_minus;
 	int		height_check_plus;
 	t_types_object	type;
 	int		status;
+	int		*line_add;
 }	t_object_hit;
 
 typedef struct s_render_calculus

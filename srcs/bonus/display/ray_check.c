@@ -109,32 +109,30 @@ static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
 /*
 reccupere les collisions et leur donnee, il faudra peut etre en rajouter (pareil, il faut verifier qu'une porte soit active avant de l'ajouer pour eviter les calculs inutiles)
 */
-void	add_hit_ray(t_ray_calculus *calcul, char c, t_object_hit	hit_tab[10])
+void	add_hit_ray(t_ray_calculus *calcul, t_object_hit	hit_tab[10])
 {
 	if (calcul->index_hit_tab >= 10)
 		return ;
+
 	if (calcul->side == 0)
 	{
-		hit_tab[calcul->index_hit_tab].x = (calcul->map_x - calcul->player_x
-				+ (1 - calcul->step_x) * 0.5);
-		hit_tab[calcul->index_hit_tab].y = ((calcul->map_x - calcul->player_x
+		hit_tab[calcul->index_hit_tab].wall_pc = calcul->player_y + ((calcul->map_x - calcul->player_x
 					+ (1 - calcul->step_x) * 0.5)
 				/ calcul->dir_x) * calcul->dir_y;
-		hit_tab[calcul->index_hit_tab].dist = calcul->side_dist_x - calcul->delta_x;
+		hit_tab[calcul->index_hit_tab].dist = calcul->side_dist_x + calcul->delta_x;
 	}
 	else
 	{
-		hit_tab[calcul->index_hit_tab].x = ((calcul->map_y - calcul->player_y
+		hit_tab[calcul->index_hit_tab].wall_pc = calcul->player_x + ((calcul->map_y - calcul->player_y
 					+ (1 - calcul->step_y) * 0.5)
 				/ calcul->dir_y) * calcul->dir_x;
-		hit_tab[calcul->index_hit_tab].y = (calcul->map_y - calcul->player_y
-				+ (1 - calcul->step_y) * 0.5);
-		hit_tab[calcul->index_hit_tab].dist = calcul->side_dist_y - calcul->delta_y;
+		hit_tab[calcul->index_hit_tab].dist = calcul->side_dist_y + calcul->delta_y;
 	}
-	if (c == 'C')
-		hit_tab[calcul->index_hit_tab].type = ITEM;
-	else// if activated_doors(	)
-		hit_tab[calcul->index_hit_tab].type = DOOR;
+
+	hit_tab[calcul->index_hit_tab].map_x = (int)calcul->map_y;
+	hit_tab[calcul->index_hit_tab].map_y = (int)calcul->map_x;
+	hit_tab[calcul->index_hit_tab].type = DOOR;
+	hit_tab[calcul->index_hit_tab].side = calcul->side;
 	calcul->index_hit_tab++;
 }
 /*
@@ -153,8 +151,8 @@ void	ray_check(t_main_struct *main_struct,
 		calcul.flag_dist
 			= (calcul.side_dist_x > RENDER_DIST
 				&& calcul.side_dist_y > RENDER_DIST);
-		if (main_struct->map[calcul.map_y][calcul.map_x] == 'C' || main_struct->map[calcul.map_y][calcul.map_x] == 'D')
-			add_hit_ray(&calcul, main_struct->map[calcul.map_y][calcul.map_x], hit_tab);
+		if (main_struct->map[calcul.map_y][calcul.map_x] == 'D')
+			add_hit_ray(&calcul, hit_tab);
 		if (calcul.side_dist_x < calcul.side_dist_y)
 		{
 			calcul.side_dist_x += calcul.delta_x;

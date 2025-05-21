@@ -129,3 +129,4 @@ override DISPLAYSRCBONUS	:= \
 	render_one_ray \
 	image_utils \
 	player_facing \
+	door_management \

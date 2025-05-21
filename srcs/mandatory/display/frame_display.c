@@ -17,9 +17,9 @@ int	frame_display(t_main_struct *main_struct)
 		teta_cos_sin[0] = cos(teta);
 		teta_cos_sin[1] = sin(teta);
 		if (teta < 0)
-			teta += PIX2;
-		if (teta > PIX2)
-			teta -= PIX2;
+			teta += PIXX2;
+		if (teta > PIXX2)
+			teta -= PIXX2;
 		render_one_ray(main_struct, teta_cos_sin, row, teta);
 		row++;
 	}
