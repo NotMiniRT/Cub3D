@@ -3,7 +3,7 @@
 
 # include <stdbool.h>
 
-# include "structs.h"
+# include "structs_b.h"
 
 # define MINIMAP_RADIUS 9
 # define PLAYER_DOT_SIZE 6

@@ -3,7 +3,7 @@
 
 #include "ft_dprintf.h"
 #include "multithreading.h"
-#include "ray.h"
+#include "ray_b.h"
 
 /* remplace ton ancienne frame_display */
 static void	process_ray_range(t_thread_data *data)
@@ -20,9 +20,9 @@ static void	process_ray_range(t_thread_data *data)
 		teta_cos_sin[0] = cos(teta);
 		teta_cos_sin[1] = sin(teta);
 		if (teta < 0)
-			teta += PIX2;
-		if (teta > PIX2)
-			teta -= PIX2;
+			teta += PIXX2;
+		if (teta > PIXX2)
+			teta -= PIXX2;
 		render_one_ray(data->main_struct, teta_cos_sin, row, teta);
 		row++;
 	}

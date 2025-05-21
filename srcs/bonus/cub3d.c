@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "main_struct.h"
+#include "main_struct_b.h"
 #include "common.h"
-#include "display.h"
+#include "display_b.h"
 #include "libft.h"
 #include "ft_dprintf.h"
 #include "parsing.h"

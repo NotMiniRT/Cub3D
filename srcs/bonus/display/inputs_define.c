@@ -1,7 +1,7 @@
 #include <X11/keysym.h>
-#include "main_struct.h"
+#include "main_struct_b.h"
 #include "mlx.h"
-#include "player.h"
+#include "player_b.h"
 #include <stdio.h>
 #include "common.h"
 #include "inputs.h"
@@ -45,6 +45,8 @@ int	handle_input(int keysym, t_main_struct *main_struct)
 {
 	if (keysym == XK_Escape)
 		on_destroy(main_struct);
+	else if (keysym == XK_e)
+		open_door(main_struct);
 	else if (keysym == XK_Shift_L)
 		main_struct->inputs[SHIFT] = 1;
 	else if (keysym == XK_a || keysym == XK_d

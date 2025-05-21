@@ -1,4 +1,4 @@
-#include "structs.h"
+#include "structs_b.h"
 
 int	get_color(t_image_cub *img, int texture_x, int texture_y)
 {

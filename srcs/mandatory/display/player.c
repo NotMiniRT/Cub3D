@@ -13,7 +13,7 @@ int	init_player(t_player *player, t_infos *infos)
 	else if (infos->scene->pos[2] == 'E')
 		player->fov_angle = 0.001;
 	else if (infos->scene->pos[2] == 'S')
-		player->fov_angle = PIX05 + 0.001;
+		player->fov_angle = PIX2 + 0.001;
 	else
 		player->fov_angle = PI + 0.001;
 	return (1);
@@ -23,9 +23,9 @@ void	turn_player(t_player *player, int turn_dir)
 {
 	player->fov_angle += turn_dir * ROT_SPEED;
 	if (player->fov_angle < 0)
-		player->fov_angle += PIX2 - player->fov_angle;
-	if (player->fov_angle > PIX2)
-		player->fov_angle -= PIX2;
+		player->fov_angle += PIXX2 - player->fov_angle;
+	if (player->fov_angle > PIXX2)
+		player->fov_angle -= PIXX2;
 }
 
 static void	one_direction(t_main_struct *main_struct, double move_x,
@@ -75,9 +75,9 @@ void	move_player(t_main_struct *main_struct, int move_dir_front,
 	if (move_dir_side != 0)
 	{
 		move_x = main_struct->player->x + cos(main_struct->player->fov_angle \
-					+ PIX05) * move_dir_side * PLAYER_SPEED;
+					+ PIX2) * move_dir_side * PLAYER_SPEED;
 		move_y = main_struct->player->y + sin(main_struct->player->fov_angle \
-					+ PIX05) * move_dir_side * PLAYER_SPEED;
+					+ PIX2) * move_dir_side * PLAYER_SPEED;
 		one_direction(main_struct, move_x, move_y);
 	}
 }

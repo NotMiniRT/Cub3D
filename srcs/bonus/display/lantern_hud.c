@@ -1,8 +1,8 @@
 #include "common.h"
 #include "fuel_bar.h"
-#include "image.h"
+#include "image_b.h"
 #include "mlx.h"
-#include "structs.h"
+#include "structs_b.h"
 
 void	hud_set_pixel(t_image_cub *img, int x, int y, int color)
 {

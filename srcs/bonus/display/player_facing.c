@@ -7,7 +7,7 @@ int	is_facing_up(double ray_angle)
 
 int	is_facing_left(double ray_angle)
 {
-	return (ray_angle < PIXX15 && ray_angle > PIX05);
+	return (ray_angle < PIXX15 && ray_angle > PIXX2);
 }
 
 int	is_facing_right(double ray_angle)

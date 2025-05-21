@@ -6,7 +6,7 @@
 #include "minimap.h"
 #include "mlx.h"
 #include "timer.h"
-#include "image.h"
+#include "image_b.h"
 
 static inline void	change_pixel_color_opt(t_image_cub *img,
 	int color, int x, int y)

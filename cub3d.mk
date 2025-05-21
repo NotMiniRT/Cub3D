@@ -136,6 +136,7 @@ override DISPLAYSRCBONUS	:= \
 	ray_check \
 	torch \
 	render_one_ray \
+	door_management \
 	timer \
 	window_start \
 

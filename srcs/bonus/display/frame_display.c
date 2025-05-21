@@ -1,9 +1,9 @@
-#include "structs.h"
+#include "structs_b.h"
 #include "common.h"
 #include "mlx.h"
-#include "ray.h"
+#include "ray_b.h"
 #include <math.h>
-#include "image.h"
+#include "image_b.h"
 #include "minimap.h"
 #include "multithreading.h"
 

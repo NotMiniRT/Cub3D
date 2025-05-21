@@ -1,5 +1,5 @@
 #include "mlx.h"
-#include "player.h"
+#include "player_b.h"
 #include "common.h"
 
 int	on_destroy(t_main_struct *main_struct)

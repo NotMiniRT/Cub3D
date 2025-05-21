@@ -1,5 +1,5 @@
 #include <math.h>
-#include "image.h"
+#include "image_b.h"
 #include "common.h"
 #include "libft.h"
 #include "minimap.h"

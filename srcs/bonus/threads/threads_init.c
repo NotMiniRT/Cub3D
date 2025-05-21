@@ -1,5 +1,5 @@
 #include "multithreading.h"
-#include "structs.h"
+#include "structs_b.h"
 
 void	calculate_thread_ranges(t_thread_manager *manager)
 {

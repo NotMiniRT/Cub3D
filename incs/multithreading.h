@@ -5,7 +5,7 @@
 # include <stdbool.h>
 
 # include "common.h"
-# include "structs.h"
+# include "structs_b.h"
 
 # define JOIN_ERROR "Error: Failed to join thread [%d] (error code: %d)\n"
 

@@ -3,10 +3,7 @@
 
 # include "stdlib.h"
 
-typedef struct s_thread_manager	t_thread_manager;
-typedef struct s_image_cub		t_image_cub;
-
-typedef enum e_moves
+typedef enum moves
 {
 	UP = 0,
 	DOWN = 1,
@@ -17,14 +14,6 @@ typedef enum e_moves
 	SHIFT = 6
 }	t_moves;
 
-typedef struct s_torch
-{
-    t_image_cub  *frames[4];
-    int          current_frame;
-    size_t       last_update;
-    size_t       frame_duration;
-}	t_torch;
-
 typedef struct s_player
 {
 	double	x;
@@ -32,93 +21,35 @@ typedef struct s_player
 	double	fov_angle;
 }	t_player;
 
-typedef struct s_gauge_color
-{
-	int	r;
-	int	g;
-	int	b;
-	int	color;
-}	t_gauge_color;
-
-typedef struct s_minimap_player
-{
-	int		i;
-	int		j;
-	int		center_x;
-	int		center_y;
-	int		dir_x;
-	int		dir_y;
-	float	distance;
-}	t_minimap_player;
-
-typedef struct s_minimap
-{
-	double				offset_x;
-	double				offset_y;
-	double				fractional_x;
-	double				fractional_y;
-	int					block_size;
-	int					player_x;
-	int					player_y;
-	int					x;
-	int					y;
-	int					map_x;
-	int					map_y;
-	int					color;
-	char				block_type;
-}	t_minimap;
-
-typedef struct s_fuel_bar
-{
-	int		x;
-	int		y;
-	int		width;
-	int		height;
-	int		gauge_x;
-	int		gauge_y;
-	int		gauge_width;
-	int		gauge_height;
-	int		color;
-}	t_fuel_bar;
-
 typedef struct s_image_cub
 {
 	void	*sprite;
 	int		pixel_bits;
 	int		line_bytes;
 	int		endian;
-	char	*buffer; // string de limage
+	char	*buffer;
 }	t_image_cub;
 
 typedef struct s_main_struct
 {
-	void				*mlx_ptr; // instance mlx
-	void				*win_ptr; // instance image de la fenetre
-	t_player			*player;
-	t_image_cub			*frame; // image principale
-	t_image_cub			*minimap; // image minimap
-	t_torch				*torch;
-	t_image_cub			*fuel_bar;
-	t_image_cub			*wall_n;
-	t_image_cub			*wall_o;
-	t_image_cub			*wall_s;
-	t_image_cub			*wall_e;
-	t_image_cub			*fog;
-	t_thread_manager	*thread_manager;
-	int					ground;
-	int					ceil;
-	int					fuel;
-	char				**map;
-	double				*r_h_tab;
-	double				*cos_r_h_tab;
-	size_t				created_at;
-	size_t				last_move;
-	short int			inputs[7];
-	int					is_moving;
-	int					lock_mouse_x;
-    int					lock_mouse_y;
-    int					is_mouse_locked;
-    int					mouse_left_pressed;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	t_player		*player;
+	t_image_cub		*frame;
+	t_image_cub		*wall_n;
+	t_image_cub		*wall_o;
+	t_image_cub		*wall_s;
+	t_image_cub		*wall_e;
+	t_image_cub		*fog;
+	int				ground;
+	int				ceil;
+	char			**map;
+	double			*r_h_tab;
+	double			*cos_r_h_tab;
+	size_t			created_at;
+	size_t			last_move;
+	short int		inputs[7];
+	int				is_moving;
 }	t_main_struct;
 
 typedef struct s_render_calculus

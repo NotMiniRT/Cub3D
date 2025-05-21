@@ -1,6 +1,6 @@
-#include "structs.h"
+#include "structs_b.h"
 #include "common.h"
-#include "image.h"
+#include "image_b.h"
 #include "mlx.h"
 #include "fuel_bar.h"
 #include <stdbool.h>

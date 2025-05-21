@@ -1,9 +1,9 @@
 #include "common.h"
 #include "fuel_bar.h"
-#include "image.h"
+#include "image_b.h"
 #include "minimap.h"
 #include "mlx.h"
-#include "structs.h"
+#include "structs_b.h"
 #include "torch.h"
 
 bool	overlay(t_main_struct *main_struct)

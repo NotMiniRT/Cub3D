@@ -1,10 +1,10 @@
-#include "inputs.h"
-#include "main_struct.h"
+#include "inputs_b.h"
+#include "main_struct_b.h"
 #include "mlx.h"
 #include "common.h"
-#include "image.h"
-#include "display.h"
-#include "player.h"
+#include "image_b.h"
+#include "display_b.h"
+#include "player_b.h"
 #include "parsing.h"
 #include <stdio.h>
 #include "fuel_bar.h"
@@ -33,6 +33,10 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 			WINDOW_WIDTH, WINDOW_HEIGHT)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
 			"assets/textures/walls/fog.xpm")
+		|| !get_image_cub_from_xpm(main_struct, &(main_struct->door), \
+			"assets/textures/walls/door.xpm")
+		|| !get_image_cub_from_xpm(main_struct, &(main_struct->potion), \
+			"assets/textures/walls/potion.xpm")
 		|| !create_img_cub(main_struct, &(main_struct->minimap), \
 			WINDOW_HEIGHT / 3, WINDOW_HEIGHT / 3)
 		|| !create_img_cub(main_struct, &(main_struct->fuel_bar), \
@@ -57,6 +61,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
 	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
+	main_struct->doors = &(infos->scene->door_positions);
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
