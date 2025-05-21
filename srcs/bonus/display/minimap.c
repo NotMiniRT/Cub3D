@@ -55,7 +55,7 @@ static void	init_offset_fractional(t_main_struct *main_struct, \
 	minimap->offset_y = minimap->fractional_y * minimap->block_size;
 }
 
-bool	render_minimap(t_main_struct *main_struct, t_minimap *minimap)
+static bool	render_minimap(t_main_struct *main_struct, t_minimap *minimap)
 {
 	if (!main_struct->minimap)
 		return (false);
@@ -82,11 +82,15 @@ bool	render_minimap(t_main_struct *main_struct, t_minimap *minimap)
 	return (true);
 }
 
-bool	display_miniminimap(t_main_struct *main_struct)
+bool	display_minimap(t_main_struct *main_struct)
 {
-	int	i;
-	int	j;
+	t_minimap	minimap;
+	int			i;
+	int			j;
 
+	ft_memset(&minimap, 0, sizeof(t_minimap));
+	if (!render_minimap(main_struct, &minimap))
+		return (false);
 	i = 0;
 	while (i < WINDOW_HEIGHT * 0.3333)
 	{
@@ -99,16 +103,5 @@ bool	display_miniminimap(t_main_struct *main_struct)
 		}
 		i++;
 	}
-	return (true);
-}
-
-bool	display_minimap(t_main_struct *main_struct)
-{
-	t_minimap	minimap;
-
-	ft_memset(&minimap, 0, sizeof(t_minimap));
-	if (!render_minimap(main_struct, &minimap))
-		return (false);
-	display_miniminimap(main_struct);
 	return (true);
 }
