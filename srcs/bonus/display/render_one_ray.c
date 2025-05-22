@@ -139,7 +139,6 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 		render_calc->hit_tab[i].height = (WINDOW_HEIGHT
 				/ (render_calc->hit_tab[i].dist * main_struct->cos_r_h_tab[row]));
 
-		render_calc->hit_tab[i].wall_pc = render_calc->hit_tab[i].wall_pc - floor(render_calc->hit_tab[i].wall_pc);
 		if ((render_calc->hit_tab[i].side == 0 && teta_cos_sin[0] < 0)
 			|| (render_calc->hit_tab[i].side == 1 && teta_cos_sin[1] > 0))
 			render_calc->hit_tab[i].wall_pc  = 1 - render_calc->hit_tab[i].wall_pc ;
