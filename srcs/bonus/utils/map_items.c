@@ -60,7 +60,7 @@ t_object_door *create_object_map_door(int doors[4])
 		door->p1.x = door->x;
 		door->p1.y = door->y + 0.5;
 		door->p2.x = door->x + 1;
-		door->p2.y = door->x + 0.5;
+		door->p2.y = door->y + 0.5;
 	}
 	return (door);
 }
