@@ -28,7 +28,7 @@ typedef enum s_types_object
 
 typedef struct s_torch
 {
-    t_image_cub  *frames[4];
+    t_image_cub  *frames[34];
     int          current_frame;
     size_t       last_update;
     size_t       frame_duration;
@@ -117,7 +117,7 @@ typedef struct s_main_struct
 	t_image_cub		*potion;
 	t_image_cub		*door;
 	t_thread_manager	*thread_manager;
-	int				(*doors)[100][4]; 
+	int				(*doors)[100][4];
 	int				ground;
 	int				ceil;
 	int					fuel;
@@ -138,7 +138,7 @@ typedef struct s_object_hit
 {
 	int				map_x;
 	int				map_y;
-	float			dist; 
+	float			dist;
 	double			height;
 	int				text_x;
 	int 			side;
