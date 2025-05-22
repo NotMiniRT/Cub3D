@@ -38,19 +38,19 @@ static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 	{
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if (!check_doors(map_data, infos))
 	{
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if (!are_entities_valid(map_data))
 	{
 		free_extended_map(map_data.map, map_data.height);
 		cleanup_parsing(infos);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	store_monsters(map_data, infos);
 	debug_print_entities(infos, 7);
@@ -89,7 +89,7 @@ void	check_map_validity(t_infos *infos, int map_start)
 	if (map_data.map == NULL)
 	{
 		cleanup_parsing(infos);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	map_data.height = height + 2;
 	map_data.width = width + 2;

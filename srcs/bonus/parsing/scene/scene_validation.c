@@ -83,7 +83,7 @@ int	check_scene_validity(t_infos *infos)
 		else if (result == -2)
 		{
 			cleanup_parsing(infos);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		i++;
 	}
