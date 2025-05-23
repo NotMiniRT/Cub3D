@@ -38,7 +38,7 @@ int	handle_mouse_rl(int button, int x, int y, t_main_struct *main_struct)
 int	handle_mouse_move(int x, int y, t_main_struct *main_struct)
 {
 	int		delta_x;
-	float	rotation;
+	double	rotation;
 
 	(void)y;
 	if (main_struct->mouse_left_pressed && !main_struct->is_mouse_locked)

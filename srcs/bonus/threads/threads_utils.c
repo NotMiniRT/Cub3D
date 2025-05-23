@@ -18,7 +18,11 @@ static void	process_ray_range(t_thread_data *data)
 		teta = data->main_struct->player->fov_angle + \
 				data->main_struct->r_h_tab[row];
 		teta_cos_sin[0] = cos(teta);
+		if (teta_cos_sin[0] == 0)
+			teta_cos_sin[0] = 0.00001;
 		teta_cos_sin[1] = sin(teta);
+		if (teta_cos_sin[1] == 0)
+			teta_cos_sin[1] = 0.00001;
 		if (teta < 0)
 			teta += PIXX2;
 		if (teta > PIXX2)

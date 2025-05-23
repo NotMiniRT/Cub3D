@@ -26,6 +26,37 @@ typedef enum s_types_object
 	DOOR
 }	t_types_object;
 
+typedef struct s_point
+{
+    double x;
+	double y;
+}	t_point;
+
+typedef struct s_object_door
+{
+	t_point	p1;
+	t_point	p2;
+	int 	x;
+	int		y;
+	int		side;
+	int		status;
+}	t_object_door;
+
+typedef struct s_object_collectible
+{
+	t_point	p1;
+	t_point	p2;
+	int 	x;
+	int		y;
+	int		status;
+}	t_object_collectible;
+
+typedef union u_objects
+{
+	t_object_door			*door;
+	t_object_collectible	*item;
+} t_objects;
+
 typedef struct s_torch
 {
     t_image_cub  *frames[34];
@@ -50,7 +81,7 @@ typedef struct s_minimap_player
 	int		center_y;
 	int		dir_x;
 	int		dir_y;
-	float	distance;
+	double	distance;
 }	t_minimap_player;
 
 typedef struct s_minimap
@@ -105,10 +136,11 @@ typedef struct s_main_struct
 	void			*mlx_ptr;
 	void			*win_ptr;
 	t_player		*player;
+	t_torch			*torch;
+
 	t_image_cub		*frame;
-	t_image_cub			*minimap;
-	t_torch				*torch;
-	t_image_cub			*fuel_bar;
+	t_image_cub		*minimap;
+	t_image_cub		*fuel_bar;
 	t_image_cub		*wall_n;
 	t_image_cub		*wall_o;
 	t_image_cub		*wall_s;
@@ -116,8 +148,10 @@ typedef struct s_main_struct
 	t_image_cub		*fog;
 	t_image_cub		*potion;
 	t_image_cub		*door;
+
 	t_thread_manager	*thread_manager;
-	int				(*doors)[100][4];
+	int				(*doors)[100][4]; 
+	int				(*items)[100][3]; 
 	int				ground;
 	int				ceil;
 	int					fuel;
@@ -126,8 +160,12 @@ typedef struct s_main_struct
 	double			*cos_r_h_tab;
 	size_t			created_at;
 	size_t			last_move;
+	size_t			fuel_time;
 	short int		inputs[7];
 	int				is_moving;
+	int				count_lines;
+	int				count_row;
+	t_objects		**map_items;
 	int					lock_mouse_x;
     int					lock_mouse_y;
     int					is_mouse_locked;
@@ -138,18 +176,18 @@ typedef struct s_object_hit
 {
 	int				map_x;
 	int				map_y;
-	float			dist;
+	double			dist; 
 	double			height;
 	int				text_x;
 	int 			side;
 	double			wall_pc;
 	double			texpos;
-	double step;
-	int		height_check_minus;
-	int		height_check_plus;
+	double			step;
+	int				height_check_minus;
+	int				height_check_plus;
 	t_types_object	type;
-	int		status;
-	int		*line_add;
+	int				status;
+	int				*line_add;
 }	t_object_hit;
 
 typedef struct s_render_calculus
@@ -183,6 +221,7 @@ typedef struct s_ray_calculus
 	int				side;
 	int				map_x;
 	int				map_y;
+	int		render_dist;
 	double			wall_x;
 	double			wall_y;
 	double			dist;

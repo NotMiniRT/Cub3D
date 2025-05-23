@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-static void	set_gauge_color(t_gauge_color *color, float ratio)
+static void	set_gauge_color(t_gauge_color *color, double ratio)
 {
 	if (ratio < 0.25)
 	{
@@ -91,7 +91,7 @@ void	draw_fuel_gauge(t_image_cub *img, int fuel_level)
 {
 	int				y;
 	int				fuel_height;
-	float			gradient_ratio;
+	double			gradient_ratio;
 	t_gauge_color	color;
 
 	if (fuel_level < 0)
@@ -104,8 +104,8 @@ void	draw_fuel_gauge(t_image_cub *img, int fuel_level)
 	y = GAUGE_Y + GAUGE_HEIGHT - 1;
 	while (y >= GAUGE_Y + GAUGE_HEIGHT - fuel_height)
 	{
-		gradient_ratio = (float)(y - (GAUGE_Y + GAUGE_HEIGHT - fuel_height))
-			/ (float)fuel_height;
+		gradient_ratio = (double)(y - (GAUGE_Y + GAUGE_HEIGHT - fuel_height))
+			/ (double)fuel_height;
 		gradient_ratio = 1.0 - gradient_ratio;
 		set_gauge_color(&color, gradient_ratio);
 		draw_gauge_segment(img, y, color);

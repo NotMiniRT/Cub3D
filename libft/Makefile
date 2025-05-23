@@ -9,7 +9,7 @@ DEPS		:= $(OBJS:.o=.d)
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror 
 CPPFLAGS	:= -MMD -MP -I . -I incs/
 
 AR			:= ar

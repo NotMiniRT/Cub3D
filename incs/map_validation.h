@@ -28,6 +28,8 @@ void    store_door(t_map_data map_data, int i, int j, t_infos *infos);
 
 void    store_monsters(t_map_data map_data, t_infos *infos);
 
+void	store_item(t_map_data map_data, t_infos *infos);
+
 void	check_map_validity(t_infos *infos, int map_start);
 
 #endif

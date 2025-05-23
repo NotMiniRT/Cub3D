@@ -35,7 +35,6 @@ static void activate_door(t_main_struct *main_struct, int x, int y)
 		{
 			if ((*(main_struct->doors))[i][0] == new_x + 1 && (*(main_struct->doors))[i][1] == new_y + 1)
 			{
-				printf("i live\n");
 				if ((*(main_struct->doors))[i][2] == 0)
 					(*(main_struct->doors))[i][2] = 100;
 				else if ((*(main_struct->doors))[i][2] == 100)

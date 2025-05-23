@@ -27,8 +27,6 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 			infos->scene->no_texture)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
 			infos->scene->ea_texture)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
-			infos->scene->ea_texture)
 		|| !create_img_cub(main_struct, &(main_struct->frame), \
 			WINDOW_WIDTH, WINDOW_HEIGHT)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
@@ -62,13 +60,16 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
 	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
 	main_struct->doors = &(infos->scene->door_positions);
+	main_struct->items = &(infos->scene->collectible_positions);
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
-	main_struct->fuel = 100;
+	main_struct->fuel = 15;
 	if (!init_torch(main_struct))
 		return (false);
 	if (!init_threads(main_struct))
+		return (false);
+	if (!map_object_set(main_struct))
 		return (false);
 	return (true);
 }
@@ -87,9 +88,9 @@ static void	init_inputs(t_main_struct *main_struct)
 
 bool	start_display(t_main_struct *main_struct, t_infos *infos)
 {
+	main_struct->map = &(infos->data->lines[infos->map_start]);
 	if (!init_display(main_struct, infos))
 		return (false);
-	main_struct->map = &(infos->data->lines[infos->map_start]);
 	init_inputs(main_struct);
 	mlx_loop(main_struct->mlx_ptr);
 	mlx_do_key_autorepeaton(main_struct->mlx_ptr);
