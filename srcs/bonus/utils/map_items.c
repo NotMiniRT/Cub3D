@@ -3,6 +3,7 @@
 # include "libft.h"
 # include "parsing.h"
 # include <stdio.h>
+
 void free_map_item_i(t_main_struct *main_struct, int i)
 {
 	int j;
@@ -33,8 +34,7 @@ void free_map_item_ij(t_main_struct *main_struct)
 		}
 		k++;
 	}
-	free(main_struct->map_items);
-	main_struct->map_items = NULL;
+	free_map_item_i(main_struct, k);
 }
 
 t_object_door *create_object_map_door(int doors[4])
@@ -88,7 +88,7 @@ bool fill_map_object(t_main_struct *main_struct)
 	t_objects object;
 
 	i = 0;
-	while (i < 100 && (*main_struct->doors)[i])
+	while (i < 100 && (*main_struct->doors)[i][0] != 0)
 	{
 		object.door = create_object_map_door((*main_struct->doors)[i]);
 		if (object.door == NULL)
@@ -97,10 +97,9 @@ bool fill_map_object(t_main_struct *main_struct)
 		i++;
 	}
 	i = 0;
-	while (i < 100 && (*main_struct->items)[i])
+	while (i < 100 && (*main_struct->items)[i][0] != 0)
 	{
 		object.item = create_object_map_item((*main_struct->items)[i]);
-		printf("object: %d, %d\n", object.item->x, object.item->y);
 		if (object.item == NULL)
 			return (false);
 		main_struct->map_items[(*main_struct->items)[i][1]][(*main_struct->items)[i][0]] = object;
@@ -124,18 +123,17 @@ bool map_object_set(t_main_struct *main_struct)
 		return (false);
 	while (main_struct->map[0][main_struct->count_row] != '\0')
 		main_struct->count_row++;
-	main_struct->map_items = malloc(main_struct->count_lines * sizeof(t_objects*));
+	main_struct->map_items = malloc(main_struct->count_lines * sizeof(t_objects *));
 	if (main_struct->map_items == NULL)
 		return (false);
 	while (i < main_struct->count_lines)
 	{
-		main_struct->map_items[i] = malloc(main_struct->count_row * sizeof(t_objects));
+		main_struct->map_items[i] = ft_calloc(main_struct->count_row, sizeof(t_objects));
 		if (main_struct->map_items[i] == NULL)
 		{
 			free_map_item_i(main_struct, i);
 			return (false);
 		}
-		ft_memset(main_struct->map_items[i], main_struct->count_row, sizeof(t_objects));
 		i++;
 	}
 	if (!fill_map_object(main_struct))

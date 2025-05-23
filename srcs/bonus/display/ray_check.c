@@ -124,7 +124,7 @@ t_point calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
 	}
 	t = ((p1.x - p3.x) * (p3.y - p4.y) - (p1.y - p3.y) * (p3.x - p4.x)) / den;
 	u = -((p1.x - p2.x) * (p1.y - p3.y) - (p1.y - p2.y) * (p1.x - p3.x)) / den;
-	if (t > 0 && t < 1 && u > 0)
+	if (t > 0 && t < 1 && u > 0 && u < 1)
 	{
 		res.x = p1.x + t * (p2.x - p1.x);
 		res.y = p1.y + t * (p2.y - p1.y);

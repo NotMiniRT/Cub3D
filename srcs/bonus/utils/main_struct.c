@@ -6,6 +6,7 @@
 #include "common.h"
 #include <stdbool.h>
 #include "multithreading.h"
+#include "main_struct_b.h"
 
 int	init_r_h_tab(t_main_struct *main_struct)
 {
@@ -57,9 +58,11 @@ void	free_main_struct(t_main_struct *main_struct)
 {
 	if (!main_struct)
 		return ;
+	free_main_struct_img(main_struct);
+	if (main_struct->map_items != NULL)
+		free_map_item_ij(main_struct);
 	if (main_struct->player != NULL)
 		free(main_struct->player);
-	free_main_struct_img(main_struct);
 	if (main_struct->mlx_ptr != NULL && main_struct->win_ptr != NULL)
 		mlx_destroy_window(main_struct->mlx_ptr, main_struct->win_ptr);
 	if (main_struct->cos_r_h_tab != NULL)
@@ -76,6 +79,7 @@ void	free_main_struct(t_main_struct *main_struct)
 	main_struct->win_ptr = NULL;
 	main_struct->cos_r_h_tab = NULL;
 	cleanup_threads(main_struct->thread_manager);
+	
 }
 
 int	is_moving(t_main_struct *main_struct)
