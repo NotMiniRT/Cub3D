@@ -85,6 +85,7 @@ int	put_transparency(t_render_calculus *render_calc,
 {
 	int i;
 	int color;
+	int text_y;
 
 	i = 0;
 	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
@@ -92,7 +93,10 @@ int	put_transparency(t_render_calculus *render_calc,
 		// printf("max: %d, minus: %d, j = %d, status: %d\n", render_calc->hit_tab[i].height_check_plus, render_calc->hit_tab[i].height_check_minus, j, render_calc->hit_tab[i].status);
 		if (render_calc->hit_tab[i].status != 0 && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
 		{
-			color = (render_calc->hit_tab[i].line_add + (int)render_calc->hit_tab[i].texpos)[0];
+			text_y = (int)render_calc->hit_tab[i].texpos;
+			if (text_y < 0)
+				text_y = 0;
+			color = (render_calc->hit_tab[i].line_add + text_y)[0];
 			if (color != 0)
 			{
 				change_pixel_color_opt(main_struct->frame, color, row, j);
@@ -120,8 +124,10 @@ static void	render_on_screen(t_render_calculus *render_calc,
 	else
 	{
 		render_calc->text_y = ((int)render_calc->texpos);
+		if (render_calc->text_y < 0)
+			render_calc->text_y  = 0;
 		change_pixel_color_opt(main_struct->frame,
-			(render_calc->line_add + render_calc->text_y)[0], row, j);
+			render_calc->line_add[render_calc->text_y], row, j);
 	}
 }
 
@@ -135,30 +141,53 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 	i = 0;
 	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
 	{
-		render_calc->hit_tab[i].status = get_status_door(render_calc->hit_tab[i].map_x, render_calc->hit_tab[i].map_y, main_struct);
-		render_calc->hit_tab[i].height = (WINDOW_HEIGHT
+		if (render_calc->hit_tab[i].type == DOOR)
+		{
+			render_calc->hit_tab[i].status = get_status_door(render_calc->hit_tab[i].map_x, render_calc->hit_tab[i].map_y, main_struct);
+			render_calc->hit_tab[i].height = (WINDOW_HEIGHT
+					/ (render_calc->hit_tab[i].dist * main_struct->cos_r_h_tab[row]));
+
+			if ((render_calc->hit_tab[i].side == 0 && teta_cos_sin[0] < 0)
+				|| (render_calc->hit_tab[i].side == 1 && teta_cos_sin[1] > 0))
+				render_calc->hit_tab[i].wall_pc  = 1 - render_calc->hit_tab[i].wall_pc ;
+			render_calc->hit_tab[i].text_x = 64. * render_calc->hit_tab[i].wall_pc ;
+			if (render_calc->hit_tab[i].text_x < 0)
+				render_calc->hit_tab[i].text_x = 0;
+			if (render_calc->hit_tab[i].text_x >= 64)
+				render_calc->hit_tab[i].text_x = 64 - 1;
+			render_calc->hit_tab[i].step = 64. / render_calc->hit_tab[i].height;
+			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
+				* 0.5 * render_calc->hit_tab[i].step;
+			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
+					- render_calc->hit_tab[i].height) * 0.5;
+			render_calc->hit_tab[i].height_check_plus = (WINDOW_HEIGHT
+					+ render_calc->hit_tab[i].height) * 0.5;
+
+			render_calc->hit_tab[i].line_add = (int *)(main_struct->door->buffer
+				+ (render_calc->hit_tab[i].text_x * main_struct->door->line_bytes));
+			i++;
+		}
+		else if (render_calc->hit_tab[i].type == ITEM)
+		{
+			render_calc->hit_tab[i].height = (WINDOW_HEIGHT
 				/ (render_calc->hit_tab[i].dist * main_struct->cos_r_h_tab[row]));
-
-		if ((render_calc->hit_tab[i].side == 0 && teta_cos_sin[0] < 0)
-			|| (render_calc->hit_tab[i].side == 1 && teta_cos_sin[1] > 0))
-			render_calc->hit_tab[i].wall_pc  = 1 - render_calc->hit_tab[i].wall_pc ;
-		render_calc->hit_tab[i].text_x = 64. * render_calc->hit_tab[i].wall_pc ;
-		if (render_calc->hit_tab[i].text_x < 0)
-			render_calc->hit_tab[i].text_x = 0;
-		if (render_calc->hit_tab[i].text_x >= 64)
-			render_calc->hit_tab[i].text_x = 64 - 1;
-		render_calc->hit_tab[i].step = 64. / render_calc->hit_tab[i].height;
-		render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
-			* 0.5 * render_calc->hit_tab[i].step;
-
-		render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
-				- render_calc->hit_tab[i].height) * 0.5;
-		render_calc->hit_tab[i].height_check_plus = (WINDOW_HEIGHT
-				+ render_calc->hit_tab[i].height) * 0.5;
-
-		render_calc->hit_tab[i].line_add = (int *)(main_struct->door->buffer
-			+ (render_calc->hit_tab[i].text_x * main_struct->door->line_bytes));
-		i++;
+			render_calc->hit_tab[i].text_x = 64. * render_calc->hit_tab[i].wall_pc;
+			if (render_calc->hit_tab[i].text_x < 0)
+				render_calc->hit_tab[i].text_x = 0;
+			if (render_calc->hit_tab[i].text_x >= 64)
+				render_calc->hit_tab[i].text_x = 64 - 1;
+			render_calc->hit_tab[i].step = 64. / render_calc->hit_tab[i].height;
+			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
+					* 0.5 * render_calc->hit_tab[i].step;
+			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
+					- render_calc->hit_tab[i].height) * 0.5;
+			render_calc->hit_tab[i].height_check_plus = (WINDOW_HEIGHT
+					+ render_calc->hit_tab[i].height) * 0.5;
+			render_calc->hit_tab[i].line_add = (int *)(main_struct->potion->buffer
+				+ (render_calc->hit_tab[i].text_x * main_struct->potion->line_bytes));
+			render_calc->hit_tab[i].status = 1;
+			i++;
+		}
 	}
 }
 /*

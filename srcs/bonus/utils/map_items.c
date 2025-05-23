@@ -27,7 +27,7 @@ void free_map_item_ij(t_main_struct *main_struct)
 	while (k < main_struct->count_lines)
 	{
 		n = 0;
-		while (n < main_struct->count_row)
+		while (n <= main_struct->count_row)
 		{
 			free(main_struct->map_items[k][n].door);
 			n++;
@@ -75,10 +75,10 @@ t_object_collectible *create_object_map_item(int item[2])
 	new_item->x = item[0];
 	new_item->y = item[1];
 	new_item->status = 1;
-	new_item->p1.x = 0;
-	new_item->p1.y = 0;
-	new_item->p2.x = 0;
-	new_item->p2.y = 0;
+	new_item->p1.x = new_item->x + 0.5;
+	new_item->p1.y = new_item->y;
+	new_item->p2.x = new_item->x + 0.5;
+	new_item->p2.y = new_item->y + 1;
 	return (new_item);
 }
 
@@ -123,12 +123,12 @@ bool map_object_set(t_main_struct *main_struct)
 		return (false);
 	while (main_struct->map[0][main_struct->count_row] != '\0')
 		main_struct->count_row++;
-	main_struct->map_items = malloc(main_struct->count_lines * sizeof(t_objects *));
+	main_struct->map_items = ft_calloc(main_struct->count_lines, sizeof(t_objects *));
 	if (main_struct->map_items == NULL)
 		return (false);
 	while (i < main_struct->count_lines)
 	{
-		main_struct->map_items[i] = ft_calloc(main_struct->count_row, sizeof(t_objects));
+		main_struct->map_items[i] = ft_calloc(main_struct->count_row + 1 , sizeof(t_objects));
 		if (main_struct->map_items[i] == NULL)
 		{
 			free_map_item_i(main_struct, i);

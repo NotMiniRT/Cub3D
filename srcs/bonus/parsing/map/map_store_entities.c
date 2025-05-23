@@ -52,3 +52,29 @@ void	store_monsters(t_map_data map_data, t_infos *infos)
 	}
 	infos->scene->monster_count = count;
 }
+
+void	store_item(t_map_data map_data, t_infos *infos)
+{
+	int	i;
+	int	j;
+	int count;
+
+	i = 0;
+	count = 0;
+	infos->scene->collectible_count = 0;
+	while (++i < map_data.height - 1)
+	{
+		j = 0;
+		while (++j < map_data.width - 1)
+		{
+			if (is_collectible(map_data.map[i][j]))
+			{
+				infos->scene->collectible_positions[count][0] = j;
+				infos->scene->collectible_positions[count][1] = i;
+				infos->scene->collectible_positions[count][2] = 1;
+				count++;
+			}
+		}
+	}
+	infos->scene->collectible_count = count;
+}

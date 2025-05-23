@@ -13,6 +13,6 @@ void	turn_player(t_player *player, int turn_dir);
 void	move_player(t_main_struct *main_struct,
 			int move_dir_front, int move_dir_side);
 void open_door(t_main_struct *main_struct);
-void	rotate_player_by_mouse(t_player *player, float rotation);
+void	rotate_player_by_mouse(t_player *player, double rotation);
 
 #endif

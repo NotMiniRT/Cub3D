@@ -11,6 +11,7 @@ static void	define_basic_param_calculus(t_ray_calculus *calcul,
 		double cos_sin[2], t_main_struct *main_struct)
 {
 	calcul->flag_dist = 0;
+	calcul->render_dist = main_struct->fuel + 100;
 	calcul->player_x = main_struct->player->x;
 	calcul->player_y = main_struct->player->y;
 	calcul->dir_x = cos_sin[0];
@@ -97,7 +98,7 @@ static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
 	(*cross)[1] = calcul->side;
 	if (calcul->flag_dist)
 	{
-		(*cross)[0] = RENDER_DIST;
+		(*cross)[0] = calcul->render_dist;
 		(*cross)[1] = 0;
 	}
 	if (calcul->side == 1)
@@ -156,8 +157,8 @@ void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_s
 	door = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].door;
 	p1.x = calcul->player_x;
 	p1.y = calcul->player_y;
-	p2.x = calcul->player_x + cos_sin[0] * RENDER_DIST;
-	p2.y = calcul->player_y + cos_sin[1] * RENDER_DIST;
+	p2.x = calcul->player_x + cos_sin[0] * calcul->render_dist;
+	p2.y = calcul->player_y + cos_sin[1] * calcul->render_dist;
 	p3.x = door->p1.x -1;
 	p3.y = door->p1.y -1;
 	p4.x = door->p2.x -1;
@@ -177,14 +178,34 @@ void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_s
 
 void	add_hit_ray_item(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_struct *main_struct, double cos_sin[2])
 {
-	if (calcul->index_hit_tab >= 10)
+	t_object_collectible *item;
+	t_point p1;
+	t_point p2;
+	t_point p3;
+	t_point p4;
+	t_point inter;
+	if (calcul->index_hit_tab >= 10 || main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].item == NULL)
 		return ;
-	(void)cos_sin;
-	(void)hit_tab;
-	if (main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].item != NULL)
-		printf("ok nice\n");
-	else
-		printf("nonnnn\n");
+	item = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].item;
+	p1.x = calcul->player_x;
+	p1.y = calcul->player_y;
+	p2.x = calcul->player_x + cos_sin[0] * calcul->render_dist;
+	p2.y = calcul->player_y + cos_sin[1] * calcul->render_dist;
+	p3.x = item->p1.x -1;
+	p3.y = item->p1.y -1;
+	p4.x = item->p2.x -1;
+	p4.y = item->p2.y -1;
+	//printf("points: (%f, %f) (%f, %f)\n", p3.x, p3.y, p4.x, p4.y);
+	inter = calcul_intersection(p1, p2, p3, p4);
+	if (inter.x == -1)
+		return ;
+	hit_tab[calcul->index_hit_tab].wall_pc = dist_points(p3, inter);
+	hit_tab[calcul->index_hit_tab].dist = dist_points(p1, inter);
+	hit_tab[calcul->index_hit_tab].map_x = calcul->map_y;
+	hit_tab[calcul->index_hit_tab].map_y = calcul->map_x;
+	hit_tab[calcul->index_hit_tab].type = ITEM;
+	hit_tab[calcul->index_hit_tab].side = calcul->side;
+	calcul->index_hit_tab++;
 }
 
 /*
@@ -202,8 +223,8 @@ void	ray_check(t_main_struct *main_struct,
 		&& main_struct->map[calcul.map_y][calcul.map_x] != '1')
 	{
 		calcul.flag_dist
-			= (calcul.side_dist_x > RENDER_DIST
-				&& calcul.side_dist_y > RENDER_DIST);
+			= (calcul.side_dist_x > calcul.render_dist
+				&& calcul.side_dist_y > calcul.render_dist);
 		if (main_struct->map[calcul.map_y][calcul.map_x] == 'D')
 			add_hit_ray_door(&calcul, hit_tab, main_struct, cos_sin);
 		else if (main_struct->map[calcul.map_y][calcul.map_x] == 'C')

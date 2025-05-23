@@ -81,7 +81,7 @@ typedef struct s_minimap_player
 	int		center_y;
 	int		dir_x;
 	int		dir_y;
-	float	distance;
+	double	distance;
 }	t_minimap_player;
 
 typedef struct s_minimap
@@ -151,7 +151,7 @@ typedef struct s_main_struct
 
 	t_thread_manager	*thread_manager;
 	int				(*doors)[100][4]; 
-	int				(*items)[100][2]; 
+	int				(*items)[100][3]; 
 	int				ground;
 	int				ceil;
 	int					fuel;
@@ -160,6 +160,7 @@ typedef struct s_main_struct
 	double			*cos_r_h_tab;
 	size_t			created_at;
 	size_t			last_move;
+	size_t			fuel_time;
 	short int		inputs[7];
 	int				is_moving;
 	int				count_lines;
@@ -175,7 +176,7 @@ typedef struct s_object_hit
 {
 	int				map_x;
 	int				map_y;
-	float			dist; 
+	double			dist; 
 	double			height;
 	int				text_x;
 	int 			side;
@@ -220,6 +221,7 @@ typedef struct s_ray_calculus
 	int				side;
 	int				map_x;
 	int				map_y;
+	int		render_dist;
 	double			wall_x;
 	double			wall_y;
 	double			dist;

@@ -20,7 +20,7 @@ int	init_player(t_player *player, t_infos *infos)
 	return (1);
 }
 
-void	rotate_player_by_mouse(t_player *player, float rotation)
+void	rotate_player_by_mouse(t_player *player, double rotation)
 {
 	player->fov_angle += rotation;
 	if (player->fov_angle < 0)
@@ -73,6 +73,14 @@ static void	one_direction(t_main_struct *main_struct, double move_x,
 			main_struct->player->y = floor(move_y) - 0.01;
 		else if (main_struct->player->y - move_y > 0)
 			main_struct->player->y = ceil(move_y) + 0.01;
+	}
+	if (main_struct->map[(int)main_struct->player->y][(int)main_struct->player->x] == 'C')
+	{
+		main_struct->map[(int)main_struct->player->y][(int)main_struct->player->x] = '0';
+		if (main_struct->fuel <= 90)
+			main_struct->fuel = main_struct->fuel + 10;
+		else
+			main_struct->fuel = 100;
 	}
 }
 
