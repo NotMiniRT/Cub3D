@@ -79,7 +79,7 @@ static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
 	(*cross)[1] = calcul->side;
 	if (calcul->flag_dist)
 	{
-		(*cross)[0] = RENDER_DIST;
+		(*cross)[0] = fuel;
 		(*cross)[1] = 0;
 	}
 	if (calcul->side == 1)
@@ -100,8 +100,8 @@ void	ray_check(t_main_struct *main_struct,
 		&& main_struct->map[calcul.map_y][calcul.map_x] != '1')
 	{
 		calcul.flag_dist
-			= (calcul.side_dist_x > RENDER_DIST
-				&& calcul.side_dist_y > RENDER_DIST);
+			= (calcul.side_dist_x > fuel
+				&& calcul.side_dist_y > fuel);
 		if (calcul.side_dist_x < calcul.side_dist_y)
 		{
 			calcul.side_dist_x += calcul.delta_x;

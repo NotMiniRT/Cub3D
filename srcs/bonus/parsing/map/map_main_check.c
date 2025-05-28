@@ -53,6 +53,7 @@ static void	validate_extended_map(t_infos *infos, t_map_data map_data)
 		exit(EXIT_FAILURE);
 	}
 	store_monsters(map_data, infos);
+	store_item(map_data, infos);
 	debug_print_entities(infos, 7);
 }
 
