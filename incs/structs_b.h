@@ -129,6 +129,8 @@ typedef struct s_image_cub
 	int		line_bytes;
 	int		endian;
 	char	*buffer;
+	int		width;
+	int		height;
 }	t_image_cub;
 
 typedef struct s_main_struct
@@ -150,8 +152,8 @@ typedef struct s_main_struct
 	t_image_cub		*door;
 
 	t_thread_manager	*thread_manager;
-	int				(*doors)[100][4]; 
-	int				(*items)[100][3]; 
+	int				(*doors)[100][4];
+	int				(*items)[100][3];
 	int				ground;
 	int				ceil;
 	int					fuel;
@@ -176,7 +178,7 @@ typedef struct s_object_hit
 {
 	int				map_x;
 	int				map_y;
-	double			dist; 
+	double			dist;
 	double			height;
 	int				text_x;
 	int 			side;
@@ -188,6 +190,7 @@ typedef struct s_object_hit
 	t_types_object	type;
 	int				status;
 	int				*line_add;
+	t_image_cub		*texture;
 }	t_object_hit;
 
 typedef struct s_render_calculus
@@ -204,6 +207,7 @@ typedef struct s_render_calculus
 	double	teta;
 	int		*line_add;
 	t_object_hit	hit_tab[10];
+	t_image_cub		*current_texture;
 }	t_render_calculus;
 
 typedef struct s_ray_calculus

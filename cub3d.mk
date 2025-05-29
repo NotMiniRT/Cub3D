@@ -140,6 +140,7 @@ override DISPLAYSRCBONUS	:= \
 	door_management \
 	timer \
 	window_start \
+	texture_utils \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 
