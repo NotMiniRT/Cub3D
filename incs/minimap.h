@@ -8,6 +8,14 @@
 # define MINIMAP_RADIUS 9
 # define PLAYER_DOT_SIZE 6
 
+# define MINIMAP_WALL_COLOR 0x00203050
+# define MINIMAP_FLOOR_COLOR 0x00152035
+# define MINIMAP_DOOR_COLOR 0x00303050 + 100
+# define MINIMAP_ITEM_COLOR 0x00304060 + 50
+# define MINIMAP_MONSTER_COLOR 0x00404870
+# define MINIMAP_DIRECTION_COLOR 0x00305070
+# define MINIMAP_DEFAULT_COLOR 0x00101825
+
 bool	display_minimap(t_main_struct *main_struct);
 bool	overlay(t_main_struct *main_struct);
 

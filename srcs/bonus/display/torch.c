@@ -16,12 +16,9 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 
 bool	init_torch(t_main_struct *main_struct)
 {
-	static char	*torch_paths[4] = {
-		"assets/textures/torch/torch_1.xpm",
-		"assets/textures/torch/torch_2.xpm",
-		"assets/textures/torch/torch_3.xpm",
-		"assets/textures/torch/torch_4.xpm"
-	};
+	static char	*torch_paths[4] = {\
+		TORCH_FRAME_1, TORCH_FRAME_2, \
+		TORCH_FRAME_3, TORCH_FRAME_4};
 	int			i;
 
 	main_struct->torch = malloc(sizeof(t_torch));

@@ -8,19 +8,19 @@
 static int	get_block_color(char block_type)
 {
 	if (block_type == '1')
-		return (0x00203050);
+		return (MINIMAP_WALL_COLOR);
 	else if (block_type == '0')
-		return (0x00152035);
+		return (MINIMAP_FLOOR_COLOR);
 	else if (block_type == 'D')
-		return (0x00303050 + 100);
+		return (MINIMAP_DOOR_COLOR);
 	else if (block_type == 'C')
-		return (0x00304060 + 50);
+		return (MINIMAP_ITEM_COLOR);
 	else if (block_type == 'M')
-		return (0x00404870);
+		return (MINIMAP_MONSTER_COLOR);
 	else if (block_type == 'N' || block_type == 'S' || \
 			block_type == 'E' || block_type == 'W')
-		return (0x00305070);
-	return (0x00101825);
+		return (MINIMAP_DIRECTION_COLOR);
+	return (MINIMAP_DEFAULT_COLOR);
 }
 
 static bool	is_valid_coord(t_main_struct *main_struct, int map_x, int map_y)

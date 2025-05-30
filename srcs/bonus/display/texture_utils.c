@@ -19,7 +19,7 @@ static int	interpolate_color(int c1, int c2, double factor)
 	g2 = (c2 >> 8) & 0xFF;
 	return (((int)(r1 + (r2 - r1) * factor) << 16) |
 			((int)(g1 + (g2 - g1) * factor) << 8) |
-			((int)(b1 + (c2 & 0xFF - b1) * factor)));
+			((int)(b1 + (c2 & (0xFF - b1)) * factor)));
 }
 
 /* Sample texture with better quality for non-integer coordinates */
@@ -71,15 +71,7 @@ bool	is_power_of_two(int n)
 void	get_optimal_texture_size(int *width, int *height)
 {
 	if (!is_power_of_two(*width))
-	{
 		*width = 1;
-		while (*width < *width)
-			*width *= 2;
-	}
 	if (!is_power_of_two(*height))
-	{
 		*height = 1;
-		while (*height < *height)
-			*height *= 2;
-	}
 }
