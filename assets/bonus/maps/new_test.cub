@@ -1,0 +1,15 @@
+NO ./assets/textures/walls/blue-rocks.xpm
+SO ./assets/textures/walls/wall-blood.xpm
+WE ./assets/textures/walls/wall-brick-blue-light-from-top.xpm
+EA ./assets/textures/walls/wall-moss.xpm
+
+
+F 20,30,50
+C 35,06,35
+
+
+111111111
+100000001
+1000N0001
+100000001
+111111111

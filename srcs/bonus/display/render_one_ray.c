@@ -14,125 +14,132 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 	((int *)(img->buffer + (y * img->line_bytes) + (x)))[0] = color;
 }
 
-/*
-Obtient le mur a aficher en fonction du side et de la direction que face le joueur, si on ne fait absolument aucunne transcparence sur la porte il suffit de la remettre la
-*/
-// static void	get_right_wall(t_render_calculus *render_calc,
-// 	t_main_struct *main_struct)
-// {
-// 	if (render_calc->res[3])
-// 		render_calc->line_add = (int *)(main_struct->fog->buffer
-// 				+ (render_calc->text_x * main_struct->fog->line_bytes));
-// 	else if (is_facing_up(render_calc->teta) && render_calc->res[1] == 1)
-// 		render_calc->line_add = (int *)(main_struct->wall_s->buffer
-// 				+ (render_calc->text_x * main_struct->wall_s->line_bytes));
-// 	else if (render_calc->res[1] == 1)
-// 		render_calc->line_add = (int *)(main_struct->wall_n->buffer
-// 				+ (render_calc->text_x * main_struct->wall_n->line_bytes));
-// 	else if (is_facing_left(render_calc->teta))
-// 		render_calc->line_add = (int *)(main_struct->wall_e->buffer
-// 				+ (render_calc->text_x * main_struct->wall_e->line_bytes));
-// 	else
-// 		render_calc->line_add = (int *)(main_struct->wall_o->buffer
-// 				+ (render_calc->text_x * main_struct->wall_o->line_bytes));
-// }
+static t_image_cub	*get_texture_for_wall(t_render_calculus *rc,
+		t_main_struct *ms, double teta_cos_sin[2])
+{
+	if (rc->res[3])
+		return (ms->fog);
 
-// /*
-// height: taille en pixel a l'ecran corrigee
-// wall_pc: point de collision avec le mur, en %
-// step: avancee en y sur l'ecrn pour chaque iteration ( pour les murs)
-// text_x/y: la position en x/y sur la texture
-// texpos: point de depart du mur en y
-// height_check_minus?max: debut et fin du mur en y
-// */
-// static void	get_calcul_param(t_render_calculus *render_calc,
-// 	t_main_struct *main_struct, double teta_cos_sin[2], int row)
-// {
-// 	render_calc->height = (WINDOW_HEIGHT
-// 			/ (render_calc->res[0] * main_struct->cos_r_h_tab[row]));
-// 	if (render_calc->res[3])
-// 		render_calc->text_x = fmod((0.21 * row), 64);
-// 	else
-// 	{
-// 		render_calc->wall_pc = render_calc->res[2] - floor(render_calc->res[2]);
-// 		if ((render_calc->res[1] == 0 && teta_cos_sin[0] < 0)
-// 			|| (render_calc->res[1] == 1 && teta_cos_sin[1] > 0))
-// 			render_calc->wall_pc = 1 - render_calc->wall_pc;
-// 		render_calc->text_x = 64. * render_calc->wall_pc;
-// 		if (render_calc->text_x < 0)
-// 			render_calc->text_x = 0;
-// 		if (render_calc->text_x >= 64)
-// 			render_calc->text_x = 64 - 1;
-// 	}
-// 	render_calc->step = 64. / render_calc->height;
-// 	render_calc->texpos = -(WINDOW_HEIGHT - render_calc->height)
-// 		* 0.5 * render_calc->step;
-// 	render_calc->height_check_minus = (WINDOW_HEIGHT
-// 			- render_calc->height) * 0.5;
-// 	render_calc->height_check_plus = (WINDOW_HEIGHT
-// 			+ render_calc->height) * 0.5;
-// 	get_right_wall(render_calc, main_struct);
-// }
+	// For horizontal walls (rc->res[1] == 1)
+	if (rc->res[1] == 1)
+	{
+		// Check if ray is going up (sin < 0) or down (sin > 0)
+		if (teta_cos_sin[1] < 0)  // Ray going up, hits bottom of wall
+			return (ms->wall_n);   // North wall texture
+		else                       // Ray going down, hits top of wall
+			return (ms->wall_s);   // South wall texture
+	}
+	else  // For vertical walls (rc->res[1] == 0)
+	{
+		// Check if ray is going left (cos < 0) or right (cos > 0)
+		if (teta_cos_sin[0] < 0)   // Ray going left, hits right side of wall
+			return (ms->wall_e);    // East wall texture
+		else                        // Ray going right, hits left side of wall
+			return (ms->wall_o);    // West wall texture
+	}
+}
 
+static void	get_right_wall(t_render_calculus *rc, t_main_struct *ms,
+		double teta_cos_sin[2])
+{
+	t_image_cub	*texture;
 
-// /*
-// boucle sur le tableau de collision pour chaque pixel du rayon et verfie si il y a besoin de l'afficher
-// la partie commentee sert a reccuperer le bon pixel, il faut remplacer text_y/x par les coordonnes a reccuperer sur la texture
-// */
-// int	put_transparency(t_render_calculus *render_calc,
-// 	t_main_struct *main_struct, int row, int j)
-// {
-// 	int i;
-// 	int color;
-// 	int text_y;
+	texture = get_texture_for_wall(rc, ms, teta_cos_sin);
+	rc->current_texture = texture;
+	rc->line_add = (int *)(texture->buffer
+			+ (rc->text_x * texture->line_bytes));
+}
 
-// 	i = 0;
-// 	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
-// 	{
-// 		// printf("max: %d, minus: %d, j = %d, status: %d\n", render_calc->hit_tab[i].height_check_plus, render_calc->hit_tab[i].height_check_minus, j, render_calc->hit_tab[i].status);
-// 		if (render_calc->hit_tab[i].status != 0 && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
-// 		{
-// 			text_y = (int)render_calc->hit_tab[i].texpos;
-// 			if (text_y < 0)
-// 				text_y = 0;
-// 			color = (render_calc->hit_tab[i].line_add + text_y)[0];
-// 			if (color != 0)
-// 			{
-// 				change_pixel_color_opt(main_struct->frame, color, row, j);
-// 				return (1);
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
+static void	calculate_texture_coords(t_render_calculus *rc,
+		double teta_cos_sin[2], int row, t_main_struct *ms)
+{
+	t_image_cub	*texture;
 
-// /*
-// pLACE LA COULEUR DU PIXEL si aucunne collision n'a eu besoin de s'afficher
-// */
-// static void	render_on_screen(t_render_calculus *render_calc,
-// 	t_main_struct *main_struct, int row, int j)
-// {
+	texture = get_texture_for_wall(rc, ms, teta_cos_sin);
+	if (rc->res[3])
+		rc->text_x = fmod((0.21 * row), texture->width);
+	else
+	{
+		rc->wall_pc = rc->res[2] - floor(rc->res[2]);
+		if ((rc->res[1] == 0 && teta_cos_sin[0] < 0)
+			|| (rc->res[1] == 1 && teta_cos_sin[1] > 0))
+			rc->wall_pc = 1 - rc->wall_pc;
+		rc->text_x = texture->width * rc->wall_pc;
+		if (rc->text_x < 0)
+			rc->text_x = 0;
+		if (rc->text_x >= texture->width)
+			rc->text_x = texture->width - 1;
+	}
+}
 
-// 	if (put_transparency(render_calc, main_struct, row, j))
-// 		return ;
-// 	else if (j < render_calc->height_check_minus)
-// 		change_pixel_color_opt(main_struct->frame, main_struct->ceil, row, j);
-// 	else if (j > render_calc->height_check_plus)
-// 		change_pixel_color_opt(main_struct->frame, main_struct->ground, row, j);
-// 	else
-// 	{
-// 		render_calc->text_y = ((int)render_calc->texpos);
-// 		if (render_calc->text_y < 0)
-// 			render_calc->text_y  = 0;
-// 		change_pixel_color_opt(main_struct->frame,
-// 			render_calc->line_add[render_calc->text_y], row, j);
-// 	}
-// }
+static void	get_calcul_param(t_render_calculus *rc,
+		t_main_struct *ms, double teta_cos_sin[2], int row)
+{
+	t_image_cub	*texture;
 
-// /*
-// effectue les clculs de base pour chaque eleemnt du tableau de colision
-// */
+	rc->height = (WINDOW_HEIGHT
+			/ (rc->res[0] * ms->cos_r_h_tab[row]));
+	calculate_texture_coords(rc, teta_cos_sin, row, ms);
+	texture = get_texture_for_wall(rc, ms, teta_cos_sin);
+	rc->step = (double)texture->height / rc->height;
+	rc->texpos = -(WINDOW_HEIGHT - rc->height)
+		* 0.5 * rc->step;
+	rc->height_check_minus = (WINDOW_HEIGHT
+			- rc->height) * 0.5;
+	rc->height_check_plus = (WINDOW_HEIGHT
+			+ rc->height) * 0.5;
+	get_right_wall(rc, ms, teta_cos_sin);
+}
+
+int	put_transparency(t_render_calculus *render_calc,
+	t_main_struct *main_struct, int row, int j)
+{
+	int i;
+	int color;
+	int text_y;
+
+	i = 0;
+	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	{
+		// printf("max: %d, minus: %d, j = %d, status: %d\n", render_calc->hit_tab[i].height_check_plus, render_calc->hit_tab[i].height_check_minus, j, render_calc->hit_tab[i].status);
+		if (render_calc->hit_tab[i].status != 0 && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
+		{
+			text_y = (int)render_calc->hit_tab[i].texpos;
+			if (text_y < 0)
+				text_y = 0;
+			color = (render_calc->hit_tab[i].line_add + text_y)[0];
+			if (color != 0)
+			{
+				change_pixel_color_opt(main_struct->frame, color, row, j);
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
+static void	render_on_screen(t_render_calculus *rc,
+		t_main_struct *ms, int row, int j)
+{
+	// if (put_transparency(rc, ms, row, j))
+	// 	return ;
+	if (j < rc->height_check_minus)
+		change_pixel_color_opt(ms->frame, ms->ceil, row, j);
+	else if (j > rc->height_check_plus)
+		change_pixel_color_opt(ms->frame, ms->ground, row, j);
+	else
+	{
+		rc->text_y = (int)rc->texpos;
+		if (rc->text_y < 0)
+			rc->text_y = 0;
+		if (rc->text_y >= rc->current_texture->height)
+			rc->text_y = rc->current_texture->height - 1;
+		change_pixel_color_opt(ms->frame,
+			(rc->line_add + rc->text_y)[0], row, j);
+	}
+}
+
 // void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int row, double teta_cos_sin[2])
 // {
 // 	int i;
@@ -189,9 +196,10 @@ Obtient le mur a aficher en fonction du side et de la direction que face le joue
 // 		}
 // 	}
 // }
-// /*
-// beta: servirait a incrementer tout les textpos, items et murs, potentiellement inutile
-// */
+
+/*
+beta: servirait a incrementer tout les textpos, items et murs, potentiellement inutile
+*/
 // void add_text_pos(t_render_calculus *render_calc)
 // {
 // 	int i;
@@ -204,138 +212,6 @@ Obtient le mur a aficher en fonction du side et de la direction que face le joue
 // 		i++;
 // 	}
 // }
-// /*
-// recupere les donnees du rayonpuis boucle sur tout les pixels de la rangee
-// */
-// void	render_one_ray(t_main_struct *main_struct,
-// 	double teta_cos_sin[2], int row, double teta)
-// {
-// 	int					j;
-// 	t_render_calculus	render_calc;
-
-// 	render_calc.res[0] = 0;
-// 	render_calc.res[1] = 0;
-// 	render_calc.res[2] = 0;
-// 	render_calc.res[3] = 0;
-// 	render_calc.teta = teta;
-// 	ft_bzero(render_calc.hit_tab, 10 * sizeof(t_object_hit));
-// 	ray_check(main_struct, &(render_calc.res), teta_cos_sin, render_calc.hit_tab);
-// 	get_calcul_param(&render_calc, main_struct, teta_cos_sin, row);
-// 	if (render_calc.hit_tab[0].type != NOTHING)
-// 		set_hit_tab(&render_calc, main_struct, row, teta_cos_sin);
-// 	row = row * 4;
-// 	j = 0;
-// 	while (j < WINDOW_HEIGHT)
-// 	{
-// 		render_on_screen(&render_calc, main_struct, row, j);
-// 		add_text_pos(&render_calc);
-// 		j = j + 1;
-// 	}
-// }
-
-
-static t_image_cub	*get_texture_for_wall(t_render_calculus *rc,
-		t_main_struct *ms)
-{
-	// if (rc->res[3])
-	// 	return (ms->fog);
-	// else if (is_facing_up(rc->teta) && rc->res[1] == 1)
-	// 	return (ms->wall_s);
-	// else if (rc->res[1] == 1)
-	// 	return (ms->wall_n);
-	// else if (is_facing_left(rc->teta))
-	// 	return (ms->wall_e);
-	// else
-	// 	return (ms->wall_o);
-
-	if (rc->res[3])
-		return (ms->fog);
-	if (rc->res[1] == 1)
-	{
-		if (is_facing_up(rc->teta && rc->res[1] == 1))
-			return (ms->wall_s);
-		else
-			return (ms->wall_n);
-	}
-	else
-	{
-		if (is_facing_left(rc->teta))
-			return (ms->wall_e);
-		else
-			return (ms->wall_o);
-	}
-}
-
-static void	get_right_wall(t_render_calculus *rc, t_main_struct *ms)
-{
-	t_image_cub	*texture;
-
-	texture = get_texture_for_wall(rc, ms);
-	rc->current_texture = texture;
-	rc->line_add = (int *)(texture->buffer
-			+ (rc->text_x * texture->line_bytes));
-}
-
-static void	calculate_texture_coords(t_render_calculus *rc,
-		double teta_cos_sin[2], int row, t_main_struct *ms)
-{
-	t_image_cub	*texture;
-
-	texture = get_texture_for_wall(rc, ms);
-	if (rc->res[3])
-		rc->text_x = fmod((0.21 * row), texture->width);
-	else
-	{
-		rc->wall_pc = rc->res[2] - floor(rc->res[2]);
-		if ((rc->res[1] == 0 && teta_cos_sin[0] < 0)
-			|| (rc->res[1] == 1 && teta_cos_sin[1] > 0))
-			rc->wall_pc = 1 - rc->wall_pc;
-		rc->text_x = texture->width * rc->wall_pc;
-		if (rc->text_x < 0)
-			rc->text_x = 0;
-		if (rc->text_x >= texture->width)
-			rc->text_x = texture->width - 1;
-	}
-}
-
-static void	get_calcul_param(t_render_calculus *rc,
-		t_main_struct *ms, double teta_cos_sin[2], int row)
-{
-	t_image_cub	*texture;
-
-	rc->height = (WINDOW_HEIGHT
-			/ (rc->res[0] * ms->cos_r_h_tab[row]));
-	calculate_texture_coords(rc, teta_cos_sin, row, ms);
-	texture = get_texture_for_wall(rc, ms);
-	rc->step = (double)texture->height / rc->height;
-	rc->texpos = -(WINDOW_HEIGHT - rc->height)
-		* 0.5 * rc->step;
-	rc->height_check_minus = (WINDOW_HEIGHT
-			- rc->height) * 0.5;
-	rc->height_check_plus = (WINDOW_HEIGHT
-			+ rc->height) * 0.5;
-	rc->teta = teta_cos_sin[0] + teta_cos_sin[1] * 0;
-	get_right_wall(rc, ms);
-}
-
-static void	render_on_screen(t_render_calculus *rc,
-		t_main_struct *ms, int row, int j)
-{
-	if (j < rc->height_check_minus)
-		change_pixel_color_opt(ms->frame, ms->ceil, row, j);
-	else if (j > rc->height_check_plus)
-		change_pixel_color_opt(ms->frame, ms->ground, row, j);
-	else
-	{
-		rc->text_y = (int)rc->texpos;
-		if (rc->text_y < 0)
-			rc->text_y = 0;
-		if (rc->text_y >= rc->current_texture->height)
-			rc->text_y = rc->current_texture->height - 1;
-		change_pixel_color_opt(ms->frame,
-			(rc->line_add + rc->text_y)[0], row, j);
-	}
-}
 
 void	render_one_ray(t_main_struct *main_struct,
 		double teta_cos_sin[2], int row, double teta)
@@ -348,13 +224,17 @@ void	render_one_ray(t_main_struct *main_struct,
 	render_calc.res[2] = 0;
 	render_calc.res[3] = 0;
 	render_calc.teta = teta;
+	ft_bzero(render_calc.hit_tab, 10 * sizeof(t_object_hit));
 	ray_check(main_struct, &(render_calc.res), teta_cos_sin, render_calc.hit_tab);
 	get_calcul_param(&render_calc, main_struct, teta_cos_sin, row);
+	// if (render_calc.hit_tab[0].type != NOTHING)
+	// 	set_hit_tab(&render_calc, main_struct, row, teta_cos_sin);
 	row = row * 4;
 	j = 0;
 	while (j < WINDOW_HEIGHT)
 	{
 		render_on_screen(&render_calc, main_struct, row, j);
+		// add_text_pos(&render_calc);
 		render_calc.texpos += render_calc.step;
 		j = j + 1;
 	}
