@@ -114,14 +114,14 @@ t_point calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
 	double t;
 	double u;
 	double den;
-	
+
 	den = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
 
 	if (den == 0)
 	{
 		res.x = -1;
 		res.y = -1;
-		return (res);	
+		return (res);
 	}
 	t = ((p1.x - p3.x) * (p3.y - p4.y) - (p1.y - p3.y) * (p3.x - p4.x)) / den;
 	u = -((p1.x - p2.x) * (p1.y - p3.y) - (p1.y - p2.y) * (p1.x - p3.x)) / den;
@@ -133,7 +133,7 @@ t_point calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
 	}
 	res.x = -1;
 	res.y = -1;
-	return (res);	
+	return (res);
 }
 
 static inline double dist_points(t_point a, t_point b)
@@ -153,7 +153,6 @@ void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_s
 	t_point inter;
 	if (calcul->index_hit_tab >= 10)
 		return ;
-
 	door = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].door;
 	p1.x = calcul->player_x;
 	p1.y = calcul->player_y;

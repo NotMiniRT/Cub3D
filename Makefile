@@ -11,7 +11,7 @@ DEPSB		:= $(OBJSB:.o=.d)
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g3
+CFLAGS		:= -Wall -Wextra -Werror -g3 -O3
 CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/
 
 MLX_DIR      := mlx/
@@ -139,7 +139,7 @@ debugb: clean
 	@$(MAKE) bonus DEBUG_MODE=1
 
 .PHONY: bonus
-bonus: init .bonus
+bonus: init .bonus Makefile
 
 .bonus: libft/libft.a mlx/libmlx_Linux.a mlx/libmlx.a Makefile $(OBJSB)
 	@$(RM) $(NAME)

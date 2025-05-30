@@ -2,6 +2,7 @@
 #include "common.h"
 #include "stdio.h"
 
+#include "libft.h"
 
 int	get_status_door(int x, int y, t_main_struct *main_struct)
 {

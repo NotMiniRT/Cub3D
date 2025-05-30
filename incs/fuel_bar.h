@@ -4,7 +4,7 @@
 # include <stdbool.h>
 # include "structs_b.h"
 
-# define HUD_WIDTH 240           // Largeur de la fenetre
+# define HUD_WIDTH 60           // Largeur de la fenetre
 # define HUD_HEIGHT 450         // Longueur de la fenetre
 # define HUD_X 80               // Position X de l'HUD
 # define HUD_Y 420              // Position Y de l'HUD

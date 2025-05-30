@@ -87,19 +87,19 @@ bool	display_minimap(t_main_struct *main_struct)
 	t_minimap	minimap;
 	int			i;
 	int			j;
-
+	const int			minimap_size = WINDOW_HEIGHT * 0.3333;
 	ft_memset(&minimap, 0, sizeof(t_minimap));
 	if (!render_minimap(main_struct, &minimap))
 		return (false);
 	i = 0;
-	while (i < WINDOW_HEIGHT * 0.3333)
+	while (i < minimap_size)
 	{
 		j = 0;
-		while (j < WINDOW_HEIGHT * 1.3333)
+		while (j < minimap_size)
 		{
 			change_pixel_color(main_struct->frame, \
 					get_color(main_struct->minimap, j, i), 80 + j, 20 + i);
-			j = j + 4;
+			j++;
 		}
 		i++;
 	}

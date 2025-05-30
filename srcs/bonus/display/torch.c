@@ -99,7 +99,7 @@ bool	display_torch(t_main_struct *main_struct)
 		return (false);
 	frame = main_struct->torch->current_frame;
 	i = 0;
-	while (i < 64)
+	while (i < 256)
 	{
 		j = 0;
 		while (j < 256)
@@ -107,7 +107,7 @@ bool	display_torch(t_main_struct *main_struct)
 			color = get_color(main_struct->torch->frames[frame], j, i);
 			if (color != 0)
 				draw_scaled_pixel(main_struct, color, j, i);
-			j = j + 4;
+			j++;
 		}
 		i++;
 	}

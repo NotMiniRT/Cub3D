@@ -88,7 +88,7 @@ bool	display_minifuel(t_main_struct *main_struct)
 		{
 			change_pixel_color(main_struct->frame, \
 				get_color(main_struct->fuel_bar, j, i), HUD_X + j, HUD_Y + i);
-			j = j + 4;
+			j++;
 		}
 		i++;
 	}
