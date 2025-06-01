@@ -59,7 +59,7 @@ typedef union u_objects
 
 typedef struct s_torch
 {
-    t_image_cub  *frames[34];
+    t_image_cub  *frames[4];
     int          current_frame;
     size_t       last_update;
     size_t       frame_duration;

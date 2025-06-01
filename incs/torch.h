@@ -10,6 +10,13 @@
 # define TORCH_Y 600        // Position Y of the torch on screen
 # define FRAME_DURATION 150 // Milliseconds between animation frames
 
+# define TORCH_DISPLAY_X 1250       // Position X de la torche sur l'écran
+# define TORCH_DISPLAY_Y 550        // Position Y de la torche sur l'écran
+# define TORCH_DISPLAY_SCALE 8      // Facteur de mise à l'échelle (8 pour 64x64 = 512x512)
+# define TORCH_FRAME_COUNT 4        // Nombre de frames d'animation
+# define TORCH_FRAME_DURATION 150   // Millisecondes entre les frames
+
+
 # define TORCH_FRAME_1 "assets/textures/torch/torch_1.xpm"
 # define TORCH_FRAME_2 "assets/textures/torch/torch_2.xpm"
 # define TORCH_FRAME_3 "assets/textures/torch/torch_3.xpm"
