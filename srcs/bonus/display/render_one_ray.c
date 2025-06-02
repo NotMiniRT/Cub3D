@@ -118,7 +118,9 @@ int	put_transparency(t_render_calculus *render_calc,
 	}
 	return (0);
 }
-
+/**
+ * @brief valeurs set a 2048 pour l'instant parce que joue avec les portes mais on va devoir changer ca aussi
+ */
 void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int row, double teta_cos_sin[2])
 {
 	int i;
@@ -135,12 +137,12 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 			if ((render_calc->hit_tab[i].side == 0 && teta_cos_sin[0] < 0)
 				|| (render_calc->hit_tab[i].side == 1 && teta_cos_sin[1] > 0))
 				render_calc->hit_tab[i].wall_pc  = 1 - render_calc->hit_tab[i].wall_pc ;
-			render_calc->hit_tab[i].text_x = 64. * render_calc->hit_tab[i].wall_pc ;
+			render_calc->hit_tab[i].text_x = 2048. * render_calc->hit_tab[i].wall_pc ;
 			if (render_calc->hit_tab[i].text_x < 0)
 				render_calc->hit_tab[i].text_x = 0;
-			if (render_calc->hit_tab[i].text_x >= 64)
-				render_calc->hit_tab[i].text_x = 64 - 1;
-			render_calc->hit_tab[i].step = 64. / render_calc->hit_tab[i].height;
+			if (render_calc->hit_tab[i].text_x >= 2048)
+				render_calc->hit_tab[i].text_x = 2048 - 1;
+			render_calc->hit_tab[i].step = 2048. / render_calc->hit_tab[i].height;
 			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
 				* 0.5 * render_calc->hit_tab[i].step;
 			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
