@@ -1,20 +1,7 @@
-# name: Norminette Check
-# on:
-#   pull_request:
-#     branches: [ main, master ]
-
-# jobs:
-#   norminette:
-#     runs-on: ubuntu-latest
-#     name: norminette
-#     steps:
-#     - uses: actions/checkout@v3
-#     - uses: alexandregv/norminette-action@v3
-#       with:
-#         flags: '.'
-
 name: Norminette Check
 on:
+  push:
+    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 jobs:
