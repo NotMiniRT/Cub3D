@@ -6,7 +6,7 @@
 /*   By: gueberso <gueberso@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 22:04:17 by gueberso          #+#    #+#             */
-/*   Updated: 2025/04/28 20:43:33 by gueberso         ###   ########.fr       */
+/*   Updated: 2025/06/02 09:26:08 by gueberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	convert_args(t_dprintf *data, char type, va_list args)
 	return (len);
 }
 
-static int	handle_conversion(t_dprintf *data, const char *format, \
+static int	handle_conversion(t_dprintf *data, const char *format,
 	va_list args, int *total_len)
 {
 	int	converted_len;
