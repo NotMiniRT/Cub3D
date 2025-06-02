@@ -29,25 +29,79 @@ jobs:
         python3 -m pip install --upgrade pip setuptools
         python3 -m pip install norminette
     
-    - name: Run Norminette with Filtering
+    - name: Create Norminette Filter Script
       run: |
-        # Run norminette and capture output
-        if norminette . 2>&1 | tee norminette_output.txt; then
-          echo "Norminette passed completely"
-          exit 0
-        else
-          echo "Norminette found issues, filtering INVALID_HEADER errors..."
-          
-          # Filter out INVALID_HEADER errors
-          filtered_output=$(grep -v "INVALID_HEADER" norminette_output.txt)
-          
-          # Check if there are any remaining errors
-          if echo "$filtered_output" | grep -q "Error:"; then
-            echo "❌ Norminette found errors (excluding INVALID_HEADER):"
-            echo "$filtered_output"
-            exit 1
-          else
-            echo "✅ Norminette passed (only INVALID_HEADER errors found, which are ignored)"
-            exit 0
-          fi
-        fi
+        cat > filter_norminette.py << 'EOF'
+        #!/usr/bin/env python3
+        import sys
+        import subprocess
+        import re
+
+        def run_norminette_filtered():
+            # List of error types to ignore
+            ignored_errors = [
+                'INVALID_HEADER',
+                # Add more error types here if needed
+                # 'ANOTHER_ERROR_TYPE',
+            ]
+            
+            try:
+                # Run norminette and capture output
+                result = subprocess.run(['norminette', '.'], 
+                                      capture_output=True, 
+                                      text=True, 
+                                      timeout=300)
+                
+                output_lines = (result.stdout + result.stderr).split('\n')
+                filtered_lines = []
+                ignored_count = 0
+                error_count = 0
+                
+                for line in output_lines:
+                    # Check if line contains an ignored error
+                    should_ignore = False
+                    for ignored_error in ignored_errors:
+                        if f'Error: {ignored_error}' in line:
+                            should_ignore = True
+                            ignored_count += 1
+                            break
+                    
+                    if not should_ignore:
+                        filtered_lines.append(line)
+                        if 'Error:' in line:
+                            error_count += 1
+                
+                # Print filtered output
+                filtered_output = '\n'.join(filtered_lines)
+                if filtered_output.strip():
+                    print(filtered_output)
+                
+                # Print summary
+                if ignored_count > 0:
+                    print(f"\n🔕 Ignored {ignored_count} INVALID_HEADER error(s)")
+                
+                if error_count > 0:
+                    print(f"\n❌ Found {error_count} error(s) that need attention")
+                    return 1
+                else:
+                    print(f"\n✅ Norminette passed! ({ignored_count} ignored errors)")
+                    return 0
+                    
+            except subprocess.TimeoutExpired:
+                print("❌ Norminette timed out")
+                return 1
+            except FileNotFoundError:
+                print("❌ Norminette not found")
+                return 1
+            except Exception as e:
+                print(f"❌ Error running norminette: {e}")
+                return 1
+
+        if __name__ == "__main__":
+            sys.exit(run_norminette_filtered())
+        EOF
+        
+        chmod +x filter_norminette.py
+    
+    - name: Run Filtered Norminette
+      run: python3 filter_norminette.py
