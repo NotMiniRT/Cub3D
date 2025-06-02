@@ -24,3 +24,6 @@ void	draw_player(t_image_cub *img, double angle);
 void	fill_minimap_background(t_image_cub *img);
 
 #endif
+
+
+

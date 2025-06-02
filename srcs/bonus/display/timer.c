@@ -2,6 +2,11 @@
 #include <stdint.h>
 #include "main_struct.h"
 
+
+/**
+ * @bug franchement, est-ce qu'on enleverai pas cette secu ?
+ * Elle sert vraiment a rien...
+ */
 static size_t	gettimeofday_ms(void)
 {
 	static struct timeval	tv;

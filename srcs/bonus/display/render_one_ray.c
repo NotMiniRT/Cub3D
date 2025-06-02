@@ -213,7 +213,7 @@ static void	render_on_screen(t_render_calculus *rc,
 	}
 }
 
-void	render_one_ray(t_main_struct *main_struct,
+void	render_one_ray(t_main_struct *ms,
 		double teta_cos_sin[2], int row, double teta)
 {
 	int					j;
@@ -226,15 +226,15 @@ void	render_one_ray(t_main_struct *main_struct,
 	render_calc.teta = teta;
 	ft_bzero(render_calc.hit_tab, 10 * sizeof(t_object_hit));
 
-	ray_check(main_struct, &(render_calc.res), teta_cos_sin, render_calc.hit_tab);
-	get_calcul_param(&render_calc, main_struct, teta_cos_sin, row);
+	ray_check(ms, &(render_calc.res), teta_cos_sin, render_calc.hit_tab);
+	get_calcul_param(&render_calc, ms, teta_cos_sin, row);
 	if (render_calc.hit_tab[0].type != NOTHING)
-		set_hit_tab(&render_calc, main_struct, row, teta_cos_sin);
+		set_hit_tab(&render_calc, ms, row, teta_cos_sin);
 	row = row * 4;
 	j = 0;
 	while (j < WINDOW_HEIGHT)
 	{
-		render_on_screen(&render_calc, main_struct, row, j);
+		render_on_screen(&render_calc, ms, row, j);
 		add_text_pos(&render_calc);
 		j = j + 1;
 	}

@@ -32,7 +32,7 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
 			"assets/textures/walls/fog.xpm")
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->door), \
-			"assets/textures/walls/door.xpm")
+			"assets/textures/walls/door1.xpm")
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->potion), \
 			"assets/textures/walls/potion.xpm")
 		|| !create_img_cub(main_struct, &(main_struct->minimap), \
@@ -65,9 +65,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	init_player(main_struct->player, infos);
 	main_struct->fuel = 15;
-	if (!init_torch(main_struct))
-		return (false);
-	if (!init_threads(main_struct))
+	if (!init_torch(main_struct) || !init_threads(main_struct))
 		return (false);
 	if (!map_object_set(main_struct))
 		return (false);
