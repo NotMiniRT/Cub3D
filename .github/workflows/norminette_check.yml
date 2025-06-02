@@ -23,7 +23,6 @@ jobs:
     name: norminette
     steps:
     - uses: actions/checkout@v3
-
     - name: Install Norminette
       run: |
         python3 -m pip install --upgrade pip setuptools
@@ -105,3 +104,25 @@ jobs:
     
     - name: Run Filtered Norminette
       run: python3 filter_norminette.py
+    - name: Run Norminette with Filtering
+      run: |
+        # Run norminette and capture output
+        if norminette . 2>&1 | tee norminette_output.txt; then
+          echo "Norminette passed completely"
+          exit 0
+        else
+          echo "Norminette found issues, filtering INVALID_HEADER errors..."
+          
+          # Filter out INVALID_HEADER errors
+          filtered_output=$(grep -v "INVALID_HEADER" norminette_output.txt)
+          
+          # Check if there are any remaining errors
+          if echo "$filtered_output" | grep -q "Error:"; then
+            echo "❌ Norminette found errors (excluding INVALID_HEADER):"
+            echo "$filtered_output"
+            exit 1
+          else
+            echo "✅ Norminette passed (only INVALID_HEADER errors found, which are ignored)"
+            exit 0
+          fi
+        fi
