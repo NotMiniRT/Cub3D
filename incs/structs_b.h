@@ -4,6 +4,11 @@
 # include "stdlib.h"
 
 
+// a degager
+
+# define HIT_TAB_LEN 100
+
+
 typedef struct s_thread_manager	t_thread_manager;
 typedef struct s_image_cub		t_image_cub;
 
@@ -195,7 +200,7 @@ typedef struct s_object_hit
 
 typedef struct s_render_calculus
 {
-	double	res[4];
+	double	res[5];
 	double	height;
 	int		text_x;
 	int		text_y;
@@ -206,7 +211,7 @@ typedef struct s_render_calculus
 	double	wall_pc;
 	double	teta;
 	int		*line_add;
-	t_object_hit	hit_tab[10];
+	t_object_hit	hit_tab[HIT_TAB_LEN];
 	t_image_cub		*current_texture;
 }	t_render_calculus;
 

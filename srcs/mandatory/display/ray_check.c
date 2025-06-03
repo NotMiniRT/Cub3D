@@ -73,7 +73,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 	}
 }
 
-static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
+static void	fill_cross(t_ray_calculus *calcul, double (*cross)[5])
 {
 	(*cross)[0] = calcul->dist;
 	(*cross)[1] = calcul->side;
@@ -90,7 +90,7 @@ static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
 }
 
 void	ray_check(t_main_struct *main_struct,
-		double (*cross)[4], double cos_sin[2])
+		double (*cross)[5], double cos_sin[2])
 {
 	t_ray_calculus	calcul;
 

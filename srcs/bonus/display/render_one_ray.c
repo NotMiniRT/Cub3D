@@ -99,7 +99,7 @@ int	put_transparency(t_render_calculus *render_calc,
 	int text_y;
 
 	i = 0;
-	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	while(i < render_calc->res[4])
 	{
 		// printf("max: %d, minus: %d, j = %d, status: %d\n", render_calc->hit_tab[i].height_check_plus, render_calc->hit_tab[i].height_check_minus, j, render_calc->hit_tab[i].status);
 		if (render_calc->hit_tab[i].status != 0 && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
@@ -126,7 +126,7 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 	int i;
 
 	i = 0;
-	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	while(i < render_calc->res[4])
 	{
 		if (render_calc->hit_tab[i].type == DOOR)
 		{
@@ -187,7 +187,7 @@ void add_text_pos(t_render_calculus *render_calc)
 
 	i = 0;
 	render_calc->texpos += render_calc->step;
-	while (i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	while (i < render_calc->res[4])
 	{
 		render_calc->hit_tab[i].texpos += render_calc->hit_tab[i].step;
 		i++;
@@ -225,12 +225,12 @@ void	render_one_ray(t_main_struct *ms,
 	render_calc.res[1] = 0;
 	render_calc.res[2] = 0;
 	render_calc.res[3] = 0;
+	render_calc.res[4] = 0;
 	render_calc.teta = teta;
 	ft_bzero(render_calc.hit_tab, 10 * sizeof(t_object_hit));
-
 	ray_check(ms, &(render_calc.res), teta_cos_sin, render_calc.hit_tab);
 	get_calcul_param(&render_calc, ms, teta_cos_sin, row);
-	if (render_calc.hit_tab[0].type != NOTHING)
+	if (render_calc.res[4] != 0)
 		set_hit_tab(&render_calc, ms, row, teta_cos_sin);
 	row = row * 4;
 	j = 0;

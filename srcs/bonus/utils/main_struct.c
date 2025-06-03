@@ -30,7 +30,7 @@ int	init_r_h_tab(t_main_struct *main_struct)
 
 void	free_main_struct_img(t_main_struct *main_struct)
 {
-	int	i;
+	static int	i = -1;
 
 	free_image_cub(main_struct, main_struct->frame);
 	free_image_cub(main_struct, main_struct->wall_e);
@@ -44,12 +44,10 @@ void	free_main_struct_img(t_main_struct *main_struct)
 	free_image_cub(main_struct, main_struct->fog);
 	if (main_struct->torch)
 	{
-		i = 0;
-		while (i < 4)
+		while (++i < 4)
 		{
 			if (main_struct->torch->frames[i])
 				free_image_cub(main_struct, main_struct->torch->frames[i]);
-			i++;
 		}
 		free(main_struct->torch);
 		main_struct->torch = NULL;
@@ -81,7 +79,7 @@ void	free_main_struct(t_main_struct *main_struct)
 	main_struct->win_ptr = NULL;
 	main_struct->cos_r_h_tab = NULL;
 	cleanup_threads(main_struct->thread_manager);
-	
+
 }
 
 int	is_moving(t_main_struct *main_struct)
