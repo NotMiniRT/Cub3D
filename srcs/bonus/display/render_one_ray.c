@@ -14,6 +14,17 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 	((int *)(img->buffer + (y * img->line_bytes) + (x)))[0] = color;
 }
 
+static double	get_right_size(t_render_calculus *render_calc,
+	t_main_struct *main_struct)
+{
+	if (is_facing_up(render_calc->teta) && render_calc->res[1] == 1)
+		return (main_struct->wall_s->size);
+	else if (render_calc->res[1] == 1)
+		return (main_struct->wall_n->size);
+	else if (is_facing_left(render_calc->teta))
+		return (main_struct->wall_e->size);
+	return (main_struct->wall_o->size);
+}
 
 /*
 Obtient le mur a aficher en fonction du side et de la direction que face le joueur, si on ne fait absolument aucunne transcparence sur la porte il suffit de la remettre la
@@ -49,23 +60,29 @@ height_check_minus?max: debut et fin du mur en y
 static void	get_calcul_param(t_render_calculus *render_calc,
 	t_main_struct *main_struct, double teta_cos_sin[2], int row)
 {
+	double size;
+
 	render_calc->height = (WINDOW_HEIGHT
 			/ (render_calc->res[0] * main_struct->cos_r_h_tab[row]));
 	if (render_calc->res[3])
-		render_calc->text_x = fmod((0.21 * row), 64);
+	{
+		render_calc->text_x = fmod((0.33 * main_struct->fog->size * row), main_struct->fog->size);
+		size = main_struct->fog->size;
+	}
 	else
 	{
+		size = get_right_size(render_calc, main_struct);
 		render_calc->wall_pc = render_calc->res[2] - floor(render_calc->res[2]);
 		if ((render_calc->res[1] == 0 && teta_cos_sin[0] < 0)
 			|| (render_calc->res[1] == 1 && teta_cos_sin[1] > 0))
 			render_calc->wall_pc = 1 - render_calc->wall_pc;
-		render_calc->text_x = 64. * render_calc->wall_pc;
+		render_calc->text_x = size * render_calc->wall_pc;
 		if (render_calc->text_x < 0)
 			render_calc->text_x = 0;
-		if (render_calc->text_x >= 64)
-			render_calc->text_x = 64 - 1;
+		if (render_calc->text_x >= size)
+			render_calc->text_x = size - 1;
 	}
-	render_calc->step = 64. / render_calc->height;
+	render_calc->step = size / render_calc->height;
 	render_calc->texpos = -(WINDOW_HEIGHT - render_calc->height)
 		* 0.5 * render_calc->step;
 	render_calc->height_check_minus = (WINDOW_HEIGHT
@@ -88,7 +105,7 @@ int	put_transparency(t_render_calculus *render_calc,
 	int text_y;
 
 	i = 0;
-	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	while(i < render_calc->res[4])
 	{
 		// printf("max: %d, minus: %d, j = %d, status: %d\n", render_calc->hit_tab[i].height_check_plus, render_calc->hit_tab[i].height_check_minus, j, render_calc->hit_tab[i].status);
 		if (render_calc->hit_tab[i].status != 0 && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
@@ -139,7 +156,7 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 	int i;
 
 	i = 0;
-	while(i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	while(i < render_calc->res[4])
 	{
 		if (render_calc->hit_tab[i].type == DOOR)
 		{
@@ -150,12 +167,12 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 			if ((render_calc->hit_tab[i].side == 0 && teta_cos_sin[0] < 0)
 				|| (render_calc->hit_tab[i].side == 1 && teta_cos_sin[1] > 0))
 				render_calc->hit_tab[i].wall_pc  = 1 - render_calc->hit_tab[i].wall_pc ;
-			render_calc->hit_tab[i].text_x = 64. * render_calc->hit_tab[i].wall_pc ;
+			render_calc->hit_tab[i].text_x = main_struct->door->size * render_calc->hit_tab[i].wall_pc ;
 			if (render_calc->hit_tab[i].text_x < 0)
 				render_calc->hit_tab[i].text_x = 0;
-			if (render_calc->hit_tab[i].text_x >= 64)
-				render_calc->hit_tab[i].text_x = 64 - 1;
-			render_calc->hit_tab[i].step = 64. / render_calc->hit_tab[i].height;
+			if (render_calc->hit_tab[i].text_x >= main_struct->door->size)
+				render_calc->hit_tab[i].text_x = main_struct->door->size - 1;
+			render_calc->hit_tab[i].step = main_struct->door->size / render_calc->hit_tab[i].height;
 			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
 				* 0.5 * render_calc->hit_tab[i].step;
 			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
@@ -171,12 +188,12 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 		{
 			render_calc->hit_tab[i].height = (WINDOW_HEIGHT
 				/ (render_calc->hit_tab[i].dist * main_struct->cos_r_h_tab[row]));
-			render_calc->hit_tab[i].text_x = 64. * render_calc->hit_tab[i].wall_pc;
+			render_calc->hit_tab[i].text_x = main_struct->potion->size * render_calc->hit_tab[i].wall_pc;
 			if (render_calc->hit_tab[i].text_x < 0)
 				render_calc->hit_tab[i].text_x = 0;
-			if (render_calc->hit_tab[i].text_x >= 64)
-				render_calc->hit_tab[i].text_x = 64 - 1;
-			render_calc->hit_tab[i].step = 64. / render_calc->hit_tab[i].height;
+			if (render_calc->hit_tab[i].text_x >= main_struct->potion->size)
+				render_calc->hit_tab[i].text_x = main_struct->potion->size - 1;
+			render_calc->hit_tab[i].step = main_struct->potion->size / render_calc->hit_tab[i].height;
 			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
 					* 0.5 * render_calc->hit_tab[i].step;
 			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
@@ -199,7 +216,7 @@ void add_text_pos(t_render_calculus *render_calc)
 
 	i = 0;
 	render_calc->texpos += render_calc->step;
-	while (i <= 9 && render_calc->hit_tab[i].type != NOTHING)
+	while (i < render_calc->res[4])
 	{
 		render_calc->hit_tab[i].texpos += render_calc->hit_tab[i].step;
 		i++;
@@ -218,11 +235,12 @@ void	render_one_ray(t_main_struct *main_struct,
 	render_calc.res[1] = 0;
 	render_calc.res[2] = 0;
 	render_calc.res[3] = 0;
+	render_calc.res[4] = 0;
 	render_calc.teta = teta;
-	ft_bzero(render_calc.hit_tab, 10 * sizeof(t_object_hit));
+	// ft_bzero(render_calc.hit_tab, HIT_TAB_LEN * sizeof(t_object_hit));
 	ray_check(main_struct, &(render_calc.res), teta_cos_sin, render_calc.hit_tab);
 	get_calcul_param(&render_calc, main_struct, teta_cos_sin, row);
-	if (render_calc.hit_tab[0].type != NOTHING)
+	if (render_calc.res[4] != 0)
 		set_hit_tab(&render_calc, main_struct, row, teta_cos_sin);
 	row = row * 4;
 	j = 0;

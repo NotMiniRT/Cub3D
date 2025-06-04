@@ -92,7 +92,7 @@ repmlis les resultats:
 	1-> le side;
 	2-> le %du mur a l'imapct, sert pour calculer quelle colone afficher
 */
-static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
+static void	fill_cross(t_ray_calculus *calcul, double (*cross)[5])
 {
 	(*cross)[0] = calcul->dist;
 	(*cross)[1] = calcul->side;
@@ -106,6 +106,7 @@ static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
 	else
 		(*cross)[2] = calcul->player_y + calcul->wall_y;
 	(*cross)[3] = calcul->flag_dist;
+	(*cross)[4] = calcul->index_hit_tab;
 }
 
 t_point calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
@@ -143,7 +144,7 @@ static inline double dist_points(t_point a, t_point b)
 /*
 reccupere les collisions et leur donnee, il faudra peut etre en rajouter (pareil, il faut verifier qu'une porte soit active avant de l'ajouer pour eviter les calculs inutiles)
 */
-void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_struct *main_struct, double cos_sin[2])
+void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN], t_main_struct *main_struct, double cos_sin[2])
 {
 	t_object_door *door;
 	t_point p1;
@@ -151,7 +152,7 @@ void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_s
 	t_point p3;
 	t_point p4;
 	t_point inter;
-	if (calcul->index_hit_tab >= 10)
+	if (calcul->index_hit_tab >= HIT_TAB_LEN)
 		return ;
 
 	door = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].door;
@@ -176,7 +177,7 @@ void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_s
 	calcul->index_hit_tab++;
 }
 
-void	add_hit_ray_item(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_struct *main_struct, double cos_sin[2])
+void	add_hit_ray_item(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN], t_main_struct *main_struct, double cos_sin[2])
 {
 	t_object_collectible *item;
 	t_point p1;
@@ -184,7 +185,7 @@ void	add_hit_ray_item(t_ray_calculus *calcul, t_object_hit	hit_tab[10], t_main_s
 	t_point p3;
 	t_point p4;
 	t_point inter;
-	if (calcul->index_hit_tab >= 10 || main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].item == NULL)
+	if (calcul->index_hit_tab >= HIT_TAB_LEN)
 		return ;
 	item = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].item;
 	p1.x = calcul->player_x;
@@ -213,7 +214,7 @@ boucle principale, avance sur l'axe du rayon en x/y en fonction de la distance l
 */
 
 void	ray_check(t_main_struct *main_struct,
-		double (*cross)[4], double cos_sin[2], t_object_hit	hit_tab[10])
+		double (*cross)[5], double cos_sin[2], t_object_hit	hit_tab[HIT_TAB_LEN])
 {
 	t_ray_calculus	calcul;
 

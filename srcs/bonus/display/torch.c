@@ -35,7 +35,7 @@ bool	init_torch(t_main_struct *main_struct)
 	while (i < 4)
 	{
 		if (!get_image_cub_from_xpm_no_rot(main_struct,
-				&(main_struct->torch->frames[i]), torch_paths[i]))
+				&(main_struct->torch->frames[i]), torch_paths[i], 64))
 			return (false);
 		i++;
 	}

@@ -1,7 +1,7 @@
-NO ./assets/textures/walls/wall_1.xpm
-SO ./assets/textures/walls/wall_2.xpm
-WE ./assets/textures/walls/wall_3.xpm
-EA ./assets/textures/walls/wall_4.xpm
+NO ./assets/textures/walls/wall-blood.xpm
+SO ./assets/textures/walls/wall-moss.xpm
+WE ./assets/textures/walls/wall-brick-blue-light-from-top.xpm
+EA ./assets/textures/walls/blue-rocks.xpm
 F 20,30,50
 C 135,206,235
 
