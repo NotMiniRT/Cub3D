@@ -27,6 +27,12 @@ typedef enum s_types_object
 	DOOR
 }	t_types_object;
 
+typedef struct s_lst_int
+{
+	int 			index;
+	struct s_lst_int *next;
+} t_lst_int;
+
 typedef struct s_point
 {
     double x;
@@ -163,6 +169,7 @@ typedef struct s_main_struct
 	size_t			created_at;
 	size_t			last_move;
 	size_t			fuel_time;
+	size_t			door_action;
 	short int		inputs[7];
 	int				is_moving;
 	int				count_lines;
@@ -172,6 +179,9 @@ typedef struct s_main_struct
     int					lock_mouse_y;
     int					is_mouse_locked;
     int					mouse_left_pressed;
+	t_lst_int			**up_door;
+	t_lst_int			**down_door;
+
 }	t_main_struct;
 
 typedef struct s_object_hit

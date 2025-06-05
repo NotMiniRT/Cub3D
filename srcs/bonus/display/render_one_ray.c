@@ -108,11 +108,15 @@ int	put_transparency(t_render_calculus *render_calc,
 	while(i < render_calc->res[4])
 	{
 		// printf("max: %d, minus: %d, j = %d, status: %d\n", render_calc->hit_tab[i].height_check_plus, render_calc->hit_tab[i].height_check_minus, j, render_calc->hit_tab[i].status);
-		if (render_calc->hit_tab[i].status != 0 && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
+		if (((render_calc->hit_tab[i].type == ITEM && render_calc->hit_tab[i].status != 0) || render_calc->hit_tab[i].type == DOOR) && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
 		{
 			text_y = (int)render_calc->hit_tab[i].texpos;
+			if (render_calc->hit_tab[i].type == DOOR && render_calc->hit_tab[i].status != 100)
+				text_y = text_y - (int)(main_struct->door->size * (100 - render_calc->hit_tab[i].status) * 0.008);
 			if (text_y < 0)
 				text_y = 0;
+			if (text_y >= main_struct->door->size)
+				text_y = main_struct->door->size - 1;
 			color = (render_calc->hit_tab[i].line_add + text_y)[0];
 			if (color != 0)
 			{

@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include "multithreading.h"
 #include "main_struct_b.h"
-
+#include "lst_int.h"
 int	init_r_h_tab(t_main_struct *main_struct)
 {
 	int	i;
@@ -71,6 +71,16 @@ void	free_main_struct(t_main_struct *main_struct)
 		free(main_struct->cos_r_h_tab);
 	if (main_struct->r_h_tab != NULL)
 		free(main_struct->r_h_tab);
+	if (main_struct->down_door != NULL)
+	{
+		free_lst_int(*(main_struct->down_door));
+		free(main_struct->down_door);
+	}
+	if (main_struct->up_door != NULL)
+	{
+		free_lst_int(*(main_struct->up_door));
+		free(main_struct->up_door);
+	}
 	if (main_struct->mlx_ptr != NULL)
 	{
 		mlx_destroy_display(main_struct->mlx_ptr);

@@ -5,6 +5,7 @@
 #include "stdio.h"
 #include "time.h"
 #include "math.h"
+#include "doors_b.h"
 void	do_one_move(t_main_struct *main_struct)
 {
 	if (main_struct->inputs[UP] + main_struct->inputs[DOWN] == 1
@@ -129,6 +130,15 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	{
 		main_struct->last_move = timestamp_in_ms(main_struct);
 		do_one_move(main_struct);
+	}
+	if (timestamp_in_ms(main_struct) - main_struct->door_action > 20
+		&& (main_struct->down_door != NULL || main_struct->up_door != NULL))
+	{
+		main_struct->door_action = timestamp_in_ms(main_struct);
+		if (main_struct->up_door != NULL)
+			up_doors(main_struct, main_struct->up_door);
+		if (main_struct->down_door != NULL)
+			down_doors(main_struct, main_struct->down_door);
 	}
 	return (0);
 }

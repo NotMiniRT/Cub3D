@@ -1,7 +1,34 @@
 #include "structs_b.h"
 #include "common.h"
 #include "stdio.h"
+#include "lst_int.h"
 
+void up_doors(t_main_struct *main_struct, t_lst_int **lst)
+{
+	if (*lst == NULL)
+		return ;
+	(*(main_struct->doors))[(*lst)->index][2] = (*(main_struct->doors))[(*lst)->index][2] + 1;
+	if ((*(main_struct->doors))[(*lst)->index][2] >= 100)
+	{
+		remove_last_lst_int(lst);
+		return ;
+	}
+	up_doors(main_struct, &((*lst)->next));
+}
+
+
+void down_doors(t_main_struct *main_struct, t_lst_int **lst)
+{
+	if (*lst == NULL)
+		return ;
+	(*(main_struct->doors))[(*lst)->index][2] = (*(main_struct->doors))[(*lst)->index][2] - 1;
+	if ((*(main_struct->doors))[(*lst)->index][2] <= 0)
+	{
+		remove_last_lst_int(lst);
+		return ;
+	}
+	down_doors(main_struct, &((*lst)->next));
+}
 
 int	get_status_door(int x, int y, t_main_struct *main_struct)
 {
@@ -17,9 +44,7 @@ int	get_status_door(int x, int y, t_main_struct *main_struct)
 	return (-1);
 }
 
-/*
-	TODO: understand what goes wrong with coordinates
-*/
+
 static void activate_door(t_main_struct *main_struct, int x, int y)
 {
 	int new_x;
@@ -36,9 +61,9 @@ static void activate_door(t_main_struct *main_struct, int x, int y)
 			if ((*(main_struct->doors))[i][0] == new_x + 1 && (*(main_struct->doors))[i][1] == new_y + 1)
 			{
 				if ((*(main_struct->doors))[i][2] == 0)
-					(*(main_struct->doors))[i][2] = 100;
+					add_front_lst_int(main_struct->up_door, i);
 				else if ((*(main_struct->doors))[i][2] == 100)
-					(*(main_struct->doors))[i][2] = 0;
+					add_front_lst_int(main_struct->down_door, i);
 				return ;
 			}
 			i++;

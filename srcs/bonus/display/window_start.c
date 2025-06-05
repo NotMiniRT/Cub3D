@@ -55,6 +55,14 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	main_struct->player = malloc(sizeof(t_player));
 	if (main_struct->player == NULL)
 		return (false);
+	main_struct->up_door = malloc(sizeof(t_lst_int *));
+	if (main_struct->up_door == NULL)
+		return (false);
+	*(main_struct->up_door) = NULL;
+	main_struct->down_door = malloc(sizeof(t_lst_int *));
+	if (main_struct->down_door == NULL)
+		return (false);
+	*(main_struct->down_door) = NULL;
 	if (!init_all_sprites(main_struct, infos))
 		return (false);
 	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
@@ -64,7 +72,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
-	main_struct->fuel = 15;
+	main_struct->fuel = 100;
 	if (!init_torch(main_struct))
 		return (false);
 	if (!init_threads(main_struct))
