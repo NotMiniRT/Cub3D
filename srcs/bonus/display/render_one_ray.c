@@ -108,7 +108,7 @@ int	put_transparency(t_render_calculus *render_calc,
 	while(i < render_calc->res[4])
 	{
 		// printf("max: %d, minus: %d, j = %d, status: %d\n", render_calc->hit_tab[i].height_check_plus, render_calc->hit_tab[i].height_check_minus, j, render_calc->hit_tab[i].status);
-		if (((render_calc->hit_tab[i].type == ITEM && render_calc->hit_tab[i].status != 0) || render_calc->hit_tab[i].type == DOOR) && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
+		if (((render_calc->hit_tab[i].type == ITEM && render_calc->hit_tab[i].status != 0) || render_calc->hit_tab[i].type == DOOR || render_calc->hit_tab[i].type == MONSTER) && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
 		{
 			text_y = (int)render_calc->hit_tab[i].texpos;
 			if (render_calc->hit_tab[i].type == DOOR && render_calc->hit_tab[i].status != 100)
@@ -206,6 +206,27 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 					+ render_calc->hit_tab[i].height) * 0.5;
 			render_calc->hit_tab[i].line_add = (int *)(main_struct->potion->buffer
 				+ (render_calc->hit_tab[i].text_x * main_struct->potion->line_bytes));
+			render_calc->hit_tab[i].status = 1;
+			i++;
+		}
+		else if (render_calc->hit_tab[i].type == MONSTER)
+		{
+			render_calc->hit_tab[i].height = (WINDOW_HEIGHT
+				/ (render_calc->hit_tab[i].dist * main_struct->cos_r_h_tab[row]));
+			render_calc->hit_tab[i].text_x = (main_struct->mj->sprite[main_struct->mj->frame])->size * render_calc->hit_tab[i].wall_pc;
+			if (render_calc->hit_tab[i].text_x < 0)
+				render_calc->hit_tab[i].text_x = 0;
+			if (render_calc->hit_tab[i].text_x >= (main_struct->mj->sprite[main_struct->mj->frame])->size)
+				render_calc->hit_tab[i].text_x = (main_struct->mj->sprite[main_struct->mj->frame])->size - 1;
+			render_calc->hit_tab[i].step = (main_struct->mj->sprite[main_struct->mj->frame])->size / render_calc->hit_tab[i].height;
+			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
+					* 0.5 * render_calc->hit_tab[i].step;
+			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
+					- render_calc->hit_tab[i].height) * 0.5;
+			render_calc->hit_tab[i].height_check_plus = (WINDOW_HEIGHT
+					+ render_calc->hit_tab[i].height) * 0.5;
+			render_calc->hit_tab[i].line_add = (int *)((main_struct->mj->sprite[main_struct->mj->frame])->buffer
+				+ (render_calc->hit_tab[i].text_x * (main_struct->mj->sprite[main_struct->mj->frame])->line_bytes));
 			render_calc->hit_tab[i].status = 1;
 			i++;
 		}

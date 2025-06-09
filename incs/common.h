@@ -20,5 +20,5 @@
 # define PIX116 5.75958653158 
 # define RENDER_DIST 100
 # define MOUSE_SENSITIVITY 0.002
-
+# define MJ_SPRITES 34
 #endif

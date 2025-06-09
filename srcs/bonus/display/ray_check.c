@@ -11,7 +11,7 @@ static void	define_basic_param_calculus(t_ray_calculus *calcul,
 		double cos_sin[2], t_main_struct *main_struct)
 {
 	calcul->flag_dist = 0;
-	calcul->render_dist = main_struct->fuel + 100;
+	calcul->render_dist = main_struct->fuel;
 	calcul->player_x = main_struct->player->x;
 	calcul->player_y = main_struct->player->y;
 	calcul->dir_x = cos_sin[0];
@@ -209,6 +209,36 @@ void	add_hit_ray_item(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN],
 	calcul->index_hit_tab++;
 }
 
+void	get_monster_ray(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN], t_main_struct *main_struct, double cos_sin[2])
+{
+	t_point p1;
+	t_point p2;
+	t_point p3;
+	t_point p4;
+	t_point inter;
+	if (calcul->index_hit_tab >= HIT_TAB_LEN)
+		return ;
+	p1.x = calcul->player_x;
+	p1.y = calcul->player_y;
+	p2.x = calcul->player_x + cos_sin[0] * calcul->render_dist;
+	p2.y = calcul->player_y + cos_sin[1] * calcul->render_dist;
+	p3.x = main_struct->mj->p1.x;
+	p3.y = main_struct->mj->p1.y;
+	p4.x = main_struct->mj->p2.x;
+	p4.y = main_struct->mj->p2.y;
+	//printf("points: (%f, %f) (%f, %f)\n", p3.x, p3.y, p4.x, p4.y);
+	inter = calcul_intersection(p1, p2, p3, p4);
+	if (inter.x == -1)
+		return ;
+	hit_tab[calcul->index_hit_tab].wall_pc = dist_points(p3, inter);
+	hit_tab[calcul->index_hit_tab].dist = dist_points(p1, inter);
+	hit_tab[calcul->index_hit_tab].map_x = calcul->map_y;
+	hit_tab[calcul->index_hit_tab].map_y = calcul->map_x;
+	hit_tab[calcul->index_hit_tab].type = MONSTER;
+	hit_tab[calcul->index_hit_tab].side = calcul->side;
+	calcul->index_hit_tab++;
+}
+
 /*
 boucle principale, avance sur l'axe du rayon en x/y en fonction de la distance la plus petite parcourue sur les axes respectifs, jusqua la premiere collision avec un mur, puis renvoie les resultats
 */
@@ -220,6 +250,8 @@ void	ray_check(t_main_struct *main_struct,
 
 	define_basic_param_calculus(&calcul, cos_sin, main_struct);
 	get_step_and_side_dist(&calcul);
+	if (main_struct->mj != NULL)
+		get_monster_ray(&calcul, hit_tab, main_struct, cos_sin);
 	while (!calcul.flag_dist
 		&& main_struct->map[calcul.map_y][calcul.map_x] != '1')
 	{

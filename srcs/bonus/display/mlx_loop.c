@@ -6,6 +6,7 @@
 #include "time.h"
 #include "math.h"
 #include "doors_b.h"
+#include "monster.h"
 void	do_one_move(t_main_struct *main_struct)
 {
 	if (main_struct->inputs[UP] + main_struct->inputs[DOWN] == 1
@@ -17,51 +18,6 @@ void	do_one_move(t_main_struct *main_struct)
 		turn_player(main_struct->player,
 			main_struct->inputs[TRIGHT] - main_struct->inputs[TLEFT]);
 }
-
-// double cx = (*main_struct->items)[i][0] + 0.5;
-// double cy = (*main_struct->items)[i][1] + 0.5;
-
-// double dx = main_struct->player->x - cx;
-// double dy = main_struct->player->y - cy;
-
-// double angle = atan2(dy, dx);
-// double angle_perp = angle + PI / 2.0;
-
-// // Vecteur de base du sprite (non encore sécurisé)
-// double ux = cos(angle_perp);
-// double uy = sin(angle_perp);
-
-// // Vecteur direction vers la caméra (pour dot product)
-// double vx = dx;
-// double vy = dy;
-// double len_v = sqrt(vx * vx + vy * vy);
-// if (len_v < 0.0001)
-// 	len_v = 0.0001;
-// vx /= len_v;
-// vy /= len_v;
-
-// // Produit scalaire
-// double dot = ux * vx + uy * vy;
-
-// // Si dot < 0 → vecteur perpendiculaire pointe "derrière" → on l’inverse
-// if (dot < 0) {
-// 	ux = -ux;
-// 	uy = -uy;
-// }
-
-// // Segment
-// double L = 0.5;
-// double p1x = cx - ux * L;
-// double p1y = cy - uy * L;
-// double p2x = cx + ux * L;
-// double p2y = cy + uy * L;
-
-
-
-// static inline double dist_points(double x1, double y1, double x2, double y2)
-// {
-// 	return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
-// }
 
 void rotate_point(t_main_struct *main_struct, int i, t_point *p)
 {
@@ -84,6 +40,13 @@ void update_items(t_main_struct *main_struct)
 	int x;
 	int y;
 	i = 0;
+	if (main_struct->mj != NULL)
+	{
+		main_struct->mj->p1.x = main_struct->mj->x + 0.5 * main_struct->mj->dir.y;
+		main_struct->mj->p1.y = main_struct->mj->y + 0.5 * main_struct->mj->dir.x;
+		main_struct->mj->p2.x = main_struct->mj->x - 0.5 * main_struct->mj->dir.y;
+		main_struct->mj->p2.y = main_struct->mj->y - 0.5 * main_struct->mj->dir.x;
+	}
 	while (i < 100 && (*main_struct->items)[i][0] != 0)
 	{
 		if ((*main_struct->items)[i][2] == 1)
@@ -118,6 +81,10 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	update_items(main_struct);
 	if (frame_display(main_struct))
 		return (1);
+	if (main_struct->mj != NULL && timestamp_in_ms(main_struct) - main_struct->mj->dir_time > 500)
+		get_monster_dir(main_struct);
+	if (main_struct->mj != NULL && timestamp_in_ms(main_struct) - main_struct->mj->move_time > 20)
+		move_monster(main_struct);
 	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 700 && main_struct->fuel != 1)
 	{
 		main_struct->fuel_time = timestamp_in_ms(main_struct);

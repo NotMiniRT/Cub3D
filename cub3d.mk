@@ -141,6 +141,7 @@ override DISPLAYSRCBONUS	:= \
 	timer \
 	window_start \
 	lst_int \
+	monster \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 

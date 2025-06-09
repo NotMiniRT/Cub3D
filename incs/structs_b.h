@@ -24,7 +24,8 @@ typedef enum s_types_object
 {
 	NOTHING = 0,
 	ITEM,
-	DOOR
+	DOOR,
+	MONSTER
 }	t_types_object;
 
 typedef struct s_lst_int
@@ -139,12 +140,26 @@ typedef struct s_image_cub
 	double		size;
 }	t_image_cub;
 
+typedef struct s_monster
+{
+	int frame;
+	t_image_cub		**sprite; // futur tab
+	double x;
+	double y;
+	t_point	p1;
+	t_point	p2;
+	t_point	dir;
+	size_t	move_time;
+	size_t	dir_time;
+} t_monster;
+
 typedef struct s_main_struct
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
 	t_player		*player;
 	t_torch			*torch;
+	t_monster		*mj;
 
 	t_image_cub		*frame;
 	t_image_cub		*minimap;
@@ -156,7 +171,6 @@ typedef struct s_main_struct
 	t_image_cub		*fog;
 	t_image_cub		*potion;
 	t_image_cub		*door;
-
 	t_thread_manager	*thread_manager;
 	int				(*doors)[100][4]; 
 	int				(*items)[100][3]; 

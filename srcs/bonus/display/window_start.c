@@ -10,7 +10,7 @@
 #include "fuel_bar.h"
 #include "multithreading.h"
 #include "torch.h"
-
+#include "monster.h"
 #include "libft.h"
 
 /**
@@ -69,6 +69,10 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
 	main_struct->doors = &(infos->scene->door_positions);
 	main_struct->items = &(infos->scene->collectible_positions);
+	if (infos->scene->monster_count == 0)
+		main_struct->mj = NULL;
+	else if (!set_mj(main_struct, infos))
+		return (false);
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
