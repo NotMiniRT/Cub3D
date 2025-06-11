@@ -15,7 +15,11 @@ int	create_img_cub(t_main_struct *main_struct, t_image_cub **img, int x, int y)
 	(*img)->size = x;
 	(*img)->sprite = mlx_new_image(main_struct->mlx_ptr, x, y);
 	if ((*img)->sprite == NULL)
+	{
+		free(*img);
+		*img = NULL;
 		return (false);
+	}
 	(*img)->buffer = mlx_get_data_addr((*img)->sprite, &((*img)->pixel_bits),
 			&((*img)->line_bytes), &((*img)->endian));
 	if ((*img)->buffer == NULL)
@@ -59,7 +63,11 @@ int	get_image_cub_from_xpm_no_rot(t_main_struct *main_struct,
 	(*img)->size = size;
 	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &size, &size);
 	if ((*img)->sprite == NULL)
+	{
+		free(*img);
+		*img = NULL;
 		return (false);
+	}
 	(*img)->buffer = mlx_get_data_addr((*img)->sprite, &((*img)->pixel_bits),
 			&((*img)->line_bytes), &((*img)->endian));
 	if ((*img)->buffer == NULL)
@@ -79,7 +87,11 @@ int	get_image_cub_from_xpm(t_main_struct *main_struct,
 	(*img)->size = size;
 	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &size, &size);
 	if ((*img)->sprite == NULL)
+	{
+		free(*img);
+		*img = NULL;
 		return (false);
+	}
 	(*img)->buffer = mlx_get_data_addr((*img)->sprite, &((*img)->pixel_bits),
 			&((*img)->line_bytes), &((*img)->endian));
 	if ((*img)->buffer == NULL)

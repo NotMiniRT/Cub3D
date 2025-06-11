@@ -188,6 +188,7 @@ typedef struct s_main_struct
 	int				is_moving;
 	int				count_lines;
 	int				count_row;
+	int				died;
 	t_objects		**map_items;
 	int					lock_mouse_x;
     int					lock_mouse_y;
@@ -251,6 +252,8 @@ typedef struct s_ray_calculus
 	double			wall_x;
 	double			wall_y;
 	double			dist;
+	double			dist_mj;
+	double			wall_pc_mj;
 	int				flag_dist;
 	int				index_hit_tab;
 }	t_ray_calculus;

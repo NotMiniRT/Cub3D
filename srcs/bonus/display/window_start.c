@@ -12,6 +12,8 @@
 #include "torch.h"
 #include "monster.h"
 #include "libft.h"
+#include <unistd.h>
+#include "timer.h"
 
 /**
  * @bug check les droits de fichiers avant de faire quoi que ce soit

@@ -7,6 +7,7 @@
 #include "common.h"
 #include "image_b.h"
 #include "libft.h"
+#include "inputs.h"
 static bool get_mj_sprites(t_main_struct *main_struct)
 {
 	int i;
@@ -22,6 +23,7 @@ static bool get_mj_sprites(t_main_struct *main_struct)
 		if (!get_image_cub_from_xpm(main_struct, &((main_struct->mj->sprite)[i]), name, 256))
 		{
 			free(name);
+			(main_struct->mj->sprite)[i] = NULL;
 			return (false);
 		}
 		free(name);
@@ -69,10 +71,36 @@ void get_monster_dir(t_main_struct *main_struct)
 	dist = 2147483647;
 	while (i < 4)
 	{
-		ndir = (t_point){(double)("cbab"[i] - 'b'), (double)("bcba"[i] - 'b')};
+		ndir = (t_point){(double)("zyxy"[i] - 'y'), (double)("yzyx"[i] - 'y')};
 		if (main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x + ndir.x)] != '1'
 			&& (main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x + ndir.x)] != 'D'
 				|| get_status_door(main_struct->mj->y + ndir.y, main_struct->mj->x + ndir.x, main_struct) == 0))
+		{
+			move = 1;
+			if (dist_mamh(main_struct->mj->x + ndir.x, main_struct->player->x, \
+				main_struct->mj->y + ndir.y, main_struct->player->y) < dist)
+			{
+				dist = dist_mamh(main_struct->mj->x + ndir.x, main_struct->player->x, \
+					main_struct->mj->y + ndir.y, main_struct->player->y);
+				dir.x = (int)ndir.x;
+				dir.y = (int)ndir.y;
+			}
+		}
+		i++;
+	}
+	i = 0;
+	while (i < 4)
+	{
+		ndir = (t_point){(double)("zzxx"[i] - 'y'), (double)("zxzx"[i] - 'y')};
+		if ((main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x + ndir.x)] != '1'
+			&& (main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x + ndir.x)] != 'D'
+				|| get_status_door(main_struct->mj->y + ndir.y, main_struct->mj->x + ndir.x, main_struct) == 0))
+			&& (main_struct->map[(int)(main_struct->mj->y)][(int)(main_struct->mj->x + ndir.x)] != '1'
+			&& (main_struct->map[(int)(main_struct->mj->y)][(int)(main_struct->mj->x + ndir.x)] != 'D'
+					|| get_status_door(main_struct->mj->y, main_struct->mj->x + ndir.x, main_struct) == 0))
+			&& (main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x)] != '1'
+			&& (main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x)] != 'D'
+				|| get_status_door(main_struct->mj->y + ndir.y, main_struct->mj->x, main_struct) == 0)))
 		{
 			move = 1;
 			if (dist_mamh(main_struct->mj->x + ndir.x, main_struct->player->x, \
@@ -96,10 +124,33 @@ void get_monster_dir(t_main_struct *main_struct)
 
 void move_monster(t_main_struct *main_struct)
 {
+	static int i = 0;
+	// static size_t last_frame_time = 0;
+
+	if (i == 0)
+		get_monster_dir(main_struct);
 	main_struct->mj->move_time = timestamp_in_ms(main_struct);
-	main_struct->mj->x = main_struct->mj->x + main_struct->mj->dir.x * 0.04;
-	main_struct->mj->y = main_struct->mj->y + main_struct->mj->dir.y * 0.04;
-	main_struct->mj->frame = main_struct->mj->frame + 1;
-	if (main_struct->mj->frame >= MJ_SPRITES)
-		main_struct->mj->frame = 0;
+	main_struct->mj->x = main_struct->mj->x + main_struct->mj->dir.x * 0.1;
+	main_struct->mj->y = main_struct->mj->y + main_struct->mj->dir.y * 0.1;
+	if ((fabs(main_struct->mj->x - main_struct->player->x) + fabs(main_struct->mj->y - main_struct->player->y)) <= 1)
+	{
+		main_struct->died = 1;
+		return;
+	}
+	if (i % 3 == 0)
+	{
+		// if (main_struct->mj->frame == MJ_SPRITES - 1)
+		// {
+		// 	if (timestamp_in_ms(main_struct) - last_frame_time < 3000)
+		// 		return ;
+		// 	last_frame_time = timestamp_in_ms(main_struct);
+		// }
+		main_struct->mj->frame = main_struct->mj->frame + 1;
+		if (main_struct->mj->frame >= MJ_SPRITES)
+			main_struct->mj->frame = 0;
+	}
+	if (i >= 9)
+		i = 0;
+	else
+		i++;
 }
