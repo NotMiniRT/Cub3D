@@ -194,6 +194,7 @@ typedef struct s_main_struct
     int					lock_mouse_y;
     int					is_mouse_locked;
     int					mouse_left_pressed;
+	int					collectible_count;
 	t_lst_int			**up_door;
 	t_lst_int			**down_door;
 

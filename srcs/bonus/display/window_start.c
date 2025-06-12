@@ -71,6 +71,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
 	main_struct->doors = &(infos->scene->door_positions);
 	main_struct->items = &(infos->scene->collectible_positions);
+	main_struct->collectible_count = infos->scene->collectible_count;
 	if (infos->scene->monster_count == 0)
 		main_struct->mj = NULL;
 	else if (!set_mj(main_struct, infos))

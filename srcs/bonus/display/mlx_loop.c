@@ -91,6 +91,34 @@ static void put_victory_screen(t_main_struct *main_struct)
 		i++;
 	}
 	get_image_cub_from_xpm_no_rot(main_struct, &img, \
+			"assets/textures/mj/mjescape.xpm", 1080);
+	if (img != NULL)
+	{
+		mlx_put_image_to_window(main_struct->mlx_ptr, main_struct->win_ptr, main_struct->frame->sprite, 0, 0);
+		mlx_put_image_to_window(main_struct->mlx_ptr, main_struct->win_ptr, img->sprite, (WINDOW_WIDTH - 1080) * 0.5, 0);
+		free_image_cub(main_struct, img);
+	}
+}
+
+static void put_death_screen(t_main_struct *main_struct)
+{
+	t_image_cub *img;
+	int 	i;
+	int		j;
+
+
+	i = 0;
+	while (i < WINDOW_HEIGHT)
+	{
+		j = 0;
+		while (j < (WINDOW_WIDTH * 4))
+		{
+			change_pixel_color(main_struct->frame, 0x000000, j, i);
+			j = j + 4;
+		}
+		i++;
+	}
+	get_image_cub_from_xpm_no_rot(main_struct, &img, \
 			"assets/textures/mj/mjcreepy.xpm", 1080);
 	if (img != NULL)
 	{
@@ -123,8 +151,11 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	{
 		if (main_struct->died == 1)
 		{
+			if (main_struct->collectible_count == 0)
+				put_victory_screen(main_struct);
+			else
+				put_death_screen(main_struct);
 			main_struct->died = 2;
-			put_victory_screen(main_struct);
 			main_struct->created_at = timestamp_in_ms(main_struct);
 		}
 		if (timestamp_in_ms(main_struct) - main_struct->created_at > 3000)
