@@ -72,6 +72,9 @@ void get_monster_dir(t_main_struct *main_struct)
 	while (i < 4)
 	{
 		ndir = (t_point){(double)("zyxy"[i] - 'y'), (double)("yzyx"[i] - 'y')};
+		if ((main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x + ndir.x)] == 'D'
+			&& get_status_door(main_struct->mj->y + ndir.y, main_struct->mj->x + ndir.x, main_struct) == 100))
+			activate_door_monster(main_struct, main_struct->mj->x + ndir.x, main_struct->mj->y + ndir.y);
 		if (main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x + ndir.x)] != '1'
 			&& (main_struct->map[(int)(main_struct->mj->y + ndir.y)][(int)(main_struct->mj->x + ndir.x)] != 'D'
 				|| get_status_door(main_struct->mj->y + ndir.y, main_struct->mj->x + ndir.x, main_struct) == 0))

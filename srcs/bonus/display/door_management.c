@@ -44,6 +44,26 @@ int	get_status_door(int x, int y, t_main_struct *main_struct)
 	return (-1);
 }
 
+void activate_door_monster(t_main_struct *main_struct, int new_x, int new_y)
+{
+	int i;
+
+	if (main_struct->map[new_y][new_x] == 'D')
+	{
+		i = 0;
+		while (i < 100 && (*(main_struct->doors))[i][0] != 0)
+		{
+			if ((*(main_struct->doors))[i][0] == new_x + 1 && (*(main_struct->doors))[i][1] == new_y + 1)
+			{
+				if ((*(main_struct->doors))[i][2] == 100)
+					add_front_lst_int(main_struct->down_door, i);
+				return ;
+			}
+			i++;
+		}
+	}
+	return ;
+}
 
 static void activate_door(t_main_struct *main_struct, int x, int y)
 {

@@ -6,4 +6,5 @@
 int	get_status_door(int x, int y, t_main_struct *main_struct);
 void up_doors(t_main_struct *main_struct, t_lst_int **lst);
 void down_doors(t_main_struct *main_struct, t_lst_int **lst);
+void activate_door_monster(t_main_struct *main_struct, int new_x, int new_y);
 #endif
