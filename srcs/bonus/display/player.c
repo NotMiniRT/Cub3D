@@ -80,10 +80,10 @@ static void	one_direction(t_main_struct *main_struct, double move_x,
 		main_struct->collectible_count = main_struct->collectible_count - 1;
 		if (main_struct->collectible_count == 0)
 			main_struct->died = 1;
-		if (main_struct->fuel <= 90)
-			main_struct->fuel = main_struct->fuel + 10;
+		if (main_struct->fuel <= 0.9)
+			main_struct->fuel = main_struct->fuel + 0.1;
 		else
-			main_struct->fuel = 100;
+			main_struct->fuel = 1;
 	}
 }
 

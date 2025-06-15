@@ -176,7 +176,7 @@ typedef struct s_main_struct
 	int				(*items)[100][3]; 
 	int				ground;
 	int				ceil;
-	int					fuel;
+	float					fuel;
 	char			**map;
 	double			*r_h_tab;
 	double			*cos_r_h_tab;
@@ -216,6 +216,7 @@ typedef struct s_object_hit
 	t_types_object	type;
 	int				status;
 	int				*line_add;
+	float			dark_factor;
 }	t_object_hit;
 
 typedef struct s_render_calculus
@@ -231,6 +232,10 @@ typedef struct s_render_calculus
 	double	wall_pc;
 	double	teta;
 	int		*line_add;
+	int		ceil_color;
+	float	wall_factor;
+	float	floor_factor;
+	float	floor_factor_step;
 	t_object_hit	hit_tab[HIT_TAB_LEN];
 }	t_render_calculus;
 

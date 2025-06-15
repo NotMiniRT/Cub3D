@@ -11,7 +11,7 @@ static void	define_basic_param_calculus(t_ray_calculus *calcul,
 		double cos_sin[2], t_main_struct *main_struct)
 {
 	calcul->flag_dist = 0;
-	calcul->render_dist = main_struct->fuel;
+	calcul->render_dist = main_struct->fuel * RENDER_DIST;
 	calcul->player_x = main_struct->player->x;
 	calcul->player_y = main_struct->player->y;
 	calcul->dir_x = cos_sin[0];
@@ -268,6 +268,8 @@ void	ray_check(t_main_struct *main_struct,
 	get_step_and_side_dist(&calcul);
 	if (main_struct->mj != NULL)
 		calcul.dist_mj = get_monster_dist(&calcul, main_struct, cos_sin);
+	else
+		calcul.dist_mj = -1;
 	while (!calcul.flag_dist
 		&& main_struct->map[calcul.map_y][calcul.map_x] != '1')
 	{

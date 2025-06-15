@@ -101,12 +101,12 @@ bool	display_hud(t_main_struct *main_struct)
 
 	if (!main_struct->fuel_bar)
 		return (false);
-	if (last_fuel_level != main_struct->fuel)
+	if (last_fuel_level != (main_struct->fuel * 100))
 	{
 		fill_hud_background(main_struct->fuel_bar);
 		draw_lantern_outline(main_struct->fuel_bar);
-		draw_fuel_gauge(main_struct->fuel_bar, main_struct->fuel);
-		last_fuel_level = main_struct->fuel;
+		draw_fuel_gauge(main_struct->fuel_bar, ((main_struct->fuel - 0.1) * 100));
+		last_fuel_level = (main_struct->fuel * 100);
 	}
 	display_minifuel(main_struct);
 	return (true);

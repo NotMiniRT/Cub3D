@@ -79,7 +79,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
-	main_struct->fuel = 100;
+	main_struct->fuel = 1;
 	if (!init_torch(main_struct))
 		return (false);
 	if (!init_threads(main_struct))
