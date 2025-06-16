@@ -12,7 +12,6 @@ static char	*read_line_main_loop(ssize_t bytes_read, char *buffer, \
 	while (bytes_read > 0 && \
 			(!buffer || (!ft_strchr(buffer, '\n') && buffer[0] != '\0')))
 	{
-		(void) fd;
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
@@ -43,10 +42,7 @@ char	*read_line(int fd)
 		return (NULL);
 	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (read_buffer == NULL)
-	{
-		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		return (NULL);
-	}
 	bytes_read = 1;
 	buffer = read_line_main_loop(bytes_read, buffer, read_buffer, fd);
 	free(read_buffer);
@@ -59,7 +55,7 @@ static char	**is_full_capacity(t_parsing *data)
 	if (data->count >= data->capacity - 1)
 	{
 		data->capacity *= 2;
-		data->new_lines = malloc(sizeof(char *) * data->capacity);
+		data->new_lines = ft_calloc(data->capacity, sizeof(char *));
 		if (data->new_lines == NULL)
 			return (clear_read_lines(data));
 		ft_memcpy(data->new_lines, data->lines,
