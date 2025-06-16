@@ -8,7 +8,7 @@
 typedef struct s_scene	t_scene;
 typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 
-# define BUFFER_SIZE 512
+# define BUFFER_SIZE 32 // a rechanger pour 512 (valeur opti)
 # define CLEAR_BUFFER -42
 
 # define TEXTURE_NO	"NO"

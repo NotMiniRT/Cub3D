@@ -42,7 +42,10 @@ char	*read_line(int fd)
 		return (NULL);
 	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (read_buffer == NULL)
+	{
+		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		return (NULL);
+	}
 	bytes_read = 1;
 	buffer = read_line_main_loop(bytes_read, buffer, read_buffer, fd);
 	free(read_buffer);
