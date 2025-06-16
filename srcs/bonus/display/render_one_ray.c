@@ -68,16 +68,21 @@ static void	get_calcul_param(t_render_calculus *render_calc,
 {
 	double size;
 
-	render_calc->height = (WINDOW_HEIGHT
-			/ (render_calc->res[0] * main_struct->cos_r_h_tab[row]));
+	render_calc->dark_height = (WINDOW_HEIGHT
+			/ ((main_struct->fuel * RENDER_DIST) * main_struct->cos_r_h_tab[row]));
+	render_calc->dark_height_check_minus = (WINDOW_HEIGHT
+		- render_calc->dark_height) * 0.5;
+	render_calc->dark_height_check_plus = (WINDOW_HEIGHT
+			+ render_calc->dark_height) * 0.5;
 	if (render_calc->res[3])
 	{
-		render_calc->height_check_minus = (WINDOW_HEIGHT
-			- render_calc->height) * 0.5;
-		render_calc->height_check_plus = (WINDOW_HEIGHT
-				+ render_calc->height) * 0.5;
+		render_calc->height = render_calc->dark_height;
+		render_calc->height_check_minus = render_calc->dark_height_check_minus;
+		render_calc->height_check_plus = render_calc->dark_height_check_plus;
 		return ;
 	}
+	render_calc->height = (WINDOW_HEIGHT
+		/ (render_calc->res[0] * main_struct->cos_r_h_tab[row]));
 	size = get_right_size(render_calc, main_struct);
 	render_calc->wall_pc = render_calc->res[2] - floor(render_calc->res[2]);
 	if ((render_calc->res[1] == 0 && teta_cos_sin[0] < 0)
@@ -140,14 +145,14 @@ pLACE LA COULEUR DU PIXEL si aucunne collision n'a eu besoin de s'afficher
 static void	render_on_screen(t_render_calculus *render_calc,
 	t_main_struct *main_struct, int row, int j)
 {
-	if (j > render_calc->height_check_plus)
-		render_calc->floor_factor = render_calc->floor_factor + render_calc->floor_factor_step;
+	if (j > render_calc->dark_height_check_plus)
+		render_calc->floor_factor = render_calc->floor_factor * 0.98;
 	if (put_transparency(render_calc, main_struct, row, j))
 		return ;
 	else if (j < render_calc->height_check_minus)
-		change_pixel_color_opt(main_struct->frame, render_calc->ceil_color, row, j);
+		change_pixel_color_opt(main_struct->frame, render_calc->ceil_factor, row, j);
 	else if (j > render_calc->height_check_plus)
-		change_pixel_color_opt(main_struct->frame, change_color_factor(main_struct->ground, render_calc->floor_factor), row, j);
+		change_pixel_color_opt(main_struct->frame, change_color_factor(main_struct->ground, 1 - render_calc->floor_factor), row, j);
 	else if (render_calc->res[3])
 	{
 		change_pixel_color_opt(main_struct->frame, 0, row, j);
@@ -196,7 +201,7 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 
 			render_calc->hit_tab[i].line_add = (int *)(main_struct->door->buffer
 				+ (render_calc->hit_tab[i].text_x * main_struct->door->line_bytes));
-			render_calc->hit_tab[i].dark_factor = main_struct->fuel * (1 - (render_calc->hit_tab[i].dist / (main_struct->fuel * RENDER_DIST)));
+			render_calc->hit_tab[i].dark_factor = (1 - (render_calc->hit_tab[i].dist / (main_struct->fuel * RENDER_DIST)));
 			i++;
 		}
 		else if (render_calc->hit_tab[i].type == ITEM)
@@ -218,7 +223,7 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 			render_calc->hit_tab[i].line_add = (int *)(main_struct->potion->buffer
 				+ (render_calc->hit_tab[i].text_x * main_struct->potion->line_bytes));
 			render_calc->hit_tab[i].status = 1;
-			render_calc->hit_tab[i].dark_factor = main_struct->fuel * (1 - (render_calc->hit_tab[i].dist / (main_struct->fuel * RENDER_DIST)));
+			render_calc->hit_tab[i].dark_factor = (1 - (render_calc->hit_tab[i].dist / (main_struct->fuel * RENDER_DIST)));
 			i++;
 		}
 		else if (render_calc->hit_tab[i].type == MONSTER)
@@ -240,7 +245,7 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 			render_calc->hit_tab[i].line_add = (int *)((main_struct->mj->sprite[main_struct->mj->frame])->buffer
 				+ (render_calc->hit_tab[i].text_x * (main_struct->mj->sprite[main_struct->mj->frame])->line_bytes));
 			render_calc->hit_tab[i].status = 1;
-			render_calc->hit_tab[i].dark_factor = main_struct->fuel * (1 - (render_calc->hit_tab[i].dist / (main_struct->fuel * RENDER_DIST)));
+			render_calc->hit_tab[i].dark_factor = (1 - (render_calc->hit_tab[i].dist / (main_struct->fuel * RENDER_DIST)));
 			i++;
 		}
 	}
@@ -267,8 +272,6 @@ void	render_one_ray(t_main_struct *main_struct,
 	double teta_cos_sin[2], int row, double teta)
 {
 	int					j;
-	double height_check_plus;
-	double height;
 	t_render_calculus	render_calc;
 
 	render_calc.res[0] = 0;
@@ -282,14 +285,10 @@ void	render_one_ray(t_main_struct *main_struct,
 	if (render_calc.res[4] != 0)
 		set_hit_tab(&render_calc, main_struct, row, teta_cos_sin);
 	row = row * 4;
+	render_calc.wall_factor = 1 - (render_calc.res[0] / (main_struct->fuel * RENDER_DIST));
+	render_calc.floor_factor = 1;
+	render_calc.ceil_factor = change_color_factor(main_struct->ceil, main_struct->fuel - 0.05);
 	j = 0;
-	render_calc.wall_factor = main_struct->fuel * (1 - (render_calc.res[0] / (main_struct->fuel * RENDER_DIST)));
-	height = (WINDOW_HEIGHT / ((main_struct->fuel * RENDER_DIST)));
-	height_check_plus = (WINDOW_HEIGHT + height) * 0.5;
-	render_calc.floor_factor_step = 1. / ((double)WINDOW_HEIGHT - height_check_plus);
-	render_calc.floor_factor = render_calc.height * 0.5 * render_calc.floor_factor_step;
-	render_calc.ceil_color = 1;
-	//printf("height: %f, %f, %f\n", (main_struct->fuel * RENDER_DIST), main_struct->cos_r_h_tab[row], (main_struct->fuel * RENDER_DIST)* main_struct->cos_r_h_tab[row]);
 	while (j < WINDOW_HEIGHT)
 	{
 		render_on_screen(&render_calc, main_struct, row, j);

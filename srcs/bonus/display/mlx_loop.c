@@ -167,11 +167,11 @@ int	mlx_loop_action(t_main_struct *main_struct)
 		return (1);
 	if (main_struct->mj != NULL && timestamp_in_ms(main_struct) - main_struct->mj->move_time > 30)
 		move_monster(main_struct);
-	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 700 && main_struct->fuel != 0.01)
+	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 700 && main_struct->fuel > 0.06)
 	{
 		main_struct->fuel_time = timestamp_in_ms(main_struct);
-		main_struct->fuel = main_struct->fuel - 0.01;
-		if (main_struct->fuel <= 0.05)
+		main_struct->fuel = main_struct->fuel - 0.02;
+		if (main_struct->fuel < 0.06)
 			main_struct->fuel = 0.05;
 	}
 	if (timestamp_in_ms(main_struct) - main_struct->last_move > 20

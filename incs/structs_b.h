@@ -232,10 +232,12 @@ typedef struct s_render_calculus
 	double	wall_pc;
 	double	teta;
 	int		*line_add;
-	int		ceil_color;
-	float	wall_factor;
-	float	floor_factor;
-	float	floor_factor_step;
+	double	ceil_factor;
+	double	wall_factor;
+	double	floor_factor;
+	int		dark_height_check_minus;
+	int		dark_height_check_plus;
+	double	dark_height;
 	t_object_hit	hit_tab[HIT_TAB_LEN];
 }	t_render_calculus;
 
