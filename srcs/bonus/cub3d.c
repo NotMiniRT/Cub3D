@@ -12,6 +12,7 @@ int	main(int ac, char **av)
 	t_infos			infos;
 
 	ft_memset(&main_struct, 0, sizeof(t_main_struct));
+	ft_memset(&infos, 0, sizeof(t_infos));
 	parsing(ac, av, &infos);
 	if (!start_display(&main_struct, &infos))
 		ft_dprintf(2, "Error\nExternal function fail during initialisation\n");
