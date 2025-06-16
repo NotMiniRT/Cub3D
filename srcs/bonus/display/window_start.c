@@ -15,6 +15,10 @@
 #include <unistd.h>
 #include "timer.h"
 
+#include "sound.h"
+#include "ft_dprintf.h"
+
+
 /**
  * @bug check les droits de fichiers avant de faire quoi que ce soit
  *
@@ -86,6 +90,10 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	if (!map_object_set(main_struct))
 		return (false);
+	if (!init_sound(main_struct))
+		ft_dprintf(2, "Warning: Sound initialization failed\n");
+	else
+		ft_dprintf(2, "Sound initialized successfully\n");
 	return (true);
 }
 

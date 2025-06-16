@@ -3,6 +3,8 @@
 #include "stdio.h"
 #include "lst_int.h"
 
+#include "sound.h"
+
 void up_doors(t_main_struct *main_struct, t_lst_int **lst)
 {
 	if (*lst == NULL)
@@ -84,6 +86,7 @@ static void activate_door(t_main_struct *main_struct, int x, int y)
 					add_front_lst_int(main_struct->up_door, i);
 				else if ((*(main_struct->doors))[i][2] == 100)
 					add_front_lst_int(main_struct->down_door, i);
+				play_sound(main_struct, SOUND_DOOR);
 				return ;
 			}
 			i++;

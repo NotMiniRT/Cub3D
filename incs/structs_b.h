@@ -63,7 +63,7 @@ typedef union u_objects
 {
 	t_object_door			*door;
 	t_object_collectible	*item;
-} t_objects;
+}	t_objects;
 
 typedef struct s_torch
 {
@@ -172,8 +172,8 @@ typedef struct s_main_struct
 	t_image_cub		*potion;
 	t_image_cub		*door;
 	t_thread_manager	*thread_manager;
-	int				(*doors)[100][4]; 
-	int				(*items)[100][3]; 
+	int				(*doors)[100][4];
+	int				(*items)[100][3];
 	int				ground;
 	int				ceil;
 	float					fuel;
@@ -197,14 +197,14 @@ typedef struct s_main_struct
 	int					collectible_count;
 	t_lst_int			**up_door;
 	t_lst_int			**down_door;
-
+	void				*sound;
 }	t_main_struct;
 
 typedef struct s_object_hit
 {
 	int				map_x;
 	int				map_y;
-	double			dist; 
+	double			dist;
 	double			height;
 	int				text_x;
 	int 			side;

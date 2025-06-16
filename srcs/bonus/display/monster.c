@@ -8,6 +8,9 @@
 #include "image_b.h"
 #include "libft.h"
 #include "inputs.h"
+
+#include "sound.h"
+
 static bool get_mj_sprites(t_main_struct *main_struct)
 {
 	int i;
@@ -148,6 +151,8 @@ void move_monster(t_main_struct *main_struct)
 		// 		return ;
 		// 	last_frame_time = timestamp_in_ms(main_struct);
 		// }
+		if (main_struct->mj->frame == 20)
+			play_sound(main_struct, SOUND_MJ);
 		main_struct->mj->frame = main_struct->mj->frame + 1;
 		if (main_struct->mj->frame >= MJ_SPRITES)
 			main_struct->mj->frame = 0;
