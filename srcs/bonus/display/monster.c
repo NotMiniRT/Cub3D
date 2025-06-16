@@ -48,8 +48,8 @@ bool set_mj(t_main_struct *main_struct, t_infos *infos)
 	main_struct->mj->p1.y = 0;
 	main_struct->mj->p2.x = 0;
 	main_struct->mj->p2.y = 0;
-	main_struct->mj->x = (double)(infos->scene->monster_positions[0][0] - 0.5);
-	main_struct->mj->y = (double)(infos->scene->monster_positions[0][1] - 0.5);
+	main_struct->mj->x = (double)(infos->scene->monster_positions[0] - 0.5);
+	main_struct->mj->y = (double)(infos->scene->monster_positions[1] - 0.5);
 	return (true);
 }
 

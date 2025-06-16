@@ -40,15 +40,15 @@ void	store_monsters(t_map_data map_data, t_infos *infos)
 		{
 			if (is_monster(map_data.map[i][j]))
 			{
-				infos->scene->monster_count = infos->scene->monster_count + 1;
-				infos->scene->monster_positions[0][0] = j;
-				infos->scene->monster_positions[0][1] = i;
-			}
-			if (infos->scene->monster_count > 1)
-			{
-				free_extended_map(map_data.map, map_data.height);
-				cleanup_parsing(infos);
-				exit_error(ERR_NB_MONSTER);
+				infos->scene->monster_count++;
+				if (infos->scene->monster_count > 1)
+				{
+					free_extended_map(map_data.map, map_data.height);
+					cleanup_parsing(infos);
+					exit_error(ERR_NB_MONSTER);
+				}
+				infos->scene->monster_positions[0] = j;
+				infos->scene->monster_positions[1] = i;
 			}
 		}
 	}
@@ -58,7 +58,7 @@ void	store_item(t_map_data map_data, t_infos *infos)
 {
 	int	i;
 	int	j;
-	int count;
+	int	count;
 
 	i = 0;
 	count = 0;
