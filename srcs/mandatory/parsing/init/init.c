@@ -9,7 +9,6 @@
 
 void	init_data(t_infos *infos, char **av)
 {
-	(void) av;
 	infos->data->line = NULL;
 	infos->data->count = 0;
 	infos->data->capacity = 16;
