@@ -9,19 +9,26 @@
 
 void	init_data(t_infos *infos, char **av)
 {
+	(void) av;
 	infos->data->line = NULL;
 	infos->data->count = 0;
 	infos->data->capacity = 16;
 	infos->data->new_lines = NULL;
-	infos->data->fd = open(av[1], O_RDONLY);
 	infos->data->lines = malloc(sizeof(char *) * 16);
-	if (infos->data->lines == NULL || infos->data->fd == -1)
+	if (infos->data->lines == NULL)
 	{
 		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		cleanup_parsing(infos);
 		exit(errno);
 	}
 	ft_memset(infos->data->lines, 0, sizeof(char *) * 16);
+	infos->data->fd = open(av[1], O_RDONLY);
+	if (infos->data->fd == -1)
+	{
+		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
+		cleanup_parsing(infos);
+		exit(errno);
+	}
 }
 
 void	init_parsing(t_infos *infos, char **av)
