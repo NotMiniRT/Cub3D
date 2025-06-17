@@ -12,9 +12,14 @@ int	create_img_cub(t_main_struct *main_struct, t_image_cub **img, int x, int y)
 		return (false);
 	(*img)->buffer = NULL;
 	(*img)->sprite = NULL;
+	(*img)->size = x;
 	(*img)->sprite = mlx_new_image(main_struct->mlx_ptr, x, y);
 	if ((*img)->sprite == NULL)
+	{
+		free(*img);
+		*img = NULL;
 		return (false);
+	}
 	(*img)->buffer = mlx_get_data_addr((*img)->sprite, &((*img)->pixel_bits),
 			&((*img)->line_bytes), &((*img)->endian));
 	if ((*img)->buffer == NULL)
@@ -22,19 +27,19 @@ int	create_img_cub(t_main_struct *main_struct, t_image_cub **img, int x, int y)
 	return (true);
 }
 
-static int	rotate_img(t_main_struct *main_struct, t_image_cub **img)
+static int	rotate_img(t_main_struct *main_struct, t_image_cub **img, int size)
 {
 	int			x;
 	int			y;
 	t_image_cub	*new_img;
 
 	y = 0;
-	if (!create_img_cub(main_struct, &new_img, 64, 64))
+	if (!create_img_cub(main_struct, &new_img, size, size))
 		return (false);
-	while (y < 64)
+	while (y < size)
 	{
 		x = 0;
-		while (x < 64)
+		while (x < size)
 		{
 			change_pixel_color(new_img, get_color(*img, x * 4, y), y * 4, x);
 			x++;
@@ -47,20 +52,22 @@ static int	rotate_img(t_main_struct *main_struct, t_image_cub **img)
 }
 
 int	get_image_cub_from_xpm_no_rot(t_main_struct *main_struct,
-	t_image_cub **img, char *path)
+	t_image_cub **img, char *path, int size)
 {
-	int	s;
-
-	s = 64;
 	(*img) = NULL;
 	(*img) = malloc(sizeof(t_image_cub));
 	if ((*img) == NULL)
 		return (false);
 	(*img)->buffer = NULL;
 	(*img)->sprite = NULL;
-	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &s, &s);
+	(*img)->size = size;
+	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &size, &size);
 	if ((*img)->sprite == NULL)
+	{
+		free(*img);
+		*img = NULL;
 		return (false);
+	}
 	(*img)->buffer = mlx_get_data_addr((*img)->sprite, &((*img)->pixel_bits),
 			&((*img)->line_bytes), &((*img)->endian));
 	if ((*img)->buffer == NULL)
@@ -69,25 +76,27 @@ int	get_image_cub_from_xpm_no_rot(t_main_struct *main_struct,
 }
 
 int	get_image_cub_from_xpm(t_main_struct *main_struct,
-		t_image_cub **img, char *path)
+		t_image_cub **img, char *path, int size)
 {
-	int	s;
-
-	s = 64;
 	(*img) = NULL;
 	(*img) = malloc(sizeof(t_image_cub));
 	if ((*img) == NULL)
 		return (false);
 	(*img)->buffer = NULL;
 	(*img)->sprite = NULL;
-	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &s, &s);
+	(*img)->size = size;
+	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &size, &size);
 	if ((*img)->sprite == NULL)
+	{
+		free(*img);
+		*img = NULL;
 		return (false);
+	}
 	(*img)->buffer = mlx_get_data_addr((*img)->sprite, &((*img)->pixel_bits),
 			&((*img)->line_bytes), &((*img)->endian));
 	if ((*img)->buffer == NULL)
 		return (false);
-	if (!rotate_img(main_struct, img))
+	if (!rotate_img(main_struct, img, size))
 		return (false);
 	return (true);
 }

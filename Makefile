@@ -11,13 +11,14 @@ DEPSB		:= $(OBJSB:.o=.d)
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g3
-CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/
+CFLAGS		:= -Wall -Wextra -Werror -g3 -O3 #-march=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32
 
-MLX_DIR      := mlx/
-MLX_LIB      := $(MLX_DIR)libmlx_Linux.a
-MLX_FLAGS    := -L mlx -lmlx_Linux -L/usr/lib -I mlx -lX11 -lm -lz -lXext $(MLX_LIB)
+AUDIO_CFLAGS := -I $(HOME)/local/include/
 
+CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/ $(AUDIO_CFLAGS)
+MLX_FLAGS	:= -L mlx -lmlx_Linux -L/usr/lib -I mlx -lX11 -lm -lz -lXext $(MLX_LIB)
+MLX_DIR		:= mlx/
+MLX_LIB		:= $(MLX_DIR)libmlx_Linux.a
 RM			:= rm -f
 RMDIR		+= -r
 MAKEFLAGS	+= --no-print-directory

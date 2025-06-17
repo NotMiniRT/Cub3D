@@ -8,7 +8,7 @@
 typedef struct s_scene	t_scene;
 typedef bool			(*t_parser_func)(t_scene *scene, char *line);
 
-# define BUFFER_SIZE 512
+# define BUFFER_SIZE 32 // a rechanger pour 512 (valeur opti)
 # define CLEAR_BUFFER -42
 
 # define TEXTURE_NO	"NO"
@@ -74,7 +74,7 @@ typedef struct s_scene
 	int		monster_count;
 	int		collectible_positions[100][3]; // Storing up to 100 collectibles (x,y)
 	int		door_positions[100][4];        // Storing up to 100 doors (x,y)
-	int		monster_positions[100][2];     // Storing up to 100 monsters (x,y)
+	int		monster_positions[2];
 }	t_scene;
 
 typedef struct s_parsing

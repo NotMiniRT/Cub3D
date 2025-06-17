@@ -9,6 +9,7 @@ override UTILSDIR		:= utils/
 override DISPLAYDIR		:= display/
 override PARSINGDIR		:= parsing/
 override THREADDIR		:= threads/
+override SOUNDDIR		:= sound/
 override MAPDIR		    := $(PARSINGDIR)map/
 override SCENEDIR		:= $(PARSINGDIR)scene/
 override INITDIR		:= $(PARSINGDIR)init/
@@ -140,9 +141,18 @@ override DISPLAYSRCBONUS	:= \
 	door_management \
 	timer \
 	window_start \
+	lst_int \
+	monster \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 
 override THREADSRC	:= \
 	threads_init \
 	threads_utils \
+
+SRCBONUS += $(addprefix $(SOUNDDIR), $(addsuffix .c, $(SOUNDSRC)))
+
+override SOUNDSRC	:= \
+	cleanup_sound \
+	init_sound \
+	play_sound \

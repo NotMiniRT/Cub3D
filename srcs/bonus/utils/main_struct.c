@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include "multithreading.h"
 #include "main_struct_b.h"
-
+#include "lst_int.h"
 int	init_r_h_tab(t_main_struct *main_struct)
 {
 	int	i;
@@ -26,6 +26,26 @@ int	init_r_h_tab(t_main_struct *main_struct)
 		i++;
 	}
 	return (true);
+}
+
+void free_michael_jakson(t_main_struct *main_struct)
+{
+	int i;
+
+	i = 0;
+	if (main_struct->mj->sprite != NULL)
+	{
+		while(i < MJ_SPRITES)
+		{
+			if ((main_struct->mj->sprite)[i] != NULL)
+				free_image_cub(main_struct, (main_struct->mj->sprite)[i]);
+			else
+				break;
+			i++;
+		}
+		free(main_struct->mj->sprite);
+	}
+	free(main_struct->mj);
 }
 
 void	free_main_struct_img(t_main_struct *main_struct)
@@ -71,6 +91,18 @@ void	free_main_struct(t_main_struct *main_struct)
 		free(main_struct->cos_r_h_tab);
 	if (main_struct->r_h_tab != NULL)
 		free(main_struct->r_h_tab);
+	if (main_struct->down_door != NULL)
+	{
+		free_lst_int(*(main_struct->down_door));
+		free(main_struct->down_door);
+	}
+	if (main_struct->mj != NULL)
+		free_michael_jakson(main_struct);
+	if (main_struct->up_door != NULL)
+	{
+		free_lst_int(*(main_struct->up_door));
+		free(main_struct->up_door);
+	}
 	if (main_struct->mlx_ptr != NULL)
 	{
 		mlx_destroy_display(main_struct->mlx_ptr);

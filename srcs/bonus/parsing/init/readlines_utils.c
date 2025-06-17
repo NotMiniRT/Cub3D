@@ -19,6 +19,7 @@ static bool	handle_remaining_buffer(char **buffer, char *line, size_t i)
 	temp = ft_strdup(&(*buffer)[i]);
 	if (temp == NULL)
 	{
+		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		free(line);
 		free(*buffer);
 		*buffer = NULL;
@@ -43,7 +44,10 @@ char	*extract_line(char **buffer)
 		i++;
 	line = malloc(sizeof(char) * i + 1);
 	if (line == NULL)
+	{
+		ft_dprintf(STDERR_FILENO, _ERROR, strerror(errno));
 		return (NULL);
+	}
 	ft_memcpy(line, *buffer, i);
 	line[i] = '\0';
 	if (!handle_remaining_buffer(buffer, line, i))

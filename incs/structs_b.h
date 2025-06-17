@@ -3,6 +3,7 @@
 
 # include "stdlib.h"
 
+# define HIT_TAB_LEN 100
 
 typedef struct s_thread_manager	t_thread_manager;
 typedef struct s_image_cub		t_image_cub;
@@ -23,8 +24,15 @@ typedef enum s_types_object
 {
 	NOTHING = 0,
 	ITEM,
-	DOOR
+	DOOR,
+	MONSTER
 }	t_types_object;
+
+typedef struct s_lst_int
+{
+	int 			index;
+	struct s_lst_int *next;
+} t_lst_int;
 
 typedef struct s_point
 {
@@ -55,7 +63,7 @@ typedef union u_objects
 {
 	t_object_door			*door;
 	t_object_collectible	*item;
-} t_objects;
+}	t_objects;
 
 typedef struct s_torch
 {
@@ -129,7 +137,21 @@ typedef struct s_image_cub
 	int		line_bytes;
 	int		endian;
 	char	*buffer;
+	double		size;
 }	t_image_cub;
+
+typedef struct s_monster
+{
+	int frame;
+	t_image_cub		**sprite; // futur tab
+	double x;
+	double y;
+	t_point	p1;
+	t_point	p2;
+	t_point	dir;
+	size_t	move_time;
+	size_t	dir_time;
+} t_monster;
 
 typedef struct s_main_struct
 {
@@ -137,6 +159,7 @@ typedef struct s_main_struct
 	void			*win_ptr;
 	t_player		*player;
 	t_torch			*torch;
+	t_monster		*mj;
 
 	t_image_cub		*frame;
 	t_image_cub		*minimap;
@@ -148,35 +171,40 @@ typedef struct s_main_struct
 	t_image_cub		*fog;
 	t_image_cub		*potion;
 	t_image_cub		*door;
-
 	t_thread_manager	*thread_manager;
-	int				(*doors)[100][4]; 
-	int				(*items)[100][3]; 
+	int				(*doors)[100][4];
+	int				(*items)[100][3];
 	int				ground;
 	int				ceil;
-	int					fuel;
+	float					fuel;
 	char			**map;
 	double			*r_h_tab;
 	double			*cos_r_h_tab;
 	size_t			created_at;
 	size_t			last_move;
 	size_t			fuel_time;
+	size_t			door_action;
 	short int		inputs[7];
 	int				is_moving;
 	int				count_lines;
 	int				count_row;
+	int				died;
 	t_objects		**map_items;
 	int					lock_mouse_x;
     int					lock_mouse_y;
     int					is_mouse_locked;
     int					mouse_left_pressed;
+	int					collectible_count;
+	t_lst_int			**up_door;
+	t_lst_int			**down_door;
+	void				*sound;
 }	t_main_struct;
 
 typedef struct s_object_hit
 {
 	int				map_x;
 	int				map_y;
-	double			dist; 
+	double			dist;
 	double			height;
 	int				text_x;
 	int 			side;
@@ -188,11 +216,12 @@ typedef struct s_object_hit
 	t_types_object	type;
 	int				status;
 	int				*line_add;
+	float			dark_factor;
 }	t_object_hit;
 
 typedef struct s_render_calculus
 {
-	double	res[4];
+	double	res[5];
 	double	height;
 	int		text_x;
 	int		text_y;
@@ -203,7 +232,13 @@ typedef struct s_render_calculus
 	double	wall_pc;
 	double	teta;
 	int		*line_add;
-	t_object_hit	hit_tab[10];
+	double	ceil_factor;
+	double	wall_factor;
+	double	floor_factor;
+	int		dark_height_check_minus;
+	int		dark_height_check_plus;
+	double	dark_height;
+	t_object_hit	hit_tab[HIT_TAB_LEN];
 }	t_render_calculus;
 
 typedef struct s_ray_calculus
@@ -225,6 +260,8 @@ typedef struct s_ray_calculus
 	double			wall_x;
 	double			wall_y;
 	double			dist;
+	double			dist_mj;
+	double			wall_pc_mj;
 	int				flag_dist;
 	int				index_hit_tab;
 }	t_ray_calculus;

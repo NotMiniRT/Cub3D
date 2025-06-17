@@ -11,7 +11,6 @@
 
 # define NUM_THREADS 8
 
-
 /* Structure de données pour chaque thread */
 typedef struct s_thread_data
 {

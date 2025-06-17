@@ -215,7 +215,7 @@ static char *mj_301747833168[] = {
 "8X c #EDEAE5",
 "9X c #ECEEE9",
 "0X c #F1EEE9",
-"qX c #F5F6E4",
+"qX c #000000",
 "wX c #F6F8E4",
 "eX c #F6F5F3",
 /* pixels */
