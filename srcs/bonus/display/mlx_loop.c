@@ -29,7 +29,7 @@ void rotate_point(t_main_struct *main_struct, int i, t_point *p)
 	double dy;
 	double center_x;
 	double center_y;
-	
+
 	center_x = (*main_struct->items)[i][0] + 0.5;
 	center_y = (*main_struct->items)[i][1] + 0.5;
 	dx = p->x - center_x;
@@ -191,5 +191,3 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	}
 	return (0);
 }
-
-
