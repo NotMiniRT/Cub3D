@@ -21,13 +21,15 @@ void free_map_item_i(t_main_struct *main_struct, int i)
 void free_map_item_ij(t_main_struct *main_struct)
 {
 	int k;
-	int n;
+	size_t line;
+	size_t n;
 
 	k = 0;
 	while (k < main_struct->count_lines)
 	{
 		n = 0;
-		while (n <= main_struct->count_row)
+		line = ft_strlen(main_struct->map[k]);
+		while (n <= line)
 		{
 			free(main_struct->map_items[k][n].door);
 			n++;
@@ -128,7 +130,7 @@ bool map_object_set(t_main_struct *main_struct)
 		return (false);
 	while (i < main_struct->count_lines)
 	{
-		main_struct->map_items[i] = ft_calloc(main_struct->count_row + 1 , sizeof(t_objects));
+		main_struct->map_items[i] = ft_calloc(ft_strlen(main_struct->map[i]) + 1, sizeof(t_objects));
 		if (main_struct->map_items[i] == NULL)
 		{
 			free_map_item_i(main_struct, i);
