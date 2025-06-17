@@ -5,6 +5,7 @@
 #include "libft.h"
 #include "ft_dprintf.h"
 #include "parsing.h"
+#include "sound.h"
 
 int	main(int ac, char **av)
 {
@@ -18,5 +19,6 @@ int	main(int ac, char **av)
 		ft_dprintf(2, "Error\nExternal function fail during initialisation\n");
 	free_main_struct(&main_struct);
 	cleanup_parsing(&infos);
+	cleanup_sound(&main_struct);
 	return (EXIT_SUCCESS);
 }
