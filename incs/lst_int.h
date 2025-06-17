@@ -1,5 +1,5 @@
-#ifndef LST_INT
-# define LST_INT
+#ifndef LST_INT_H
+# define LST_INT_H
 
 # include "structs_b.h"
 
