@@ -7,6 +7,8 @@ typedef struct s_sound_mini
 {
 	ma_engine	engine;
 	ma_sound	background_music;
+	ma_sound	victory;
+	ma_sound	death;
 	ma_sound	door_sound;
 	ma_sound	mj_sound;
 	ma_sound	pickup_sound;

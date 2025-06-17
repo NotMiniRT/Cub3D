@@ -27,6 +27,18 @@ static void	play_door_sound(t_sound_mini *sound)
 	ma_sound_start(&sound->door_sound);
 }
 
+static void	play_death_sound(t_sound_mini *sound)
+{
+	ma_sound_seek_to_pcm_frame(&sound->death, 0);
+	ma_sound_start(&sound->death);
+}
+
+static void	play_victory_sound(t_sound_mini *sound)
+{
+	ma_sound_seek_to_pcm_frame(&sound->victory, 0);
+	ma_sound_start(&sound->victory);
+}
+
 static void	play_pickup_sound(t_sound_mini *sound)
 {
 	ma_sound_seek_to_pcm_frame(&sound->pickup_sound, 0);
@@ -54,4 +66,8 @@ void	play_sound(t_main_struct *main_struct, int sound_type)
 		play_pickup_sound(sound);
 	else if (sound_type == SOUND_MJ)
 		play_mj_sound_positioned(sound, main_struct);
+	else if (sound_type == SOUND_VICTORY)
+		play_victory_sound(sound);
+	else if (sound_type == SOUND_DEATH)
+		play_death_sound(sound);
 }

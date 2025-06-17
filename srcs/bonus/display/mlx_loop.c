@@ -91,6 +91,7 @@ static void put_victory_screen(t_main_struct *main_struct)
 		}
 		i++;
 	}
+	play_sound(main_struct, SOUND_VICTORY);
 	get_image_cub_from_xpm_no_rot(main_struct, &img, \
 			"assets/textures/mj/mjescape.xpm", 1080);
 	if (img != NULL)

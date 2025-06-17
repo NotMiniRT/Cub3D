@@ -20,7 +20,7 @@ static bool	load_background_music(t_sound_mini *sound)
 	ma_result	result;
 
 	result = ma_sound_init_from_file(&sound->engine,
-		"assets/sound/background_stressing2.mp3",
+		"assets/sound/background_stressing.mp3",
 		MA_SOUND_FLAG_STREAM | MA_SOUND_FLAG_NO_SPATIALIZATION,
 		NULL, NULL,
 		&sound->background_music);
@@ -52,10 +52,21 @@ static bool	load_sound_effects(t_sound_mini *sound)
 			&sound->door_sound) != MA_SUCCESS)
 		return (false);
 	if (ma_sound_init_from_file(&sound->engine,
+			"assets/sound/death.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+			NULL, NULL,
+			&sound->death) != MA_SUCCESS)
+		return (false);
+	if (ma_sound_init_from_file(&sound->engine,
+			"assets/sound/victory.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+			NULL, NULL,
+			&sound->victory) != MA_SUCCESS)
+		return (false);
+	if (ma_sound_init_from_file(&sound->engine,
 			"assets/sound/hehe.mp3",
 			0, NULL, NULL,
 		&sound->mj_sound) != MA_SUCCESS)
 		return (false);
+	// set_sound(); ce qui est en dessous doit y aller
 	ma_sound_set_attenuation_model(&sound->mj_sound, ma_attenuation_model_linear);
 	ma_sound_set_min_distance(&sound->mj_sound, 0.8f);  // Very close for max volume
 	ma_sound_set_max_distance(&sound->mj_sound, 15.0f);  // Much shorter distance to silence

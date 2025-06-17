@@ -141,7 +141,8 @@ void move_monster(t_main_struct *main_struct)
 	if ((fabs(main_struct->mj->x - main_struct->player->x) + fabs(main_struct->mj->y - main_struct->player->y)) <= 1)
 	{
 		main_struct->died = 1;
-		return;
+		play_sound(main_struct, SOUND_DEATH);
+		return ;
 	}
 	if (i % 3 == 0)
 	{
