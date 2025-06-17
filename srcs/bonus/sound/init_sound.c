@@ -56,9 +56,12 @@ static bool	load_sound_effects(t_sound_mini *sound)
 			0, NULL, NULL,
 		&sound->mj_sound) != MA_SUCCESS)
 		return (false);
-	ma_sound_set_attenuation_model(&sound->mj_sound, ma_attenuation_model_inverse);
-	ma_sound_set_min_distance(&sound->mj_sound, 4.0f);  // Distance where volume starts dropping
-	ma_sound_set_max_distance(&sound->mj_sound, 50.0f); // Distance where volume reaches minimum
+	ma_sound_set_attenuation_model(&sound->mj_sound, ma_attenuation_model_linear);
+	ma_sound_set_min_distance(&sound->mj_sound, 0.8f);  // Very close for max volume
+	ma_sound_set_max_distance(&sound->mj_sound, 15.0f);  // Much shorter distance to silence
+	ma_sound_set_min_gain(&sound->mj_sound, 0.0f);      // Complete silence
+	ma_sound_set_max_gain(&sound->mj_sound, 1.0f);      // Full volume
+	ma_sound_set_rolloff(&sound->mj_sound, 2.0f);
 	return (true);
 }
 

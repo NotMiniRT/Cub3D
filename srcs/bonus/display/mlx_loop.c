@@ -11,6 +11,7 @@
 #include "common.h"
 #include "image_b.h"
 #include "inputs.h"
+#include "sound.h"
 void	do_one_move(t_main_struct *main_struct)
 {
 	if (main_struct->inputs[UP] + main_struct->inputs[DOWN] == 1
@@ -173,6 +174,7 @@ int	mlx_loop_action(t_main_struct *main_struct)
 		main_struct->fuel = main_struct->fuel - 0.02;
 		if (main_struct->fuel < 0.06)
 			main_struct->fuel = 0.05;
+		update_background_volume(main_struct);
 	}
 	if (timestamp_in_ms(main_struct) - main_struct->last_move > 20
 		&& is_moving(main_struct))

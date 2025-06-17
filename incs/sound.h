@@ -14,4 +14,6 @@ bool	init_sound(t_main_struct *main_struct);
 void	play_sound(t_main_struct *main_struct, int sound_type);
 void	cleanup_sound(t_main_struct *main_struct);
 
+void	update_background_volume(t_main_struct *main_struct);
+
 #endif

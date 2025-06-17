@@ -3,6 +3,24 @@
 #include "sound_internal.h"
 #include "sound.h"
 
+void	update_background_volume(t_main_struct *main_struct)
+{
+	t_sound_mini	*sound;
+	float			fuel_ratio;
+	float			volume;
+
+	if (!main_struct->sound)
+		return ;
+	sound = (t_sound_mini *)main_struct->sound;
+	fuel_ratio = main_struct->fuel;
+	volume = 0.8f - (main_struct->fuel * 0.6f);
+	if (volume < 0.2f)
+		volume = 0.2f;
+	if (volume > 0.8f)
+		volume = 0.8f;
+	ma_sound_set_volume(&sound->background_music, volume);
+}
+
 static void	play_door_sound(t_sound_mini *sound)
 {
 	ma_sound_seek_to_pcm_frame(&sound->door_sound, 0);
