@@ -38,7 +38,7 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
 			"assets/textures/walls/fog.xpm", 64)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->door), \
-			"assets/textures/walls/door4.xpm", 2048)
+			"assets/textures/walls/door5.xpm", 2048)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->potion), \
 			"assets/textures/walls/potion.xpm", 64)
 		|| !create_img_cub(main_struct, &(main_struct->minimap), \
@@ -93,7 +93,9 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	if (!map_object_set(main_struct))
 		return (false);
-	if (!init_sound(main_struct))
+	if (!SOUND_ON)
+		main_struct->sound = NULL;
+	else if (!init_sound(main_struct))
 		ft_dprintf(2, "Warning: Sound initialization failed\n");
 	else
 		ft_dprintf(2, "Sound initialized successfully\n");

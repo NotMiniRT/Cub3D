@@ -16,20 +16,12 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 
 bool	init_torch(t_main_struct *main_struct)
 {
-	static char	*torch_paths[13] = {
+	static char	*torch_paths[5] = {
 		"assets/textures/torch/torch_1.xpm",
 		"assets/textures/torch/torch_2.xpm",
 		"assets/textures/torch/torch_3.xpm",
 		"assets/textures/torch/torch_4.xpm",
 		"assets/textures/torch/torch_5.xpm",
-		"assets/textures/torch/torch_6.xpm",
-		"assets/textures/torch/torch_7.xpm",
-		"assets/textures/torch/torch_8.xpm",
-		"assets/textures/torch/torch_9.xpm",
-		"assets/textures/torch/torch_10.xpm",
-		"assets/textures/torch/torch_11.xpm",
-		"assets/textures/torch/torch_12.xpm",
-		"assets/textures/torch/torch_13.xpm"
 	};
 	int			i;
 
@@ -43,7 +35,7 @@ bool	init_torch(t_main_struct *main_struct)
 	main_struct->torch->torch_y = TORCH_Y;
 	main_struct->torch->last_update = timestamp_in_ms(main_struct);
 	i = 0;
-	while (i < 13)
+	while (i < 5)
 	{
 		if (!get_image_cub_from_xpm_no_rot(main_struct,
 				&(main_struct->torch->frames[i]), torch_paths[i], 64))
@@ -64,10 +56,10 @@ bool	render_torch(t_main_struct *main_struct)
 			main_struct->torch->frame_duration)
 	{
 		if (main_struct->fuel < 0.06)
-			main_struct->torch->current_frame = 12;
+			main_struct->torch->current_frame = 4;
 		else
 			main_struct->torch->current_frame = \
-				((main_struct->torch->current_frame + 1) % 4) + 4 * ((main_struct->fuel < 0.66) + (main_struct->fuel < 0.33));
+				((main_struct->torch->current_frame + 1) % 4);
 		main_struct->torch->last_update = current_time;
 	}
 	return (true);

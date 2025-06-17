@@ -21,4 +21,5 @@
 # define RENDER_DIST 40.
 # define MOUSE_SENSITIVITY 0.002
 # define MJ_SPRITES 34
+# define SOUND_ON 1
 #endif

@@ -11,7 +11,7 @@ DEPSB		:= $(OBJSB:.o=.d)
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror #-g3 #-O3 #-march=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32
+CFLAGS		:= -Wall -Wextra -Werror -g3 -O3 #-march=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32
 
 AUDIO_CFLAGS := -I $(HOME)/local/include/
 
