@@ -65,7 +65,7 @@ void	free_main_struct_img(t_main_struct *main_struct)
 	if (main_struct->torch)
 	{
 		i = 0;
-		while (i < 4)
+		while (i < 13)
 		{
 			if (main_struct->torch->frames[i])
 				free_image_cub(main_struct, main_struct->torch->frames[i]);

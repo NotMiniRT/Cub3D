@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 # define COMMON_H
 
-# define WINDOW_HEIGHT 1080
+# define WINDOW_HEIGHT 1280
 # define WINDOW_WIDTH 1920
 # define PI 3.14159265359
 # define FOVHALF 0.5235987756

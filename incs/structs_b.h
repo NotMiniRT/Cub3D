@@ -67,7 +67,7 @@ typedef union u_objects
 
 typedef struct s_torch
 {
-    t_image_cub  *frames[34];
+    t_image_cub  *frames[13];
     int          current_frame;
     size_t       last_update;
 	size_t       move;
@@ -251,8 +251,8 @@ typedef struct s_ray_calculus
 	double			dir_y;
 	double			player_x;
 	double			player_y;
-	double			delta_x;
-	double			delta_y;
+	double			tilde_step_x;
+	double			tilde_step_y;
 	double			side_dist_x;
 	double			side_dist_y;
 	int				step_x;
