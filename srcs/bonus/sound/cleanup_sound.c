@@ -17,6 +17,7 @@ void	cleanup_sound(t_main_struct *main_struct)
 	ma_sound_uninit(&sound->door_sound);
 	ma_sound_uninit(&sound->mj_sound);
 	ma_sound_uninit(&sound->pickup_sound);
+	ma_sound_uninit(&sound->fire_sound);
 	ma_engine_uninit(&sound->engine);
 	free(sound);
 	main_struct->sound = NULL;

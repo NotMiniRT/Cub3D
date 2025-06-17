@@ -70,7 +70,11 @@ typedef struct s_torch
     t_image_cub  *frames[34];
     int          current_frame;
     size_t       last_update;
+	size_t       move;
     size_t       frame_duration;
+	int			torch_x;
+	int			torch_y;
+
 }	t_torch;
 
 typedef struct s_gauge_color

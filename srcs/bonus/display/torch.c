@@ -30,6 +30,8 @@ bool	init_torch(t_main_struct *main_struct)
 	ft_memset(main_struct->torch, 0, sizeof(t_torch));
 	main_struct->torch->frame_duration = FRAME_DURATION;
 	main_struct->torch->current_frame = 0;
+	main_struct->torch->torch_x = TORCH_X;
+	main_struct->torch->torch_y = TORCH_Y;
 	main_struct->torch->last_update = timestamp_in_ms(main_struct);
 	i = 0;
 	while (i < 4)
@@ -74,8 +76,8 @@ static void	draw_scaled_pixel(t_main_struct *main_struct, int color,
 		x = 0;
 		while (x < scale)
 		{
-			dest_x = (TORCH_X + x) * 4 + base_x * scale;
-			dest_y = TORCH_Y + base_y * scale + y;
+			dest_x = (main_struct->torch->torch_x + + x) * 4 + base_x * scale;
+			dest_y = main_struct->torch->torch_y + base_y * scale + y;
 			if (dest_x >= 0 && dest_x < WINDOW_WIDTH * 4 && \
 				dest_y >= 0 && dest_y < WINDOW_HEIGHT)
 				change_pixel_color_opt(main_struct->frame, color, \

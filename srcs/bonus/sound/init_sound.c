@@ -42,7 +42,7 @@ static bool	load_background_music(t_sound_mini *sound)
 static bool	load_sound_effects(t_sound_mini *sound)
 {
 	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/frog1.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+			"assets/sound/glass.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
 			NULL, NULL,
 			&sound->pickup_sound) != MA_SUCCESS)
 		return (false);
@@ -65,6 +65,11 @@ static bool	load_sound_effects(t_sound_mini *sound)
 			"assets/sound/hehe.mp3",
 			0, NULL, NULL,
 		&sound->mj_sound) != MA_SUCCESS)
+		return (false);
+	if (ma_sound_init_from_file(&sound->engine,
+			"assets/sound/fire.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+			NULL, NULL,
+			&sound->fire_sound) != MA_SUCCESS)
 		return (false);
 	// set_sound(); ce qui est en dessous doit y aller
 	ma_sound_set_attenuation_model(&sound->mj_sound, ma_attenuation_model_linear);

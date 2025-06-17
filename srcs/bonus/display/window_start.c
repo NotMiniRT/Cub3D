@@ -83,6 +83,9 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
+	main_struct->map[infos->scene->pos[1] - 1][infos->scene->pos[0] - 1] = '0';
+	if (main_struct->mj != NULL)
+		main_struct->map[infos->scene->monster_positions[1] - 1][infos->scene->monster_positions[0]- 1] = '0';
 	main_struct->fuel = 1;
 	if (!init_torch(main_struct))
 		return (false);

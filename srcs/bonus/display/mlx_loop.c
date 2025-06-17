@@ -12,6 +12,7 @@
 #include "image_b.h"
 #include "inputs.h"
 #include "sound.h"
+#include "torch.h"
 void	do_one_move(t_main_struct *main_struct)
 {
 	if (main_struct->inputs[UP] + main_struct->inputs[DOWN] == 1
@@ -132,22 +133,6 @@ static void put_death_screen(t_main_struct *main_struct)
 
 int	mlx_loop_action(t_main_struct *main_struct)
 {
-	static int frame_count = 0;
-	static clock_t last_time = 0;
-
-	if (last_time == 0)
-		last_time = clock();
-
-	frame_count++;
-
-	clock_t now = clock();
-	double elapsed = (double)(now - last_time) / CLOCKS_PER_SEC;
-
-	if (elapsed >= 1.0) {
-		printf("FPS : %d\n", frame_count);
-		frame_count = 0;
-		last_time = now;
-	}
 
 	if (main_struct->died > 0)
 	{
@@ -169,8 +154,18 @@ int	mlx_loop_action(t_main_struct *main_struct)
 		return (1);
 	if (main_struct->mj != NULL && timestamp_in_ms(main_struct) - main_struct->mj->move_time > 30)
 		move_monster(main_struct);
-	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 700 && main_struct->fuel > 0.06)
+	if (timestamp_in_ms(main_struct) - main_struct->torch->move > 200)
 	{
+		main_struct->torch->move = timestamp_in_ms(main_struct);
+		main_struct->torch->torch_x = TORCH_X + main_struct->last_move%16;
+		main_struct->torch->torch_y = TORCH_Y + main_struct->last_move%24;
+	}
+	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 1000 && main_struct->fuel > 0.06)
+	{
+		if ((int)(main_struct->fuel * 100)%10 <= 1)
+		{
+			play_sound(main_struct, SOUND_FIRE);
+		}
 		main_struct->fuel_time = timestamp_in_ms(main_struct);
 		main_struct->fuel = main_struct->fuel - 0.02;
 		if (main_struct->fuel < 0.06)
@@ -194,3 +189,20 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	}
 	return (0);
 }
+
+// static int frame_count = 0;
+// static clock_t last_time = 0;
+
+// if (last_time == 0)
+// 	last_time = clock();
+
+// frame_count++;
+
+// clock_t now = clock();
+// double elapsed = (double)(now - last_time) / CLOCKS_PER_SEC;
+
+// if (elapsed >= 1.0) {
+// 	printf("FPS : %d\n", frame_count);
+// 	frame_count = 0;
+// 	last_time = now;
+// }

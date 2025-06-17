@@ -45,6 +45,12 @@ static void	play_pickup_sound(t_sound_mini *sound)
 	ma_sound_start(&sound->pickup_sound);
 }
 
+static void	play_fire_sound(t_sound_mini *sound)
+{
+	ma_sound_seek_to_pcm_frame(&sound->fire_sound, 0);
+	ma_sound_start(&sound->fire_sound);
+}
+
 static void	play_mj_sound_positioned(t_sound_mini *sound, t_main_struct *main_struct)
 {
 	ma_sound_set_position(&sound->mj_sound, main_struct->mj->x, main_struct->mj->y, 0.0f); // le dernier parametre c'est pour de la 3D (axe Z)
@@ -70,4 +76,6 @@ void	play_sound(t_main_struct *main_struct, int sound_type)
 		play_victory_sound(sound);
 	else if (sound_type == SOUND_DEATH)
 		play_death_sound(sound);
+	else if (sound_type == SOUND_FIRE)
+		play_fire_sound(sound);
 }
