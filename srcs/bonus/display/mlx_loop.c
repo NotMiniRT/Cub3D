@@ -162,7 +162,7 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	}
 	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 1000 && main_struct->fuel > 0.06)
 	{
-		if ((int)(main_struct->fuel * 100)%10 <= 1)
+		if ((int)(main_struct->fuel * 100)%10 >= 8)
 		{
 			play_sound(main_struct, SOUND_FIRE);
 		}
