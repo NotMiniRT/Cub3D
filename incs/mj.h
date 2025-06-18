@@ -2,6 +2,7 @@
 # define MJ_H
 
 # include <stdbool.h>
+
 # include "structs_b.h"
 
 # define MJ_WIDTH 256    // Width of the MJ image
@@ -44,8 +45,5 @@
 # define MJ_31 "assets/textures/mj-31.xpm"
 # define MJ_32 "assets/textures/mj-32.xpm"
 # define MJ_33 "assets/textures/mj-33.xpm"
-
-// bool	display_mj(t_main_struct *main_struct);
-// bool	init_mj(t_main_struct *main_struct);
 
 #endif

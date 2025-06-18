@@ -1,8 +1,9 @@
 #ifndef IMAGE_B_H
 # define IMAGE_B_H
 
-# include "structs_b.h"
 # include <stdbool.h>
+
+# include "structs_b.h"
 
 int		create_img_cub(t_main_struct *main_struct,
 			t_image_cub **img, int x, int y);

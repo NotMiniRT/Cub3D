@@ -4,7 +4,7 @@
 #include "player_b.h"
 #include <stdio.h>
 #include "common.h"
-#include "inputs.h"
+#include "inputs_b.h"
 
 int	release_move(int keysym, t_main_struct *main_struct)
 {

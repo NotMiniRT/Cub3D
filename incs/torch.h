@@ -2,6 +2,7 @@
 # define TORCH_H
 
 # include <stdbool.h>
+
 # include "structs_b.h"
 
 # define TORCH_WIDTH 64    // Width of the torch image

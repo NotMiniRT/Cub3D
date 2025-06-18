@@ -2,6 +2,7 @@
 # define FUEL_BAR_H
 
 # include <stdbool.h>
+
 # include "structs_b.h"
 
 # define HUD_WIDTH 240           // Largeur de la fenetre
