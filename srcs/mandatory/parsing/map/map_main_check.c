@@ -4,8 +4,8 @@
 #include "map_debug.h"
 #include "map_processing.h"
 #include "map_struct_validation.h"
-#include "map_validation.h"
 #include "map_types.h"
+#include "map_validation.h"
 #include "parsing.h"
 
 static void	validate_map_basics(t_infos *infos, int map_start)

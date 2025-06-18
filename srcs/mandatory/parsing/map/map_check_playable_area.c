@@ -4,7 +4,6 @@
 #include "map_struct_validation.h"
 #include "map_validation.h"
 #include "map_types.h"
-#include "parsing.h"
 
 static bool	is_vulnerable_point(t_map_data map_data, int i, int j)
 {

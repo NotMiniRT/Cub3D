@@ -1,7 +1,5 @@
 #include "libft.h"
-#include "map_debug.h"
 #include "parsing.h"
-#include "map_types.h"
 
 bool	check_map_chars(t_infos *infos, int map_start)
 {
