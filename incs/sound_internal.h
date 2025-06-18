@@ -14,6 +14,7 @@ typedef struct s_sound_mini
 	ma_sound	pickup_sound;
 	ma_sound	fire_sound;
 	int			initialized;
+	int			no_audio_device;
 }	t_sound_mini;
 
 #endif
