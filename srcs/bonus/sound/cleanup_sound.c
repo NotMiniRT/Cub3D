@@ -14,6 +14,7 @@ static void	cleanup_sounds(t_sound_mini *sound)
 	ma_sound_uninit(&sound->door_sound);
 	ma_sound_uninit(&sound->mj_sound);
 	ma_sound_uninit(&sound->pickup_sound);
+	ma_sound_uninit(&sound->fire_sound);
 }
 
 void	cleanup_sound(t_main_struct *main_struct)

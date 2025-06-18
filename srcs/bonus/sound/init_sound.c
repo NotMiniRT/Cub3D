@@ -1,29 +1,178 @@
-#include <stdlib.h>
-#include "miniaudio_wrapper.h"
-#include "structs_b.h"
-#include "sound_internal.h"
-#include "stdbool.h"
 #include "ft_dprintf.h"
-
-static bool	check_audio_devices(void)
+#include "libft.h"
+#include "miniaudio_wrapper.h"
+#include "sound_internal.h"
+#include "sound.h"
+#include "stdbool.h"
+#include "structs_b.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
+static void	close_extra_fds(int keep_fd)
 {
-	ma_context		context;
-	ma_device_info	*playback_infos;
-	ma_uint32		playback_count;
-	ma_device_info	*capture_infos;
-	ma_uint32		capture_count;
-	ma_result		result;
+	int	max_fd;
+	int	fd;
 
-	result = ma_context_init(NULL, 0, NULL, &context);
-	if (result != MA_SUCCESS)
-		return (false);
-	result = ma_context_get_devices(&context, &playback_infos, &playback_count,
-			&capture_infos, &capture_count);
-	ma_context_uninit(&context);
-	if (result != MA_SUCCESS)
-		return (false);
-	return (playback_count > 0);
+	max_fd = sysconf(_SC_OPEN_MAX);
+	fd = 3;
+	while (fd < max_fd)
+	{
+		if (fd != keep_fd)
+			close(fd);
+		fd++;
+	}
 }
+
+static void	setup_child_process(int pipefd[2])
+{
+	FILE	*devnull;
+
+	close_extra_fds(pipefd[1]);
+	close(pipefd[0]);
+	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+	{
+		close(pipefd[1]);
+		exit(1);
+	}
+	devnull = fopen("/dev/null", "w");
+	if (devnull)
+	{
+		dup2(fileno(devnull), STDERR_FILENO);
+		fclose(devnull);
+	}
+	close(pipefd[1]);
+}
+
+static void	str_to_lowercase(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] >= 'A' && str[i] <= 'Z')
+			str[i] = str[i] + 32;
+		i++;
+	}
+}
+
+static bool	check_bluetooth_keywords(char *buffer)
+{
+	str_to_lowercase(buffer);
+	if (ft_strnstr(buffer, "bluetooth", ft_strlen("bluetooth")))
+		return (true);
+	if (ft_strnstr(buffer, "bluez", ft_strlen("bluez")))
+		return (true);
+	if (ft_strnstr(buffer, "bt", ft_strlen("bt")))
+		return (true);
+	if (ft_strnstr(buffer, "a2dp", ft_strlen("a2dp")))
+		return (true);
+	if (ft_strnstr(buffer, "headset", ft_strlen("headset")))
+		return (true);
+	return (false);
+}
+
+static bool	read_and_check_output(int fd)
+{
+	char	buffer[256];
+	ssize_t	bytes_read;
+
+	bytes_read = read(fd, buffer, sizeof(buffer) - 1);
+	while (bytes_read > 0)
+	{
+		buffer[bytes_read] = '\0';
+		if (check_bluetooth_keywords(buffer))
+			return (true);
+		bytes_read = read(fd, buffer, sizeof(buffer) - 1);
+	}
+	return (false);
+}
+
+static pid_t	create_child_process(int pipefd[2])
+{
+	pid_t	pid;
+
+	if (pipe(pipefd) == -1)
+		return (-1);
+	pid = fork();
+	if (pid == -1)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
+	return (pid);
+}
+
+static bool	execute_pactl_command(const char *cmd)
+{
+	int		pipefd[2];
+	pid_t	pid;
+	bool	found;
+	int		status;
+
+	pid = create_child_process(pipefd);
+	if (pid == -1)
+		return (false);
+	if (pid == 0)
+	{
+		setup_child_process(pipefd);
+		execl("/bin/sh", "sh", "-c", cmd, NULL);
+		exit(1);
+	}
+	close(pipefd[1]);
+	found = read_and_check_output(pipefd[0]);
+	close(pipefd[0]);
+	waitpid(pid, &status, 0);
+	return (found);
+}
+
+static bool	check_cards_for_bluetooth(void)
+{
+	int		pipefd[2];
+	pid_t	pid;
+	char	buffer[256];
+	ssize_t	bytes_read;
+	int		status;
+
+	pid = create_child_process(pipefd);
+	if (pid == -1)
+		return (false);
+	if (pid == 0)
+	{
+		setup_child_process(pipefd);
+		execl("/bin/sh", "sh", "-c", "pactl list cards | grep -i bluetooth",
+			NULL);
+		exit(1);
+	}
+	close(pipefd[1]);
+	bytes_read = read(pipefd[0], buffer, sizeof(buffer) - 1);
+	close(pipefd[0]);
+	waitpid(pid, &status, 0);
+	if (bytes_read > 0)
+	{
+		buffer[bytes_read] = '\0';
+		return (ft_strlen(buffer) > 0);
+	}
+	return (false);
+}
+
+static bool	check_bluetooth_audio_connected(void)
+{
+	bool	bluetooth_found;
+
+	bluetooth_found = execute_pactl_command(
+			"pactl list sinks short | grep 'bluez_sink.*a2dp'");
+	if (!bluetooth_found)
+		bluetooth_found = check_cards_for_bluetooth();
+	if (bluetooth_found)
+		ft_dprintf(2, "✓ Périphérique audio Bluetooth connecté détecté\n");
+	else
+		ft_dprintf(2, "✗ Aucun périphérique audio Bluetooth connecté\n");
+	return (bluetooth_found);
+}
+
 
 static bool	init_engine_normal(t_sound_mini *sound)
 {
@@ -58,95 +207,19 @@ static bool	init_engine_no_device(t_sound_mini *sound)
 
 static bool	init_engine(t_sound_mini *sound)
 {
-	if (check_audio_devices())
+	if (!check_bluetooth_audio_connected())
 	{
-		if (init_engine_normal(sound))
-			return (true);
+		ft_dprintf(2, "Pas de Bluetooth audio -> désactivation du son\n");
+		return (init_engine_no_device(sound));
 	}
-	ft_dprintf(2, "Tentative init sans périphérique audio...\n");
+	ft_dprintf(2, "Bluetooth audio détecté -> initialisation du son\n");
+	if (init_engine_normal(sound))
+		return (true);
+	ft_dprintf(2, "Échec init normale -> fallback sans périphérique\n");
 	return (init_engine_no_device(sound));
 }
 
-static bool	load_background_music(t_sound_mini *sound)
-{
-	ma_result	result;
 
-	if (sound->no_audio_device)
-		return (true);
-	result = ma_sound_init_from_file(&sound->engine,
-			"assets/sound/background_stressing.mp3",
-			MA_SOUND_FLAG_STREAM | MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
-			&sound->background_music);
-	if (result != MA_SUCCESS)
-	{
-		ft_dprintf(2, "Failed to load background music: %d\n", result);
-		return (false);
-	}
-	ma_sound_set_looping(&sound->background_music, MA_TRUE);
-	ma_sound_set_volume(&sound->background_music, 0.6f);
-	result = ma_sound_start(&sound->background_music);
-	if (result != MA_SUCCESS)
-		ft_dprintf(2, "Failed to start background music: %d\n", result);
-	else
-		ft_dprintf(2, "Background music started successfully\n");
-	return (true);
-}
-
-static bool	load_basic_sounds(t_sound_mini *sound)
-{
-	if (sound->no_audio_device)
-		return (true);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/frog1.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
-			&sound->pickup_sound) != MA_SUCCESS)
-		return (false);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/door.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
-			&sound->door_sound) != MA_SUCCESS)
-		return (false);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/death.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
-			&sound->death) != MA_SUCCESS)
-		return (false);
-	return (true);
-}
-
-static bool	load_advanced_sounds(t_sound_mini *sound)
-{
-	if (sound->no_audio_device)
-		return (true);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/victory.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
-			&sound->victory) != MA_SUCCESS)
-		return (false);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/hehe.mp3",
-			0, NULL, NULL,
-			&sound->mj_sound) != MA_SUCCESS)
-		return (false);
-	ma_sound_set_attenuation_model(&sound->mj_sound,
-		ma_attenuation_model_linear);
-	ma_sound_set_min_distance(&sound->mj_sound, 0.8f);
-	ma_sound_set_max_distance(&sound->mj_sound, 15.0f);
-	ma_sound_set_min_gain(&sound->mj_sound, 0.0f);
-	ma_sound_set_max_gain(&sound->mj_sound, 1.0f);
-	ma_sound_set_rolloff(&sound->mj_sound, 2.0f);
-	return (true);
-}
-
-static bool	load_sound_effects(t_sound_mini *sound)
-{
-	if (!load_basic_sounds(sound))
-		return (false);
-	if (!load_advanced_sounds(sound))
-		return (false);
-	return (true);
-}
 
 bool	init_sound(t_main_struct *main_struct)
 {
@@ -156,6 +229,8 @@ bool	init_sound(t_main_struct *main_struct)
 	if (!sound)
 		return (false);
 	sound->no_audio_device = 0;
+	sound->initialized = 0;
+
 	if (!init_engine(sound))
 	{
 		free(sound);

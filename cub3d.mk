@@ -155,4 +155,5 @@ SRCBONUS += $(addprefix $(SOUNDDIR), $(addsuffix .c, $(SOUNDSRC)))
 override SOUNDSRC	:= \
 	cleanup_sound \
 	init_sound \
+	load_sound \
 	play_sound \
