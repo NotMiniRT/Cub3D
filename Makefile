@@ -1,5 +1,5 @@
 NAME	:= cub3D
-
+NAMEB	:= cub3D_bonus
 include cub3d.mk
 
 BUILD_DIR	:= .build/
@@ -178,8 +178,8 @@ bonus: init_bonus .bonus
 
 .bonus: libft/libft.a mlx/libmlx_Linux.a mlx/libmlx.a Makefile $(OBJSB)
 	@$(RM) $(NAME)
-	@$(CC) $(CFLAGS) $(CPPFLAGS_BONUS) -o $(NAME) $(OBJSB) -L libft -lft $(MLX_FLAGS)
-	@echo "\n$(GREEN_BOLD)✓ $(NAME) bonus is ready $(RESETC)\n"
+	@$(CC) $(CFLAGS) $(CPPFLAGS_BONUS) -o $(NAMEB) $(OBJSB) -L libft -lft $(MLX_FLAGS)
+	@echo "\n$(GREEN_BOLD)✓ $(NAMEB) bonus is ready $(RESETC)\n"
 	@touch .bonus
 
 .PHONY: clean
@@ -191,7 +191,7 @@ clean:
 .PHONY: fclean
 fclean: clean
 	$(MAKE) fclean -C libft/
-	@$(RM) $(RMDIR) $(NAME) $(BUILD_DIR) $(BUILD_DIR_BONUS) .bonus
+	@$(RM) $(RMDIR) $(NAME) $(NAMEB) $(BUILD_DIR) $(BUILD_DIR_BONUS) .bonus
 	@echo "$(RED_BOLD)✓ $(NAME) is fully cleaned!$(RESETC)"
 
 .PHONY: re
