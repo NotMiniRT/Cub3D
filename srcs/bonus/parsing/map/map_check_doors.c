@@ -4,6 +4,8 @@
 #include "ft_dprintf.h"
 #include "map_struct_validation.h"
 #include "map_validation.h"
+#include "map_types.h"
+#include "parsing.h"
 
 static bool	is_door_valid(t_map_data map_data, int i, int j)
 {

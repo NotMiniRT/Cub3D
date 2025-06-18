@@ -55,7 +55,7 @@ test/
 test.c
 cub3D
 cub3D_bonus
-.build/
+.build*/
 libft.a
 *logs
 
