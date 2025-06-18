@@ -17,7 +17,6 @@
 typedef struct s_map_data	t_map_data;
 typedef struct s_infos		t_infos;
 
-
 void	print_cell_color(char c);
 void	debug_print_map(t_map_data map_data);
 void	debug_print_map_with_coords(t_map_data map_data);

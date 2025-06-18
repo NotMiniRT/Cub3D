@@ -1,7 +1,7 @@
 #ifndef MAP_PROCESSING_H
 # define MAP_PROCESSING_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 typedef struct s_infos		t_infos;
 typedef struct s_map_data	t_map_data;
