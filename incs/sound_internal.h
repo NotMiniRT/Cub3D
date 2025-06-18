@@ -13,6 +13,7 @@ typedef struct s_sound_mini
 	ma_sound	mj_sound;
 	ma_sound	pickup_sound;
 	int			initialized;
+	int			no_audio_device;
 }	t_sound_mini;
 
 #endif
