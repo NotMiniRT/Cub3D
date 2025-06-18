@@ -82,6 +82,7 @@ SRCBONUS += $(addprefix $(UTILSDIR), $(addsuffix .c, $(UTILSSRCBONUS)))
 
 override UTILSSRCBONUS	:= \
 	cleanup \
+	free_main_struct \
 	utils \
 	main_struct \
 	map_items \

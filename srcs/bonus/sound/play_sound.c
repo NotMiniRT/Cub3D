@@ -27,7 +27,7 @@ void	update_background_volume(t_main_struct *main_struct)
 static void	play_generic_sound(t_sound_mini *sound, \
 									ma_sound *sound_obj, const char *sound_name)
 {
-	ma_result result;
+	ma_result	result;
 
 	if (sound->no_audio_device)
 		return ;
@@ -44,7 +44,8 @@ static void	play_generic_sound(t_sound_mini *sound, \
 
 static void	play_mj_sound_positioned(t_sound_mini *sound, t_main_struct *ms)
 {
-	ma_result result;
+	ma_result	result;
+
 	if (sound->no_audio_device)
 		return ;
 	ma_sound_set_position(&sound->mj_sound, ms->mj->x,

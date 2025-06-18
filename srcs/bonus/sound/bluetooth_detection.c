@@ -25,7 +25,7 @@ static bool	check_cards_for_bluetooth(void)
 	if (pid == 0)
 	{
 		setup_child_process(pipefd);
-		execl("/bin/sh", "sh", "-c", PACTL_BLUETOOTH_GREP, (char *)NULL);
+		execl("/bin/sh", "sh", "-c", PACTL_BLUETOOTH_GREP, (char *) NULL);
 		exit(EXIT_FAILURE);
 	}
 	close(pipefd[1]);

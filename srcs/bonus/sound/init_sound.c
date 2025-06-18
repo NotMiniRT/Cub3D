@@ -56,8 +56,6 @@ static bool	init_engine(t_sound_mini *sound)
 	return (init_engine_no_device(sound));
 }
 
-
-
 bool	init_sound(t_main_struct *main_struct)
 {
 	t_sound_mini	*sound;
