@@ -128,6 +128,7 @@ override DISPLAYSRCBONUS	:= \
 	inputs_define \
 	lantern_hud_drawing \
 	lantern_hud \
+	load_images \
 	minimap_drawing \
 	minimap \
 	mlx_loop \

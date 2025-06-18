@@ -18,37 +18,6 @@
 #include "sound.h"
 #include "ft_dprintf.h"
 
-
-/**
- * @bug check les droits de fichiers avant de faire quoi que ce soit
- *
- */
-static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
-{
-	if (!get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), \
-			infos->scene->so_texture, 2048)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_o), \
-			infos->scene->we_texture, 2048)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), \
-			infos->scene->no_texture, 2048)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
-			infos->scene->ea_texture, 2048)
-		|| !create_img_cub(main_struct, &(main_struct->frame), \
-			WINDOW_WIDTH, WINDOW_HEIGHT)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
-			"assets/textures/walls/fog.xpm", 64)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->door), \
-			"assets/textures/walls/door5.xpm", 2048)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->potion), \
-			"assets/textures/walls/potion.xpm", 64)
-		|| !create_img_cub(main_struct, &(main_struct->minimap), \
-			WINDOW_HEIGHT / 3, WINDOW_HEIGHT / 3)
-		|| !create_img_cub(main_struct, &(main_struct->fuel_bar), \
-			HUD_WIDTH, HUD_HEIGHT))
-		return (false);
-	return (true);
-}
-
 static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 {
 	main_struct->mlx_ptr = mlx_init();
