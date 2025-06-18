@@ -35,7 +35,7 @@ void	setup_child_process(int pipefd[2])
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 	{
 		close(pipefd[1]);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	devnull = fopen(DEV_NULL, TRUNCATE);
 	if (devnull)
