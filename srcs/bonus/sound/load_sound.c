@@ -34,11 +34,11 @@ bool	load_basic_sounds(t_sound_mini *sound)
 {
 	if (sound->no_audio_device)
 		return (true);
-	// if (ma_sound_init_from_file(&sound->engine,
-	// 		"assets/sound/glass.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-	// 		NULL, NULL,
-	// 		&sound->pickup_sound) != MA_SUCCESS)
-	// 	return (false);
+	if (ma_sound_init_from_file(&sound->engine,
+			"assets/sound/glass.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+			NULL, NULL,
+			&sound->pickup_sound) != MA_SUCCESS)
+		return (false);
 	if (ma_sound_init_from_file(&sound->engine,
 			"assets/sound/door.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
 			NULL, NULL,
@@ -49,11 +49,11 @@ bool	load_basic_sounds(t_sound_mini *sound)
 			NULL, NULL,
 			&sound->death) != MA_SUCCESS)
 		return (false);
-	// if (ma_sound_init_from_file(&sound->engine,
-	// 		"assets/sound/fire.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-	// 		NULL, NULL,
-	// 		&sound->fire_sound) != MA_SUCCESS)
-	// 	return (false);
+	if (ma_sound_init_from_file(&sound->engine,
+			"assets/sound/fire.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+			NULL, NULL,
+			&sound->fire_sound) != MA_SUCCESS)
+		return (false);
 	return (true);
 }
 
