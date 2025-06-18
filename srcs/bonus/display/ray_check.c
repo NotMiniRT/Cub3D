@@ -5,7 +5,7 @@
 /*
 reccupere les parametres pour les rayons,
 	dir_x/y: les omposantes pour la direction, cos et sin
-	delta_y/x: la distances entre les murs verticux/horizontaux suivant l'axe du rayon
+	tilde_step_y/x: la distances entre les murs verticux/horizontaux suivant l'axe du rayon
 */
 static void	define_basic_param_calculus(t_ray_calculus *calcul,
 		double cos_sin[2], t_main_struct *main_struct)
@@ -19,13 +19,13 @@ static void	define_basic_param_calculus(t_ray_calculus *calcul,
 	calcul->map_x = (int)floor(calcul->player_x);
 	calcul->map_y = (int)floor(calcul->player_y);
 	if (fabs(calcul->dir_x) < 0.000001)
-		calcul->delta_x = 10000000;
+		calcul->tilde_step_x = 10000000;
 	else
-		calcul->delta_x = fabs(1.0 / calcul->dir_x);
+		calcul->tilde_step_x = fabs(1.0 / calcul->dir_x);
 	if (fabs(calcul->dir_y) < 0.000001)
-		calcul->delta_y = 10000000;
+		calcul->tilde_step_y = 10000000;
 	else
-		calcul->delta_y = fabs(1.0 / calcul->dir_y);
+		calcul->tilde_step_y = fabs(1.0 / calcul->dir_y);
 	calcul->index_hit_tab = 0;
 }
 
@@ -40,25 +40,25 @@ static void	get_step_and_side_dist(t_ray_calculus *calcul)
 	{
 		calcul->step_x = -1;
 		calcul->side_dist_x = (calcul->player_x - calcul->map_x)
-			* calcul->delta_x;
+			* calcul->tilde_step_x;
 	}
 	else
 	{
 		calcul->step_x = 1;
 		calcul->side_dist_x = (calcul->map_x + 1.0 - calcul->player_x)
-			* calcul->delta_x;
+			* calcul->tilde_step_x;
 	}
 	if (calcul->dir_y < 0)
 	{
 		calcul->step_y = -1;
 		calcul->side_dist_y = (calcul->player_y - calcul->map_y)
-			* calcul->delta_y;
+			* calcul->tilde_step_y;
 	}
 	else
 	{
 		calcul->step_y = 1;
 		calcul->side_dist_y = (calcul->map_y + 1.0 - calcul->player_y)
-			* calcul->delta_y;
+			* calcul->tilde_step_y;
 	}
 	calcul->side = 0;
 }
@@ -74,7 +74,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 		calcul->wall_y = ((calcul->map_x - calcul->player_x
 					+ (1 - calcul->step_x) * 0.5)
 				/ calcul->dir_x) * calcul->dir_y;
-		calcul->dist = calcul->side_dist_x - calcul->delta_x;
+		calcul->dist = calcul->side_dist_x - calcul->tilde_step_x;
 	}
 	else
 	{
@@ -83,7 +83,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 				/ calcul->dir_y) * calcul->dir_x;
 		calcul->wall_y = (calcul->map_y - calcul->player_y
 				+ (1 - calcul->step_y) * 0.5);
-		calcul->dist = calcul->side_dist_y - calcul->delta_y;
+		calcul->dist = calcul->side_dist_y - calcul->tilde_step_y;
 	}
 }
 /*
@@ -282,13 +282,13 @@ void	ray_check(t_main_struct *main_struct,
 			add_hit_ray_item(&calcul, hit_tab, main_struct, cos_sin);
 		if (calcul.side_dist_x < calcul.side_dist_y)
 		{
-			calcul.side_dist_x += calcul.delta_x;
+			calcul.side_dist_x += calcul.tilde_step_x;
 			calcul.map_x += calcul.step_x;
 			calcul.side = 0;
 		}
 		else
 		{
-			calcul.side_dist_y += calcul.delta_y;
+			calcul.side_dist_y += calcul.tilde_step_y;
 			calcul.map_y += calcul.step_y;
 			calcul.side = 1;
 		}

@@ -54,6 +54,44 @@ static bool	init_engine(t_sound_mini *sound)
 		return (true);
 	ft_dprintf(2, RED ERROR_INITIALIZED RESET);
 	return (init_engine_no_device(sound));
+// 	if (ma_sound_init_from_file(&sound->engine,
+// 			"assets/sound/glass.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+// 			NULL, NULL,
+// 			&sound->pickup_sound) != MA_SUCCESS)
+// 		return (false);
+// 	if (ma_sound_init_from_file(&sound->engine,
+// 			"assets/sound/door.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+// 			NULL, NULL,
+// 			&sound->door_sound) != MA_SUCCESS)
+// 		return (false);
+// 	if (ma_sound_init_from_file(&sound->engine,
+// 			"assets/sound/death.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+// 			NULL, NULL,
+// 			&sound->death) != MA_SUCCESS)
+// 		return (false);
+// 	if (ma_sound_init_from_file(&sound->engine,
+// 			"assets/sound/victory.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+// 			NULL, NULL,
+// 			&sound->victory) != MA_SUCCESS)
+// 		return (false);
+// 	if (ma_sound_init_from_file(&sound->engine,
+// 			"assets/sound/hehe.mp3",
+// 			0, NULL, NULL,
+// 		&sound->mj_sound) != MA_SUCCESS)
+// 		return (false);
+// 	if (ma_sound_init_from_file(&sound->engine,
+// 			"assets/sound/fire.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
+// 			NULL, NULL,
+// 			&sound->fire_sound) != MA_SUCCESS)
+// 		return (false);
+// 	// set_sound(); ce qui est en dessous doit y aller
+// 	ma_sound_set_attenuation_model(&sound->mj_sound, ma_attenuation_model_linear);
+// 	ma_sound_set_min_distance(&sound->mj_sound, 0.8f);  // Very close for max volume
+// 	ma_sound_set_max_distance(&sound->mj_sound, 15.0f);  // Much shorter distance to silence
+// 	ma_sound_set_min_gain(&sound->mj_sound, 0.0f);      // Complete silence
+// 	ma_sound_set_max_gain(&sound->mj_sound, 1.0f);      // Full volume
+// 	ma_sound_set_rolloff(&sound->mj_sound, 2.0f);
+// 	return (true);
 }
 
 

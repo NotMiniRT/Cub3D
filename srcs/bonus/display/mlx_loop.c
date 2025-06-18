@@ -12,6 +12,7 @@
 #include "image_b.h"
 #include "inputs.h"
 #include "sound.h"
+#include "torch.h"
 void	do_one_move(t_main_struct *main_struct)
 {
 	if (main_struct->inputs[UP] + main_struct->inputs[DOWN] == 1
@@ -35,8 +36,8 @@ void rotate_point(t_main_struct *main_struct, int i, t_point *p)
 	center_y = (*main_struct->items)[i][1] + 0.5;
 	dx = p->x - center_x;
 	dy = p->y - center_y;
-	p->x = center_x + dx * cos(0.0314) - dy * sin(0.0314);
-	p->y = center_y + dx * sin(0.0314) + dy * cos(0.0314);
+	p->x = center_x + dx * 0.9995070605  - dy * 0.03139484039;
+	p->y = center_y + dx * 0.03139484039 + dy * 0.9995070605 ;
 }
 
 void update_items(t_main_struct *main_struct)
@@ -132,23 +133,22 @@ static void put_death_screen(t_main_struct *main_struct)
 
 int	mlx_loop_action(t_main_struct *main_struct)
 {
-	static int frame_count = 0;
-	static clock_t last_time = 0;
+static clock_t last_time = 0;
+static int frame_count = 0;
 
-	if (last_time == 0)
-		last_time = clock();
+if (last_time == 0)
+	last_time = clock();
 
-	frame_count++;
+frame_count++;
 
-	clock_t now = clock();
-	double elapsed = (double)(now - last_time) / CLOCKS_PER_SEC;
+clock_t now = clock();
+double elapsed = (double)(now - last_time) / CLOCKS_PER_SEC;
 
-	if (elapsed >= 1.0) {
-		printf("FPS : %d\n", frame_count);
-		frame_count = 0;
-		last_time = now;
-	}
-
+if (elapsed >= 1.0) {
+	printf("FPS : %d\n", frame_count);
+	frame_count = 0;
+	last_time = now;
+}
 	if (main_struct->died > 0)
 	{
 		if (main_struct->died == 1)
@@ -169,8 +169,18 @@ int	mlx_loop_action(t_main_struct *main_struct)
 		return (1);
 	if (main_struct->mj != NULL && timestamp_in_ms(main_struct) - main_struct->mj->move_time > 30)
 		move_monster(main_struct);
-	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 700 && main_struct->fuel > 0.06)
+	if (timestamp_in_ms(main_struct) - main_struct->torch->move > 200)
 	{
+		main_struct->torch->move = timestamp_in_ms(main_struct);
+		main_struct->torch->torch_x = TORCH_X + main_struct->last_move % 16;
+		main_struct->torch->torch_y = TORCH_Y + main_struct->last_move % 24;
+	}
+	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 1000 && main_struct->fuel > 0.06)
+	{
+		if ((int)(main_struct->fuel * 100)%10 >= 8)
+		{
+			play_sound(main_struct, SOUND_FIRE);
+		}
 		main_struct->fuel_time = timestamp_in_ms(main_struct);
 		main_struct->fuel = main_struct->fuel - 0.02;
 		if (main_struct->fuel < 0.06)
@@ -194,3 +204,5 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	}
 	return (0);
 }
+
+// 

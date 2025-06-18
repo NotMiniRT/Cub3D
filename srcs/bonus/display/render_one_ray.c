@@ -122,7 +122,7 @@ int	put_transparency(t_render_calculus *render_calc,
 		{
 			text_y = (int)render_calc->hit_tab[i].texpos;
 			if (render_calc->hit_tab[i].type == DOOR && render_calc->hit_tab[i].status != 100)
-				text_y = text_y - (int)(main_struct->door->size * (100 - render_calc->hit_tab[i].status) * 0.008);
+				text_y = text_y - (int)(main_struct->door->size * (0.8 - render_calc->hit_tab[i].status * 0.008));
 			if (text_y < 0)
 				text_y = 0;
 			if (text_y >= main_struct->door->size)

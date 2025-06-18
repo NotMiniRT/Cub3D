@@ -12,6 +12,7 @@ typedef struct s_sound_mini		t_sound_mini;
 # define SOUND_MJ 3
 # define SOUND_DEATH 4
 # define SOUND_VICTORY 5
+
 # define SOUND_FIRE 6
 
 # define A2DP		"a2dp"
@@ -34,6 +35,7 @@ typedef struct s_sound_mini		t_sound_mini;
 # define NO_DEVICE_CONNECTED "✗ No Bluetooth audio device connected\n"
 # define PACTL_BLUETOOTH_GREP "pactl list cards | grep -i bluetooth"
 # define PACTL_BLUEZ_GREP "pactl list sinks short | grep 'bluez_sink.*a2dp'"
+
 
 bool	init_sound(t_main_struct *main_struct);
 void	play_sound(t_main_struct *main_struct, int sound_type);

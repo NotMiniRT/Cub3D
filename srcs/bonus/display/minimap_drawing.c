@@ -13,9 +13,9 @@ static void	minimap_set_pixel(t_image_cub *img, int x, int y, int color)
 	char	*pixel;
 	int		bytes_per_pixel;
 
-	if (x < 0 || y < 0 || x >= (WINDOW_HEIGHT / 3) || y >= (WINDOW_HEIGHT / 3))
+	if (x < 0 || y < 0 || x >= (WINDOW_HEIGHT * 0.333) || y >= (WINDOW_HEIGHT * 0.333))
 		return ;
-	bytes_per_pixel = img->pixel_bits / 8;
+	bytes_per_pixel = img->pixel_bits * 0.125;
 	pixel = img->buffer + (y * img->line_bytes + x * bytes_per_pixel);
 	if (img->endian == 0)
 	{
@@ -48,8 +48,8 @@ void	draw_square_with_offset(t_image_cub *img, t_minimap *minimap)
 		j = 0;
 		while (j < minimap->block_size)
 		{
-			if (start_x + i >= 0 && start_x + i < (WINDOW_HEIGHT / 3) && \
-				start_y + j >= 0 && start_y + j < (WINDOW_HEIGHT / 3))
+			if (start_x + i >= 0 && start_x + i < (WINDOW_HEIGHT * 0.333) && \
+				start_y + j >= 0 && start_y + j < (WINDOW_HEIGHT * 0.333))
 				minimap_set_pixel(img, \
 									start_x + i, start_y + j, minimap->color);
 			j++;
@@ -80,8 +80,8 @@ void	draw_player(t_image_cub *img, double angle)
 {
 	t_minimap_player	player;
 
-	player.center_x = (WINDOW_HEIGHT / 3) / 2;
-	player.center_y = (WINDOW_HEIGHT / 3) / 2;
+	player.center_x = (WINDOW_HEIGHT * 0.333) * 0.5;
+	player.center_y = (WINDOW_HEIGHT * 0.333) * 0.5;
 	player.i = -PLAYER_DOT_SIZE;
 	draw_player_dot(img, &player);
 	player.dir_x = cos(angle) * (PLAYER_DOT_SIZE * 2);
@@ -103,10 +103,10 @@ void	fill_minimap_background(t_image_cub *img)
 	int	y;
 
 	y = 0;
-	while (y < (WINDOW_HEIGHT / 3))
+	while (y < (WINDOW_HEIGHT * 0.333))
 	{
 		x = 0;
-		while (x < (WINDOW_HEIGHT / 3))
+		while (x < (WINDOW_HEIGHT * 0.333))
 		{
 			minimap_set_pixel(img, x, y, 0x00101825);
 			x++;

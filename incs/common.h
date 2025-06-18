@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 # define COMMON_H
 
-# define WINDOW_HEIGHT 1080
+# define WINDOW_HEIGHT 1280
 # define WINDOW_WIDTH 1920
 # define PI 3.14159265359
 # define FOVHALF 0.5235987756
@@ -22,6 +22,7 @@
 # define MOUSE_SENSITIVITY 0.002
 # define MJ_SPRITES 34
 
+
 # define BLUE		"\001\033[1;34m\002"
 # define BOLD_RED	"\001\033[1;31m\002"
 # define CYAN		"\001\033[1;36m\002"
@@ -32,5 +33,8 @@
 # define YELLOW		"\001\033[1;33m\002"
 
 # define RESET      "\001\033[0m\002"
+
+
+// # define SOUND_ON 1
 
 #endif

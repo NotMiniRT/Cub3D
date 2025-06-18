@@ -45,7 +45,6 @@ static void	play_generic_sound(t_sound_mini *sound, \
 static void	play_mj_sound_positioned(t_sound_mini *sound, t_main_struct *ms)
 {
 	ma_result result;
-
 	if (sound->no_audio_device)
 		return ;
 	ma_sound_set_position(&sound->mj_sound, ms->mj->x,
@@ -63,6 +62,12 @@ static void	play_mj_sound_positioned(t_sound_mini *sound, t_main_struct *ms)
 		ft_dprintf(2, "Failed to start MJ sound: %d\n", result);
 }
 
+static void	play_fire_sound(t_sound_mini *sound)
+{
+	ma_sound_seek_to_pcm_frame(&sound->fire_sound, 0);
+	ma_sound_start(&sound->fire_sound);
+}  
+  
 void	play_sound(t_main_struct *main_struct, int sound_type)
 {
 	t_sound_mini	*sound;
