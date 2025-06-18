@@ -83,26 +83,4 @@
    fun:ma_sound_uninit
 }
 
-# Suppress all uninitialized values from miniaudio functions
-{
-   miniaudio_all_uninit_cond
-   Memcheck:Cond
-   ...
-   obj:*/cub3D
-}
-
-# General miniaudio suppressions
-{
-   miniaudio_generic_cond
-   Memcheck:Cond
-   fun:ma_*
-}
-
-{
-   miniaudio_malloc_cond
-   Memcheck:Cond
-   ...
-   fun:malloc
-   fun:init_sound
-}
 

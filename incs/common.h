@@ -17,8 +17,20 @@
 # define PIX76 3.66519142919
 # define PIX43 4.18879020479
 # define PIX53 5.23598775598
-# define PIX116 5.75958653158 
+# define PIX116 5.75958653158
 # define RENDER_DIST 40.
 # define MOUSE_SENSITIVITY 0.002
 # define MJ_SPRITES 34
+
+# define BLUE		"\001\033[1;34m\002"
+# define BOLD_RED	"\001\033[1;31m\002"
+# define CYAN		"\001\033[1;36m\002"
+# define GREEN		"\001\033[1;32m\002"
+# define PURPLE		"\001\033[0;35m\002"
+# define RED		"\001\033[0;31m\002"
+# define WHITE_BOLD	"\001\033[1;37m\002"
+# define YELLOW		"\001\033[1;33m\002"
+
+# define RESET      "\001\033[0m\002"
+
 #endif

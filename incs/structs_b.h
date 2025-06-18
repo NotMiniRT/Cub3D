@@ -160,7 +160,6 @@ typedef struct s_main_struct
 	t_player		*player;
 	t_torch			*torch;
 	t_monster		*mj;
-
 	t_image_cub		*frame;
 	t_image_cub		*minimap;
 	t_image_cub		*fuel_bar;

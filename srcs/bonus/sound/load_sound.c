@@ -21,17 +21,12 @@ bool	load_background_music(t_sound_mini *sound)
 			NULL, NULL,
 			&sound->background_music);
 	if (result != MA_SUCCESS)
-	{
-		ft_dprintf(2, "Failed to load background music: %d\n", result);
 		return (false);
-	}
 	ma_sound_set_looping(&sound->background_music, MA_TRUE);
 	ma_sound_set_volume(&sound->background_music, 0.6f);
 	result = ma_sound_start(&sound->background_music);
 	if (result != MA_SUCCESS)
 		ft_dprintf(2, "Failed to start background music: %d\n", result);
-	else
-		ft_dprintf(2, "Background music started successfully\n");
 	return (true);
 }
 

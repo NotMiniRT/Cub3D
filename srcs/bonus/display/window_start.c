@@ -91,9 +91,9 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!map_object_set(main_struct))
 		return (false);
 	if (!init_sound(main_struct))
-		ft_dprintf(2, "Warning: Sound initialization failed\n");
+		ft_dprintf(2, RED INIT_SOUND_FALSE RESET);
 	else
-		ft_dprintf(2, "Sound initialized successfully\n");
+		ft_dprintf(2, GREEN INIT_SOUND_TRUE RESET);
 	return (true);
 }
 
