@@ -8,9 +8,11 @@
 #include "multithreading.h"
 #include "main_struct_b.h"
 #include "lst_int.h"
+
 int	init_r_h_tab(t_main_struct *main_struct)
 {
 	int	i;
+
 	main_struct->cos_r_h_tab = malloc(sizeof(double) * WINDOW_WIDTH);
 	main_struct->r_h_tab = malloc(sizeof(double) * WINDOW_WIDTH);
 	if (main_struct->cos_r_h_tab == NULL || main_struct->r_h_tab == NULL)
@@ -28,7 +30,7 @@ int	init_r_h_tab(t_main_struct *main_struct)
 	return (true);
 }
 
-void free_michael_jakson(t_main_struct *main_struct)
+void	free_michael_jakson(t_main_struct *main_struct)
 {
 	int i;
 
@@ -113,7 +115,7 @@ void	free_main_struct(t_main_struct *main_struct)
 	main_struct->win_ptr = NULL;
 	main_struct->cos_r_h_tab = NULL;
 	cleanup_threads(main_struct->thread_manager);
-	
+
 }
 
 int	is_moving(t_main_struct *main_struct)

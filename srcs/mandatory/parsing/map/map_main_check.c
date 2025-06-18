@@ -25,7 +25,6 @@ static void	validate_map_basics(t_infos *infos, int map_start)
 	}
 }
 
-/* Remettre en static lorsqu'on aura separer les headers mandatory/bonus        */
 void	print_debug_steps(const char *message, t_map_data map_data)
 {
 	if (DEBUG_MODE)
