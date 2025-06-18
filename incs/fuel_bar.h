@@ -1,5 +1,5 @@
-#ifndef HUD_H
-# define HUD_H
+#ifndef FUEL_BAR_H
+# define FUEL_BAR_H
 
 # include <stdbool.h>
 # include "structs_b.h"

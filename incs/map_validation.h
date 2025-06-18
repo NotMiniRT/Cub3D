@@ -23,10 +23,9 @@ bool	are_entities_valid(t_map_data map_data);
 
 int		count_players(t_map_data map_data, t_infos *infos);
 
+void	store_door(t_map_data map_data, int i, int j, t_infos *infos);
 
-void    store_door(t_map_data map_data, int i, int j, t_infos *infos);
-
-void    store_monsters(t_map_data map_data, t_infos *infos);
+void	store_monsters(t_map_data map_data, t_infos *infos);
 
 void	store_item(t_map_data map_data, t_infos *infos);
 

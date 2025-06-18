@@ -10,7 +10,7 @@
 # define TORCH_Y 800        // Position Y of the torch on screen
 # define FRAME_DURATION 150 // Milliseconds between animation frames
 
-bool    display_torch(t_main_struct *main_struct);
-bool    init_torch(t_main_struct *main_struct);
+bool	display_torch(t_main_struct *main_struct);
+bool	init_torch(t_main_struct *main_struct);
 
 #endif

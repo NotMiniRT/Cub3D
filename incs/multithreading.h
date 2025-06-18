@@ -33,7 +33,7 @@ typedef struct s_thread_manager
 
 /* Fonctions de gestion des threads */
 bool	init_threads(t_main_struct *main_struct);
-void    cleanup_threads(t_thread_manager *thread_manager);
+void	cleanup_threads(t_thread_manager *thread_manager);
 void	calculate_thread_ranges(t_thread_manager *manager);
 void	*thread_render_routine(void *arg);
 

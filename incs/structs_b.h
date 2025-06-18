@@ -1,5 +1,5 @@
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#ifndef STRUCTS_B_H
+# define STRUCTS_B_H
 
 # include "stdlib.h"
 
@@ -7,7 +7,6 @@
 
 typedef struct s_thread_manager	t_thread_manager;
 typedef struct s_image_cub		t_image_cub;
-
 
 typedef enum e_moves
 {
@@ -30,21 +29,21 @@ typedef enum s_types_object
 
 typedef struct s_lst_int
 {
-	int 			index;
-	struct s_lst_int *next;
-} t_lst_int;
+	int					index;
+	struct s_lst_int	*next;
+}	t_lst_int;
 
 typedef struct s_point
 {
-    double x;
-	double y;
+	double	x;
+	double	y;
 }	t_point;
 
 typedef struct s_object_door
 {
 	t_point	p1;
 	t_point	p2;
-	int 	x;
+	int		x;
 	int		y;
 	int		side;
 	int		status;
@@ -54,7 +53,7 @@ typedef struct s_object_collectible
 {
 	t_point	p1;
 	t_point	p2;
-	int 	x;
+	int		x;
 	int		y;
 	int		status;
 }	t_object_collectible;
@@ -67,11 +66,11 @@ typedef union u_objects
 
 typedef struct s_torch
 {
-    t_image_cub  *frames[13];
-    int          current_frame;
-    size_t       last_update;
-	size_t       move;
-    size_t       frame_duration;
+	t_image_cub	*frames[13];
+	int			current_frame;
+	size_t		last_update;
+	size_t		move;
+	size_t		frame_duration;
 	int			torch_x;
 	int			torch_y;
 
@@ -98,19 +97,19 @@ typedef struct s_minimap_player
 
 typedef struct s_minimap
 {
-	double				offset_x;
-	double				offset_y;
-	double				fractional_x;
-	double				fractional_y;
-	int					block_size;
-	int					player_x;
-	int					player_y;
-	int					x;
-	int					y;
-	int					map_x;
-	int					map_y;
-	int					color;
-	char				block_type;
+	double	offset_x;
+	double	offset_y;
+	double	fractional_x;
+	double	fractional_y;
+	int		block_size;
+	int		player_x;
+	int		player_y;
+	int		x;
+	int		y;
+	int		map_x;
+	int		map_y;
+	int		color;
+	char	block_type;
 }	t_minimap;
 
 typedef struct s_fuel_bar
@@ -126,7 +125,6 @@ typedef struct s_fuel_bar
 	int		color;
 }	t_fuel_bar;
 
-
 typedef struct s_player
 {
 	double	x;
@@ -141,62 +139,62 @@ typedef struct s_image_cub
 	int		line_bytes;
 	int		endian;
 	char	*buffer;
-	double		size;
+	double	size;
 }	t_image_cub;
 
 typedef struct s_monster
 {
-	int frame;
-	t_image_cub		**sprite; // futur tab
-	double x;
-	double y;
-	t_point	p1;
-	t_point	p2;
-	t_point	dir;
-	size_t	move_time;
-	size_t	dir_time;
-} t_monster;
+	int			frame;
+	t_image_cub	**sprite;
+	double		x;
+	double		y;
+	t_point		p1;
+	t_point		p2;
+	t_point		dir;
+	size_t		move_time;
+	size_t		dir_time;
+}	t_monster;
 
 typedef struct s_main_struct
 {
-	void			*mlx_ptr;
-	void			*win_ptr;
-	t_player		*player;
-	t_torch			*torch;
-	t_monster		*mj;
-	t_image_cub		*frame;
-	t_image_cub		*minimap;
-	t_image_cub		*fuel_bar;
-	t_image_cub		*wall_n;
-	t_image_cub		*wall_o;
-	t_image_cub		*wall_s;
-	t_image_cub		*wall_e;
-	t_image_cub		*fog;
-	t_image_cub		*potion;
-	t_image_cub		*door;
+	void				*mlx_ptr;
+	void				*win_ptr;
+	t_player			*player;
+	t_torch				*torch;
+	t_monster			*mj;
+	t_image_cub			*frame;
+	t_image_cub			*minimap;
+	t_image_cub			*fuel_bar;
+	t_image_cub			*wall_n;
+	t_image_cub			*wall_o;
+	t_image_cub			*wall_s;
+	t_image_cub			*wall_e;
+	t_image_cub			*fog;
+	t_image_cub			*potion;
+	t_image_cub			*door;
 	t_thread_manager	*thread_manager;
-	int				(*doors)[100][4];
-	int				(*items)[100][3];
-	int				ground;
-	int				ceil;
-	float					fuel;
-	char			**map;
-	double			*r_h_tab;
-	double			*cos_r_h_tab;
-	size_t			created_at;
-	size_t			last_move;
-	size_t			fuel_time;
-	size_t			door_action;
-	short int		inputs[7];
-	int				is_moving;
-	int				count_lines;
-	int				count_row;
-	int				died;
-	t_objects		**map_items;
+	int					(*doors)[100][4];
+	int					(*items)[100][3];
+	int					ground;
+	int					ceil;
+	float				fuel;
+	char				**map;
+	double				*r_h_tab;
+	double				*cos_r_h_tab;
+	size_t				created_at;
+	size_t				last_move;
+	size_t				fuel_time;
+	size_t				door_action;
+	short int			inputs[7];
+	int					is_moving;
+	int					count_lines;
+	int					count_row;
+	int					died;
+	t_objects			**map_items;
 	int					lock_mouse_x;
-    int					lock_mouse_y;
-    int					is_mouse_locked;
-    int					mouse_left_pressed;
+	int					lock_mouse_y;
+	int					is_mouse_locked;
+	int					mouse_left_pressed;
 	int					collectible_count;
 	t_lst_int			**up_door;
 	t_lst_int			**down_door;
@@ -210,7 +208,7 @@ typedef struct s_object_hit
 	double			dist;
 	double			height;
 	int				text_x;
-	int 			side;
+	int				side;
 	double			wall_pc;
 	double			texpos;
 	double			step;
@@ -224,49 +222,49 @@ typedef struct s_object_hit
 
 typedef struct s_render_calculus
 {
-	double	res[5];
-	double	height;
-	int		text_x;
-	int		text_y;
-	double	step;
-	double	texpos;
-	int		height_check_minus;
-	int		height_check_plus;
-	double	wall_pc;
-	double	teta;
-	int		*line_add;
-	double	ceil_factor;
-	double	wall_factor;
-	double	floor_factor;
-	int		dark_height_check_minus;
-	int		dark_height_check_plus;
-	double	dark_height;
+	double			res[5];
+	double			height;
+	int				text_x;
+	int				text_y;
+	double			step;
+	double			texpos;
+	int				height_check_minus;
+	int				height_check_plus;
+	double			wall_pc;
+	double			teta;
+	int				*line_add;
+	double			ceil_factor;
+	double			wall_factor;
+	double			floor_factor;
+	int				dark_height_check_minus;
+	int				dark_height_check_plus;
+	double			dark_height;
 	t_object_hit	hit_tab[HIT_TAB_LEN];
 }	t_render_calculus;
 
 typedef struct s_ray_calculus
 {
-	double			dir_x;
-	double			dir_y;
-	double			player_x;
-	double			player_y;
-	double			tilde_step_x;
-	double			tilde_step_y;
-	double			side_dist_x;
-	double			side_dist_y;
-	int				step_x;
-	int				step_y;
-	int				side;
-	int				map_x;
-	int				map_y;
+	double	dir_x;
+	double	dir_y;
+	double	player_x;
+	double	player_y;
+	double	tilde_step_x;
+	double	tilde_step_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+	int		map_x;
+	int		map_y;
 	int		render_dist;
-	double			wall_x;
-	double			wall_y;
-	double			dist;
-	double			dist_mj;
-	double			wall_pc_mj;
-	int				flag_dist;
-	int				index_hit_tab;
+	double	wall_x;
+	double	wall_y;
+	double	dist;
+	double	dist_mj;
+	double	wall_pc_mj;
+	int		flag_dist;
+	int		index_hit_tab;
 }	t_ray_calculus;
 
 #endif

@@ -1,11 +1,11 @@
 #ifndef SOUND_H
 # define SOUND_H
 
-typedef struct s_sound_mini		t_sound_mini;
-
 # include <stdbool.h>
 
 # include "structs_b.h"
+
+typedef struct s_sound_mini		t_sound_mini;
 
 # define SOUND_DOOR 1
 # define SOUND_PICKUP 2
@@ -35,7 +35,6 @@ typedef struct s_sound_mini		t_sound_mini;
 # define NO_DEVICE_CONNECTED "✗ No Bluetooth audio device connected\n"
 # define PACTL_BLUETOOTH_GREP "pactl list cards | grep -i bluetooth"
 # define PACTL_BLUEZ_GREP "pactl list sinks short | grep 'bluez_sink.*a2dp'"
-
 
 bool	init_sound(t_main_struct *main_struct);
 void	play_sound(t_main_struct *main_struct, int sound_type);
