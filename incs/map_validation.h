@@ -3,8 +3,9 @@
 
 # include <stdbool.h>
 
-# include "map_types.h"
-# include "parsing.h"
+typedef struct s_infos		t_infos;
+typedef struct s_map_data	t_map_data;
+typedef struct s_point		t_point;
 
 # define ERR_UNCLOSED_POS "Error\nUnclosed map at [%d,%d]\n"
 # define ERR_INVALID_DOOR "Error\nInvalid door placement at [%d,%d]\n"

@@ -1,9 +1,6 @@
 #ifndef MAP_DEBUG_H
 # define MAP_DEBUG_H
 
-# include "map_types.h"
-# include "parsing.h"
-
 # define RED		"\033[31m"
 # define GREEN		"\033[32m"
 # define YELLOW		"\033[33m"
@@ -16,6 +13,10 @@
 # ifndef DEBUG_MODE
 #  define DEBUG_MODE 0
 # endif
+
+typedef struct s_map_data	t_map_data;
+typedef struct s_infos		t_infos;
+
 
 void	print_cell_color(char c);
 void	debug_print_map(t_map_data map_data);

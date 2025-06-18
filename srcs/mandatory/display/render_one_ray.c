@@ -3,6 +3,7 @@
 #include "common.h"
 #include "player.h"
 #include "ray.h"
+#include "structs.h"
 
 static inline void	change_pixel_color_opt(t_image_cub *img,
 		int color, int x, int y)

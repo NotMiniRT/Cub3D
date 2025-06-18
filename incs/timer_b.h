@@ -1,5 +1,5 @@
-#ifndef TIMER_H
-# define TIMER_H
+#ifndef TIMER_B_H
+# define TIMER_B_H
 
 # include "structs_b.h"
 

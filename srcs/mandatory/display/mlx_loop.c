@@ -1,6 +1,10 @@
+#include <unistd.h>
+
 #include "display.h"
 #include "player.h"
 #include "timer.h"
+#include "main_struct.h"
+#include "structs.h"
 
 void	do_one_move(t_main_struct *main_struct)
 {

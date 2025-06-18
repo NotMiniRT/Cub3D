@@ -4,6 +4,7 @@
 #include "image.h"
 #include "math.h"
 #include "mlx.h"
+#include "structs.h"
 
 int	init_r_h_tab(t_main_struct *main_struct)
 {

@@ -1,6 +1,8 @@
 #include "map_processing.h"
 #include "map_validation.h"
 #include "libft.h"
+#include "map_types.h"
+#include "parsing.h"
 
 static void	init_tmp(t_filling *tmp, t_infos *infos, t_ext_map *ext_map)
 {

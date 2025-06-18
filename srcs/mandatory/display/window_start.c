@@ -1,9 +1,12 @@
 #include "common.h"
 #include "display.h"
 #include "image.h"
+#include "structs.h"
 #include "inputs.h"
 #include "mlx.h"
 #include "player.h"
+#include "main_struct.h"
+#include "parsing.h"
 
 static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 {

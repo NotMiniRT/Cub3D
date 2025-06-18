@@ -2,6 +2,7 @@
 
 #include "mlx.h"
 #include "player.h"
+#include "structs.h"
 
 int	on_destroy(t_main_struct *main_struct)
 {
