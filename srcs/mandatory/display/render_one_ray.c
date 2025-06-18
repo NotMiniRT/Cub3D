@@ -1,8 +1,7 @@
+#include <math.h>
+
 #include "common.h"
 #include "player.h"
-#include "image.h"
-#include "mlx.h"
-#include <math.h>
 #include "ray.h"
 
 static inline void	change_pixel_color_opt(t_image_cub *img,

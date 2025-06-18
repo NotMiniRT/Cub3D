@@ -1,8 +1,8 @@
-#include "structs.h"
-#include "common.h"
 #include <math.h>
-#include "ray.h"
+
+#include "common.h"
 #include "parsing.h"
+#include "structs.h"
 
 int	init_player(t_player *player, t_infos *infos)
 {

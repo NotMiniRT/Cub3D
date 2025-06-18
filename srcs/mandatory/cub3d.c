@@ -1,10 +1,6 @@
-#include <stdlib.h>
-#include "main_struct.h"
-#include "common.h"
 #include "display.h"
-#include "libft.h"
 #include "ft_dprintf.h"
-#include "parsing.h"
+#include "libft.h"
 
 int	main(int ac, char **av)
 {

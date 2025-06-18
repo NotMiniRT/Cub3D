@@ -1,9 +1,6 @@
-#include "main_struct.h"
 #include "display.h"
-#include "timer.h"
 #include "player.h"
-#include "stdio.h"
-#include "time.h"
+#include "timer.h"
 
 void	do_one_move(t_main_struct *main_struct)
 {

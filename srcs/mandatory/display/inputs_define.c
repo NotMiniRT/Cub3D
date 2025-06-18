@@ -1,8 +1,7 @@
 #include <X11/keysym.h>
-#include "main_struct.h"
+
 #include "mlx.h"
 #include "player.h"
-#include <stdio.h>
 
 int	on_destroy(t_main_struct *main_struct)
 {

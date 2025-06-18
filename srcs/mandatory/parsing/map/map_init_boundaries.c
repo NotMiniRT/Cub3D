@@ -1,12 +1,10 @@
-#include <stdlib.h>
-#include <string.h>
 #include <errno.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "ft_dprintf.h"
 #include "libft.h"
 #include "map_processing.h"
-#include "parsing.h"
 
 void	get_map_dimensions(t_infos *infos, int map_start, \
 													int *height, int *width)

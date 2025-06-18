@@ -1,8 +1,7 @@
-#include "common.h"
-#include "structs.h"
-#include "mlx.h"
 #include <stdbool.h>
+
 #include "image.h"
+#include "mlx.h"
 
 int	create_img_cub(t_main_struct *main_struct, t_image_cub **img, int x, int y)
 {

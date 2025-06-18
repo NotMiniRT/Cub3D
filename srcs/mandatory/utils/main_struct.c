@@ -1,10 +1,9 @@
-#include "structs.h"
-#include <stdlib.h>
-#include "mlx.h"
+#include <stdbool.h>
+
+#include "common.h"
 #include "image.h"
 #include "math.h"
-#include "common.h"
-#include <stdbool.h>
+#include "mlx.h"
 
 int	init_r_h_tab(t_main_struct *main_struct)
 {

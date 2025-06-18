@@ -1,9 +1,9 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "ft_dprintf.h"
-#include "libft.h"
 #include "parsing.h"
 
 static void	free_color(t_color_parse *color)
