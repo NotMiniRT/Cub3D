@@ -10,7 +10,7 @@
 #include "multithreading.h"
 #include "parsing.h"
 #include "player_b.h"
-#include "timer.h"
+#include "timer_b.h"
 #include "torch.h"
 
 #include <stdio.h>

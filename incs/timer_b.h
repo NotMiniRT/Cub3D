@@ -1,7 +1,7 @@
 #ifndef TIMER_H
 # define TIMER_H
 
-# include "structs.h"
+# include "structs_b.h"
 
 size_t	timestamp_in_ms(t_main_struct *t_main_struct);
 

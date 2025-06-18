@@ -13,7 +13,7 @@
 #include "monster.h"
 #include "libft.h"
 #include <unistd.h>
-#include "timer.h"
+#include "timer_b.h"
 
 #include "sound.h"
 #include "ft_dprintf.h"
