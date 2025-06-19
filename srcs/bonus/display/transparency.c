@@ -1,6 +1,19 @@
 #include "common.h"
 #include "structs_b.h"
 
+static inline int	darken_color(int color, float factor)
+{
+	return (((int)(((color >> 16) & 0xFF) * factor) << 16) |
+		((int)(((color >> 8) & 0xFF) * factor) << 8)
+		| (int)(((color) & 0xFF) * factor));
+}
+
+static inline void	change_pixel_color_opt(t_image_cub *img,
+		int color, int x, int y)
+{
+	((int *)(img->buffer + (y * img->line_bytes) + (x)))[0] = color;
+}
+
 static int	one_item_transparency(t_object_hit object_hit,
 	t_main_struct *main_struct, int row, int j)
 {

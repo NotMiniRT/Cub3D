@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "structs_b.h"
 
 static t_point	calcul_intersection(t_point p1,
@@ -52,23 +54,15 @@ void	add_hit_ray_door(t_ray_calculus *calcul,
 {
 	t_object_door	*door;
 	t_point			p1;
-	t_point			p2;
 	t_point			p3;
-	t_point			p4;
 	t_point			inter;
 
 	if (calcul->index_hit_tab >= HIT_TAB_LEN - 1)
 		return ;
 	door = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].door;
-	p1.x = calcul->player_x;
-	p1.y = calcul->player_y;
-	p2.x = calcul->player_x + cos_sin[0] * calcul->render_dist;
-	p2.y = calcul->player_y + cos_sin[1] * calcul->render_dist;
-	p3.x = door->p1.x -1;
-	p3.y = door->p1.y -1;
-	p4.x = door->p2.x -1;
-	p4.y = door->p2.y -1;
-	inter = calcul_intersection(p1, p2, p3, p4);
+	p1 = (t_point){.x = calcul->player_x, .y = calcul->player_y};
+	p3 = (t_point){.x = door->p1.x -1, .y = door->p1.y -1};
+	inter = calcul_intersection(p1, (t_point){.x = calcul->player_x + cos_sin[0] * calcul->render_dist, .y = calcul->player_y + cos_sin[1] * calcul->render_dist}, p3, 	(t_point){.x = door->p2.x -1, .y = door->p2.y -1});
 	if (inter.x == -1)
 		return ;
 	hit_tab[calcul->index_hit_tab].dist = dist_points(p1, inter);
@@ -93,31 +87,24 @@ void	add_hit_ray_item(t_ray_calculus *calcul,
 {
 	t_object_collectible	*item;
 	t_point					p1;
-	t_point					p2;
 	t_point					p3;
-	t_point					p4;
 	t_point					inter;
 
 	if (calcul->index_hit_tab >= HIT_TAB_LEN - 1)
 		return ;
 	item = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].item;
-	p1.x = calcul->player_x;
-	p1.y = calcul->player_y;
-	p2.x = calcul->player_x + cos_sin[0] * calcul->render_dist;
-	p2.y = calcul->player_y + cos_sin[1] * calcul->render_dist;
-	p3.x = item->p1.x -1;
-	p3.y = item->p1.y -1;
-	p4.x = item->p2.x -1;
-	p4.y = item->p2.y -1;
-	inter = calcul_intersection(p1, p2, p3, p4);
+	p1 = (t_point){.x = calcul->player_x, .y = calcul->player_y};
+	p3 = (t_point){.x = item->p1.x -1, .y = item->p1.y -1};
+	inter = calcul_intersection(p1, (t_point){.x = calcul->player_x + cos_sin[0] * calcul->render_dist, .y = calcul->player_y + cos_sin[1] * calcul->render_dist}, p3, 	(t_point){.x = item->p2.x -1, .y = item->p2.y -1});
 	if (inter.x == -1)
 		return ;
 	hit_tab[calcul->index_hit_tab].dist = dist_points(p1, inter);
 	if (calcul->dist_mj > 0
 		&& calcul->dist_mj < hit_tab[calcul->index_hit_tab].dist)
 	{
+		hit_tab[calcul->index_hit_tab + 1].dist
+			= hit_tab[calcul->index_hit_tab].dist;
 		add_mj(calcul, hit_tab);
-		hit_tab[calcul->index_hit_tab].dist = dist_points(p1, inter);
 	}
 	hit_tab[calcul->index_hit_tab].wall_pc = dist_points(p3, inter);
 	hit_tab[calcul->index_hit_tab].map_x = calcul->map_y;

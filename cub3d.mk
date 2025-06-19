@@ -147,6 +147,9 @@ override DISPLAYSRCBONUS	:= \
 	monster \
 	set_hit_tab \
 	render_calcul \
+	ray_check_init \
+	hit_object \
+	transparency \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 

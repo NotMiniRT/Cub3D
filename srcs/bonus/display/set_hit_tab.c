@@ -1,7 +1,8 @@
 #include "common.h"
 #include "structs_b.h"
+#include "doors_b.h"
 
-static void	door_cal(t_object_hit obj_hit,
+static void	door_calc(t_object_hit obj_hit,
 	t_main_struct *main_struct, int row, double teta_cos_sin[2])
 {
 	obj_hit.status = get_status_door(obj_hit.map_x, obj_hit.map_y,
@@ -29,8 +30,8 @@ static void	door_cal(t_object_hit obj_hit,
 					* RENDER_DIST)));
 }
 
-static void	item_cal(t_object_hit obj_hit,
-	t_main_struct *main_struct, int row, double teta_cos_sin[2])
+static void	item_calc(t_object_hit obj_hit,
+	t_main_struct *main_struct, int row)
 {
 	obj_hit.height = (WINDOW_HEIGHT
 			/ (obj_hit.dist * main_struct->cos_r_h_tab[row]));
@@ -53,8 +54,8 @@ static void	item_cal(t_object_hit obj_hit,
 		= (1 - (obj_hit.dist / (main_struct->fuel * RENDER_DIST)));
 }
 
-static void	mj_cal(t_object_hit obj_hit,
-	t_main_struct *main_struct, int row, double teta_cos_sin[2])
+static void	mj_calc(t_object_hit obj_hit,
+	t_main_struct *main_struct, int row)
 {
 	obj_hit.height = (WINDOW_HEIGHT
 			/ (obj_hit.dist * main_struct->cos_r_h_tab[row]));
@@ -94,9 +95,9 @@ void	set_hit_tab(t_render_calculus *render_calc,
 		if (render_calc->hit_tab[i].type == DOOR)
 			door_calc(render_calc->hit_tab[i], main_struct, row, teta_cos_sin);
 		else if (render_calc->hit_tab[i].type == ITEM)
-			item_calc(render_calc->hit_tab[i], main_struct, row, teta_cos_sin);
+			item_calc(render_calc->hit_tab[i], main_struct, row);
 		else if (render_calc->hit_tab[i].type == MONSTER)
-			mj_calc(render_calc->hit_tab[i], main_struct, row, teta_cos_sin);
+			mj_calc(render_calc->hit_tab[i], main_struct, row);
 		i++;
 	}
 }
