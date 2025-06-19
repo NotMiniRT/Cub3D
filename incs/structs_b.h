@@ -210,7 +210,7 @@ typedef struct s_object_hit
 	int				text_x;
 	int				side;
 	double			wall_pc;
-	double			texpos;
+	double			text_y_index;
 	double			step;
 	int				height_check_minus;
 	int				height_check_plus;
@@ -227,7 +227,7 @@ typedef struct s_render_calculus
 	int				text_x;
 	int				text_y;
 	double			step;
-	double			texpos;
+	double			text_y_index;
 	int				height_check_minus;
 	int				height_check_plus;
 	double			wall_pc;
@@ -250,8 +250,8 @@ typedef struct s_ray_calculus
 	double	player_y;
 	double	tilde_step_x;
 	double	tilde_step_y;
-	double	side_dist_x;
-	double	side_dist_y;
+	double	dist_x;
+	double	dist_y;
 	int		step_x;
 	int		step_y;
 	int		side;

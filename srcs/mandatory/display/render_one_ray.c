@@ -51,7 +51,7 @@ static void	get_calcul_param(t_render_calculus *render_calc,
 			render_calc->text_x = 64 - 1;
 	}
 	render_calc->step = 64. / render_calc->height;
-	render_calc->texpos = -(WINDOW_HEIGHT - render_calc->height)
+	render_calc->text_y_index = -(WINDOW_HEIGHT - render_calc->height)
 		* 0.5 * render_calc->step;
 	render_calc->height_check_minus = (WINDOW_HEIGHT
 			- render_calc->height) * 0.5;
@@ -69,7 +69,7 @@ static void	render_on_screen(t_render_calculus *render_calc,
 		change_pixel_color_opt(main_struct->frame, main_struct->ground, row, j);
 	else
 	{
-		render_calc->text_y = (int)render_calc->texpos;
+		render_calc->text_y = (int)render_calc->text_y_index;
 		if (render_calc->text_y < 0)
 			render_calc->text_y = 0;
 		if (render_calc->text_y >= 64)
@@ -97,7 +97,7 @@ void	render_one_ray(t_main_struct *main_struct,
 	while (j < WINDOW_HEIGHT)
 	{
 		render_on_screen(&render_calc, main_struct, row, j);
-		render_calc.texpos += render_calc.step;
+		render_calc.text_y_index += render_calc.step;
 		j = j + 1;
 	}
 }

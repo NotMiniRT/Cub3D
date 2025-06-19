@@ -28,16 +28,16 @@ static void	get_step_and_side_dist(t_ray_calculus *calcul)
 	calcul->step_x = 1 - (calcul->dir_x < 0) * 2;
 	calcul->step_y = 1 - (calcul->dir_y < 0) * 2;
 	if (calcul->dir_x < 0)
-		calcul->side_dist_x = (calcul->player_x - calcul->map_x)
+		calcul->dist_x = (calcul->player_x - calcul->map_x)
 			* calcul->tilde_step_x;
 	else
-		calcul->side_dist_x = (calcul->map_x + 1.0 - calcul->player_x)
+		calcul->dist_x = (calcul->map_x + 1.0 - calcul->player_x)
 			* calcul->tilde_step_x;
 	if (calcul->dir_y < 0)
-		calcul->side_dist_y = (calcul->player_y - calcul->map_y)
+		calcul->dist_y = (calcul->player_y - calcul->map_y)
 			* calcul->tilde_step_y;
 	else
-		calcul->side_dist_y = (calcul->map_y + 1.0 - calcul->player_y)
+		calcul->dist_y = (calcul->map_y + 1.0 - calcul->player_y)
 			* calcul->tilde_step_y;
 	calcul->side = 0;
 }
@@ -51,7 +51,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 		calcul->wall_y = ((calcul->map_x - calcul->player_x
 					+ (1 - calcul->step_x) * 0.5)
 				/ calcul->dir_x) * calcul->dir_y;
-		calcul->dist = calcul->side_dist_x - calcul->tilde_step_x;
+		calcul->dist = calcul->dist_x - calcul->tilde_step_x;
 	}
 	else
 	{
@@ -60,7 +60,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 				/ calcul->dir_y) * calcul->dir_x;
 		calcul->wall_y = (calcul->map_y - calcul->player_y
 				+ (1 - calcul->step_y) * 0.5);
-		calcul->dist = calcul->side_dist_y - calcul->tilde_step_y;
+		calcul->dist = calcul->dist_y - calcul->tilde_step_y;
 	}
 }
 
@@ -91,17 +91,17 @@ void	ray_check(t_main_struct *main_struct,
 		&& main_struct->map[calcul.map_y][calcul.map_x] != '1')
 	{
 		calcul.flag_dist
-			= (calcul.side_dist_x > RENDER_DIST
-				&& calcul.side_dist_y > RENDER_DIST);
-		if (calcul.side_dist_x < calcul.side_dist_y)
+			= (calcul.dist_x > RENDER_DIST
+				&& calcul.dist_y > RENDER_DIST);
+		if (calcul.dist_x < calcul.dist_y)
 		{
-			calcul.side_dist_x += calcul.tilde_step_x;
+			calcul.dist_x += calcul.tilde_step_x;
 			calcul.map_x += calcul.step_x;
 			calcul.side = 0;
 		}
 		else
 		{
-			calcul.side_dist_y += calcul.tilde_step_y;
+			calcul.dist_y += calcul.tilde_step_y;
 			calcul.map_y += calcul.step_y;
 			calcul.side = 1;
 		}

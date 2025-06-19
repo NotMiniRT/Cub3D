@@ -56,7 +56,7 @@ height: taille en pixel a l'ecran corrigee
 wall_pc: point de collision avec le mur, en %
 step: avancee en y sur l'ecrn pour chaque iteration ( pour les murs)
 text_x/y: la position en x/y sur la texture
-texpos: point de depart du mur en y
+text_y_index: point de depart du mur en y
 height_check_minus?max: debut et fin du mur en y
 */
 static void	get_calcul_param(t_render_calculus *render_calc,
@@ -90,7 +90,7 @@ static void	get_calcul_param(t_render_calculus *render_calc,
 	if (render_calc->text_x >= size)
 		render_calc->text_x = size - 1;
 	render_calc->step = size / render_calc->height;
-	render_calc->texpos = -(WINDOW_HEIGHT - render_calc->height)
+	render_calc->text_y_index = -(WINDOW_HEIGHT - render_calc->height)
 		* 0.5 * render_calc->step;
 	render_calc->height_check_minus = (WINDOW_HEIGHT
 			- render_calc->height) * 0.5;
@@ -116,7 +116,7 @@ int	put_transparency(t_render_calculus *render_calc,
 	{
 		if (((render_calc->hit_tab[i].type == ITEM && render_calc->hit_tab[i].status != 0) || render_calc->hit_tab[i].type == DOOR || render_calc->hit_tab[i].type == MONSTER) && j < render_calc->hit_tab[i].height_check_plus && j > render_calc->hit_tab[i].height_check_minus)
 		{
-			text_y = (int)render_calc->hit_tab[i].texpos;
+			text_y = (int)render_calc->hit_tab[i].text_y_index;
 			if (render_calc->hit_tab[i].type == DOOR && render_calc->hit_tab[i].status != 100)
 				text_y = text_y - (int)(main_struct->door->size * (0.8 - render_calc->hit_tab[i].status * 0.008));
 			if (text_y < 0)
@@ -155,7 +155,7 @@ static void	render_on_screen(t_render_calculus *render_calc,
 	}
 	else
 	{
-		render_calc->text_y = ((int)render_calc->texpos);
+		render_calc->text_y = ((int)render_calc->text_y_index);
 		if (render_calc->text_y < 0)
 			render_calc->text_y  = 0;
 		change_pixel_color_opt(main_struct->frame,
@@ -188,7 +188,7 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 			if (render_calc->hit_tab[i].text_x >= main_struct->door->size)
 				render_calc->hit_tab[i].text_x = main_struct->door->size - 1;
 			render_calc->hit_tab[i].step = main_struct->door->size / render_calc->hit_tab[i].height;
-			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
+			render_calc->hit_tab[i].text_y_index = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
 				* 0.5 * render_calc->hit_tab[i].step;
 			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
 					- render_calc->hit_tab[i].height) * 0.5;
@@ -210,7 +210,7 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 			if (render_calc->hit_tab[i].text_x >= main_struct->potion->size)
 				render_calc->hit_tab[i].text_x = main_struct->potion->size - 1;
 			render_calc->hit_tab[i].step = main_struct->potion->size / render_calc->hit_tab[i].height;
-			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
+			render_calc->hit_tab[i].text_y_index = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
 					* 0.5 * render_calc->hit_tab[i].step;
 			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
 					- render_calc->hit_tab[i].height) * 0.5;
@@ -232,7 +232,7 @@ void set_hit_tab(t_render_calculus *render_calc, t_main_struct *main_struct, int
 			if (render_calc->hit_tab[i].text_x >= (main_struct->mj->sprite[main_struct->mj->frame])->size)
 				render_calc->hit_tab[i].text_x = (main_struct->mj->sprite[main_struct->mj->frame])->size - 1;
 			render_calc->hit_tab[i].step = (main_struct->mj->sprite[main_struct->mj->frame])->size / render_calc->hit_tab[i].height;
-			render_calc->hit_tab[i].texpos = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
+			render_calc->hit_tab[i].text_y_index = -(WINDOW_HEIGHT - render_calc->hit_tab[i].height)
 					* 0.5 * render_calc->hit_tab[i].step;
 			render_calc->hit_tab[i].height_check_minus = (WINDOW_HEIGHT
 					- render_calc->hit_tab[i].height) * 0.5;
@@ -254,10 +254,10 @@ void add_text_pos(t_render_calculus *render_calc)
 	int i;
 
 	i = 0;
-	render_calc->texpos += render_calc->step;
+	render_calc->text_y_index += render_calc->step;
 	while (i < render_calc->res[4])
 	{
-		render_calc->hit_tab[i].texpos += render_calc->hit_tab[i].step;
+		render_calc->hit_tab[i].text_y_index += render_calc->hit_tab[i].step;
 		i++;
 	}
 }
