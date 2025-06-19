@@ -1,12 +1,7 @@
 #include <limits.h>
 #include <math.h>
 
-#include "common.h"
 #include "doors_b.h"
-#include "image_b.h"
-#include "libft.h"
-#include "parsing.h"
-#include "sound.h"
 #include "structs_b.h"
 #include "timer_b.h"
 

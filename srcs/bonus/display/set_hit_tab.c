@@ -1,6 +1,6 @@
 #include "common.h"
-#include "structs_b.h"
 #include "doors_b.h"
+#include "structs_b.h"
 
 static void	door_calc(t_object_hit *obj_hit,
 	t_main_struct *main_struct, int row, double teta_cos_sin[2])

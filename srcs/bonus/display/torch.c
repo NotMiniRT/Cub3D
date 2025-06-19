@@ -1,7 +1,6 @@
 #include "common.h"
 #include "image_b.h"
 #include "libft.h"
-#include "minimap.h"
 #include "structs_b.h"
 #include "timer_b.h"
 #include "torch.h"
@@ -15,9 +14,7 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 bool	init_torch(t_main_struct *main_struct)
 {
 	static char	*torch_paths[5] = {
-		"assets/textures/fire/torch_1.xpm", "assets/textures/fire/torch_2.xpm",
-		"assets/textures/fire/torch_3.xpm", "assets/textures/fire/torch_4.xpm",
-		"assets/textures/fire/torch_5.xpm",
+		T_ASSET_1, T_ASSET_2, T_ASSET_3, T_ASSET_4, T_ASSET_5,
 	};
 	int			i;
 

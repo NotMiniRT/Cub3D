@@ -22,8 +22,6 @@
 # define MOUSE_SENSITIVITY 0.002
 # define MJ_SPRITES 34
 
-# define CUB3D "cub3D"
-
 # define BLUE		"\001\033[1;34m\002"
 # define BOLD_RED	"\001\033[1;31m\002"
 # define CYAN		"\001\033[1;36m\002"
@@ -35,6 +33,7 @@
 
 # define RESET      "\001\033[0m\002"
 
-// # define SOUND_ON 1
+# define CUB3D "cub3D"
+# define ERROR_EXTERNAL "Error\nExternal function fail during initialisation\n"
 
 #endif

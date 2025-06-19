@@ -3,6 +3,11 @@
 
 # define MJ_NO_NB "assets/textures/mj/mj-"
 
+# define MJ_ESCAPE "assets/textures/mj/mjescape.xpm"
+# define MJ_CREEPY "assets/textures/mj/mjcreepy.xpm"
+
+# define XPM_EXTENSION ".xpm"
+
 typedef struct s_main_struct	t_main_struct;
 typedef struct s_infos			t_infos;
 

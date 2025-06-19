@@ -1,6 +1,3 @@
-#include <math.h>
-
-#include "structs_b.h"
 #include "ray_b.h"
 
 void	add_door(t_ray_calculus *calcul,

@@ -3,8 +3,8 @@
 #include "common.h"
 #include "image_b.h"
 #include "libft.h"
-#include "structs_b.h"
 #include "minimap.h"
+#include "structs_b.h"
 
 static int	get_block_color(char block_type)
 {

@@ -1,14 +1,29 @@
 #include <math.h>
 
 #include "common.h"
-#include "doors_b.h"
 #include "image_b.h"
 #include "libft.h"
+#include "monster.h"
 #include "parsing.h"
 #include "sound.h"
 #include "structs_b.h"
 #include "timer_b.h"
-#include "monster.h"
+
+static char	*build_sprite_name(int index)
+{
+	char	*temp;
+	char	*name;
+	char	*number;
+
+	number = ft_itoa(index);
+	if (!number)
+		return (false);
+	temp = ft_strjoin_free(MJ_NO_NB, number);
+	if (!temp)
+		return (NULL);
+	name = ft_strjoin_free2(temp, XPM_EXTENSION);
+	return (name);
+}
 
 static bool	get_mj_sprites(t_main_struct *main_struct)
 {
@@ -21,11 +36,12 @@ static bool	get_mj_sprites(t_main_struct *main_struct)
 	i = 0;
 	while (i < MJ_SPRITES)
 	{
-		name = ft_strjoin_free2(ft_strjoin_free(MJ_NO_NB, ft_itoa(i)), ".xpm");
-		if (!get_image_cub_from_xpm(main_struct, \
+		name = build_sprite_name(i);
+		if (!name || !get_image_cub_from_xpm(main_struct, \
 			&((main_struct->mj->sprite)[i]), name, 256))
 		{
-			free(name);
+			if (name)
+				free(name);
 			(main_struct->mj->sprite)[i] = NULL;
 			return (false);
 		}

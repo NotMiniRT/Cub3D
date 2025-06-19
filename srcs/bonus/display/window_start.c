@@ -1,5 +1,3 @@
-#include <unistd.h>
-
 #include "common.h"
 #include "display_b.h"
 #include "ft_dprintf.h"
