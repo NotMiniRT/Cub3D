@@ -1,13 +1,9 @@
-#include "structs_b.h"
-#include <stdlib.h>
-#include "mlx.h"
-#include "image_b.h"
-#include "math.h"
-#include "common.h"
+#include <math.h>
 #include <stdbool.h>
-#include "multithreading.h"
-#include "main_struct_b.h"
-#include "lst_int.h"
+#include <stdlib.h>
+
+#include "common.h"
+#include "structs_b.h"
 
 int	init_r_h_tab(t_main_struct *main_struct)
 {

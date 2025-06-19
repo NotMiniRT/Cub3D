@@ -1,7 +1,7 @@
+#include <stdlib.h>
 #include <unistd.h>
 
 #include "ft_dprintf.h"
-#include "libft.h"
 #include "parsing.h"
 
 static int	check_line_integrity(char *line)

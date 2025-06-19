@@ -1,23 +1,11 @@
-#include "common.h"
-#include "display_b.h"
-#include "fuel_bar.h"
-#include "image_b.h"
-#include "inputs_b.h"
-#include "libft.h"
-#include "main_struct_b.h"
-#include "mlx.h"
-#include "monster.h"
-#include "multithreading.h"
-#include "parsing.h"
-#include "player_b.h"
-#include "timer_b.h"
-#include "torch.h"
-
-#include <stdio.h>
 #include <unistd.h>
 
-#include "sound.h"
+#include "common.h"
 #include "ft_dprintf.h"
+#include "fuel_bar.h"
+#include "image_b.h"
+#include "parsing.h"
+#include "structs_b.h"
 
 static bool	load_message(bool success, const char *item_name)
 {

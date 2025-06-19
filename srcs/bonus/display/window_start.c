@@ -1,22 +1,17 @@
+#include "common.h"
+#include "display_b.h"
+#include "ft_dprintf.h"
 #include "inputs_b.h"
 #include "main_struct_b.h"
 #include "mlx.h"
-#include "common.h"
-#include "image_b.h"
-#include "display_b.h"
-#include "player_b.h"
-#include "parsing.h"
-#include <stdio.h>
-#include "fuel_bar.h"
-#include "multithreading.h"
-#include "torch.h"
 #include "monster.h"
-#include "libft.h"
-#include <unistd.h>
-#include "timer_b.h"
-
+#include "multithreading.h"
+#include "parsing.h"
+#include "player_b.h"
 #include "sound.h"
-#include "ft_dprintf.h"
+#include "structs_b.h"
+#include "torch.h"
+
 
 static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 {

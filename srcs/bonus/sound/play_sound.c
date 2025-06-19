@@ -1,8 +1,7 @@
-#include "miniaudio.h"
-#include "structs_b.h"
+#include "ft_dprintf.h"
 #include "sound_internal.h"
 #include "sound.h"
-#include "ft_dprintf.h"
+#include "structs_b.h"
 
 void	update_background_volume(t_main_struct *main_struct)
 {

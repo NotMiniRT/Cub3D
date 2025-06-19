@@ -1,7 +1,8 @@
-#include "structs_b.h"
-#include "math.h"
+#include <math.h>
+
 #include "common.h"
-#include <stdio.h>
+#include "structs_b.h"
+
 /*
 reccupere les parametres pour les rayons,
 	dir_x/y: les omposantes pour la direction, cos et sin
@@ -115,14 +116,14 @@ t_point calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
 	double t;
 	double u;
 	double den;
-	
+
 	den = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
 
 	if (den == 0)
 	{
 		res.x = -1;
 		res.y = -1;
-		return (res);	
+		return (res);
 	}
 	t = ((p1.x - p3.x) * (p3.y - p4.y) - (p1.y - p3.y) * (p3.x - p4.x)) / den;
 	u = -((p1.x - p2.x) * (p1.y - p3.y) - (p1.y - p2.y) * (p1.x - p3.x)) / den;
@@ -134,7 +135,7 @@ t_point calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
 	}
 	res.x = -1;
 	res.y = -1;
-	return (res);	
+	return (res);
 }
 
 static inline double dist_points(t_point a, t_point b)

@@ -1,16 +1,9 @@
 #include "common.h"
 #include "ft_dprintf.h"
-#include "libft.h"
 #include "miniaudio_wrapper.h"
 #include "sound_internal.h"
 #include "sound.h"
-#include "stdbool.h"
 #include "structs_b.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <unistd.h>
 
 static bool	init_engine_normal(t_sound_mini *sound)
 {

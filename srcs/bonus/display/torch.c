@@ -1,12 +1,10 @@
-#include <math.h>
-#include <stdio.h>
-#include "torch.h"
 #include "common.h"
+#include "image_b.h"
 #include "libft.h"
 #include "minimap.h"
-#include "mlx.h"
+#include "structs_b.h"
 #include "timer_b.h"
-#include "image_b.h"
+#include "torch.h"
 
 static inline void	change_pixel_color_opt(t_image_cub *img,
 	int color, int x, int y)

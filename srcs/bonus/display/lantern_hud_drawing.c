@@ -1,10 +1,6 @@
-#include "structs_b.h"
-#include "common.h"
-#include "image_b.h"
-#include "mlx.h"
 #include "fuel_bar.h"
-#include <stdbool.h>
-#include <stdio.h>
+#include "structs_b.h"
+
 
 static void	set_gauge_color(t_gauge_color *color, double ratio)
 {

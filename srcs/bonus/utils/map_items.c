@@ -1,8 +1,6 @@
-#include "structs_b.h"
-#include <stdbool.h>
 #include "libft.h"
 #include "parsing.h"
-#include <stdio.h>
+#include "structs_b.h"
 
 void	free_map_item_i(t_main_struct *main_struct, int i)
 {

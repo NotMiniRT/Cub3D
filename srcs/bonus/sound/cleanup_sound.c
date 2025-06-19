@@ -1,8 +1,5 @@
-#include <stdlib.h>
-
-#include "miniaudio.h"
-#include "structs_b.h"
 #include "sound_internal.h"
+#include "structs_b.h"
 
 static void	cleanup_sounds(t_sound_mini *sound)
 {

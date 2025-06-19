@@ -1,12 +1,9 @@
-#include "structs_b.h"
-#include "common.h"
-#include "image_b.h"
-#include "mlx.h"
 #include <math.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include "libft.h"
+
+#include "common.h"
 #include "minimap.h"
+#include "structs_b.h"
+
 
 static void	minimap_set_pixel(t_image_cub *img, int x, int y, int color)
 {

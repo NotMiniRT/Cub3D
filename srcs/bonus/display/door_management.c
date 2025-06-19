@@ -1,9 +1,7 @@
-#include "structs_b.h"
 #include "common.h"
-#include "stdio.h"
 #include "lst_int.h"
-
 #include "sound.h"
+#include "structs_b.h"
 
 void up_doors(t_main_struct *main_struct, t_lst_int **lst)
 {

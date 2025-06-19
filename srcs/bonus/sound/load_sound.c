@@ -1,13 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include "structs_b.h"
-#include "sound_internal.h"
-#include "stdbool.h"
+#include <stdbool.h>
+
 #include "ft_dprintf.h"
-#include "libft.h"
+#include "sound_internal.h"
 
 bool	load_background_music(t_sound_mini *sound)
 {

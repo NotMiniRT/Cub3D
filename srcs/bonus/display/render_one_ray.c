@@ -1,13 +1,9 @@
-#include "common.h"
-#include "structs_b.h"
-#include "player_b.h"
-#include "image_b.h"
-#include "mlx.h"
 #include <math.h>
-#include "ray_b.h"
-#include "libft.h"
+
+#include "common.h"
 #include "doors_b.h"
-#include <stdio.h>
+#include "player_b.h"
+#include "ray_b.h"
 
 static inline int change_color_factor(int color, float factor)
 {
@@ -264,7 +260,7 @@ void add_text_pos(t_render_calculus *render_calc)
 		render_calc->hit_tab[i].texpos += render_calc->hit_tab[i].step;
 		i++;
 	}
-}	
+}
 /*
 recupere les donnees du rayonpuis boucle sur tout les pixels de la rangee
 */

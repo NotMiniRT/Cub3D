@@ -2,9 +2,9 @@
 # define SOUND_H
 
 # include <stdbool.h>
+# include <sys/types.h>
 
-# include "structs_b.h"
-
+typedef struct s_main_struct	t_main_struct;
 typedef struct s_sound_mini		t_sound_mini;
 
 # define SOUND_DOOR 1
@@ -12,7 +12,6 @@ typedef struct s_sound_mini		t_sound_mini;
 # define SOUND_MJ 3
 # define SOUND_DEATH 4
 # define SOUND_VICTORY 5
-
 # define SOUND_FIRE 6
 
 # define A2DP		"a2dp"

@@ -1,11 +1,10 @@
-#include <stdlib.h>
-#include "main_struct_b.h"
-#include "common.h"
 #include "display_b.h"
-#include "libft.h"
 #include "ft_dprintf.h"
+#include "libft.h"
+#include "main_struct_b.h"
 #include "parsing.h"
 #include "sound.h"
+#include "structs_b.h"
 
 int	main(int ac, char **av)
 {

@@ -1,10 +1,11 @@
-#include "structs_b.h"
-#include "common.h"
 #include <math.h>
-#include "ray_b.h"
-#include "parsing.h"
+
+#include "common.h"
 #include "doors_b.h"
+#include "parsing.h"
 #include "sound.h"
+#include "structs_b.h"
+
 int	init_player(t_player *player, t_infos *infos)
 {
 	player->x = infos->scene->pos[0] - 0.5;

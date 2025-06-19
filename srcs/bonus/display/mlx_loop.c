@@ -1,18 +1,21 @@
-#include "main_struct_b.h"
-#include "display_b.h"
-#include "timer_b.h"
-#include "player_b.h"
-#include "stdio.h"
-#include "time.h"
-#include "math.h"
-#include "doors_b.h"
-#include "monster.h"
-#include "mlx.h"
+#include <math.h>
+#include <stdio.h>
+#include <time.h>
+
 #include "common.h"
+#include "display_b.h"
+#include "doors_b.h"
 #include "image_b.h"
 #include "inputs_b.h"
+#include "main_struct_b.h"
+#include "mlx.h"
+#include "monster.h"
+#include "player_b.h"
 #include "sound.h"
+#include "structs_b.h"
+#include "timer_b.h"
 #include "torch.h"
+
 void	do_one_move(t_main_struct *main_struct)
 {
 	if (main_struct->inputs[UP] + main_struct->inputs[DOWN] == 1

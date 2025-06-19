@@ -1,4 +1,3 @@
-#include "lst_int.h"
 #include "structs_b.h"
 
 void	add_front_lst_int(t_lst_int **list, int i)
