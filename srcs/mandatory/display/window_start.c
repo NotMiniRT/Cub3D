@@ -21,7 +21,7 @@ static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
 		|| !create_img_cub(main_struct, &(main_struct->frame), \
 			WINDOW_WIDTH, WINDOW_HEIGHT)
 		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
-			"assets/textures/walls/fog.xpm"))
+			FOG_ASSET))
 		return (false);
 	return (true);
 }
@@ -32,7 +32,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (main_struct->mlx_ptr == NULL)
 		return (false);
 	main_struct->win_ptr = mlx_new_window(main_struct->mlx_ptr,
-			WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
+			WINDOW_WIDTH, WINDOW_HEIGHT, CUB3D);
 	if (main_struct->win_ptr == NULL)
 		return (false);
 	main_struct->player = malloc(sizeof(t_player));

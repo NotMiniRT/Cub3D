@@ -4,6 +4,8 @@
 typedef struct s_main_struct	t_main_struct;
 typedef struct s_image_cub		t_image_cub;
 
+# define FOG_ASSET "assets/textures/walls/fog.xpm"
+
 int		create_img_cub(t_main_struct *main_struct,
 			t_image_cub **img, int x, int y);
 int		get_image_cub_from_xpm(t_main_struct *main_struct,
