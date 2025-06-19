@@ -19,7 +19,7 @@ typedef struct s_image_cub		t_image_cub;
 # define FOG_ASSET "assets/textures/walls/fog.xpm"
 # define FOG_TEXTURE "fog texture"
 
-# define DOOR_TEXTURE "assets/textures/walls/door6.xpm"
+# define DOOR_TEXTURE "assets/textures/walls/door5.xpm"
 # define DOOR_ASSET "door texture"
 
 # define POTION_ASSET "assets/textures/walls/potion.xpm"
