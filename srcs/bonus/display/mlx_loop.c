@@ -85,7 +85,7 @@ void	put_victory_screen(t_main_struct *main_struct)
 		while (++j < (WINDOW_WIDTH * 4))
 		{
 			change_pixel_color(main_struct->frame, 0x000000, j, i);
-			j = j + 4;
+			j++;
 		}
 	}
 	play_sound(main_struct, SOUND_VICTORY);
@@ -114,7 +114,7 @@ void	put_death_screen(t_main_struct *main_struct)
 		while (++j < (WINDOW_WIDTH * 4))
 		{
 			change_pixel_color(main_struct->frame, 0x000000, j, i);
-			j = j + 4;
+			j++;
 		}
 	}
 	get_image_cub_from_xpm_no_rot(main_struct, &img, \
