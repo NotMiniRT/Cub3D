@@ -153,6 +153,7 @@ override DISPLAYSRCBONUS	:= \
 	timer \
 	torch \
 	window_start \
+	util_hit \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 
