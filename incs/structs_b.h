@@ -1,7 +1,7 @@
 #ifndef STRUCTS_B_H
 # define STRUCTS_B_H
 
-# include "stdlib.h"
+# include <stdlib.h>
 
 # define HIT_TAB_LEN 100
 

@@ -4,9 +4,6 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-// # include "common.h"
-// # include "structs_b.h"
-
 typedef struct s_main_struct	t_main_struct;
 
 # define JOIN_ERROR "Error: Failed to join thread [%d] (error code: %d)\n"
