@@ -21,12 +21,12 @@ static void	define_basic_param_calculus(t_ray_calculus *calcul,
 		calcul->tilde_step_y = 10000000;
 	else
 		calcul->tilde_step_y = fabs(1.0 / calcul->dir_y);
-}
-
-static void	get_step_and_side_dist(t_ray_calculus *calcul)
-{
 	calcul->step_x = 1 - (calcul->dir_x < 0) * 2;
 	calcul->step_y = 1 - (calcul->dir_y < 0) * 2;
+}
+
+static void	get_start_dist(t_ray_calculus *calcul)
+{
 	if (calcul->dir_x < 0)
 		calcul->dist_x = (calcul->player_x - calcul->map_x)
 			* calcul->tilde_step_x;
@@ -86,7 +86,7 @@ void	ray_check(t_main_struct *main_struct,
 	t_ray_calculus	calcul;
 
 	define_basic_param_calculus(&calcul, cos_sin, main_struct);
-	get_step_and_side_dist(&calcul);
+	get_start_dist(&calcul);
 	while (!calcul.flag_dist
 		&& main_struct->map[calcul.map_y][calcul.map_x] != '1')
 	{

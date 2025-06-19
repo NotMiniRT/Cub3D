@@ -7,5 +7,8 @@ double	*ray_check(t_main_struct *main_struct,
 			double (*cross)[4], double teta_cos_sin[2]);
 void	render_one_ray(t_main_struct *main_struct,
 			double teta_cos_sin[2], int row, double teta);
-
+void	get_calcul_param(t_render_calculus *render_calc,
+	t_main_struct *main_struct, double teta_cos_sin[2], int row);
+int	put_transparency(t_render_calculus *render_calc,
+		t_main_struct *main_struct, int row, int j);
 #endif

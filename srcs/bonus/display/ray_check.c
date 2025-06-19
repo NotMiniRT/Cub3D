@@ -1,13 +1,7 @@
 #include <math.h>
-
 #include "common.h"
 #include "structs_b.h"
 
-/*
-reccupere les parametres pour les rayons,
-	dir_x/y: les omposantes pour la direction, cos et sin
-	tilde_step_y/x: la distances entre les murs verticux/horizontaux suivant l'axe du rayon
-*/
 static void	define_basic_param_calculus(t_ray_calculus *calcul,
 		double cos_sin[2], t_main_struct *main_struct)
 {
@@ -28,44 +22,27 @@ static void	define_basic_param_calculus(t_ray_calculus *calcul,
 	else
 		calcul->tilde_step_y = fabs(1.0 / calcul->dir_y);
 	calcul->index_hit_tab = 0;
+	calcul->step_x = 1 - (calcul->dir_x < 0) * 2;
+	calcul->step_y = 1 - (calcul->dir_y < 0) * 2;
 }
 
-/*
-reccupere les parametres pour les rayons,
-	step: permet de se deplacer dans le bon sens a l'interieur
-	side: utis pour les murs, connaitre de quel cote on les frappe avec le rayon
-*/
-static void	get_step_and_side_dist(t_ray_calculus *calcul)
+static void	get_start_dist(t_ray_calculus *calcul)
 {
 	if (calcul->dir_x < 0)
-	{
-		calcul->step_x = -1;
 		calcul->dist_x = (calcul->player_x - calcul->map_x)
 			* calcul->tilde_step_x;
-	}
 	else
-	{
-		calcul->step_x = 1;
 		calcul->dist_x = (calcul->map_x + 1.0 - calcul->player_x)
 			* calcul->tilde_step_x;
-	}
 	if (calcul->dir_y < 0)
-	{
-		calcul->step_y = -1;
 		calcul->dist_y = (calcul->player_y - calcul->map_y)
 			* calcul->tilde_step_y;
-	}
 	else
-	{
-		calcul->step_y = 1;
 		calcul->dist_y = (calcul->map_y + 1.0 - calcul->player_y)
 			* calcul->tilde_step_y;
-	}
 	calcul->side = 0;
 }
-/*
-calcul de la distance avec le mur ainsi que les coorodonnes
-*/
+
 static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 {
 	if (calcul->side == 0)
@@ -87,12 +64,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 		calcul->dist = calcul->dist_y - calcul->tilde_step_y;
 	}
 }
-/*
-repmlis les resultats:
-	0-> la distance;
-	1-> le side;
-	2-> le %du mur a l'imapct, sert pour calculer quelle colone afficher
-*/
+
 static void	fill_cross(t_ray_calculus *calcul, double (*cross)[5])
 {
 	(*cross)[0] = calcul->dist;
@@ -110,15 +82,14 @@ static void	fill_cross(t_ray_calculus *calcul, double (*cross)[5])
 	(*cross)[4] = calcul->index_hit_tab;
 }
 
-t_point calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
+t_point	calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
 {
-	t_point res;
-	double t;
-	double u;
-	double den;
+	t_point	res;
+	double	t;
+	double	u;
+	double	den;
 
 	den = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
-
 	if (den == 0)
 	{
 		res.x = -1;
@@ -138,7 +109,7 @@ t_point calcul_intersection(t_point p1, t_point p2, t_point p3, t_point p4)
 	return (res);
 }
 
-static inline double dist_points(t_point a, t_point b)
+static inline double	dist_points(t_point a, t_point b)
 {
 	return (sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y)));
 }
@@ -153,20 +124,20 @@ void	add_mj(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN])
 	hit_tab[calcul->index_hit_tab].side = 0;
 	calcul->index_hit_tab++;
 }
-/*
-reccupere les collisions et leur donnee, il faudra peut etre en rajouter (pareil, il faut verifier qu'une porte soit active avant de l'ajouer pour eviter les calculs inutiles)
-*/
-void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN], t_main_struct *main_struct, double cos_sin[2])
+
+void	add_hit_ray_door(t_ray_calculus *calcul,
+	t_object_hit hit_tab[HIT_TAB_LEN],
+	t_main_struct *main_struct, double cos_sin[2])
 {
-	t_object_door *door;
-	t_point p1;
-	t_point p2;
-	t_point p3;
-	t_point p4;
-	t_point inter;
+	t_object_door	*door;
+	t_point			p1;
+	t_point			p2;
+	t_point			p3;
+	t_point			p4;
+	t_point			inter;
+
 	if (calcul->index_hit_tab >= HIT_TAB_LEN - 1)
 		return ;
-
 	door = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].door;
 	p1.x = calcul->player_x;
 	p1.y = calcul->player_y;
@@ -180,9 +151,11 @@ void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN],
 	if (inter.x == -1)
 		return ;
 	hit_tab[calcul->index_hit_tab].dist = dist_points(p1, inter);
-	if (calcul->dist_mj > 0 && calcul->dist_mj < hit_tab[calcul->index_hit_tab].dist)
+	if (calcul->dist_mj > 0
+		&& calcul->dist_mj < hit_tab[calcul->index_hit_tab].dist)
 	{
-		hit_tab[calcul->index_hit_tab + 1].dist = hit_tab[calcul->index_hit_tab].dist;
+		hit_tab[calcul->index_hit_tab + 1].dist
+			= hit_tab[calcul->index_hit_tab].dist;
 		add_mj(calcul, hit_tab);
 	}
 	hit_tab[calcul->index_hit_tab].wall_pc = dist_points(p3, inter);
@@ -193,14 +166,17 @@ void	add_hit_ray_door(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN],
 	calcul->index_hit_tab++;
 }
 
-void	add_hit_ray_item(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN], t_main_struct *main_struct, double cos_sin[2])
+void	add_hit_ray_item(t_ray_calculus *calcul,
+	t_object_hit hit_tab[HIT_TAB_LEN],
+	t_main_struct *main_struct, double cos_sin[2])
 {
-	t_object_collectible *item;
-	t_point p1;
-	t_point p2;
-	t_point p3;
-	t_point p4;
-	t_point inter;
+	t_object_collectible	*item;
+	t_point					p1;
+	t_point					p2;
+	t_point					p3;
+	t_point					p4;
+	t_point					inter;
+
 	if (calcul->index_hit_tab >= HIT_TAB_LEN - 1)
 		return ;
 	item = main_struct->map_items[calcul->map_y + 1][calcul->map_x + 1].item;
@@ -216,7 +192,8 @@ void	add_hit_ray_item(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN],
 	if (inter.x == -1)
 		return ;
 	hit_tab[calcul->index_hit_tab].dist = dist_points(p1, inter);
-	if (calcul->dist_mj > 0 && calcul->dist_mj < hit_tab[calcul->index_hit_tab].dist)
+	if (calcul->dist_mj > 0
+		&& calcul->dist_mj < hit_tab[calcul->index_hit_tab].dist)
 	{
 		add_mj(calcul, hit_tab);
 		hit_tab[calcul->index_hit_tab].dist = dist_points(p1, inter);
@@ -229,13 +206,15 @@ void	add_hit_ray_item(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN],
 	calcul->index_hit_tab++;
 }
 
-double	get_monster_dist(t_ray_calculus *calcul, t_main_struct *main_struct, double cos_sin[2])
+double	get_monster_dist(t_ray_calculus *calcul,
+	t_main_struct *main_struct, double cos_sin[2])
 {
-	t_point p1;
-	t_point p2;
-	t_point p3;
-	t_point p4;
-	t_point inter;
+	t_point	p1;
+	t_point	p2;
+	t_point	p3;
+	t_point	p4;
+	t_point	inter;
+
 	if (calcul->index_hit_tab >= HIT_TAB_LEN)
 		return (-1);
 	p1.x = calcul->player_x;
@@ -256,17 +235,14 @@ double	get_monster_dist(t_ray_calculus *calcul, t_main_struct *main_struct, doub
 	return (dist_points(p1, inter));
 }
 
-/*
-boucle principale, avance sur l'axe du rayon en x/y en fonction de la distance la plus petite parcourue sur les axes respectifs, jusqua la premiere collision avec un mur, puis renvoie les resultats
-*/
-
 void	ray_check(t_main_struct *main_struct,
-		double (*cross)[5], double cos_sin[2], t_object_hit	hit_tab[HIT_TAB_LEN])
+		double (*cross)[5],
+		double cos_sin[2], t_object_hit	hit_tab[HIT_TAB_LEN])
 {
 	t_ray_calculus	calcul;
 
 	define_basic_param_calculus(&calcul, cos_sin, main_struct);
-	get_step_and_side_dist(&calcul);
+	get_start_dist(&calcul);
 	if (main_struct->mj != NULL)
 		calcul.dist_mj = get_monster_dist(&calcul, main_struct, cos_sin);
 	else

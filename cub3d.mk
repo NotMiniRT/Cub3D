@@ -145,6 +145,8 @@ override DISPLAYSRCBONUS	:= \
 	window_start \
 	lst_int \
 	monster \
+	set_hit_tab \
+	render_calcul \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 

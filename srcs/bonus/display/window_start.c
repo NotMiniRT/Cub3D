@@ -59,10 +59,6 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	if (!init_sound(main_struct))
 		ft_dprintf(2, RED INIT_SOUND_FALSE RESET);
-// 	if (!SOUND_ON)
-// 		main_struct->sound = NULL;
-// 	else if (!init_sound(main_struct))
-// 		ft_dprintf(2, "Warning: Sound initialization failed\n");
 	else
 		ft_dprintf(2, GREEN INIT_SOUND_TRUE RESET);
 	return (true);

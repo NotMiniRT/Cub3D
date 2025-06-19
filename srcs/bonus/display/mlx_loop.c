@@ -136,22 +136,6 @@ static void put_death_screen(t_main_struct *main_struct)
 
 int	mlx_loop_action(t_main_struct *main_struct)
 {
-static clock_t last_time = 0;
-static int frame_count = 0;
-
-if (last_time == 0)
-	last_time = clock();
-
-frame_count++;
-
-clock_t now = clock();
-double elapsed = (double)(now - last_time) / CLOCKS_PER_SEC;
-
-if (elapsed >= 1.0) {
-	printf("FPS : %d\n", frame_count);
-	frame_count = 0;
-	last_time = now;
-}
 	if (main_struct->died > 0)
 	{
 		if (main_struct->died == 1)
