@@ -12,25 +12,25 @@ static void	set_gauge_color(t_gauge_color *color, double ratio)
 	{
 		color->r = 15;
 		color->g = 20;
-		color->b = 80 + (int)(95 * ratio / 0.25);
+		color->b = 80 + (int)(380 * ratio);
 	}
 	else if (ratio < 0.5)
 	{
 		color->r = 15;
-		color->g = 20 + (int)(60 * (ratio - 0.25) / 0.25);
+		color->g = 20 + (int)(240 * (ratio - 0.25));
 		color->b = 175;
 	}
 	else if (ratio < 0.75)
 	{
-		color->r = 15 + (int)(25 * (ratio - 0.5) / 0.25);
-		color->g = 80 + (int)(100 * (ratio - 0.5) / 0.25);
+		color->r = 15 + (int)(100 * (ratio - 0.5));
+		color->g = 80 + (int)(400 * (ratio - 0.5));
 		color->b = 175;
 	}
 	else
 	{
-		color->r = 40 + (int)(60 * (ratio - 0.75) / 0.25);
+		color->r = 40 + (int)(240 * (ratio - 0.75));
 		color->g = 180;
-		color->b = 175 - (int)(30 * (ratio - 0.75) / 0.25);
+		color->b = 175 - (int)(120 * (ratio - 0.75));
 	}
 	color->color = (color->r << 16) | (color->g << 8) | color->b;
 }

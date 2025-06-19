@@ -18,37 +18,6 @@
 #include "sound.h"
 #include "ft_dprintf.h"
 
-
-/**
- * @bug check les droits de fichiers avant de faire quoi que ce soit
- *
- */
-static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
-{
-	if (!get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), \
-			infos->scene->so_texture, 2048)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_o), \
-			infos->scene->we_texture, 2048)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), \
-			infos->scene->no_texture, 2048)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
-			infos->scene->ea_texture, 2048)
-		|| !create_img_cub(main_struct, &(main_struct->frame), \
-			WINDOW_WIDTH, WINDOW_HEIGHT)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
-			"assets/textures/walls/fog.xpm", 64)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->door), \
-			"assets/textures/walls/door4.xpm", 2048)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->potion), \
-			"assets/textures/walls/potion.xpm", 64)
-		|| !create_img_cub(main_struct, &(main_struct->minimap), \
-			WINDOW_HEIGHT / 3, WINDOW_HEIGHT / 3)
-		|| !create_img_cub(main_struct, &(main_struct->fuel_bar), \
-			HUD_WIDTH, HUD_HEIGHT))
-		return (false);
-	return (true);
-}
-
 static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 {
 	main_struct->mlx_ptr = mlx_init();
@@ -83,6 +52,9 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
+	main_struct->map[infos->scene->pos[1] - 1][infos->scene->pos[0] - 1] = '0';
+	if (main_struct->mj != NULL)
+		main_struct->map[infos->scene->monster_positions[1] - 1][infos->scene->monster_positions[0]- 1] = '0';
 	main_struct->fuel = 1;
 	if (!init_torch(main_struct))
 		return (false);
@@ -91,9 +63,13 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!map_object_set(main_struct))
 		return (false);
 	if (!init_sound(main_struct))
-		ft_dprintf(2, "Warning: Sound initialization failed\n");
+		ft_dprintf(2, RED INIT_SOUND_FALSE RESET);
+// 	if (!SOUND_ON)
+// 		main_struct->sound = NULL;
+// 	else if (!init_sound(main_struct))
+// 		ft_dprintf(2, "Warning: Sound initialization failed\n");
 	else
-		ft_dprintf(2, "Sound initialized successfully\n");
+		ft_dprintf(2, GREEN INIT_SOUND_TRUE RESET);
 	return (true);
 }
 

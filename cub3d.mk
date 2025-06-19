@@ -128,6 +128,7 @@ override DISPLAYSRCBONUS	:= \
 	inputs_define \
 	lantern_hud_drawing \
 	lantern_hud \
+	load_images \
 	minimap_drawing \
 	minimap \
 	mlx_loop \
@@ -153,6 +154,10 @@ override THREADSRC	:= \
 SRCBONUS += $(addprefix $(SOUNDDIR), $(addsuffix .c, $(SOUNDSRC)))
 
 override SOUNDSRC	:= \
+	bluetooth_detection \
+	bluetooth_utils \
 	cleanup_sound \
 	init_sound \
+	load_sound \
 	play_sound \
+	process_utils \

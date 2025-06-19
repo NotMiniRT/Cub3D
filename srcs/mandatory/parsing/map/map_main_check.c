@@ -91,7 +91,7 @@ void	check_map_validity(t_infos *infos, int map_start)
 	if (map_data.map == NULL)
 	{
 		cleanup_parsing(infos);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	map_data.height = height + 2;
 	map_data.width = width + 2;

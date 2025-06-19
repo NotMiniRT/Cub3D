@@ -4,7 +4,7 @@
 #include "ray_b.h"
 #include "parsing.h"
 #include "doors_b.h"
-
+#include "sound.h"
 int	init_player(t_player *player, t_infos *infos)
 {
 	player->x = infos->scene->pos[0] - 0.5;
@@ -76,6 +76,7 @@ static void	one_direction(t_main_struct *main_struct, double move_x,
 	}
 	if (main_struct->map[(int)main_struct->player->y][(int)main_struct->player->x] == 'C')
 	{
+		play_sound(main_struct, SOUND_PICKUP);
 		main_struct->map[(int)main_struct->player->y][(int)main_struct->player->x] = '0';
 		main_struct->collectible_count = main_struct->collectible_count - 1;
 		if (main_struct->collectible_count == 0)
