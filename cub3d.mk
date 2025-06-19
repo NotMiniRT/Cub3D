@@ -83,25 +83,26 @@ SRCBONUS += $(addprefix $(UTILSDIR), $(addsuffix .c, $(UTILSSRCBONUS)))
 override UTILSSRCBONUS	:= \
 	cleanup \
 	free_main_struct \
-	utils \
+	item_utils \
 	main_struct \
 	map_items \
+	utils \
 
 SRCBONUS += $(addprefix $(INITDIR), $(addsuffix .c, $(INITSRCBONUS)))
 
 override INITSRCBONUS	:= \
 	check_param_validity \
 	init \
-	readlines_utils \
 	readlines \
+	readlines_utils \
 
 SRCBONUS += $(addprefix $(SCENEDIR), $(addsuffix .c, $(SCENESRCBONUS)))
 
 override SCENESRCBONUS	:= \
 	check_cardinal_directions \
 	color_utils \
-	scene_validation_utils \
 	scene_validation \
+	scene_validation_utils \
 	texture_utils \
 
 SRCBONUS += $(addprefix $(MAPDIR), $(addsuffix .c, $(MAPSRCBONUS)))
@@ -113,8 +114,8 @@ override MAPSRCBONUS	:= \
 	map_check_playable_area \
 	map_check_validity \
 	map_create_copy \
-	map_debug_collectibles \
 	map_debug \
+	map_debug_collectibles \
 	map_init_boundaries \
 	map_main_check \
 	map_player_check \
@@ -123,33 +124,34 @@ override MAPSRCBONUS	:= \
 SRCBONUS += $(addprefix $(DISPLAYDIR), $(addsuffix .c, $(DISPLAYSRCBONUS)))
 
 override DISPLAYSRCBONUS	:= \
+	door_management \
+	door_movements \
 	frame_display \
 	image_function \
 	image_utils \
 	inputs_define \
-	lantern_hud_drawing \
 	lantern_hud \
+	lantern_hud_drawing \
 	load_images \
-	minimap_drawing \
+	lst_int \
 	minimap \
+	minimap_drawing \
 	mlx_loop \
+	monster \
 	mouse_hook \
 	overlay \
-	player_facing \
 	player \
+	player_facing \
 	ray_check \
-	torch \
-	render_one_ray \
-	door_management \
-	timer \
-	window_start \
-	lst_int \
-	monster \
-	set_hit_tab \
 	render_calcul \
 	ray_check_init \
 	hit_object \
 	transparency \
+	render_one_ray \
+	set_hit_tab \
+	timer \
+	torch \
+	window_start \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 
