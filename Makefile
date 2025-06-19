@@ -1,27 +1,31 @@
 NAME	:= cub3D
-
+NAMEB	:= cub3D_bonus
 include cub3d.mk
 
 BUILD_DIR	:= .build/
+BUILD_DIR_BONUS	:= .build_bonus/
 OBJS 		:= $(patsubst $(SRCSDIR)%.c,$(BUILD_DIR)%.o,$(SRCS))
-OBJSB		:= $(patsubst $(SRCSDIR)%.c,$(BUILD_DIR)%.o,$(SRCSBONUS))
+OBJSB		:= $(patsubst $(SRCSDIR)%.c,$(BUILD_DIR_BONUS)%.o,$(SRCSBONUS))
 DEPS		:= $(OBJS:.o=.d)
 DEPSB		:= $(OBJSB:.o=.d)
 
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g3
+CFLAGS		:= -Wall -Wextra -Werror -g3 -O3 #-march=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32
+
+
 CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/
+CPPFLAGS_BONUS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/ -I incs_external/
 
-MLX_DIR      := mlx/
-MLX_LIB      := $(MLX_DIR)libmlx_Linux.a
-MLX_FLAGS    := -L mlx -lmlx_Linux -L/usr/lib -I mlx -lX11 -lm -lz -lXext $(MLX_LIB)
-
+MLX_FLAGS	:= -L mlx -lmlx_Linux -L/usr/lib -I mlx -lX11 -lm -lz -lXext $(MLX_LIB)
+MLX_DIR		:= mlx/
+MLX_LIB		:= $(MLX_DIR)libmlx_Linux.a
 RM			:= rm -f
 RMDIR		+= -r
 MAKEFLAGS	+= --no-print-directory
 DIR_DUP		= mkdir -p $(BUILD_DIR)
+DIR_DUP_BONUS	= mkdir -p $(BUILD_DIR_BONUS)
 
 .DEFAULT_GOAL	:= all
 
@@ -68,6 +72,7 @@ else
         endif
     endif
 endif
+
 # ********** RULES *********************************************************** #
 
 -include $(DEPS)
@@ -78,6 +83,12 @@ init: ensure_mlx FORCE
 	@mkdir -p $(BUILD_DIR)
 	@echo "$(NEED_REBUILD)" > $(BUILD_DIR)total_files
 	@echo "0" > $(BUILD_DIR)current_file
+
+.PHONY: init_bonus
+init_bonus: ensure_mlx FORCE
+	@mkdir -p $(BUILD_DIR_BONUS)
+	@echo "$(NEED_REBUILD)" > $(BUILD_DIR_BONUS)total_files
+	@echo "0" > $(BUILD_DIR_BONUS)current_file
 
 .PHONY: all
 all: init $(NAME)
@@ -130,6 +141,30 @@ $(BUILD_DIR)%.o: $(SRCSDIR)%.c
 	printf "] [%d/%d] $(RESETC)%s" "$$CURRENT" "$$TOTAL" "$<"
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $< -D DEBUG_MODE=$(DEBUG_MODE)
 
+$(BUILD_DIR_BONUS)%.o: $(SRCSDIR)%.c
+	@mkdir -p $(dir $@)
+	@CURRENT=`cat $(BUILD_DIR_BONUS)current_file`; \
+	CURRENT=$$((CURRENT+1)); \
+	echo "$$CURRENT" > $(BUILD_DIR_BONUS)current_file; \
+	TOTAL=`cat $(BUILD_DIR_BONUS)total_files`; \
+	POSITION=$$((CURRENT % 6)); \
+	printf "$(ERASE)$(CYAN)["; \
+	if [ "$$POSITION" -eq 0 ]; then \
+		printf "⠋"; \
+	elif [ "$$POSITION" -eq 1 ]; then \
+		printf "⠙"; \
+	elif [ "$$POSITION" -eq 2 ]; then \
+		printf "⠹"; \
+	elif [ "$$POSITION" -eq 3 ]; then \
+		printf "⠸"; \
+	elif [ "$$POSITION" -eq 4 ]; then \
+		printf "⠼"; \
+	else \
+		printf "⠴"; \
+	fi; \
+	printf "] [%d/%d] $(RESETC)%s" "$$CURRENT" "$$TOTAL" "$<"
+	@$(CC) $(CFLAGS) $(CPPFLAGS_BONUS) -c -o $@ $< -D DEBUG_MODE=$(DEBUG_MODE)
+
 .PHONY: debug
 debug: clean
 	@$(MAKE) DEBUG_MODE=1
@@ -139,25 +174,24 @@ debugb: clean
 	@$(MAKE) bonus DEBUG_MODE=1
 
 .PHONY: bonus
-bonus: init .bonus
+bonus: init_bonus .bonus
 
 .bonus: libft/libft.a mlx/libmlx_Linux.a mlx/libmlx.a Makefile $(OBJSB)
 	@$(RM) $(NAME)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $(NAME) $(OBJSB) -L libft -lft $(MLX_FLAGS)
-	@echo "\n$(GREEN_BOLD)✓ $(NAME) bonus is ready $(RESETC)\n"
+	@$(CC) $(CFLAGS) $(CPPFLAGS_BONUS) -o $(NAMEB) $(OBJSB) -L libft -lft $(MLX_FLAGS)
+	@echo "\n$(GREEN_BOLD)✓ $(NAMEB) bonus is ready $(RESETC)\n"
 	@touch .bonus
 
 .PHONY: clean
 clean:
 	$(MAKE) clean -C libft/
-	@$(RM) $(OBJS) $(DEPS)
+	@$(RM) $(OBJS) $(DEPS) $(OBJSB) $(DEPSB)
 	@echo "$(RED_BOLD)[Cleaning]$(RESETC)"
 
 .PHONY: fclean
 fclean: clean
 	$(MAKE) fclean -C libft/
-	@$(RM) $(RMDIR) $(NAME) $(BUILD_DIR) .bonus
-	@$(RM) $(RMDIR)
+	@$(RM) $(RMDIR) $(NAME) $(NAMEB) $(BUILD_DIR) $(BUILD_DIR_BONUS) .bonus
 	@echo "$(RED_BOLD)✓ $(NAME) is fully cleaned!$(RESETC)"
 
 .PHONY: re

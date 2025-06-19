@@ -1,7 +1,7 @@
 #ifndef MAIN_STRUCT_H
 # define MAIN_STRUCT_H
 
-# include "structs.h"
+typedef struct s_main_struct	t_main_struct;
 
 int		is_moving(t_main_struct *t_main_struct);
 void	free_main_struct(t_main_struct *main_struct);

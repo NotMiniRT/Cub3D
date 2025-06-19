@@ -1,10 +1,8 @@
 #include <X11/keysym.h>
-#include "main_struct_b.h"
-#include "mlx.h"
+
+#include "inputs_b.h"
 #include "player_b.h"
-#include <stdio.h>
-#include "common.h"
-#include "inputs.h"
+#include "structs_b.h"
 
 int	release_move(int keysym, t_main_struct *main_struct)
 {

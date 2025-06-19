@@ -1,6 +1,7 @@
-#include "structs.h"
-#include "math.h"
+#include <math.h>
+
 #include "common.h"
+#include "structs.h"
 
 static void	define_basic_param_calculus(t_ray_calculus *calcul,
 		double cos_sin[2], t_main_struct *main_struct)

@@ -1,47 +1,17 @@
+#include "common.h"
+#include "display_b.h"
+#include "ft_dprintf.h"
 #include "inputs_b.h"
 #include "main_struct_b.h"
 #include "mlx.h"
-#include "common.h"
-#include "image_b.h"
-#include "display_b.h"
-#include "player_b.h"
-#include "parsing.h"
-#include <stdio.h>
-#include "fuel_bar.h"
+#include "monster.h"
 #include "multithreading.h"
+#include "parsing.h"
+#include "player_b.h"
+#include "sound.h"
+#include "structs_b.h"
 #include "torch.h"
 
-#include "libft.h"
-
-/**
- * @bug check les droits de fichiers avant de faire quoi que ce soit
- *
- */
-static bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos)
-{
-	if (!get_image_cub_from_xpm(main_struct, &(main_struct->wall_s), \
-			infos->scene->so_texture)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_o), \
-			infos->scene->we_texture)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_n), \
-			infos->scene->no_texture)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->wall_e), \
-			infos->scene->ea_texture)
-		|| !create_img_cub(main_struct, &(main_struct->frame), \
-			WINDOW_WIDTH, WINDOW_HEIGHT)
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->fog), \
-			"assets/textures/walls/fog.xpm")
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->door), \
-			"assets/textures/walls/door.xpm")
-		|| !get_image_cub_from_xpm(main_struct, &(main_struct->potion), \
-			"assets/textures/walls/potion.xpm")
-		|| !create_img_cub(main_struct, &(main_struct->minimap), \
-			WINDOW_HEIGHT / 3, WINDOW_HEIGHT / 3)
-		|| !create_img_cub(main_struct, &(main_struct->fuel_bar), \
-			HUD_WIDTH, HUD_HEIGHT))
-		return (false);
-	return (true);
-}
 
 static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 {
@@ -55,22 +25,46 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	main_struct->player = malloc(sizeof(t_player));
 	if (main_struct->player == NULL)
 		return (false);
+	main_struct->up_door = malloc(sizeof(t_lst_int *));
+	if (main_struct->up_door == NULL)
+		return (false);
+	*(main_struct->up_door) = NULL;
+	main_struct->down_door = malloc(sizeof(t_lst_int *));
+	if (main_struct->down_door == NULL)
+		return (false);
+	*(main_struct->down_door) = NULL;
 	if (!init_all_sprites(main_struct, infos))
 		return (false);
 	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
 	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
 	main_struct->doors = &(infos->scene->door_positions);
 	main_struct->items = &(infos->scene->collectible_positions);
+	main_struct->collectible_count = infos->scene->collectible_count;
+	if (infos->scene->monster_count == 0)
+		main_struct->mj = NULL;
+	else if (!set_mj(main_struct, infos))
+		return (false);
 	if (!init_r_h_tab(main_struct))
 		return (false);
 	init_player(main_struct->player, infos);
-	main_struct->fuel = 15;
+	main_struct->map[infos->scene->pos[1] - 1][infos->scene->pos[0] - 1] = '0';
+	if (main_struct->mj != NULL)
+		main_struct->map[infos->scene->monster_positions[1] - 1][infos->scene->monster_positions[0]- 1] = '0';
+	main_struct->fuel = 1;
 	if (!init_torch(main_struct))
 		return (false);
 	if (!init_threads(main_struct))
 		return (false);
 	if (!map_object_set(main_struct))
 		return (false);
+	if (!init_sound(main_struct))
+		ft_dprintf(2, RED INIT_SOUND_FALSE RESET);
+// 	if (!SOUND_ON)
+// 		main_struct->sound = NULL;
+// 	else if (!init_sound(main_struct))
+// 		ft_dprintf(2, "Warning: Sound initialization failed\n");
+	else
+		ft_dprintf(2, GREEN INIT_SOUND_TRUE RESET);
 	return (true);
 }
 

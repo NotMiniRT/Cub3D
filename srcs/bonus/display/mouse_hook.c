@@ -1,6 +1,7 @@
+#include "common.h"
 #include "mlx.h"
 #include "player_b.h"
-#include "common.h"
+#include "structs_b.h"
 
 int	on_destroy(t_main_struct *main_struct)
 {

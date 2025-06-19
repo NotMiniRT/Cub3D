@@ -2,15 +2,16 @@
 # define TORCH_H
 
 # include <stdbool.h>
-# include "structs_b.h"
 
-# define TORCH_WIDTH 64    // Width of the torch image
-# define TORCH_HEIGHT 64   // Height of the torch image
-# define TORCH_X 1300       // Position X of the torch on screen
-# define TORCH_Y 600        // Position Y of the torch on screen
-# define FRAME_DURATION 150 // Milliseconds between animation frames
+typedef struct s_main_struct	t_main_struct;
 
-bool    display_torch(t_main_struct *main_struct);
-bool    init_torch(t_main_struct *main_struct);
+# define TORCH_WIDTH 64    
+# define TORCH_HEIGHT 64
+# define TORCH_X 1300
+# define TORCH_Y 800
+# define FRAME_DURATION 150
+
+bool	display_torch(t_main_struct *main_struct);
+bool	init_torch(t_main_struct *main_struct);
 
 #endif

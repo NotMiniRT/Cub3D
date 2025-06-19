@@ -1,3 +1,4 @@
+#include "map_types.h"
 #include "map_validation.h"
 
 bool	is_valid_map_char(char c)

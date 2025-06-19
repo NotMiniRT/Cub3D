@@ -4,15 +4,15 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-# include "common.h"
-# include "structs_b.h"
+// # include "common.h"
+// # include "structs_b.h"
+
+typedef struct s_main_struct	t_main_struct;
 
 # define JOIN_ERROR "Error: Failed to join thread [%d] (error code: %d)\n"
 
 # define NUM_THREADS 8
 
-
-/* Structure de données pour chaque thread */
 typedef struct s_thread_data
 {
 	int				thread_id;
@@ -22,7 +22,6 @@ typedef struct s_thread_data
 	pthread_t		thread;
 }	t_thread_data;
 
-/* Structure globale de gestion des threads */
 typedef struct s_thread_manager
 {
 	t_thread_data		threads[NUM_THREADS];
@@ -34,7 +33,7 @@ typedef struct s_thread_manager
 
 /* Fonctions de gestion des threads */
 bool	init_threads(t_main_struct *main_struct);
-void    cleanup_threads(t_thread_manager *thread_manager);
+void	cleanup_threads(t_thread_manager *thread_manager);
 void	calculate_thread_ranges(t_thread_manager *manager);
 void	*thread_render_routine(void *arg);
 

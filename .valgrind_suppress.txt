@@ -1,0 +1,86 @@
+# Miniaudio uninitialized value suppressions
+{
+   miniaudio_node_detach_all_output_buses
+   Memcheck:Cond
+   fun:ma_node_detach_all_output_buses
+   fun:ma_node_detach_full
+   fun:ma_node_uninit
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_node_detach_full
+   Memcheck:Cond
+   fun:ma_node_detach_full
+   fun:ma_node_uninit
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_node_uninit
+   Memcheck:Cond
+   fun:ma_node_uninit
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_engine_node_uninit
+   Memcheck:Cond
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_gainer_uninit
+   Memcheck:Cond
+   fun:ma_gainer_uninit
+   fun:ma_spatializer_uninit
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_spatializer_uninit
+   Memcheck:Cond
+   fun:ma_spatializer_uninit
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_lpf_uninit_1
+   Memcheck:Cond
+   fun:ma_lpf_uninit
+   fun:ma_linear_resampler_uninit
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_lpf_uninit_2
+   Memcheck:Cond
+   ...
+   fun:ma_lpf_uninit
+   fun:ma_linear_resampler_uninit
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_linear_resampler_uninit
+   Memcheck:Cond
+   fun:ma_linear_resampler_uninit
+   fun:ma_engine_node_uninit
+   fun:ma_sound_uninit
+}
+
+{
+   miniaudio_sound_uninit
+   Memcheck:Cond
+   fun:ma_sound_uninit
+}
+
+

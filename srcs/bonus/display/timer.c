@@ -1,6 +1,6 @@
 #include <sys/time.h>
-#include <stdint.h>
-#include "main_struct.h"
+
+#include "structs.h"
 
 static size_t	gettimeofday_ms(void)
 {

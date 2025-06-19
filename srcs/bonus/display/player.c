@@ -1,9 +1,10 @@
-#include "structs_b.h"
-#include "common.h"
 #include <math.h>
-#include "ray_b.h"
-#include "parsing.h"
+
+#include "common.h"
 #include "doors_b.h"
+#include "parsing.h"
+#include "sound.h"
+#include "structs_b.h"
 
 int	init_player(t_player *player, t_infos *infos)
 {
@@ -76,11 +77,15 @@ static void	one_direction(t_main_struct *main_struct, double move_x,
 	}
 	if (main_struct->map[(int)main_struct->player->y][(int)main_struct->player->x] == 'C')
 	{
+		play_sound(main_struct, SOUND_PICKUP);
 		main_struct->map[(int)main_struct->player->y][(int)main_struct->player->x] = '0';
-		if (main_struct->fuel <= 90)
-			main_struct->fuel = main_struct->fuel + 10;
+		main_struct->collectible_count = main_struct->collectible_count - 1;
+		if (main_struct->collectible_count == 0)
+			main_struct->died = 1;
+		if (main_struct->fuel <= 0.9)
+			main_struct->fuel = main_struct->fuel + 0.1;
 		else
-			main_struct->fuel = 100;
+			main_struct->fuel = 1;
 	}
 }
 

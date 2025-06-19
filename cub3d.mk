@@ -9,6 +9,7 @@ override UTILSDIR		:= utils/
 override DISPLAYDIR		:= display/
 override PARSINGDIR		:= parsing/
 override THREADDIR		:= threads/
+override SOUNDDIR		:= sound/
 override MAPDIR		    := $(PARSINGDIR)map/
 override SCENEDIR		:= $(PARSINGDIR)scene/
 override INITDIR		:= $(PARSINGDIR)init/
@@ -81,6 +82,7 @@ SRCBONUS += $(addprefix $(UTILSDIR), $(addsuffix .c, $(UTILSSRCBONUS)))
 
 override UTILSSRCBONUS	:= \
 	cleanup \
+	free_main_struct \
 	utils \
 	main_struct \
 	map_items \
@@ -127,6 +129,7 @@ override DISPLAYSRCBONUS	:= \
 	inputs_define \
 	lantern_hud_drawing \
 	lantern_hud \
+	load_images \
 	minimap_drawing \
 	minimap \
 	mlx_loop \
@@ -140,9 +143,22 @@ override DISPLAYSRCBONUS	:= \
 	door_management \
 	timer \
 	window_start \
+	lst_int \
+	monster \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 
 override THREADSRC	:= \
 	threads_init \
 	threads_utils \
+
+SRCBONUS += $(addprefix $(SOUNDDIR), $(addsuffix .c, $(SOUNDSRC)))
+
+override SOUNDSRC	:= \
+	bluetooth_detection \
+	bluetooth_utils \
+	cleanup_sound \
+	init_sound \
+	load_sound \
+	play_sound \
+	process_utils \

@@ -1,44 +1,95 @@
-#include "structs_b.h"
 #include "common.h"
-#include "stdio.h"
+#include "lst_int.h"
+#include "sound.h"
+#include "structs_b.h"
 
+void up_doors(t_main_struct *main_struct, t_lst_int **lst)
+{
+	if (*lst == NULL)
+		return ;
+	(*(main_struct->doors))[(*lst)->index][2] = (*(main_struct->doors))[(*lst)->index][2] + 1;
+	if ((*(main_struct->doors))[(*lst)->index][2] >= 100)
+	{
+		remove_last_lst_int(lst);
+		return ;
+	}
+	up_doors(main_struct, &((*lst)->next));
+}
+
+
+void down_doors(t_main_struct *main_struct, t_lst_int **lst)
+{
+	if (*lst == NULL)
+		return ;
+	(*(main_struct->doors))[(*lst)->index][2] = (*(main_struct->doors))[(*lst)->index][2] - 1;
+	if ((*(main_struct->doors))[(*lst)->index][2] <= 0)
+	{
+		remove_last_lst_int(lst);
+		return ;
+	}
+	down_doors(main_struct, &((*lst)->next));
+}
 
 int	get_status_door(int x, int y, t_main_struct *main_struct)
 {
 	int i;
 
 	i = 0;
+	x++;
+	y++;
 	while (i < 100 && (*(main_struct->doors))[i][0] != 0)
 	{
-		if ((*(main_struct->doors))[i][0] == y + 1 && (*(main_struct->doors))[i][1] == x + 1)
+		if ((*(main_struct->doors))[i][0] == y && (*(main_struct->doors))[i][1] == x)
 			return ((*(main_struct->doors))[i][2]);
 		i++;
 	}
 	return (-1);
 }
 
-/*
-	TODO: understand what goes wrong with coordinates
-*/
+void activate_door_monster(t_main_struct *main_struct, int new_x, int new_y)
+{
+	int i;
+
+	if (main_struct->map[new_y][new_x] == 'D')
+	{
+		new_x++;
+		new_y++;
+		i = 0;
+		while (i < 100 && (*(main_struct->doors))[i][0] != 0)
+		{
+			if ((*(main_struct->doors))[i][0] == new_x && (*(main_struct->doors))[i][1] == new_y)
+			{
+				if ((*(main_struct->doors))[i][2] == 100)
+					add_front_lst_int(main_struct->down_door, i);
+				play_sound(main_struct, SOUND_DOOR);
+				return ;
+			}
+			i++;
+		}
+	}
+	return ;
+}
+
 static void activate_door(t_main_struct *main_struct, int x, int y)
 {
 	int new_x;
 	int new_y;
 	int i;
 
-	new_x = (int)(main_struct->player->x + x);
-	new_y = (int)(main_struct->player->y + y);
-	if (main_struct->map[new_y][new_x] == 'D')
+	new_x = (int)(main_struct->player->x + x) + 1;
+	new_y = (int)(main_struct->player->y + y) + 1;
+	if (main_struct->map[new_y - 1][new_x - 1] == 'D')
 	{
 		i = 0;
 		while (i < 100 && (*(main_struct->doors))[i][0] != 0)
 		{
-			if ((*(main_struct->doors))[i][0] == new_x + 1 && (*(main_struct->doors))[i][1] == new_y + 1)
+			if ((*(main_struct->doors))[i][0] == new_x&& (*(main_struct->doors))[i][1] == new_y)
 			{
 				if ((*(main_struct->doors))[i][2] == 0)
-					(*(main_struct->doors))[i][2] = 100;
+					add_front_lst_int(main_struct->up_door, i);
 				else if ((*(main_struct->doors))[i][2] == 100)
-					(*(main_struct->doors))[i][2] = 0;
+					add_front_lst_int(main_struct->down_door, i);
+				play_sound(main_struct, SOUND_DOOR);
 				return ;
 			}
 			i++;

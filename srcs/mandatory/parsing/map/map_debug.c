@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "map_debug.h"
-#include "map_validation.h"
+#include "map_types.h"
 
 void	print_cell_color(char c)
 {

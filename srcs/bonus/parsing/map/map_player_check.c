@@ -1,4 +1,5 @@
-#include "map_validation.h"
+#include "map_types.h"
+#include "parsing.h"
 
 static bool	is_player(char c)
 {

@@ -1,9 +1,9 @@
-#include <stdio.h>
 #include <unistd.h>
 
 #include "ft_dprintf.h"
-#include "map_struct_validation.h"
+#include "map_types.h"
 #include "map_validation.h"
+#include "parsing.h"
 
 bool	is_point_closed(t_map_data map_data, t_point p)
 {

@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "map_debug.h"
-#include "map_validation.h"
+#include "map_types.h"
 #include "parsing.h"
 
 static void	debug_print_door(t_infos *infos, int show_flags)
@@ -36,8 +36,8 @@ static void	debug_print_monster(t_infos *infos, int show_flags)
 		printf(RED "Monsters (%d):" RESET "\n", infos->scene->monster_count);
 		printf("\tM[%d]: x=%d, y=%d\n",
 			i,
-			infos->scene->monster_positions[i][0],
-			infos->scene->monster_positions[i][1]);
+			infos->scene->monster_positions[0],
+			infos->scene->monster_positions[1]);
 		printf("\n");
 	}
 }

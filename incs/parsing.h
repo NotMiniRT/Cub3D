@@ -64,17 +64,17 @@ typedef struct s_scene
 {
 	t_color_parse	*floor_color;
 	t_color_parse	*ceiling_color;
-	char	*we_texture;
-	char	*so_texture;
-	char	*no_texture;
-	char	*ea_texture;
-	int		pos[3];
-	int		collectible_count;
-	int		door_count;
-	int		monster_count;
-	int		collectible_positions[100][3]; // Storing up to 100 collectibles (x,y)
-	int		door_positions[100][4];        // Storing up to 100 doors (x,y)
-	int		monster_positions[100][2];     // Storing up to 100 monsters (x,y)
+	char			*we_texture;
+	char			*so_texture;
+	char			*no_texture;
+	char			*ea_texture;
+	int				pos[3];
+	int				collectible_count;
+	int				door_count;
+	int				monster_count;
+	int				collectible_positions[100][3];
+	int				door_positions[100][4];
+	int				monster_positions[2];
 }	t_scene;
 
 typedef struct s_parsing

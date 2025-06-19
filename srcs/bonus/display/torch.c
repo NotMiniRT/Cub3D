@@ -1,12 +1,10 @@
-#include <math.h>
-
-#include "torch.h"
 #include "common.h"
+#include "image_b.h"
 #include "libft.h"
 #include "minimap.h"
-#include "mlx.h"
-#include "timer.h"
-#include "image_b.h"
+#include "structs_b.h"
+#include "timer_b.h"
+#include "torch.h"
 
 static inline void	change_pixel_color_opt(t_image_cub *img,
 	int color, int x, int y)
@@ -16,11 +14,12 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 
 bool	init_torch(t_main_struct *main_struct)
 {
-	static char	*torch_paths[4] = {
+	static char	*torch_paths[5] = {
 		"assets/textures/torch/torch_1.xpm",
 		"assets/textures/torch/torch_2.xpm",
 		"assets/textures/torch/torch_3.xpm",
-		"assets/textures/torch/torch_4.xpm"
+		"assets/textures/torch/torch_4.xpm",
+		"assets/textures/torch/torch_5.xpm",
 	};
 	int			i;
 
@@ -30,12 +29,14 @@ bool	init_torch(t_main_struct *main_struct)
 	ft_memset(main_struct->torch, 0, sizeof(t_torch));
 	main_struct->torch->frame_duration = FRAME_DURATION;
 	main_struct->torch->current_frame = 0;
+	main_struct->torch->torch_x = TORCH_X;
+	main_struct->torch->torch_y = TORCH_Y;
 	main_struct->torch->last_update = timestamp_in_ms(main_struct);
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		if (!get_image_cub_from_xpm_no_rot(main_struct,
-				&(main_struct->torch->frames[i]), torch_paths[i]))
+				&(main_struct->torch->frames[i]), torch_paths[i], 64))
 			return (false);
 		i++;
 	}
@@ -52,8 +53,11 @@ bool	render_torch(t_main_struct *main_struct)
 	if (current_time - main_struct->torch->last_update > \
 			main_struct->torch->frame_duration)
 	{
-		main_struct->torch->current_frame = \
-			(main_struct->torch->current_frame + 1) % 4;
+		if (main_struct->fuel < 0.06)
+			main_struct->torch->current_frame = 4;
+		else
+			main_struct->torch->current_frame = \
+				((main_struct->torch->current_frame + 1) % 4);
 		main_struct->torch->last_update = current_time;
 	}
 	return (true);
@@ -74,8 +78,8 @@ static void	draw_scaled_pixel(t_main_struct *main_struct, int color,
 		x = 0;
 		while (x < scale)
 		{
-			dest_x = (TORCH_X + x) * 4 + base_x * scale;
-			dest_y = TORCH_Y + base_y * scale + y;
+			dest_x = (main_struct->torch->torch_x + x) * 4 + base_x * scale;
+			dest_y = main_struct->torch->torch_y + base_y * scale + y;
 			if (dest_x >= 0 && dest_x < WINDOW_WIDTH * 4 && \
 				dest_y >= 0 && dest_y < WINDOW_HEIGHT)
 				change_pixel_color_opt(main_struct->frame, color, \
