@@ -149,6 +149,8 @@ override DISPLAYSRCBONUS	:= \
 	hit_object \
 	transparency \
 	render_one_ray \
+	monster_direction \
+	player_direction \
 	set_hit_tab \
 	timer \
 	torch \

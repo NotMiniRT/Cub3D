@@ -1,6 +1,8 @@
 #ifndef MONSTER_H
 # define MONSTER_H
 
+# define MJ_NO_NB "assets/textures/mj/mj-"
+
 typedef struct s_main_struct	t_main_struct;
 typedef struct s_infos			t_infos;
 

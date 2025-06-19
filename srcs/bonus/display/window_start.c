@@ -1,3 +1,5 @@
+#include <unistd.h>
+
 #include "common.h"
 #include "display_b.h"
 #include "ft_dprintf.h"
@@ -11,8 +13,6 @@
 #include "sound.h"
 #include "structs_b.h"
 #include "torch.h"
-
-#include <unistd.h>
 
 static void	display_second_part(t_main_struct *main_struct, t_infos *infos)
 {
