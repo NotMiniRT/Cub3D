@@ -33,6 +33,16 @@ typedef struct s_lst_int
 	struct s_lst_int	*next;
 }	t_lst_int;
 
+typedef struct s_update_item
+{
+	int		i;
+	int		x;
+	int		y;
+	double	mj_new_x;
+	double	mj_new_y;
+	double	norm;
+}	t_update_item;
+
 typedef struct s_point
 {
 	double	x;
