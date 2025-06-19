@@ -137,6 +137,7 @@ override DISPLAYSRCBONUS	:= \
 	minimap \
 	minimap_drawing \
 	mlx_loop \
+	mlx_main_loop \
 	monster \
 	mouse_hook \
 	overlay \

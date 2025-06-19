@@ -14,7 +14,16 @@
 
 #include <unistd.h>
 
-static bool	init_display(t_main_struct *main_struct, t_infos *infos)
+static void	display_second_part(t_main_struct *main_struct, t_infos *infos)
+{
+	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
+	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
+	main_struct->doors = &(infos->scene->door_positions);
+	main_struct->items = &(infos->scene->collectible_positions);
+	main_struct->collectible_count = infos->scene->collectible_count;
+}
+
+static bool	display_first_part(t_main_struct *main_struct, t_infos *infos)
 {
 	main_struct->mlx_ptr = mlx_init();
 	if (main_struct->mlx_ptr == NULL)
@@ -25,7 +34,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	main_struct->player = malloc(sizeof(t_player));
 	if (main_struct->player == NULL)
-		return (false);
+	return (false);
 	main_struct->up_door = malloc(sizeof(t_lst_int *));
 	if (main_struct->up_door == NULL)
 		return (false);
@@ -36,11 +45,14 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	*(main_struct->down_door) = NULL;
 	if (!init_all_sprites(main_struct, infos))
 		return (false);
-	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
-	main_struct->ground = *((int *)&(infos->scene->floor_color->b));
-	main_struct->doors = &(infos->scene->door_positions);
-	main_struct->items = &(infos->scene->collectible_positions);
-	main_struct->collectible_count = infos->scene->collectible_count;
+	display_second_part(main_struct, infos);
+	return (true);
+}
+
+static bool	init_display(t_main_struct *main_struct, t_infos *infos)
+{
+	if (!display_first_part(main_struct, infos))
+		return (false);
 	if (infos->scene->monster_count == 0)
 		main_struct->mj = NULL;
 	else if (!set_mj(main_struct, infos))
@@ -50,7 +62,8 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	init_player(main_struct->player, infos);
 	main_struct->map[infos->scene->pos[1] - 1][infos->scene->pos[0] - 1] = '0';
 	if (main_struct->mj != NULL)
-		main_struct->map[infos->scene->monster_positions[1] - 1][infos->scene->monster_positions[0]- 1] = '0';
+		main_struct->map[infos->scene->monster_positions[1] - 1] \
+		[infos->scene->monster_positions[0] - 1] = '0';
 	main_struct->fuel = 1;
 	if (!init_torch(main_struct))
 		return (false);
