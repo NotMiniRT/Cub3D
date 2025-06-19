@@ -72,7 +72,7 @@ void	update_items(t_main_struct *ms)
 	}
 }
 
-static void	put_victory_screen(t_main_struct *main_struct)
+void	put_victory_screen(t_main_struct *main_struct)
 {
 	t_image_cub	*img;
 	int			i;
@@ -101,7 +101,7 @@ static void	put_victory_screen(t_main_struct *main_struct)
 	}
 }
 
-static void	put_death_screen(t_main_struct *main_struct)
+void	put_death_screen(t_main_struct *main_struct)
 {
 	t_image_cub	*img;
 	int			i;
