@@ -30,4 +30,9 @@ void	get_start_dist(t_ray_calculus *calcul);
 void	get_dists_and_wall_x_y(t_ray_calculus *calcul);
 void	set_hit_tab(t_render_calculus *render_calc,
 	t_main_struct *main_struct, int row, double teta_cos_sin[2]);
+t_point	calcul_intersection(t_point p1,
+		t_point p2, t_point p3, t_point p4);
+double	dist_points(t_point a, t_point b);
+void	add_mj(t_ray_calculus *calcul, t_object_hit	hit_tab[HIT_TAB_LEN]);
+
 #endif
