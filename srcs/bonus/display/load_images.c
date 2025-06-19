@@ -49,15 +49,15 @@ static bool	load_frame_buffer(t_main_struct *main_struct)
 static bool	load_environment_textures(t_main_struct *main_struct)
 {
 	if (!get_image_cub_from_xpm(main_struct, &(main_struct->fog),
-		FOG_ASSET, 64))
+			FOG_ASSET, 64))
 		return (load_message(false, FOG_TEXTURE));
 	load_message(true, FOG_TEXTURE);
 	if (!get_image_cub_from_xpm(main_struct, &(main_struct->door),
-		DOOR_TEXTURE, 2048))
+			DOOR_TEXTURE, 2048))
 		return (load_message(false, DOOR_ASSET));
 	load_message(true, DOOR_ASSET);
 	if (!get_image_cub_from_xpm(main_struct, &(main_struct->potion),
-		POTION_ASSET, 64))
+			POTION_ASSET, 64))
 		return (load_message(false, POTION_TEXTURE));
 	load_message(true, POTION_TEXTURE);
 	if (!create_img_cub(main_struct, &(main_struct->minimap),

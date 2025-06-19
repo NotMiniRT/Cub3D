@@ -4,13 +4,13 @@
 #include "minimap.h"
 #include "structs_b.h"
 
-
 static void	minimap_set_pixel(t_image_cub *img, int x, int y, int color)
 {
 	char	*pixel;
 	int		bytes_per_pixel;
 
-	if (x < 0 || y < 0 || x >= (WINDOW_HEIGHT * 0.333) || y >= (WINDOW_HEIGHT * 0.333))
+	if (x < 0 || y < 0 || x >= (WINDOW_HEIGHT * 0.333)
+		|| y >= (WINDOW_HEIGHT * 0.333))
 		return ;
 	bytes_per_pixel = img->pixel_bits * 0.125;
 	pixel = img->buffer + (y * img->line_bytes + x * bytes_per_pixel);

@@ -59,7 +59,8 @@ int	get_image_cub_from_xpm_no_rot(t_main_struct *main_struct,
 	(*img)->buffer = NULL;
 	(*img)->sprite = NULL;
 	(*img)->size = size;
-	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &size, &size);
+	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &size,
+			&size);
 	if ((*img)->sprite == NULL)
 	{
 		free(*img);
@@ -83,7 +84,8 @@ int	get_image_cub_from_xpm(t_main_struct *main_struct,
 	(*img)->buffer = NULL;
 	(*img)->sprite = NULL;
 	(*img)->size = size;
-	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &size, &size);
+	(*img)->sprite = mlx_xpm_file_to_image(main_struct->mlx_ptr, path, &size,
+			&size);
 	if ((*img)->sprite == NULL)
 	{
 		free(*img);

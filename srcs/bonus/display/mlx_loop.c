@@ -192,4 +192,3 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	return (0);
 }
 
-//
