@@ -1,7 +1,6 @@
 #include "fuel_bar.h"
 #include "structs_b.h"
 
-
 static void	set_gauge_color(t_gauge_color *color, double ratio)
 {
 	if (ratio < 0.25)

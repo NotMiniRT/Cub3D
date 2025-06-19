@@ -129,8 +129,7 @@ void get_monster_dir(t_main_struct *main_struct)
 void move_monster(t_main_struct *main_struct)
 {
 	static int i = 0;
-	// static size_t last_frame_time = 0;
-
+	
 	if (i == 0)
 		get_monster_dir(main_struct);
 	main_struct->mj->move_time = timestamp_in_ms(main_struct);
@@ -144,12 +143,6 @@ void move_monster(t_main_struct *main_struct)
 	}
 	if (i % 3 == 0)
 	{
-		// if (main_struct->mj->frame == MJ_SPRITES - 1)
-		// {
-		// 	if (timestamp_in_ms(main_struct) - last_frame_time < 3000)
-		// 		return ;
-		// 	last_frame_time = timestamp_in_ms(main_struct);
-		// }
 		if (main_struct->mj->frame == 20)
 			play_sound(main_struct, SOUND_MJ);
 		main_struct->mj->frame = main_struct->mj->frame + 1;

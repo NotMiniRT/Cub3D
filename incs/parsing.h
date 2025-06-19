@@ -9,7 +9,8 @@ typedef struct s_main_struct		t_main_struct;
 typedef struct s_scene				t_scene;
 typedef struct s_object_door		t_object_door;
 typedef struct s_object_collectible	t_object_collectible;
-typedef bool						(*t_parser_func)(t_scene *scene, char *line);
+typedef bool						(*t_parser_func)(t_scene *scene,
+										char *line);
 
 # define BUFFER_SIZE 512
 # define CLEAR_BUFFER -42
@@ -97,40 +98,40 @@ typedef struct s_infos
 	int			map_start;
 }	t_infos;
 
-bool	check_extension(char *map, int fd, char *extension);
-bool	is_scene_complete(t_scene *scene);
-bool	is_texture_valid(char *path);
-bool	parse_ceiling_color(t_scene *scene, char *line);
-bool	parse_ea_texture(t_scene *scene, char *line);
-bool	parse_floor_color(t_scene *scene, char *line);
-bool	parse_no_texture(t_scene *scene, char *line);
-bool	parse_so_texture(t_scene *scene, char *line);
-bool	parse_we_texture(t_scene *scene, char *line);
-bool	read_line_check(int fd, char *buffer);
+bool					check_extension(char *map, int fd, char *extension);
+bool					is_scene_complete(t_scene *scene);
+bool					is_texture_valid(char *path);
+bool					parse_ceiling_color(t_scene *scene, char *line);
+bool					parse_ea_texture(t_scene *scene, char *line);
+bool					parse_floor_color(t_scene *scene, char *line);
+bool					parse_no_texture(t_scene *scene, char *line);
+bool					parse_so_texture(t_scene *scene, char *line);
+bool					parse_we_texture(t_scene *scene, char *line);
+bool					read_line_check(int fd, char *buffer);
 
-char	**clear_read_lines(t_parsing *data);
-char	**read_all_lines(t_parsing *data);
-char	*extract_line(char **buffer);
-char	*extract_texture_path(char *line, int id_len);
-char	*join_and_free(char *s1, char *s2);
-char	*read_line(int fd);
+char					**clear_read_lines(t_parsing *data);
+char					**read_all_lines(t_parsing *data);
+char					*extract_line(char **buffer);
+char					*extract_texture_path(char *line, int id_len);
+char					*join_and_free(char *s1, char *s2);
+char					*read_line(int fd);
 
-int		check_scene_validity(t_infos *infos);
-int		get_element_type(char *line);
+int						check_scene_validity(t_infos *infos);
+int						get_element_type(char *line);
 
 t_object_collectible	*create_object_map_item(int item[2]);
 t_object_door			*create_object_map_door(int doors[4]);
 
-void	check_map_validity(t_infos *infos, int map_start);
-void	cleanup_parsing(t_infos *infos);
-void	exit_error(char *message);
-void	free_array(char **array);
-void	free_extended_map(char **extended_map, int height);
-void	free_map_item_i(t_main_struct *main_struct, int i);
-void	free_scene(t_scene *scene);
-void	init_data(t_infos *infos, char **av);
-void	init_data(t_infos *infos, char **av);
-void	init_parsing(t_infos *infos, char **av);
-void	parsing(int ac, char **av, t_infos *infos);
+void					check_map_validity(t_infos *infos, int map_start);
+void					cleanup_parsing(t_infos *infos);
+void					exit_error(char *message);
+void					free_array(char **array);
+void					free_extended_map(char **extended_map, int height);
+void					free_map_item_i(t_main_struct *main_struct, int i);
+void					free_scene(t_scene *scene);
+void					init_data(t_infos *infos, char **av);
+void					init_data(t_infos *infos, char **av);
+void					init_parsing(t_infos *infos, char **av);
+void					parsing(int ac, char **av, t_infos *infos);
 
 #endif

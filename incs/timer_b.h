@@ -1,7 +1,7 @@
 #ifndef TIMER_B_H
 # define TIMER_B_H
 
-#include <stddef.h>
+# include <stddef.h>
 
 typedef struct s_main_struct	t_main_struct;
 

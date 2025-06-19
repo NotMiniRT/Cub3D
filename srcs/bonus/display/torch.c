@@ -15,11 +15,9 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 bool	init_torch(t_main_struct *main_struct)
 {
 	static char	*torch_paths[5] = {
-		"assets/textures/torch/torch_1.xpm",
-		"assets/textures/torch/torch_2.xpm",
-		"assets/textures/torch/torch_3.xpm",
-		"assets/textures/torch/torch_4.xpm",
-		"assets/textures/torch/torch_5.xpm",
+		"assets/textures/fire/torch_1.xpm", "assets/textures/fire/torch_2.xpm",
+		"assets/textures/fire/torch_3.xpm", "assets/textures/fire/torch_4.xpm",
+		"assets/textures/fire/torch_5.xpm",
 	};
 	int			i;
 
