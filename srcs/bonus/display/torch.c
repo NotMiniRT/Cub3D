@@ -15,11 +15,9 @@ static inline void	change_pixel_color_opt(t_image_cub *img,
 bool	init_torch(t_main_struct *main_struct)
 {
 	static char	*torch_paths[5] = {
-		"assets/textures/torch/torch_1.xpm",
-		"assets/textures/torch/torch_2.xpm",
-		"assets/textures/torch/torch_3.xpm",
-		"assets/textures/torch/torch_4.xpm",
-		"assets/textures/torch/torch_5.xpm",
+		"assets/textures/fire/torch_1.xpm", "assets/textures/fire/torch_2.xpm",
+		"assets/textures/fire/torch_3.xpm", "assets/textures/fire/torch_4.xpm",
+		"assets/textures/fire/torch_5.xpm",
 	};
 	int			i;
 
@@ -28,17 +26,15 @@ bool	init_torch(t_main_struct *main_struct)
 		return (false);
 	ft_memset(main_struct->torch, 0, sizeof(t_torch));
 	main_struct->torch->frame_duration = FRAME_DURATION;
-	main_struct->torch->current_frame = 0;
 	main_struct->torch->torch_x = TORCH_X;
 	main_struct->torch->torch_y = TORCH_Y;
 	main_struct->torch->last_update = timestamp_in_ms(main_struct);
-	i = 0;
-	while (i < 5)
+	i = -1;
+	while (++i < 5)
 	{
 		if (!get_image_cub_from_xpm_no_rot(main_struct,
 				&(main_struct->torch->frames[i]), torch_paths[i], 64))
 			return (false);
-		i++;
 	}
 	return (true);
 }

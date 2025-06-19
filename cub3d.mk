@@ -137,6 +137,7 @@ override DISPLAYSRCBONUS	:= \
 	minimap \
 	minimap_drawing \
 	mlx_loop \
+	mlx_main_loop \
 	monster \
 	mouse_hook \
 	overlay \
@@ -144,11 +145,17 @@ override DISPLAYSRCBONUS	:= \
 	player_facing \
 	ray_check \
 	render_calcul \
+	ray_check_init \
+	hit_object \
+	transparency \
 	render_one_ray \
+	monster_direction \
+	player_direction \
 	set_hit_tab \
 	timer \
 	torch \
 	window_start \
+	util_hit \
 
 SRCBONUS += $(addprefix $(THREADDIR), $(addsuffix .c, $(THREADSRC)))
 

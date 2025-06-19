@@ -6,11 +6,15 @@
 typedef struct s_main_struct	t_main_struct;
 typedef struct s_infos			t_infos;
 
-
 int		frame_display(t_main_struct *main_struct);
 int		mlx_loop_action(t_main_struct *main_struct);
 
 bool	start_display(t_main_struct *main_struct, t_infos *infos);
 bool	init_all_sprites(t_main_struct *main_struct, t_infos *infos);
+
+void	put_death_screen(t_main_struct *main_struct);
+void	put_victory_screen(t_main_struct *main_struct);
+void	do_one_move(t_main_struct *main_struct);
+void	update_items(t_main_struct *ms);
 
 #endif

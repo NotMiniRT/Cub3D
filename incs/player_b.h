@@ -16,4 +16,6 @@ void	move_player(t_main_struct *main_struct,
 void	open_door(t_main_struct *main_struct);
 void	rotate_player_by_mouse(t_player *player, double rotation);
 
+void	one_direction(t_main_struct *ms, double move_x, double move_y);
+
 #endif

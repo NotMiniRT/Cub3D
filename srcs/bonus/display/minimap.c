@@ -49,8 +49,8 @@ static void	init_offset_fractional(t_main_struct *main_struct, \
 	minimap->y = -1;
 	minimap->player_x = (int)floor(main_struct->player->x);
 	minimap->player_y = (int)floor(main_struct->player->y);
-	minimap->fractional_x = main_struct->player->x - minimap->player_x;
-	minimap->fractional_y = main_struct->player->y - minimap->player_y;
+	minimap->fractional_x = main_struct->player->x - 0.25 - minimap->player_x;
+	minimap->fractional_y = main_struct->player->y - 0.25 - minimap->player_y;
 	minimap->block_size = (WINDOW_HEIGHT / 3) / (MINIMAP_RADIUS * 2);
 	minimap->offset_x = minimap->fractional_x * minimap->block_size;
 	minimap->offset_y = minimap->fractional_y * minimap->block_size;
@@ -62,13 +62,13 @@ static bool	render_minimap(t_main_struct *main_struct, t_minimap *minimap)
 		return (false);
 	fill_minimap_background(main_struct->minimap);
 	init_offset_fractional(main_struct, minimap);
-	while (++minimap->y < MINIMAP_RADIUS * 2 + 1)
+	while (++minimap->y < MINIMAP_RADIUS * 2 + 2)
 	{
 		minimap->x = 0;
-		while (minimap->x < MINIMAP_RADIUS * 2 + 1)
+		minimap->map_y = minimap->player_y + (minimap->y - MINIMAP_RADIUS);
+		while (minimap->x < MINIMAP_RADIUS * 2 + 2)
 		{
 			minimap->map_x = minimap->player_x + (minimap->x - MINIMAP_RADIUS);
-			minimap->map_y = minimap->player_y + (minimap->y - MINIMAP_RADIUS);
 			if (is_valid_coord(main_struct, minimap->map_x, minimap->map_y))
 			{
 				minimap->block_type = \

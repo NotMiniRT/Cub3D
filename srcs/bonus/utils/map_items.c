@@ -44,6 +44,7 @@ static bool	map_object_alloc(t_main_struct *main_struct)
 		}
 		i++;
 	}
+	return (true);
 }
 
 bool	map_object_set(t_main_struct *main_struct)

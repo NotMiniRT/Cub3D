@@ -1,5 +1,8 @@
+#include <math.h>
+
 #include "common.h"
 #include "structs_b.h"
+#include "player_b.h"
 
 static double	get_right_size(t_render_calculus *render_calc,
 	t_main_struct *main_struct)
