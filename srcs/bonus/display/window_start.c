@@ -14,7 +14,6 @@
 #include "structs_b.h"
 #include "torch.h"
 
-
 static void	display_second_part(t_main_struct *main_struct, t_infos *infos)
 {
 	main_struct->ceil = *((int *)&(infos->scene->ceiling_color->b));
@@ -35,7 +34,7 @@ static bool	display_first_part(t_main_struct *main_struct, t_infos *infos)
 		return (false);
 	main_struct->player = malloc(sizeof(t_player));
 	if (main_struct->player == NULL)
-	return (false);
+		return (false);
 	main_struct->up_door = malloc(sizeof(t_lst_int *));
 	if (main_struct->up_door == NULL)
 		return (false);

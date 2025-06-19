@@ -103,7 +103,7 @@ bool	display_hud(t_main_struct *main_struct)
 	{
 		fill_hud_background(main_struct->fuel_bar);
 		draw_lantern_outline(main_struct->fuel_bar);
-		draw_fuel_gauge(main_struct->fuel_bar,
+		draw_fuel_gauge(main_struct->fuel_bar, \
 				((main_struct->fuel - 0.05) * 105));
 		last_fuel_level = (main_struct->fuel * 100);
 	}
