@@ -12,6 +12,7 @@
 #include "structs_b.h"
 #include "torch.h"
 
+#include <unistd.h>
 
 static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 {
@@ -58,7 +59,7 @@ static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 	if (!map_object_set(main_struct))
 		return (false);
 	if (!init_sound(main_struct))
-		ft_dprintf(2, RED INIT_SOUND_FALSE RESET);
+		ft_dprintf(STDERR_FILENO, RED INIT_SOUND_FALSE RESET);
 // 	if (!SOUND_ON)
 // 		main_struct->sound = NULL;
 // 	else if (!init_sound(main_struct))
