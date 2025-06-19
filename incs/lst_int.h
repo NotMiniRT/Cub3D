@@ -1,7 +1,7 @@
 #ifndef LST_INT_H
 # define LST_INT_H
 
-# include "structs_b.h"
+typedef struct s_lst_int		t_lst_int;
 
 void	add_front_lst_int(t_lst_int **list, int i);
 void	remove_last_lst_int(t_lst_int **list);

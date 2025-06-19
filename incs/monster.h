@@ -1,7 +1,8 @@
 #ifndef MONSTER_H
 # define MONSTER_H
 
-# include "structs_b.h"
+typedef struct s_main_struct	t_main_struct;
+typedef struct s_infos			t_infos;
 
 void	move_monster(t_main_struct *main_struct);
 void	get_monster_dir(t_main_struct *main_struct);

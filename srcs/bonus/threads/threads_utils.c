@@ -1,11 +1,11 @@
 #include <math.h>
 #include <unistd.h>
 
+#include "common.h"
 #include "ft_dprintf.h"
 #include "multithreading.h"
 #include "ray_b.h"
 
-/* remplace ton ancienne frame_display */
 static void	process_ray_range(t_thread_data *data)
 {
 	int		row;

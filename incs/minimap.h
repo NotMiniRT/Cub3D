@@ -3,7 +3,10 @@
 
 # include <stdbool.h>
 
-# include "structs_b.h"
+typedef struct s_main_struct	t_main_struct;
+typedef struct s_image_cub		t_image_cub;
+typedef struct s_minimap		t_minimap;
+
 
 # define MINIMAP_RADIUS 9
 # define PLAYER_DOT_SIZE 6

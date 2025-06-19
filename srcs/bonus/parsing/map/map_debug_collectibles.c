@@ -1,9 +1,8 @@
 #include <stdio.h>
 
 #include "map_debug.h"
-#include "map_validation.h"
-#include "parsing.h"
 #include "map_types.h"
+#include "parsing.h"
 
 static void	debug_print_door(t_infos *infos, int show_flags)
 {

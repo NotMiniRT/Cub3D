@@ -1,15 +1,8 @@
-#include "common.h"
-#include "ft_dprintf.h"
-#include "libft.h"
-#include "sound_internal.h"
-#include "sound.h"
-#include "stdbool.h"
-#include "structs_b.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+#include "libft.h"
+#include "sound.h"
 
 static void	str_to_lowercase(char *str)
 {

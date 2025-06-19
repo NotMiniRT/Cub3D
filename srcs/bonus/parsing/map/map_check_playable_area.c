@@ -1,9 +1,7 @@
-#include <stdio.h>
 #include <unistd.h>
 
 #include "ft_dprintf.h"
 #include "map_struct_validation.h"
-#include "map_validation.h"
 #include "map_types.h"
 #include "map_validation.h"
 

@@ -1,15 +1,13 @@
-#include "structs_b.h"
-#include "math.h"
-#include "doors_b.h"
-#include "timer_b.h"
-#include "stdio.h"
-#include "parsing.h"
+#include <math.h>
+
 #include "common.h"
+#include "doors_b.h"
 #include "image_b.h"
 #include "libft.h"
-#include "inputs_b.h"
-
+#include "parsing.h"
 #include "sound.h"
+#include "structs_b.h"
+#include "timer_b.h"
 
 static bool get_mj_sprites(t_main_struct *main_struct)
 {

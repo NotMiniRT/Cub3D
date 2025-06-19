@@ -1,11 +1,7 @@
-#include "structs_b.h"
-#include "common.h"
-#include "mlx.h"
-#include "ray_b.h"
-#include <math.h>
-#include "image_b.h"
 #include "minimap.h"
+#include "mlx.h"
 #include "multithreading.h"
+#include "ray_b.h"
 
 /**
  * Appeler les thread ici apres mlx_put_image (en gros)

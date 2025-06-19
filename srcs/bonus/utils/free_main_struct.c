@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -5,7 +6,6 @@
 #include "image_b.h"
 #include "lst_int.h"
 #include "main_struct_b.h"
-#include "math.h"
 #include "mlx.h"
 #include "multithreading.h"
 #include "structs_b.h"

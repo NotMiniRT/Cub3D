@@ -1,7 +1,4 @@
-#include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "ft_dprintf.h"
 #include "map_debug.h"
