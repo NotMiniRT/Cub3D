@@ -28,60 +28,61 @@ void	do_one_move(t_main_struct *main_struct)
 			main_struct->inputs[TRIGHT] - main_struct->inputs[TLEFT]);
 }
 
-void rotate_point(t_main_struct *main_struct, int i, t_point *p)
+void	rotate_point(t_main_struct *main_struct, int i, t_point *p)
 {
-	double dx;
-	double dy;
-	double center_x;
-	double center_y;
+	double	dx;
+	double	dy;
+	double	center_x;
+	double	center_y;
 
 	center_x = (*main_struct->items)[i][0] + 0.5;
 	center_y = (*main_struct->items)[i][1] + 0.5;
 	dx = p->x - center_x;
 	dy = p->y - center_y;
-	p->x = center_x + dx * 0.9995070605  - dy * 0.03139484039;
+	p->x = center_x + dx * 0.9995070605 - dy * 0.03139484039;
 	p->y = center_y + dx * 0.03139484039 + dy * 0.9995070605 ;
 }
 
-void update_items(t_main_struct *main_struct)
+void	update_items(t_main_struct *ms)
 {
-	int	i;
-	int x;
-	int y;
-	double mj_new_x;
-	double mj_new_y;
-	double norm;
+	int		i;
+	int		x;
+	int		y;
+	double	mj_new_x;
+	double	mj_new_y;
+	double	norm;
+
 	i = 0;
-	if (main_struct->mj != NULL)
+	if (ms->mj != NULL)
 	{
-		mj_new_x = (main_struct->mj->x - main_struct->player->x);
-		mj_new_y = (main_struct->mj->y - main_struct->player->y);
+		mj_new_x = (ms->mj->x - ms->player->x);
+		mj_new_y = (ms->mj->y - ms->player->y);
 		norm = sqrt(mj_new_x * mj_new_x + mj_new_y * mj_new_y);
 		mj_new_x = mj_new_x / norm;
 		mj_new_y = mj_new_y / norm;
-		main_struct->mj->p1.x = main_struct->mj->x - 0.5 * mj_new_y;
-		main_struct->mj->p1.y = main_struct->mj->y + 0.5 * mj_new_x;
-		main_struct->mj->p2.x = main_struct->mj->x + 0.5 * mj_new_y;
-		main_struct->mj->p2.y = main_struct->mj->y - 0.5 * mj_new_x;
+		ms->mj->p1.x = ms->mj->x - 0.5 * mj_new_y;
+		ms->mj->p1.y = ms->mj->y + 0.5 * mj_new_x;
+		ms->mj->p2.x = ms->mj->x + 0.5 * mj_new_y;
+		ms->mj->p2.y = ms->mj->y - 0.5 * mj_new_x;
 	}
-	while (i < 100 && (*main_struct->items)[i][0] != 0)
+	while (i < 100 && (*ms->items)[i][0] != 0)
 	{
-		if ((*main_struct->items)[i][2] == 1)
+		if ((*ms->items)[i][2] == 1)
 		{
-			x = (*main_struct->items)[i][0];
-			y = (*main_struct->items)[i][1];
-			rotate_point(main_struct, i, &(main_struct->map_items[y][x].item->p1));
-			rotate_point(main_struct, i, &(main_struct->map_items[y][x].item->p2));
+			x = (*ms->items)[i][0];
+			y = (*ms->items)[i][1];
+			rotate_point(ms, i, &(ms->map_items[y][x].item->p1));
+			rotate_point(ms, i, &(ms->map_items[y][x].item->p2));
 		}
 		i++;
 	}
 }
 
-static void put_victory_screen(t_main_struct *main_struct)
+static void	put_victory_screen(t_main_struct *main_struct)
 {
-	t_image_cub *img;
-	int 	i;
-	int		j;
+	t_image_cub	*img;
+	int			i;
+	int			j;
 
 
 	i = 0;
@@ -106,11 +107,11 @@ static void put_victory_screen(t_main_struct *main_struct)
 	}
 }
 
-static void put_death_screen(t_main_struct *main_struct)
+static void	put_death_screen(t_main_struct *main_struct)
 {
-	t_image_cub *img;
-	int 	i;
-	int		j;
+	t_image_cub	*img;
+	int			i;
+	int			j;
 
 
 	i = 0;
@@ -164,7 +165,7 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	}
 	if (timestamp_in_ms(main_struct) - main_struct->fuel_time > 1000 && main_struct->fuel > 0.06)
 	{
-		if ((int)(main_struct->fuel * 100)%10 >= 8)
+		if ((int)(main_struct->fuel * 100) %10 >= 8)
 		{
 			play_sound(main_struct, SOUND_FIRE);
 		}
@@ -191,4 +192,3 @@ int	mlx_loop_action(t_main_struct *main_struct)
 	}
 	return (0);
 }
-
