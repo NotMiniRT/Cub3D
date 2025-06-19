@@ -12,6 +12,7 @@
 #include "structs_b.h"
 #include "torch.h"
 
+#include <unistd.h>
 
 static bool	init_display(t_main_struct *main_struct, t_infos *infos)
 {

@@ -7,7 +7,6 @@
 #include "libft.h"
 #include "sound.h"
 
-
 static bool	check_cards_for_bluetooth(void)
 {
 	int		pipefd[2];
@@ -45,8 +44,8 @@ bool	check_bluetooth_audio_connected(void)
 	if (!bluetooth_found)
 		bluetooth_found = check_cards_for_bluetooth();
 	if (bluetooth_found)
-		ft_dprintf(2, GREEN DEVICE_CONNECTED RESET);
+		ft_dprintf(STDOUT_FILENO, GREEN DEVICE_CONNECTED RESET);
 	else
-		ft_dprintf(2, RED NO_DEVICE_CONNECTED RESET);
+		ft_dprintf(STDERR_FILENO, RED NO_DEVICE_CONNECTED RESET);
 	return (bluetooth_found);
 }

@@ -27,7 +27,7 @@ static bool	init_engine_no_device(t_sound_mini *sound)
 	result = ma_engine_init(&config, &sound->engine);
 	if (result != MA_SUCCESS)
 	{
-		ft_dprintf(2, RED ERROR_ENGINE_INIT RESET, result);
+		ft_dprintf(STDERR_FILENO, RED ERROR_ENGINE_INIT RESET, result);
 		return (false);
 	}
 	sound->initialized = 1;
@@ -45,7 +45,7 @@ static bool	init_engine(t_sound_mini *sound)
 	}
 	if (init_engine_normal(sound))
 		return (true);
-	ft_dprintf(2, RED ERROR_INITIALIZED RESET);
+	ft_dprintf(STDERR_FILENO, RED ERROR_INITIALIZED RESET);
 	return (init_engine_no_device(sound));
 }
 

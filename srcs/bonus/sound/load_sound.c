@@ -1,7 +1,18 @@
 #include <stdbool.h>
+#include <unistd.h>
 
+#include "common.h"
 #include "ft_dprintf.h"
 #include "sound_internal.h"
+#include "sound.h"
+
+static bool	check_audio_file_access(const char *path)
+{
+	if (access(path, F_OK | R_OK) == 0)
+		return (true);
+	ft_dprintf(STDERR_FILENO, YELLOW ERROR_AUDIO_ACCESS, path, RESET);
+	return (false);
+}
 
 bool	load_background_music(t_sound_mini *sound)
 {
@@ -9,8 +20,9 @@ bool	load_background_music(t_sound_mini *sound)
 
 	if (sound->no_audio_device)
 		return (true);
-	result = ma_sound_init_from_file(&sound->engine,
-			"assets/sound/background_stressing.mp3",
+	if (!check_audio_file_access(BACKGROUND_PATH_SOUND))
+		return (false);
+	result = ma_sound_init_from_file(&sound->engine, BACKGROUND_PATH_SOUND,
 			MA_SOUND_FLAG_STREAM | MA_SOUND_FLAG_NO_SPATIALIZATION,
 			NULL, NULL,
 			&sound->background_music);
@@ -20,7 +32,7 @@ bool	load_background_music(t_sound_mini *sound)
 	ma_sound_set_volume(&sound->background_music, 0.6f);
 	result = ma_sound_start(&sound->background_music);
 	if (result != MA_SUCCESS)
-		ft_dprintf(2, "Failed to start background music: %d\n", result);
+		ft_dprintf(STDERR_FILENO, ERROR_BG_START, result);
 	return (true);
 }
 
@@ -28,24 +40,24 @@ bool	load_basic_sounds(t_sound_mini *sound)
 {
 	if (sound->no_audio_device)
 		return (true);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/glass.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
+	if (!check_audio_file_access(GLASS_PATH_SOUND) || \
+		ma_sound_init_from_file(&sound->engine, GLASS_PATH_SOUND, \
+			MA_SOUND_FLAG_NO_SPATIALIZATION, NULL, NULL,
 			&sound->pickup_sound) != MA_SUCCESS)
 		return (false);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/door.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
+	if (!check_audio_file_access(DOOR_PATH_SOUND) || \
+		ma_sound_init_from_file(&sound->engine, DOOR_PATH_SOUND, \
+			MA_SOUND_FLAG_NO_SPATIALIZATION, NULL, NULL,
 			&sound->door_sound) != MA_SUCCESS)
 		return (false);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/death.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
+	if (!check_audio_file_access(DEATH_PATH_SOUND) || \
+		ma_sound_init_from_file(&sound->engine, DEATH_PATH_SOUND, \
+			MA_SOUND_FLAG_NO_SPATIALIZATION, NULL, NULL,
 			&sound->death) != MA_SUCCESS)
 		return (false);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/fire.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
+	if (!check_audio_file_access(FIRE_PATH_SOUND) || \
+		ma_sound_init_from_file(&sound->engine, FIRE_PATH_SOUND, \
+			MA_SOUND_FLAG_NO_SPATIALIZATION, NULL, NULL,
 			&sound->fire_sound) != MA_SUCCESS)
 		return (false);
 	return (true);
@@ -55,14 +67,14 @@ bool	load_advanced_sounds(t_sound_mini *sound)
 {
 	if (sound->no_audio_device)
 		return (true);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/victory.mp3", MA_SOUND_FLAG_NO_SPATIALIZATION,
-			NULL, NULL,
+	if (!check_audio_file_access(VICTORY_PATH_SOUND) || \
+		ma_sound_init_from_file(&sound->engine, VICTORY_PATH_SOUND, \
+			MA_SOUND_FLAG_NO_SPATIALIZATION, NULL, NULL,
 			&sound->victory) != MA_SUCCESS)
 		return (false);
-	if (ma_sound_init_from_file(&sound->engine,
-			"assets/sound/hehe.mp3",
-			0, NULL, NULL,
+	if (!check_audio_file_access(HEHE_PATH_SOUND) || \
+		ma_sound_init_from_file(&sound->engine, HEHE_PATH_SOUND,
+			MA_SOUND_FLAG_NO_SPATIALIZATION, NULL, NULL,
 			&sound->mj_sound) != MA_SUCCESS)
 		return (false);
 	ma_sound_set_attenuation_model(&sound->mj_sound,
