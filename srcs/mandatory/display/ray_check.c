@@ -13,41 +13,31 @@ static void	define_basic_param_calculus(t_ray_calculus *calcul,
 	calcul->map_x = (int)floor(calcul->player_x);
 	calcul->map_y = (int)floor(calcul->player_y);
 	if (fabs(calcul->dir_x) < 0.000001)
-		calcul->delta_x = 10000000;
+		calcul->tilde_step_x = 10000000;
 	else
-		calcul->delta_x = fabs(1.0 / calcul->dir_x);
+		calcul->tilde_step_x = fabs(1.0 / calcul->dir_x);
 	if (fabs(calcul->dir_y) < 0.000001)
-		calcul->delta_y = 10000000;
+		calcul->tilde_step_y = 10000000;
 	else
-		calcul->delta_y = fabs(1.0 / calcul->dir_y);
+		calcul->tilde_step_y = fabs(1.0 / calcul->dir_y);
 }
 
 static void	get_step_and_side_dist(t_ray_calculus *calcul)
 {
+	calcul->step_x = 1 - (calcul->dir_x < 0) * 2;
+	calcul->step_y = 1 - (calcul->dir_y < 0) * 2;
 	if (calcul->dir_x < 0)
-	{
-		calcul->step_x = -1;
 		calcul->side_dist_x = (calcul->player_x - calcul->map_x)
-			* calcul->delta_x;
-	}
+			* calcul->tilde_step_x;
 	else
-	{
-		calcul->step_x = 1;
 		calcul->side_dist_x = (calcul->map_x + 1.0 - calcul->player_x)
-			* calcul->delta_x;
-	}
+			* calcul->tilde_step_x;
 	if (calcul->dir_y < 0)
-	{
-		calcul->step_y = -1;
 		calcul->side_dist_y = (calcul->player_y - calcul->map_y)
-			* calcul->delta_y;
-	}
+			* calcul->tilde_step_y;
 	else
-	{
-		calcul->step_y = 1;
 		calcul->side_dist_y = (calcul->map_y + 1.0 - calcul->player_y)
-			* calcul->delta_y;
-	}
+			* calcul->tilde_step_y;
 	calcul->side = 0;
 }
 
@@ -60,7 +50,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 		calcul->wall_y = ((calcul->map_x - calcul->player_x
 					+ (1 - calcul->step_x) * 0.5)
 				/ calcul->dir_x) * calcul->dir_y;
-		calcul->dist = calcul->side_dist_x - calcul->delta_x;
+		calcul->dist = calcul->side_dist_x - calcul->tilde_step_x;
 	}
 	else
 	{
@@ -69,7 +59,7 @@ static void	get_dists_and_wall_x_y(t_ray_calculus *calcul)
 				/ calcul->dir_y) * calcul->dir_x;
 		calcul->wall_y = (calcul->map_y - calcul->player_y
 				+ (1 - calcul->step_y) * 0.5);
-		calcul->dist = calcul->side_dist_y - calcul->delta_y;
+		calcul->dist = calcul->side_dist_y - calcul->tilde_step_y;
 	}
 }
 
@@ -79,7 +69,7 @@ static void	fill_cross(t_ray_calculus *calcul, double (*cross)[4])
 	(*cross)[1] = calcul->side;
 	if (calcul->flag_dist)
 	{
-		(*cross)[0] = fuel;
+		(*cross)[0] = RENDER_DIST;
 		(*cross)[1] = 0;
 	}
 	if (calcul->side == 1)
@@ -100,17 +90,17 @@ void	ray_check(t_main_struct *main_struct,
 		&& main_struct->map[calcul.map_y][calcul.map_x] != '1')
 	{
 		calcul.flag_dist
-			= (calcul.side_dist_x > fuel
-				&& calcul.side_dist_y > fuel);
+			= (calcul.side_dist_x > RENDER_DIST
+				&& calcul.side_dist_y > RENDER_DIST);
 		if (calcul.side_dist_x < calcul.side_dist_y)
 		{
-			calcul.side_dist_x += calcul.delta_x;
+			calcul.side_dist_x += calcul.tilde_step_x;
 			calcul.map_x += calcul.step_x;
 			calcul.side = 0;
 		}
 		else
 		{
-			calcul.side_dist_y += calcul.delta_y;
+			calcul.side_dist_y += calcul.tilde_step_y;
 			calcul.map_y += calcul.step_y;
 			calcul.side = 1;
 		}
