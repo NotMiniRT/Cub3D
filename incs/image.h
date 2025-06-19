@@ -1,7 +1,8 @@
 #ifndef IMAGE_H
 # define IMAGE_H
 
-# include "structs.h"
+typedef struct s_main_struct	t_main_struct;
+typedef struct s_image_cub		t_image_cub;
 
 int		create_img_cub(t_main_struct *main_struct,
 			t_image_cub **img, int x, int y);

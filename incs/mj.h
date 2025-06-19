@@ -2,13 +2,12 @@
 # define MJ_H
 
 # include <stdbool.h>
-# include "structs_b.h"
 
-# define MJ_WIDTH 256    // Width of the MJ image
-# define MJ_HEIGHT 256   // Height of the MJ image
-# define MJ_X 1000       // Position X of the MJ on screen
-# define MJ_Y 200        // Position Y of the MJ on screen
-# define FRAME_DURATION 150 // Milliseconds between animation frames
+# define MJ_WIDTH 256
+# define MJ_HEIGHT 256
+# define MJ_X 1000
+# define MJ_Y 200
+# define FRAME_DURATION 150
 
 # define MJ_0 "assets/textures/mj-0.xpm"
 # define MJ_1 "assets/textures/mj-1.xpm"
@@ -44,8 +43,5 @@
 # define MJ_31 "assets/textures/mj-31.xpm"
 # define MJ_32 "assets/textures/mj-32.xpm"
 # define MJ_33 "assets/textures/mj-33.xpm"
-
-// bool	display_mj(t_main_struct *main_struct);
-// bool	init_mj(t_main_struct *main_struct);
 
 #endif

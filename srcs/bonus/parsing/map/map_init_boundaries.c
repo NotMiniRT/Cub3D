@@ -5,7 +5,7 @@
 
 #include "ft_dprintf.h"
 #include "libft.h"
-#include "map_processing.h"
+#include "map_types.h"
 #include "parsing.h"
 
 void	get_map_dimensions(t_infos *infos, int map_start, \

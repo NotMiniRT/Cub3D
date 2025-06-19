@@ -17,7 +17,7 @@ int	main(int ac, char **av)
 	parsing(ac, av, &infos);
 	if (!start_display(&main_struct, &infos))
 		ft_dprintf(2, "Error\nExternal function fail during initialisation\n");
-	free_main_struct(&main_struct);
+	free_main_struct_first_part(&main_struct);
 	cleanup_parsing(&infos);
 	cleanup_sound(&main_struct);
 	return (EXIT_SUCCESS);

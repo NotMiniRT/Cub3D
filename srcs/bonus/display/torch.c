@@ -5,7 +5,7 @@
 #include "libft.h"
 #include "minimap.h"
 #include "mlx.h"
-#include "timer.h"
+#include "timer_b.h"
 #include "image_b.h"
 
 static inline void	change_pixel_color_opt(t_image_cub *img,

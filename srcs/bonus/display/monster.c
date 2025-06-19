@@ -1,13 +1,13 @@
 #include "structs_b.h"
 #include "math.h"
 #include "doors_b.h"
-#include "timer.h"
+#include "timer_b.h"
 #include "stdio.h"
 #include "parsing.h"
 #include "common.h"
 #include "image_b.h"
 #include "libft.h"
-#include "inputs.h"
+#include "inputs_b.h"
 
 #include "sound.h"
 

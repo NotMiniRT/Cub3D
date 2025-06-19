@@ -1,9 +1,10 @@
 #ifndef DISPLAY_H
 # define DISPLAY_H
 
-# include "main_struct.h"
-# include "parsing.h"
 # include <stdbool.h>
+
+typedef struct s_main_struct	t_main_struct;
+typedef struct s_infos			t_infos;
 
 int		frame_display(t_main_struct *main_struct);
 int		mlx_loop_action(t_main_struct *main_struct);

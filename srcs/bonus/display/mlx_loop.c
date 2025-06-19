@@ -1,6 +1,6 @@
 #include "main_struct_b.h"
 #include "display_b.h"
-#include "timer.h"
+#include "timer_b.h"
 #include "player_b.h"
 #include "stdio.h"
 #include "time.h"
@@ -10,7 +10,7 @@
 #include "mlx.h"
 #include "common.h"
 #include "image_b.h"
-#include "inputs.h"
+#include "inputs_b.h"
 #include "sound.h"
 #include "torch.h"
 void	do_one_move(t_main_struct *main_struct)
@@ -205,4 +205,4 @@ if (elapsed >= 1.0) {
 	return (0);
 }
 
-// 
+//

@@ -1,9 +1,9 @@
 #include "lst_int.h"
 #include "structs_b.h"
 
-void add_front_lst_int(t_lst_int **list, int i)
+void	add_front_lst_int(t_lst_int **list, int i)
 {
-	t_lst_int *new_node;
+	t_lst_int	*new_node;
 
 	new_node = malloc(sizeof(t_lst_int));
 	if (new_node == NULL)
@@ -13,7 +13,7 @@ void add_front_lst_int(t_lst_int **list, int i)
 	new_node->index = i;
 }
 
-void remove_last_lst_int(t_lst_int **list)
+void	remove_last_lst_int(t_lst_int **list)
 {
 	if (*list == NULL)
 		return ;
@@ -32,7 +32,7 @@ void remove_last_lst_int(t_lst_int **list)
 	remove_last_lst_int(&((*list)->next));
 }
 
-void free_lst_int(t_lst_int *list)
+void	free_lst_int(t_lst_int *list)
 {
 	if (list == NULL)
 		return ;

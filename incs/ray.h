@@ -1,6 +1,8 @@
 #ifndef RAY_H
 # define RAY_H
 
+typedef struct s_main_struct	t_main_struct;
+
 double	*ray_check(t_main_struct *main_struct,
 			double (*cross)[4], double teta_cos_sin[2]);
 void	render_one_ray(t_main_struct *main_struct,

@@ -1,5 +1,6 @@
 #include "map_validation.h"
 #include "parsing.h"
+#include "map_types.h"
 
 void	store_door(t_map_data map_data, int i, int j, t_infos *infos)
 {

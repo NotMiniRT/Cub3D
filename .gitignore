@@ -54,7 +54,8 @@ dkms.conf
 test/
 test.c
 cub3D
-.build/
+cub3D_bonus
+.build*/
 libft.a
 *logs
 

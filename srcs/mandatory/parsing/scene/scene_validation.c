@@ -1,7 +1,7 @@
+#include <stdlib.h>
 #include <unistd.h>
 
 #include "ft_dprintf.h"
-#include "libft.h"
 #include "parsing.h"
 
 static int	check_line_integrity(char *line)
@@ -34,13 +34,6 @@ static bool	is_empty_line(char *line)
 	return (line[i] == '\0');
 }
 
-
-/**
- * @brief Refacto ? renvoyer -1 ou -2 c'est pas incroyable on pourrait utiliser un enum pour savoir si
- * on continue de lire le fichier ou non, savoir ou on en est.
- * @return a check
- *
- */
 static int	process_scene_line(t_infos *infos, int line_index,
 								t_parser_func *parsers, bool *found_element)
 {
