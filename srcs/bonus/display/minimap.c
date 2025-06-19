@@ -62,10 +62,10 @@ static bool	render_minimap(t_main_struct *main_struct, t_minimap *minimap)
 		return (false);
 	fill_minimap_background(main_struct->minimap);
 	init_offset_fractional(main_struct, minimap);
-	while (++minimap->y < MINIMAP_RADIUS * 2 + 1)
+	while (++minimap->y < MINIMAP_RADIUS * 2 + 2)
 	{
 		minimap->x = 0;
-		while (minimap->x < MINIMAP_RADIUS * 2 + 1)
+		while (minimap->x < MINIMAP_RADIUS * 2 + 2)
 		{
 			minimap->map_x = minimap->player_x + (minimap->x - MINIMAP_RADIUS);
 			minimap->map_y = minimap->player_y + (minimap->y - MINIMAP_RADIUS);
