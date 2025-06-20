@@ -1,5 +1,6 @@
 NAME	:= cub3D
 NAMEB	:= cub3D_bonus
+
 include cub3d.mk
 
 BUILD_DIR	:= .build/
@@ -12,8 +13,7 @@ DEPSB		:= $(OBJSB:.o=.d)
 # ********** FLAGS AND COMPILATION FLAGS ************************************* #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g3 #-march=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32
-
+CFLAGS		:= -Wall -Wextra -Werror -g3
 
 CPPFLAGS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/
 CPPFLAGS_BONUS	:= -MMD -MP -I incs/ -I libft/incs/ -I mlx/ -I incs_external/
@@ -177,7 +177,6 @@ debugb: clean
 bonus: init_bonus .bonus
 
 .bonus: libft/libft.a mlx/libmlx_Linux.a mlx/libmlx.a Makefile $(OBJSB)
-	@$(RM) $(NAME)
 	@$(CC) $(CFLAGS) $(CPPFLAGS_BONUS) -o $(NAMEB) $(OBJSB) -L libft -lft $(MLX_FLAGS)
 	@echo "\n$(GREEN_BOLD)✓ $(NAMEB) bonus is ready $(RESETC)\n"
 	@touch .bonus
