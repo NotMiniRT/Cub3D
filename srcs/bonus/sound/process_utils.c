@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agantaum <agantaum@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/20 11:45:46 by agantaum          #+#    #+#             */
+/*   Updated: 2025/06/20 11:48:22 by agantaum         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -37,7 +49,7 @@ void	setup_child_process(int pipefd[2])
 		{
 			close(pipefd[1]);
 			return ;
-		}	
+		}
 		fclose(devnull);
 	}
 	close(pipefd[1]);
