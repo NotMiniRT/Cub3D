@@ -33,7 +33,11 @@ void	setup_child_process(int pipefd[2])
 	devnull = fopen(DEV_NULL, TRUNCATE);
 	if (devnull)
 	{
-		dup2(fileno(devnull), STDERR_FILENO);
+		if (dup2(fileno(devnull), STDERR_FILENO) == -1)
+		{
+			close(pipefd[1]);
+			return ;
+		}	
 		fclose(devnull);
 	}
 	close(pipefd[1]);

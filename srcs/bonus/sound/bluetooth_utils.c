@@ -63,7 +63,7 @@ bool	execute_pactl_command(const char *cmd)
 	{
 		setup_child_process(pipefd);
 		execl("/bin/sh", "sh", "-c", cmd, (char *) NULL);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	close(pipefd[1]);
 	found = read_and_check_output(pipefd[0]);
