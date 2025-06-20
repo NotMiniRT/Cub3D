@@ -1,3 +1,6 @@
+#include <unistd.h>
+
+#include "common.h"
 #include "display_b.h"
 #include "ft_dprintf.h"
 #include "libft.h"
@@ -15,7 +18,7 @@ int	main(int ac, char **av)
 	ft_memset(&infos, 0, sizeof(t_infos));
 	parsing(ac, av, &infos);
 	if (!start_display(&main_struct, &infos))
-		ft_dprintf(2, "Error\nExternal function fail during initialisation\n");
+		ft_dprintf(STDERR_FILENO, ERROR_EXTERNAL);
 	free_main_struct_first_part(&main_struct);
 	cleanup_parsing(&infos);
 	cleanup_sound(&main_struct);

@@ -1,20 +1,12 @@
 #include <math.h>
-#include <stdio.h>
-#include <time.h>
 
 #include "common.h"
-#include "display_b.h"
-#include "doors_b.h"
 #include "image_b.h"
-#include "inputs_b.h"
-#include "main_struct_b.h"
 #include "mlx.h"
 #include "monster.h"
 #include "player_b.h"
 #include "sound.h"
 #include "structs_b.h"
-#include "timer_b.h"
-#include "torch.h"
 
 void	do_one_move(t_main_struct *main_struct)
 {
@@ -90,7 +82,7 @@ void	put_victory_screen(t_main_struct *main_struct)
 	}
 	play_sound(main_struct, SOUND_VICTORY);
 	get_image_cub_from_xpm_no_rot(main_struct, &img, \
-			"assets/textures/mj/mjescape.xpm", 1080);
+		MJ_ESCAPE, 1080);
 	if (img != NULL)
 	{
 		mlx_put_image_to_window(main_struct->mlx_ptr, \
@@ -118,7 +110,7 @@ void	put_death_screen(t_main_struct *main_struct)
 		}
 	}
 	get_image_cub_from_xpm_no_rot(main_struct, &img, \
-			"assets/textures/mj/mjcreepy.xpm", 1080);
+		MJ_CREEPY, 1080);
 	if (img != NULL)
 	{
 		mlx_put_image_to_window(main_struct->mlx_ptr, \

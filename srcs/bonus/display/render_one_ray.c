@@ -1,9 +1,7 @@
 #include <math.h>
+
 #include "common.h"
-#include "doors_b.h"
-#include "player_b.h"
 #include "ray_b.h"
-#include "libft.h"
 
 static inline int	darken_color(int color, float factor)
 {

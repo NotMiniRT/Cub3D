@@ -1,7 +1,7 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# include "stdlib.h"
+# include <stdlib.h>
 
 typedef enum moves
 {

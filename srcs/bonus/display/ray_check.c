@@ -1,6 +1,5 @@
 #include <math.h>
-#include "common.h"
-#include "structs_b.h"
+
 #include "ray_b.h"
 
 static void	fill_cross(t_ray_calculus *calcul, double (*cross)[5],

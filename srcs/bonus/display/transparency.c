@@ -1,4 +1,3 @@
-#include "common.h"
 #include "structs_b.h"
 
 static inline int	darken_color(int color, float factor)
@@ -21,8 +20,7 @@ static int	one_item_transparency(t_object_hit object_hit,
 	int	color;
 
 	text_y = (int)object_hit.text_y_index;
-	if (object_hit.type == DOOR
-		&& object_hit.status != 100)
+	if (object_hit.type == DOOR && object_hit.status != 100)
 		text_y = text_y - (int)(main_struct->door->size
 				* (0.8 - object_hit.status * 0.008));
 	if (text_y < 0)

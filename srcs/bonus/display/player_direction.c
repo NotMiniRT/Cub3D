@@ -1,11 +1,8 @@
 #include <math.h>
 
-#include "common.h"
 #include "doors_b.h"
-#include "parsing.h"
 #include "sound.h"
 #include "structs_b.h"
-#include "player_b.h"
 
 static int	is_position_accessible(t_main_struct *ms, int x, int y)
 {

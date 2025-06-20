@@ -1,16 +1,8 @@
-#include <math.h>
-#include <stdio.h>
-#include <time.h>
-
-#include "common.h"
 #include "display_b.h"
 #include "doors_b.h"
-#include "image_b.h"
 #include "inputs_b.h"
 #include "main_struct_b.h"
-#include "mlx.h"
 #include "monster.h"
-#include "player_b.h"
 #include "sound.h"
 #include "structs_b.h"
 #include "timer_b.h"
