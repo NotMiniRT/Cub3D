@@ -34,8 +34,8 @@ Cub3D est un moteur de rendu 3D utilisant la technique du ray-casting pour crée
 - **HUD avancé** : Interface utilisateur avec jauge de carburant et informations de jeu
 - **Minimap** : Carte miniature en temps réel montrant la position du joueur
 - **Système de portes** : Portes interactives avec animations d'ouverture/fermeture
-- **Collectibles** : Objets à ramasser (potions, etc.)
-- **Système audio** : Sons d'ambiance et effets sonores avec MinIAudio
+- **Collectibles** : Objets à ramasser (potions)
+- **Système audio** : Sons d'ambiance et effets sonores avec MiniAudio
 - **Effets visuels** : Brouillard, torche, éclairage dynamique
 - **Multithreading** : Optimisation des performances avec traitement parallèle
 - **Monstres** : Entités IA basiques (en développement)
@@ -59,13 +59,13 @@ xcode-select --install
 ### Dépendances incluses
 - **libft** : Bibliothèque C personnalisée (incluse)
 - **MLX (MiniLibX)** : Bibliothèque graphique (auto-téléchargée)
-- **MinIAudio** : Bibliothèque audio (incluse dans le code)
+- **MiniAudio** : Bibliothèque audio (incluse dans le code)
 
 ## 📦 Installation
 
 1. **Cloner le repository**
 ```bash
-git clone [URL_DU_REPO] cub3d
+git clone https://github.com/NotMiniRT/Cub3D cub3d
 cd cub3d
 ```
 
@@ -118,8 +118,6 @@ make re             # Recompiler entièrement
 - **W/A/S/D** : Déplacement
 - **Souris** : Rotation de la caméra
 - **E** : Interagir avec les portes
-- **F** : Allumer/éteindre la torche
-- **M** : Afficher/masquer la minimap
 - **ESC** : Quitter le jeu
 
 ### Format des cartes
@@ -155,7 +153,7 @@ Légende :
 - `1` : Mur
 - `N/S/E/W` : Position et orientation initiale du joueur
 - `D` : Porte (bonus)
-- `P` : Potion (bonus)
+- `C` : Collectible (potions, bonus)
 
 ## 📁 Structure du projet
 
@@ -202,14 +200,6 @@ make
 ./scripts/test_map_errors_valgrind.sh
 ```
 
-### Tests de cartes d'erreur
-```bash
-# Tests version mandatory
-./scripts/test_map_errors.sh
-
-# Tests version bonus
-./scripts/test_map_errors.sh --bonus
-```
 
 ## 🎯 Fonctionnalités bonus
 
@@ -248,15 +238,11 @@ make
 Le cœur du projet utilise l'algorithme DDA (Digital Differential Analyzer) pour calculer les intersections des rayons avec les murs. Chaque rayon est projeté depuis la position du joueur selon l'angle de vue, permettant de calculer la distance aux murs et de déterminer la hauteur des colonnes à afficher.
 
 ### Gestion des textures
-Les textures sont chargées au format XPM et stockées en mémoire pour un accès rapide. Le système de mapping de textures calcule les coordonnées UV en fonction de la position d'intersection du rayon avec le mur.
+Les textures sont chargées au format XPM et stockées en mémoire pour un accès rapide. Le système de mapping de textures calcule les coordonnées en fonction de la position d'intersection du rayon avec le mur.
 
 ### Système audio
-L'intégration de MinIAudio permet la lecture de sons d'ambiance et d'effets sonores, avec support de multiple formats audio et gestion du positionnement spatial.
+L'intégration de MiniAudio permet la lecture de sons d'ambiance et d'effets sonores, avec support de multiple formats audio et gestion du positionnement spatial.
 
 ## 🤝 Contributeurs
 
-Ce projet a été développé dans le cadre du cursus 42. Les contributions sont les bienvenues pour améliorer les performances, ajouter des fonctionnalités ou corriger des bugs.
-
----
-
-**Note** : Ce projet est réalisé à des fins éducatives dans le cadre de l'École 42. Il démontre la maîtrise des concepts de programmation C, de gestion mémoire, de géométrie 3D et d'optimisation de performances.
+agantaum && gueberso
