@@ -283,13 +283,14 @@ Ce projet a également été un terrain d'expérimentation graphique :
 - Réduction dynamique de la luminosité du mur selon la distance
 - Réduction progressive de la luminosité du sol en fonction de la distance avec le joueur
 - Réduction uniforme de la luminosité du plafond
-- Le tout relié à une valeur qui fluctue dans le code, représentée par la jauge de carburant
+- Le tout relié à une variable représentant la jauge de carburant
 
 ### Gestion des textures
 Les textures sont chargées au format XPM et stockées en mémoire pour un accès rapide. Le système de mapping de textures calcule les coordonnées en fonction de la position d'intersection du rayon avec le mur.
 
 ### Système audio
 L'intégration de MiniAudio permet la lecture de sons d'ambiance et d'effets sonores, avec support de multiples formats audio et gestion du positionnement spatial.
+
 ## 🤝 Contributeurs
 
 agantaum && gueberso
