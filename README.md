@@ -233,15 +233,40 @@ make
 
 ## 🏗️ Architecture technique
 
-### Moteur de ray-casting
-Le cœur du projet utilise l'algorithme DDA (Digital Differential Analyzer) pour calculer les intersections des rayons avec les murs. Chaque rayon est projeté depuis la position du joueur selon l'angle de vue, permettant de calculer la distance aux murs et de déterminer la hauteur des colonnes à afficher.
+### Fonctionnement du ray-casting (DDA)
+Le moteur utilise l'algorithme DDA (Digital Differential Analyzer) pour effectuer la projection de rayons à partir de la position du joueur, en fonction de sa direction (calculée via cos(θ) et sin(θ)). Chaque rayon progresse dans la carte grille par grille, en testant à chaque itération s'il entre en collision avec un mur, un objet, une porte ou un monstre.
+
+Le DDA permet ainsi de détecter très rapidement l'obstacle le plus proche dans une direction donnée, ce qui permet d'afficher une colonne de pixels proportionnelle à la distance calculée. Les entités dynamiques telles que les portes et les monstres, ou fixes comme les objets ramassables (collectibles), sont également intégrées dans cette logique de détection. À chaque rayon, une vérification est effectuée pour savoir si une entité se trouve dans le champ du joueur, puis cette information est utilisée lors du rendu.
+
+### Optimisations techniques internes
+Plusieurs optimisations ont été mises en place pour améliorer les performances du moteur :
+
+**Pré-calculs mathématiques** : Toutes les valeurs trigonométriques non dynamiques sont pré-calculées. Seuls les cos et sin des rayons à tracer restent calculés en temps réel pour garantir un affichage fluide.
+
+**Textures en mémoire optimisée** : Les images (textures murales, objets, HUD) sont volontairement pivotées sur le côté au chargement afin de permettre un accès par colonne verticale (très utile pour le ray-casting), en simplifiant l'accès mémoire par ligne dans un tableau.
+
+### Expérimentations graphiques
+Ce projet a également été un terrain d'expérimentation graphique :
+
+**Objets fixes** : Affichés avec une perspective simple.
+
+**Collectibles** : Affichés indépendamment du joueur ; ils ne réagissent pas à la direction du regard, mais à la distance et tournent sur eux-mêmes.
+
+**Monstre dynamique** : Une entité mobile qui fait toujours face au joueur et est affichée face au joueur.
+
+**Portes interactives** : Gèrent leur animation d'ouverture via un état interne déclenché par une interaction du joueur (E).
+
+**Effets d'obscurité** : Plusieurs méthodes sont combinées pour créer une ambiance sombre :
+- Réduction dynamique de la luminosité du mur selon la distance
+- Réduction progressive de la luminosité du sol en fonction de la distance avec le joueur
+- Réduction uniforme de la luminosité du plafond
+- Le tout relié à une valeur qui fluctue dans le code, représentée par la jauge de carburant
 
 ### Gestion des textures
-Les textures sont chargées au format XPM et stockées en mémoire pour un accès rapide. Le système de mapping de textures calcule les coordonnées en fonction de la position d'intersection du rayon avec le mur.
+Les textures sont chargées au format XPM et stockées en mémoire pour un accès rapide. Le système de mapping de textures calcule les coordonnées UV en fonction de la position d'intersection du rayon avec le mur.
 
 ### Système audio
-L'intégration de MiniAudio permet la lecture de sons d'ambiance et d'effets sonores, avec support de multiple formats audio et gestion du positionnement spatial.
-
+L'intégration de MinIAudio permet la lecture de sons d'ambiance et d'effets sonores, avec support de multiples formats audio et gestion du positionnement spatial.
 ## 🤝 Contributeurs
 
 agantaum && gueberso
