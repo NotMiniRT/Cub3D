@@ -263,10 +263,10 @@ Ce projet a également été un terrain d'expérimentation graphique :
 - Le tout relié à une valeur qui fluctue dans le code, représentée par la jauge de carburant
 
 ### Gestion des textures
-Les textures sont chargées au format XPM et stockées en mémoire pour un accès rapide. Le système de mapping de textures calcule les coordonnées UV en fonction de la position d'intersection du rayon avec le mur.
+Les textures sont chargées au format XPM et stockées en mémoire pour un accès rapide. Le système de mapping de textures calcule les coordonnées en fonction de la position d'intersection du rayon avec le mur.
 
 ### Système audio
-L'intégration de MinIAudio permet la lecture de sons d'ambiance et d'effets sonores, avec support de multiples formats audio et gestion du positionnement spatial.
+L'intégration de MiniAudio permet la lecture de sons d'ambiance et d'effets sonores, avec support de multiples formats audio et gestion du positionnement spatial.
 ## 🤝 Contributeurs
 
 agantaum && gueberso
