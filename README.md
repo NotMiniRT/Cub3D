@@ -221,7 +221,6 @@ make
 ## ⚡ Optimisations
 
 ### Performances
-- **Compilation optimisée** : Flags `-O3` pour les performances
 - **Cache de calculs** : Précalcul des tables trigonométriques
 - **Gestion mémoire** : Allocation/libération optimisées
 - **Multithreading** : Parallélisation des calculs intensifs
