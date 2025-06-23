@@ -233,6 +233,29 @@ make
 
 ## 🏗️ Architecture technique
 
+### Système de multithreading
+Le projet utilise un système de multithreading avec des `pthread_barrier_t` pour optimiser les performances de rendu. Le calcul des rayons est réparti sur plusieurs threads parallèles, chacun s'occupant d'une portion de l'écran. Les barrières de synchronisation permettent de s'assurer que tous les threads ont terminé leur portion de calcul avant de passer à l'affichage final du frame.
+
+Cette approche permet d'exploiter pleinement les processeurs multi-cœurs modernes en parallélisant les calculs intensifs du ray-casting, tout en maintenant la cohérence des données partagées entre les threads.
+
+### Validation de cartes
+Le système de validation des cartes fonctionne par vérification externe avec des règles simples pour chaque caractère accepté :
+
+**Caractères autorisés :**
+- `0` : Espace vide (sol)
+- `1` : Mur solide
+- `N`, `S`, `E`, `W` : Position et orientation initiale du joueur (un seul autorisé par carte)
+- `D` : Porte (version bonus)
+- `P` : Potion/collectible (version bonus)
+- ` ` (espace) : Zone externe à la carte
+
+**Règles de validation :**
+- La carte doit être entourée de murs (`1`) ou d'espaces externes
+- Un seul point de spawn joueur autorisé
+- Aucun espace vide ne doit être adjacent à une zone externe
+- Les entités bonus (portes, collectibles) doivent être accessibles
+- Vérification de l'intégrité structurelle par parcours récursif des zones accessibles
+
 ### Fonctionnement du ray-casting (DDA)
 Le moteur utilise l'algorithme DDA (Digital Differential Analyzer) pour effectuer la projection de rayons à partir de la position du joueur, en fonction de sa direction (calculée via cos(θ) et sin(θ)). Chaque rayon progresse dans la carte grille par grille, en testant à chaque itération s'il entre en collision avec un mur, un objet, une porte ou un monstre.
 
